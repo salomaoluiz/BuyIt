@@ -10,6 +10,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.10.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.3.0",
     "@react-navigation/stack": "^5.3.4",
@@ -18,7 +19,10 @@
     "react-native-gesture-handler": "^1.6.1",
     "react-native-reanimated": "^1.8.0",
     "react-native-safe-area-context": "^1.0.0",
-    "react-native-screens": "^2.7.0"
+    "react-native-screens": "^2.7.0",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
@@ -26,16 +30,23 @@
     "@react-native-community/eslint-config": "^1.0.0",
     "@types/jest": "^24.0.24",
     "@types/react-native": "^0.62.0",
+    "@types/react-redux": "^7.1.8",
     "@types/react-test-renderer": "16.9.2",
+    "@types/redux": "^3.6.0",
+    "@types/redux-persist": "^4.3.1",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "babel-jest": "^24.9.0",
+    "babel-plugin-module-resolver": "^4.0.0",
     "eslint": "^6.5.1",
     "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-typescript": "^0.14.0",
+    "husky": "^4.2.5",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.58.0",
     "prettier": "^2.0.4",
     "react-test-renderer": "16.11.0",
+    "redux-devtools-extension": "^2.13.8",
     "typescript": "^3.8.3"
   },
   "jest": {
@@ -48,5 +59,11 @@
       "json",
       "node"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn test && yarn lint && yarn tsc",
+      "pre-push": "yarn test && yarn lint && yarn tsc"
+    }
   }
 }
