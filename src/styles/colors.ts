@@ -1,6 +1,6 @@
 const colors = {  
   primaryBrandMedium: "#fce303",
-  white: "#fff",
+  backgroundLight: "#fff",
 }
 
 export default colors;

@@ -1,9 +1,9 @@
 const size = {
-  smalless: 8,
-  small: 10,
-  medium: 12,
-  big: 16,
-  biggest: 18,
+  smalless: '8px',
+  small: '10px',
+  medium: '12px',
+  big: '16px',
+  biggest: '18px',
 };
 
 const family = {};

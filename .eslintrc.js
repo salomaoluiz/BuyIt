@@ -28,13 +28,4 @@ module.exports = {
     // disable the rule for all files
     '@typescript-eslint/explicit-function-return-type': 'off',
   },
-  overrides: [
-    {
-      // enable the rule specifically for TypeScript files
-      files: ['*.ts'],
-      rules: {
-        '@typescript-eslint/explicit-function-return-type': ['warn'],
-      },
-    },
-  ],
 };
