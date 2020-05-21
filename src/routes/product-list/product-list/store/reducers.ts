@@ -5,7 +5,7 @@ export const initialState: ItemsReducerState = {
   itemsData: [],
 };
 
-const listItemsReducer = (
+const productListReducer = (
   state: ItemsReducerState = initialState,
   action: ItemsActions,
 ): ItemsReducerState => {
@@ -18,4 +18,4 @@ const listItemsReducer = (
   }
 };
 
-export default listItemsReducer;
+export default productListReducer;

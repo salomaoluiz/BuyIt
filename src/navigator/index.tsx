@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import ListItens from '@routes/list-itens';
+import ProductList from '@routes/product-list/product-list';
+import { Routes } from '@routes';
 
 const Stack = createStackNavigator();
 
@@ -9,7 +10,7 @@ const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="ListItens" component={ListItens} />
+        <Stack.Screen name={Routes.ProductList} component={ProductList} />
       </Stack.Navigator>
     </NavigationContainer>
   );

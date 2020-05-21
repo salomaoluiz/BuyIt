@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import uiReducer from './general-store/ui-reducers';
-import listItemsReducer from '@routes/list-itens/store/reducers';
+import productListReducers from '@routes/product-list/product-list/store/reducers';
 
-const reducers = combineReducers({ uiReducer, listItemsReducer });
+const reducers = combineReducers({ uiReducer, productListReducers });
 
 export default reducers;
 

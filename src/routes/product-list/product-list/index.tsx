@@ -1,9 +1,6 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { Button, FlatList } from 'react-native';
-import { RootState } from '@store/reducers';
-import { setLoader } from '@store/general-store/ui-actions';
 import {
   Container,
   ItemContainer,
@@ -13,32 +10,12 @@ import {
   ListContainer,
   FooterContainer,
 } from './styles';
-import useListItems from './useListItems';
+import useProductList from './useProductList';
 import { ItemsData } from './store/types';
 import * as strings from '@locales/list-items';
 
-// #region Redux & Props
-
-const mapState = (state: RootState) => ({
-  uiLoading: state.uiReducer.loading,
-});
-
-const mapDispatch = {
-  setLoader,
-};
-
-const connector = connect(mapState, mapDispatch);
-
-// type PropsFromRedux = ConnectedProps<typeof connector>;
-
-// interface Props extends PropsFromRedux {
-//   navigation: StackNavigationProp<{}>;
-// }
-
-// #endregion
-
-const ListItens = () => {
-  const { itemsData, onAddButtonPress, amountTotal, qtdTotal } = useListItems();
+const ProductList = () => {
+  const { itemsData, onAddButtonPress, amountTotal, qtdTotal } = useProductList();
 
   const renderItem = ({ item, index }: { item: ItemsData; index: number }) => {
     return (
@@ -78,4 +55,4 @@ const ListItens = () => {
   );
 };
 
-export default connector(ListItens);
+export default ProductList;

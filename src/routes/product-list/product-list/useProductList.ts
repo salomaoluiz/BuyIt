@@ -3,9 +3,9 @@ import { ItemsDataArray } from './store/types';
 import { useSelector } from 'react-redux';
 import { RootState } from '@store/reducers';
 
-const useListItems = () => {
+const useProductList = () => {
   const itemsData = useSelector<RootState, ItemsDataArray>(
-    (state) => state.listItemsReducer.itemsData,
+    (state) => state.productListReducers.itemsData,
   );
   const [amountTotal, setAmountTotal] = useState<number>(0);
   const [qtdTotal, setQtdTotal] = useState<number>(0);
@@ -33,4 +33,4 @@ const useListItems = () => {
   return { itemsData, onAddButtonPress, amountTotal, qtdTotal };
 };
 
-export default useListItems;
+export default useProductList;

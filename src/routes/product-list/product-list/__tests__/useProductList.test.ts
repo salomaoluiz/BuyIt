@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
-import useListItems from '../useListItems';
+import useProductList from '../useProductList';
 import * as reactRedux from 'react-redux';
 
-describe('Testando useListItems', () => {
+describe('Testando useProductList', () => {
   let getItemData: jest.SpyInstance;
   const itemDataMocked = [
     { key: '1', name: 'name', value: '1.5', qtd: '13' },
@@ -16,14 +16,14 @@ describe('Testando useListItems', () => {
   });
   
   it('deve ao iniciar chamar o reducer e setar retornar a lista de itens', () => {
-    const { result } = renderHook(useListItems);
+    const { result } = renderHook(useProductList);
 
     expect(getItemData).toBeCalled();
     expect(result.current.itemsData).toEqual(itemDataMocked);
   });
 
   it('deve ao iniciar calcular corretamente o valor total e quantidade total', () => {
-    const { result } = renderHook(useListItems);
+    const { result } = renderHook(useProductList);
 
     expect(result.current.amountTotal).toEqual(4);
     expect(result.current.qtdTotal).toEqual(15);
