@@ -15,13 +15,23 @@ const radius = {
   small: '4px',
   regular: '10px',
   big: '16px',
-  round: '500px'
-}
+  round: '500px',
+};
+
+const lineWeight = {
+  hairLine: '1px',
+  small: '2px',
+  medium: '3px',
+  big: '4px',
+  bold: '6px',
+};
+
 const dimensions = {
   screenHeight,
   screenWidth,
   spacing,
   radius,
+  lineWeight,
 };
 
 export default dimensions;

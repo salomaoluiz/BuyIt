@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
-import { Button, FlatList } from 'react-native';
+import { Button } from 'react-native';
 import {
   Container,
   ItemContainer,
@@ -11,19 +11,25 @@ import {
   FooterContainer,
 } from './styles';
 import useProductList from './useProductList';
-import { ItemsData } from './store/types';
-import * as strings from '@locales/list-items';
+import { ItemsData } from '../store/types';
+import * as strings from '@locales/product-list';
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParamsList } from '@navigator';
 
-const ProductList = () => {
-  const { itemsData, onAddButtonPress, amountTotal, qtdTotal } = useProductList();
+export type Props = StackScreenProps<RootStackParamsList, 'ProductList'>;
+
+const ProductList = (props: Props) => {
+  const { itemsData, onAddButtonPress, amountTotal, qtdTotal } = useProductList(
+    props,
+  );
 
   const renderItem = ({ item, index }: { item: ItemsData; index: number }) => {
     return (
-      <ItemContainer>
+      <ItemContainer key={item.id}>
         <ItemText>{index}</ItemText>
         <ItemText>{item.name}</ItemText>
         <ItemText>{item.qtd}</ItemText>
-        <ItemText>{item.value}</ItemText>
+        <ItemText>{item.amount}</ItemText>
       </ItemContainer>
     );
   };
@@ -36,16 +42,11 @@ const ProductList = () => {
       </SubTotalContainer>
     );
   };
-
-  const keyExtractor = (item: ItemsData) => item.key;
+  
   return (
     <Container>
       <ListContainer>
-        <FlatList<ItemsData>
-          data={itemsData}
-          renderItem={renderItem}
-          keyExtractor={keyExtractor}
-        />
+        {itemsData.map((item, index) => renderItem({ item, index }))}
       </ListContainer>
       <FooterContainer>
         {renderFooter()}

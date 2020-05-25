@@ -7,9 +7,7 @@ const Container = styled.View`
   background-color: ${colors.backgroundLight};
 `;
 
-const ListContainer = styled.View`
-  flex: 1;
-  justify-content: space-between;
+const ListContainer = styled.ScrollView`  
 `;
 const FooterContainer = styled.View``;
 

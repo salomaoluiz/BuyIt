@@ -1,9 +1,9 @@
 import { SET_ITEMS_DATA } from './constants';
 
 export type ItemsData = {
-  key: string;
+  id: string;
   name: string;
-  value: string;
+  amount: string;
   qtd: string;
 };
 

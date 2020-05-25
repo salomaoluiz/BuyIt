@@ -1,3 +1,4 @@
 export const Routes = {
-  ProductList: 'ProductList'
-}
+  ProductList: 'ProductList' as 'ProductList',
+  NewProduct: 'NewProduct' as 'NewProduct',
+};

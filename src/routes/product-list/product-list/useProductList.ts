@@ -1,9 +1,10 @@
 import { useEffect, useCallback, useState } from 'react';
-import { ItemsDataArray } from './store/types';
+import { ItemsDataArray } from '../store/types';
 import { useSelector } from 'react-redux';
 import { RootState } from '@store/reducers';
+import { Props } from '.';
 
-const useProductList = () => {
+const useProductList = (props: Props) => {
   const itemsData = useSelector<RootState, ItemsDataArray>(
     (state) => state.productListReducers.itemsData,
   );
@@ -11,14 +12,15 @@ const useProductList = () => {
   const [qtdTotal, setQtdTotal] = useState<number>(0);
 
   const onAddButtonPress = useCallback(() => {
-    console.log('ola');
+    props.navigation.navigate('NewProduct');
   }, []);
 
   const handleSubTotal = useCallback(() => {
     let totalAmount = 0;
     let totalQtd = 0;
+
     itemsData.forEach((item) => {
-      totalAmount += parseFloat(item.value);
+      totalAmount += parseFloat(item.amount);
       totalQtd += parseFloat(item.qtd);
     });
 
@@ -28,7 +30,7 @@ const useProductList = () => {
 
   useEffect(() => {
     handleSubTotal();
-  }, [handleSubTotal]);
+  }, [itemsData]);
 
   return { itemsData, onAddButtonPress, amountTotal, qtdTotal };
 };
