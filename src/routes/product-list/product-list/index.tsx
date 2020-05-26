@@ -27,9 +27,11 @@ const ProductList = (props: Props) => {
     onItemPress,
   } = useProductList(props);
 
+  console.log(itemsData);
+
   const renderItem = ({ item, index }: { item: ItemsData; index: number }) => {
-    const handleItemPress = () => onItemPress(item.id)
-    
+    const handleItemPress = () => onItemPress(item.id);
+
     return (
       <TouchableOpacity key={item.id} onPress={handleItemPress}>
         <ItemContainer>

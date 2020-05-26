@@ -3,6 +3,7 @@ import useProductList from '../useProductList';
 import * as reactRedux from 'react-redux';
 import { Routes } from '@routes';
 import { Alert } from 'react-native';
+import { setItemsData } from '@routes/product-list/store/actions';
 
 describe('Testando useProductList', () => {
   let getItemData: jest.SpyInstance;
@@ -14,8 +15,11 @@ describe('Testando useProductList', () => {
     { id: '2', name: 'name2', amount: '2.5', qtd: '2' },
   ];
   let alert: jest.SpyInstance;
-
+  let dispatch: jest.Mock;
   beforeEach(() => {
+    dispatch = jest.fn();
+
+    jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(dispatch);
     getItemData = jest
       .spyOn(reactRedux, 'useSelector')
       .mockReturnValue(itemDataMocked);
@@ -58,5 +62,21 @@ describe('Testando useProductList', () => {
     expect(navigate).toHaveBeenLastCalledWith('NewProduct', {
       itemData: { id: '1', name: 'name', amount: '1.5', qtd: '13' },
     });
+  });
+
+  it('deve clicar no item, aparecer o Alert e clicar em Deletar deve apagar o item', () => {
+    const { result } = renderHook(useProductList, { initialProps });
+
+    result.current.onItemPress('1');
+
+    expect(alert).toHaveBeenCalled();
+    const deleteButton = alert.mock.calls[0][2][1].onPress;
+
+    const newItemsDataMocked = [
+      { id: '2', name: 'name2', amount: '2.5', qtd: '2' },
+    ];
+    const action = setItemsData(newItemsDataMocked);
+    deleteButton();
+    expect(dispatch).toHaveBeenLastCalledWith(action);
   });
 });
