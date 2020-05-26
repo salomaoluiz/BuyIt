@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
-import { Button } from 'react-native';
+import { Button, TouchableOpacity } from 'react-native';
 import {
   Container,
   ItemContainer,
@@ -19,18 +19,26 @@ import { RootStackParamsList } from '@navigator';
 export type Props = StackScreenProps<RootStackParamsList, 'ProductList'>;
 
 const ProductList = (props: Props) => {
-  const { itemsData, onAddButtonPress, amountTotal, qtdTotal } = useProductList(
-    props,
-  );
+  const {
+    itemsData,
+    onAddButtonPress,
+    amountTotal,
+    qtdTotal,
+    onItemPress,
+  } = useProductList(props);
 
   const renderItem = ({ item, index }: { item: ItemsData; index: number }) => {
+    const handleItemPress = () => onItemPress(item.id)
+    
     return (
-      <ItemContainer key={item.id}>
-        <ItemText>{index}</ItemText>
-        <ItemText>{item.name}</ItemText>
-        <ItemText>{item.qtd}</ItemText>
-        <ItemText>{item.amount}</ItemText>
-      </ItemContainer>
+      <TouchableOpacity key={item.id} onPress={handleItemPress}>
+        <ItemContainer>
+          <ItemText>{index}</ItemText>
+          <ItemText>{item.name}</ItemText>
+          <ItemText>{item.qtd}</ItemText>
+          <ItemText>{item.amount}</ItemText>
+        </ItemContainer>
+      </TouchableOpacity>
     );
   };
 
@@ -42,7 +50,7 @@ const ProductList = (props: Props) => {
       </SubTotalContainer>
     );
   };
-  
+
   return (
     <Container>
       <ListContainer>

@@ -13,6 +13,7 @@ let getItemData: jest.SpyInstance;
 let dispatch: jest.Mock;
 let useErrorMessage: jest.SpyInstance;
 let goBack: jest.Mock;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let initialProps: any;
 
 const itemDataMocked = [
@@ -33,13 +34,32 @@ describe('Testando useNewProduct', () => {
 
     jest.spyOn(id, 'generateUniqueID').mockReturnValue('3');
     jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(dispatch);
-    initialProps = { navigation: { goBack } };
+    initialProps = { navigation: { goBack }, route: { params: undefined } };
   });
 
   it('deve ao iniciar chamar o reducer e setar retornar a lista de itens', () => {
     renderHook(useNewProduct, { initialProps });
 
     expect(getItemData).toBeCalled();
+  });
+
+  it('deve ao iniciar com valores default caso chegue pelo navigation', () => {
+    const newInitialProps = {
+      ...initialProps,
+      route: {
+        params: {
+          itemData: { id: '123', name: 'Teste', amount: '69', qtd: '555' },
+        },
+      },
+    };
+
+    const { result } = renderHook(useNewProduct, {
+      initialProps: newInitialProps,
+    });
+
+    expect(result.current.name).toEqual('Teste');
+    expect(result.current.amount).toEqual('69');
+    expect(result.current.qtd).toEqual('555');
   });
 
   it('deve resultar em erro caso o nome nao esteja preenchido', () => {

@@ -9,12 +9,20 @@ import errorsString from '@locales/general-errors';
 import { Props } from '.';
 import { setItemsData } from '../store/actions';
 import { ItemsDataArray } from '../store/types';
+import { filterNotByID } from '@utils/filters';
 
-const useNewProduct = ({ navigation }: Props) => {
+const useNewProduct = ({ navigation, route }: Props) => {
+  const editName = route.params?.itemData?.name;
+  const editAmount = route.params?.itemData?.amount;
+  const editQtd = route.params?.itemData?.qtd;
+  const editId = route.params?.itemData?.id;
+
+  
+  
   const qtdDefault = 1;
-  const [name, setName] = useState<string>('');
-  const [amount, setAmount] = useState<string>('');
-  const [qtd, setQtd] = useState<string>('');
+  const [name, setName] = useState<string>(editName || '');
+  const [amount, setAmount] = useState<string>(editAmount || '');
+  const [qtd, setQtd] = useState<string>(editQtd || '');
   const itemsData = useSelector<RootState, ItemsDataArray>(
     (state) => state.productListReducers.itemsData,
   );
@@ -33,6 +41,7 @@ const useNewProduct = ({ navigation }: Props) => {
   const generateNewItemData = useCallback(() => {
     const setDefaultQtd = qtd || qtdDefault.toString();
     const id = generateUniqueID();
+    const itemsList = filterNotByID(itemsData, editId);
 
     const newItem = [
       {
@@ -43,7 +52,7 @@ const useNewProduct = ({ navigation }: Props) => {
       },
     ];
 
-    return itemsData.concat(newItem);
+    return itemsList.concat(newItem);
   }, [name, amount, qtd]);
 
   const onSaveButtonPress = useCallback(() => {

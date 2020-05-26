@@ -52,17 +52,6 @@
     "redux-devtools-extension": "^2.13.8",
     "typescript": "^3.8.3"
   },
-  "jest": {
-    "preset": "react-native",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
-  },
   "husky": {
     "hooks": {
       "pre-commit": "yarn test && yarn lint && yarn tsc",
