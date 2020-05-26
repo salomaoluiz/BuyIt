@@ -17,8 +17,6 @@ const useNewProduct = ({ navigation, route }: Props) => {
   const editQtd = route.params?.itemData?.qtd;
   const editId = route.params?.itemData?.id;
 
-  
-  
   const qtdDefault = 1;
   const [name, setName] = useState<string>(editName || '');
   const [amount, setAmount] = useState<string>(editAmount || '');

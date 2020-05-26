@@ -6,6 +6,7 @@ import { Props } from '.';
 import { Alert } from 'react-native';
 import { filterByID, filterNotByID } from '@utils/filters';
 import { setItemsData } from '../store/actions';
+import * as strings from '@locales/product-list';
 
 const useProductList = (props: Props) => {
   const itemsData = useSelector<RootState, ItemsDataArray>(
@@ -57,9 +58,9 @@ const useProductList = (props: Props) => {
         delete: () => handleDeleteItem(id),
       };
 
-      Alert.alert('O que desejas?', 'O que deseja fazer', [
-        { text: 'Editar', onPress: handlePress.edit },
-        { text: 'Apagar', onPress: handlePress.delete },
+      Alert.alert(strings.whatWant, strings.whatWantDo, [
+        { text: strings.editItem, onPress: handlePress.edit },
+        { text: strings.deleteItem, onPress: handlePress.delete },
       ]);
     },
     [itemsData],

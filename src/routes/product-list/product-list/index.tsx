@@ -60,7 +60,7 @@ const ProductList = (props: Props) => {
       </ListContainer>
       <FooterContainer>
         {renderFooter()}
-        <Button title="Add" onPress={onAddButtonPress} />
+        <Button title={strings.add} onPress={onAddButtonPress} />
       </FooterContainer>
     </Container>
   );
