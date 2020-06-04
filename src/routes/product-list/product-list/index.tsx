@@ -27,8 +27,6 @@ const ProductList = (props: Props) => {
     onItemPress,
   } = useProductList(props);
 
-  console.log(itemsData);
-
   const renderItem = ({ item, index }: { item: ItemsData; index: number }) => {
     const handleItemPress = () => onItemPress(item.id);
 

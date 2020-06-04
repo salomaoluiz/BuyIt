@@ -1,5 +1,6 @@
 apply plugin: "com.android.application"
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'io.fabric'
 
 import com.android.build.OutputFile
 
@@ -123,6 +124,9 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 
 def getVersionCode = System.getenv('ANDROID_VERSION_CODE') ? System.getenv('ANDROID_VERSION_CODE') as int : 1;
 def getVersionName = System.getenv('ANDROID_VERSION_NAME') ? System.getenv('ANDROID_VERSION_NAME') : "1.0";
+crashlytics {
+  enableNdk true
+}
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
