@@ -20,6 +20,7 @@ const NewProduct = (props: Props) => {
     qtdDefault,
     onSaveButtonPress,
   } = useNewProduct(props);
+
   return (
     <Container>
       <InputContainer>

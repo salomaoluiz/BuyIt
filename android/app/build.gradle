@@ -136,6 +136,7 @@ android {
     }
 
     defaultConfig {
+        multiDexEnabled true
         applicationId "br.com.jacobysoftware.buyit"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
