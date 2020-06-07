@@ -1,0 +1,53 @@
+image: node:alpine
+
+stages:
+    - build
+    - code-check
+    - notification
+
+cache:
+    paths:
+        - node_modules/
+
+
+install:
+    stage: build
+    only: 
+        - merge_requests
+        - master
+        - tags
+    script: 
+        yarn install
+
+lint: 
+    stage: code-check
+    only:
+        - merge_requests
+        - master
+    dependencies:
+        - install
+    script:
+        - yarn install
+        - yarn lint
+
+test: 
+    stage: code-check
+    only:
+        - merge_requests
+        - master
+    dependencies:
+        - install
+    script:
+        - yarn install
+        - yarn test
+
+tsc: 
+    stage: code-check
+    only:
+        - merge_requests
+        - master
+    dependencies:
+        - install
+    script:
+        - yarn install
+        - yarn tsc
