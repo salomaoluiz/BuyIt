@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
-import { Button, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import {
   Container,
   ItemContainer,
@@ -15,6 +15,7 @@ import { ItemsData } from '../store/types';
 import * as strings from '@locales/product-list';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamsList } from '@navigator';
+import Button from '@components/button';
 
 export type Props = StackScreenProps<RootStackParamsList, 'ProductList'>;
 
@@ -58,7 +59,7 @@ const ProductList = (props: Props) => {
       </ListContainer>
       <FooterContainer>
         {renderFooter()}
-        <Button title={strings.add} onPress={onAddButtonPress} />
+        <Button onPress={onAddButtonPress} title={strings.add} />
       </FooterContainer>
     </Container>
   );
