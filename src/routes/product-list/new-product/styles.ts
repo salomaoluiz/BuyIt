@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import { dimensions } from '@styles';
 
 const Container = styled.View`
-  padding: ${dimensions.spacing.medium};
+  padding: ${dimensions.size.stackXxxs};
   flex: 1;
   justify-content: space-between;
 `;
@@ -11,10 +11,10 @@ const Container = styled.View`
 const InputContainer = styled.View``;
 
 const TextInput = styled.TextInput`
-  margin: ${dimensions.spacing.small};
-  border-width: ${dimensions.lineWeight.hairLine};
-  border-radius: ${dimensions.radius.regular};
-  padding: ${dimensions.spacing.medium};
+  margin-bottom: ${dimensions.size.stackXxs};
+  border-width: ${dimensions.border.widthMedium};
+  border-radius: ${dimensions.border.radiusSm};
+  padding: ${dimensions.spacing.inlineXs};
 `;
 
 const Button = styled.Button``;

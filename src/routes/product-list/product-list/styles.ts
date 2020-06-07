@@ -3,8 +3,8 @@ import { colors, dimensions } from '@styles';
 
 const Container = styled.View`
   flex: 1;
-  padding: ${dimensions.spacing.medium};
-  background-color: ${colors.backgroundLight};
+  padding: ${dimensions.size.stackXxxs};
+  background-color: ${colors.list.neutralLightest};
 `;
 
 const ListContainer = styled.ScrollView``;
@@ -14,9 +14,9 @@ const ItemContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
   border-width: 1px;
-  padding: ${dimensions.spacing.small};
-  border-radius: ${dimensions.radius.regular};
-  margin: ${dimensions.spacing.medium};
+  padding: ${dimensions.size.stackXxxs};
+  border-radius: ${dimensions.border.radiusXs};
+  margin: ${dimensions.size.stackXxxs};
 `;
 
 const ItemText = styled.Text``;
@@ -24,7 +24,7 @@ const ItemText = styled.Text``;
 const SubTotalContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  margin: ${dimensions.spacing.medium};
+  margin: ${dimensions.size.stackXxxs};
 `;
 
 const SubTotalText = styled.Text``;

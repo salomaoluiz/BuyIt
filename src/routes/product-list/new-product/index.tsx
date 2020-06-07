@@ -5,7 +5,8 @@ import { RootStackParamsList } from '@navigator';
 import * as strings from '@locales/product-list';
 
 import useNewProduct from './useNewProduct';
-import { Container, TextInput, InputContainer, Button } from './styles';
+import { Container, TextInput, InputContainer } from './styles';
+import Button from '@components/button';
 
 export type Props = StackScreenProps<RootStackParamsList, 'NewProduct'>;
 
