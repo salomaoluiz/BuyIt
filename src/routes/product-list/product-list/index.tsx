@@ -1,21 +1,13 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
 import { TouchableOpacity } from 'react-native';
-import {
-  Container,
-  ItemContainer,
-  ItemText,
-  SubTotalContainer,
-  SubTotalText,
-  ListContainer,
-  FooterContainer,
-} from './styles';
+import { Container, ItemContainer, ItemText, ListContainer } from './styles';
 import useProductList from './useProductList';
 import { ItemsData } from '../store/types';
-import * as strings from '@locales/product-list';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamsList } from '@navigator';
-import Button from '@components/button';
+import Footer from './containers/footer';
+import Background from '@components/background';
 
 export type Props = StackScreenProps<RootStackParamsList, 'ProductList'>;
 
@@ -43,25 +35,19 @@ const ProductList = (props: Props) => {
     );
   };
 
-  const renderFooter = () => {
-    return (
-      <SubTotalContainer>
-        <SubTotalText>{strings.totalAmount(amountTotal)}</SubTotalText>
-        <SubTotalText>{strings.totalQtd(qtdTotal)}</SubTotalText>
-      </SubTotalContainer>
-    );
-  };
-
   return (
-    <Container>
-      <ListContainer>
-        {itemsData.map((item, index) => renderItem({ item, index }))}
-      </ListContainer>
-      <FooterContainer>
-        {renderFooter()}
-        <Button onPress={onAddButtonPress} title={strings.add} />
-      </FooterContainer>
-    </Container>
+    <Background>
+      <Container>
+        <ListContainer>
+          {itemsData.map((item, index) => renderItem({ item, index }))}
+        </ListContainer>
+      </Container>
+      <Footer
+        totalAmount={amountTotal}
+        onAddPress={onAddButtonPress}
+        totalQtd={qtdTotal}
+      />
+    </Background>
   );
 };
 
