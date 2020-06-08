@@ -1,11 +1,12 @@
 import React from 'react';
 import {
-  Container,
-  ButtonContainer,
-  TextContainer,
-  TextSubContainer,
-  Title,
-  Value,
+	Container,
+	ButtonContainer,
+	TextContainer,
+	TextSubContainer,
+	SubContainer,
+	Title,
+	Value,
 } from './styles';
 import CircleButton from '@components/circle-button';
 
@@ -16,24 +17,26 @@ interface Props {
 }
 
 const Footer = (props: Props) => {
-  const { totalAmount, totalQtd, onAddPress } = props;
-  return (
-    <Container>
-      <ButtonContainer>
-        <CircleButton icon="plus" onPress={onAddPress} />
-      </ButtonContainer>
-      <TextContainer>
-        <TextSubContainer>
-          <Title>Items</Title>
-          <Value>{totalQtd}</Value>
-        </TextSubContainer>
-        <TextSubContainer>
-          <Title>Total</Title>
-          <Value>R$ {totalAmount}</Value>
-        </TextSubContainer>
-      </TextContainer>
-    </Container>
-  );
+	const { totalAmount, totalQtd, onAddPress } = props;
+	return (
+		<Container>
+			<ButtonContainer>
+				<CircleButton icon="plus" onPress={onAddPress} />
+			</ButtonContainer>
+			<SubContainer>
+				<TextContainer>
+					<TextSubContainer>
+						<Title>Items</Title>
+						<Value>{totalQtd}</Value>
+					</TextSubContainer>
+					<TextSubContainer>
+						<Title>Total</Title>
+						<Value>R$ {totalAmount}</Value>
+					</TextSubContainer>
+				</TextContainer>
+			</SubContainer>
+		</Container>
+	);
 };
 
 export default Footer;

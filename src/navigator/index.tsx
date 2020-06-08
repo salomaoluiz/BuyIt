@@ -17,14 +17,14 @@ export type RootStackParamsList = {
 const Stack = createStackNavigator<RootStackParamsList>();
 
 const AppNavigator = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name={Routes.ProductList} component={ProductList} />
-        <Stack.Screen name={Routes.NewProduct} component={NewProduct} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+	return (
+		<NavigationContainer>
+			<Stack.Navigator>
+				<Stack.Screen name={Routes.ProductList} component={ProductList} />
+				<Stack.Screen name={Routes.NewProduct} component={NewProduct} />
+			</Stack.Navigator>
+		</NavigationContainer>
+	);
 };
 
 export default AppNavigator;

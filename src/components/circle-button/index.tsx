@@ -9,16 +9,16 @@ interface Props {
 }
 
 const CircleButton = (props: Props) => {
-  const { onPress, icon } = props;
-  return (
-    <Container>
-      <TouchableNativeFeedback onPress={onPress} background={Ripple}>
-        <SubContainer>
-          <Icon name={icon} />
-        </SubContainer>
-      </TouchableNativeFeedback>
-    </Container>
-  );
+	const { onPress, icon } = props;
+	return (
+		<Container>
+			<TouchableNativeFeedback onPress={onPress} background={Ripple}>
+				<SubContainer>
+					<Icon name={icon} />
+				</SubContainer>
+			</TouchableNativeFeedback>
+		</Container>
+	);
 };
 
 export default CircleButton;

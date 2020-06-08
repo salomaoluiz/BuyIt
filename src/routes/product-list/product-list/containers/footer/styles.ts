@@ -2,11 +2,13 @@ import styled from 'styled-components/native';
 import { dimensions, fonts, colors } from '@styles';
 
 const Container = styled.View`
-  
   border-top-left-radius: ${dimensions.border.radiusMd};
   border-top-right-radius: ${dimensions.border.radiusMd};
+  padding-top: ${dimensions.spacing.inlineMd};
+`;
+const SubContainer = styled.View`
   padding: ${dimensions.spacing.inlineXxs};
-  background-color: ${colors.list.neutralLightest}  
+  background-color: ${colors.list.neutralLightest};
 `;
 
 const ButtonContainer = styled.View`
@@ -29,14 +31,15 @@ const Title = styled.Text`
 `;
 
 const Value = styled.Text`
-    font-size: ${fonts.size.fontSizeXxs}
+  font-size: ${fonts.size.fontSizeXxs};
 `;
 
 export {
-  ButtonContainer,
-  Container,
-  TextContainer,
-  TextSubContainer,
-  Title,
-  Value,
+	ButtonContainer,
+	SubContainer,
+	Container,
+	TextContainer,
+	TextSubContainer,
+	Title,
+	Value,
 };

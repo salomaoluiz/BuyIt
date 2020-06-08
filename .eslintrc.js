@@ -26,5 +26,9 @@ module.exports = {
   rules: {
     // disable the rule for all files
     '@typescript-eslint/explicit-function-return-type': 'off',
+    'no-console': 'warn',
+    'object-curly-spacing': ['error', 'always'],
+    semi: 'warn',
+    indent: ['error', 'tab'],
   },
 };
