@@ -7,8 +7,8 @@ interface Props {
 }
 
 const Background = (props: Props) => {
-  const { color, children } = props;
-  return <BackgroundContainer color={color}>{children}</BackgroundContainer>;
+	const { color, children } = props;
+	return <BackgroundContainer color={color}>{children}</BackgroundContainer>;
 };
 
 export default Background;

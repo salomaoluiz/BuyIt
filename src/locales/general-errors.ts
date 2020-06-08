@@ -4,7 +4,7 @@ export const error = 'Erro';
 export const invalidValue = 'Valores Inválidos';
 
 export default {
-  productList: productListErrors,
-  error,
-  invalidValue,
+	productList: productListErrors,
+	error,
+	invalidValue,
 };
