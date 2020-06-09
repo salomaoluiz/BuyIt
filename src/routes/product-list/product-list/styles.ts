@@ -23,10 +23,10 @@ const ItemText = styled.Text``;
 
 
 export {
-	Container,
-	ListContainer,
+  Container,
+  ListContainer,
 
-	ItemContainer,
-	ItemText,
+  ItemContainer,
+  ItemText,
 
 };

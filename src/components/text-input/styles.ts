@@ -25,10 +25,10 @@ const InputContainer = styled.View<InputContainerProps>`
   align-items: center;
   border-width: ${dimensions.border.widthThin};
   border-color: ${({ isError, isFocused }) => {
-		if (isError) return colors.list.supportDangerMedium;
-		if (isFocused) return colors.list.brandPrimaryDark;
-		return colors.list.neutralDarkest;
-	}};
+    if (isError) return colors.list.supportDangerMedium;
+    if (isFocused) return colors.list.brandPrimaryDark;
+    return colors.list.neutralDarkest;
+  }};
   background-color: ${colors.list.neutralLight};
   border-radius: ${dimensions.border.radiusXs};
 `;
@@ -38,9 +38,9 @@ const TextInputStyled = styled.TextInput`
 `;
 
 export {
-	Container,
-	SubContainer,
-	TextInputStyled,
-	InputContainer,
-	ItensContainer,
+  Container,
+  SubContainer,
+  TextInputStyled,
+  InputContainer,
+  ItensContainer,
 };

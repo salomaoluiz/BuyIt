@@ -11,22 +11,22 @@ interface Props {
   isFocused: boolean;
 }
 const Title = (props: Props) => {
-	const { value, isError, isFocused, hasPrefix, titlePosition } = props;
+  const { value, isError, isFocused, hasPrefix, titlePosition } = props;
 
-	return (
-		<TitleText
-			isError={isError}
-			isFocused={isFocused}
-			style={{
-				transform: [
-					{ translateY: titlePosition.top },
-					{ translateX: titlePosition.left },
-				],
-			}}
-			hasPrefix={hasPrefix}>
-			{value}
-		</TitleText>
-	);
+  return (
+    <TitleText
+      isError={isError}
+      isFocused={isFocused}
+      style={{
+        transform: [
+          { translateY: titlePosition.top },
+          { translateX: titlePosition.left },
+        ],
+      }}
+      hasPrefix={hasPrefix}>
+      {value}
+    </TitleText>
+  );
 };
 
 export default Title;

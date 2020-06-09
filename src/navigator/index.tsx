@@ -6,25 +6,30 @@ import NewProduct from '@routes/product-list/new-product';
 
 import { Routes } from '@routes';
 import { ItemsData } from '@routes/product-list/store/types';
+import navigationStyles from 'src/styles/navigation';
 
 export type RootStackParamsList = {
-  [Routes.ProductList]: undefined;
-  [Routes.NewProduct]: {
-    itemData?: ItemsData;
-  };
+	[Routes.ProductList]: undefined;
+	[Routes.NewProduct]: {
+		itemData?: ItemsData;
+	};
 };
 
 const Stack = createStackNavigator<RootStackParamsList>();
 
 const AppNavigator = () => {
-	return (
-		<NavigationContainer>
-			<Stack.Navigator>
-				<Stack.Screen name={Routes.ProductList} component={ProductList} />
-				<Stack.Screen name={Routes.NewProduct} component={NewProduct} />
-			</Stack.Navigator>
-		</NavigationContainer>
-	);
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name={Routes.ProductList} component={ProductList} />
+        <Stack.Screen
+          name={Routes.NewProduct}
+          component={NewProduct}
+          options={navigationStyles.defaultHeader}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 };
 
 export default AppNavigator;

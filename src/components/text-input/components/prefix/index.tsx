@@ -8,15 +8,15 @@ interface Props {
 }
 
 const Prefix = (props: Props) => {
-	const { value, color } = props;
+  const { value, color } = props;
 
-	if (!value) return null;
+  if (!value) return null;
 
-	return (
-		<PrefixContainer>
-			<PrefixText color={color}>{value}</PrefixText>
-		</PrefixContainer>
-	);
+  return (
+    <PrefixContainer>
+      <PrefixText color={color}>{value}</PrefixText>
+    </PrefixContainer>
+  );
 };
 
 export default Prefix;

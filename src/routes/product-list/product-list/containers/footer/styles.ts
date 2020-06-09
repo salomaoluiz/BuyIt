@@ -2,44 +2,44 @@ import styled from 'styled-components/native';
 import { dimensions, fonts, colors } from '@styles';
 
 const Container = styled.View`
-  border-top-left-radius: ${dimensions.border.radiusMd};
-  border-top-right-radius: ${dimensions.border.radiusMd};
-  padding-top: ${dimensions.spacing.inlineMd};
+	padding-top: ${dimensions.spacing.inlineMd};
 `;
 const SubContainer = styled.View`
-  padding: ${dimensions.spacing.inlineXxs};
-  background-color: ${colors.list.neutralLightest};
+	padding: ${dimensions.spacing.inlineXxs};
+	background-color: ${colors.list.neutralLightest};
+	border-top-left-radius: ${dimensions.border.radiusMd};
+	border-top-right-radius: ${dimensions.border.radiusMd};
 `;
 
 const ButtonContainer = styled.View`
-  align-self: center;
-  position: absolute;
-  bottom: ${dimensions.spacing.inlineMd};
+	align-self: center;
+	position: absolute;
+	bottom: ${dimensions.spacing.inlineMd};
 `;
 
 const TextContainer = styled.View`
-  flex-direction: row;
-  justify-content: space-around;
+	flex-direction: row;
+	justify-content: space-around;
 `;
 
 const TextSubContainer = styled.View`
-  align-items: center;
+	align-items: center;
 `;
 
 const Title = styled.Text`
-  font-size: ${fonts.size.fontSizeXs};
+	font-size: ${fonts.size.fontSizeXs};
 `;
 
 const Value = styled.Text`
-  font-size: ${fonts.size.fontSizeXxs};
+	font-size: ${fonts.size.fontSizeXxs};
 `;
 
 export {
-	ButtonContainer,
-	SubContainer,
-	Container,
-	TextContainer,
-	TextSubContainer,
-	Title,
-	Value,
+  ButtonContainer,
+  SubContainer,
+  Container,
+  TextContainer,
+  TextSubContainer,
+  Title,
+  Value,
 };
