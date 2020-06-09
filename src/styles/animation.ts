@@ -1,10 +1,10 @@
 const duration = {
-	default: 300,
-	slow: 400,
+  default: 300,
+  slow: 400,
 };
 
 const animation = {
-	duration,
+  duration,
 };
 
 export default animation;

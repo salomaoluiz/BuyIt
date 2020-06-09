@@ -12,69 +12,75 @@ import { ItemsDataArray } from '../store/types';
 import { filterNotByID } from '@utils/filters';
 
 const useNewProduct = ({ navigation, route }: Props) => {
-	const editName = route.params?.itemData?.name;
-	const editAmount = route.params?.itemData?.amount;
-	const editQtd = route.params?.itemData?.qtd;
-	const editId = route.params?.itemData?.id;
+  const editName = route.params?.itemData?.name;
+  const editAmount = route.params?.itemData?.amount;
+  const editQtd = route.params?.itemData?.qtd;
+  const editId = route.params?.itemData?.id;
+  const editBrand = route.params?.itemData?.brand;
 
-	const qtdDefault = 1;
-	const [name, setName] = useState<string>(editName || '');
-	const [amount, setAmount] = useState<string>(editAmount || '');
-	const [qtd, setQtd] = useState<string>(editQtd || '');
-	const itemsData = useSelector<RootState, ItemsDataArray>(
-		(state) => state.productListReducers.itemsData,
-	);
+  const qtdDefault = 1;
+  const [name, setName] = useState<string>(editName || '');
+  const [amount, setAmount] = useState<string>(editAmount || '');
+  const [qtd, setQtd] = useState<string>(editQtd || '');
+  const [brand, setBrand] = useState<string>(editBrand || '');
 
-	const dispatch = useDispatch();
+  const itemsData = useSelector<RootState, ItemsDataArray>(
+    (state) => state.productListReducers.itemsData,
+  );
 
-	const canAddNewItem = useCallback(() => {
-		const isNaNAmount = isNaN(parseInt(amount));
-		const isEmptyName = !name;
+  const dispatch = useDispatch();
 
-		if (isEmptyName) throw new Error(errorsString.productList.insertValidName);
-		if (isNaNAmount)
-			throw new Error(errorsString.productList.insertValidAmount);
-	}, [name, amount, qtd]);
+  const canAddNewItem = useCallback(() => {
+    const isNaNAmount = isNaN(parseInt(amount));
+    const isEmptyName = !name;
 
-	const generateNewItemData = useCallback(() => {
-		const setDefaultQtd = qtd || qtdDefault.toString();
-		const id = generateUniqueID();
-		const itemsList = filterNotByID(itemsData, editId);
+    if (isEmptyName) throw new Error(errorsString.productList.insertValidName);
+    if (isNaNAmount)
+      throw new Error(errorsString.productList.insertValidAmount);
+  }, [name, amount, qtd, brand]);
 
-		const newItem = [
-			{
-				id,
-				name,
-				amount,
-				qtd: setDefaultQtd,
-			},
-		];
+  const generateNewItemData = useCallback(() => {
+    const setDefaultQtd = qtd || qtdDefault.toString();
+    const id = generateUniqueID();
+    const itemsList = filterNotByID(itemsData, editId);
 
-		return itemsList.concat(newItem);
-	}, [name, amount, qtd]);
+    const newItem = [
+      {
+        amount,
+        brand,
+        id,
+        name,
+        qtd: setDefaultQtd,
+      },
+    ];
 
-	const onSaveButtonPress = useCallback(() => {
-		try {
-			canAddNewItem();
+    return itemsList.concat(newItem);
+  }, [name, amount, qtd, brand]);
 
-			const newItemsData = generateNewItemData();
-			dispatch(setItemsData(newItemsData));
-			navigation.goBack();
-		} catch (e) {
-			useErrorMessage(errorsString.error, e.message);
-		}
-	}, [name, amount, qtd]);
+  const onSaveButtonPress = useCallback(() => {
+    try {
+      canAddNewItem();
 
-	return {
-		name,
-		setName,
-		amount,
-		setAmount,
-		qtd,
-		setQtd,
-		qtdDefault,
-		onSaveButtonPress,
-	};
+      const newItemsData = generateNewItemData();
+      dispatch(setItemsData(newItemsData));
+      navigation.goBack();
+    } catch (e) {
+      useErrorMessage(errorsString.error, e.message);
+    }
+  }, [name, amount, qtd, brand]);
+
+  return {
+    name,
+    setName,
+    amount,
+    setAmount,
+    qtd,
+    setQtd,
+    brand,
+    setBrand,
+    qtdDefault,
+    onSaveButtonPress,
+  };
 };
 
 export default useNewProduct;

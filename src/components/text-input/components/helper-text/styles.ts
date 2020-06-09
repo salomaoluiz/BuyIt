@@ -6,9 +6,9 @@ interface HelperTextProps {
 }
 const HelperText = styled.Text<HelperTextProps>`
   color: ${({ isError }) => {
-		if (isError) return colors.list.supportDangerMedium;    
-		return colors.list.neutralDark;
-	}};
+    if (isError) return colors.list.supportDangerMedium;    
+    return colors.list.neutralDark;
+  }};
 `;
 
 const HelperContainer = styled.View`

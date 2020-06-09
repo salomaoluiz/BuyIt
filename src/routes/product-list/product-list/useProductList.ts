@@ -9,68 +9,68 @@ import { setItemsData } from '../store/actions';
 import * as strings from '@locales/product-list';
 
 const useProductList = (props: Props) => {
-	const itemsData = useSelector<RootState, ItemsDataArray>(
-		(state) => state.productListReducers.itemsData,
-	);
-	const dispatch = useDispatch();
-	const [amountTotal, setAmountTotal] = useState<number>(0);
-	const [qtdTotal, setQtdTotal] = useState<number>(0);
+  const itemsData = useSelector<RootState, ItemsDataArray>(
+    (state) => state.productListReducers.itemsData,
+  );
+  const dispatch = useDispatch();
+  const [amountTotal, setAmountTotal] = useState<number>(0);
+  const [qtdTotal, setQtdTotal] = useState<number>(0);
 
-	const onAddButtonPress = useCallback(() => {
-		props.navigation.navigate('NewProduct');
-	}, []);
+  const onAddButtonPress = useCallback(() => {
+    props.navigation.navigate('NewProduct');
+  }, []);
 
-	const handleSubTotal = useCallback(() => {
-		let totalAmount = 0;
-		let totalQtd = 0;
+  const handleSubTotal = useCallback(() => {
+    let totalAmount = 0;
+    let totalQtd = 0;
 
-		itemsData.forEach((item) => {
-			totalAmount += parseFloat(item.amount);
-			totalQtd += parseFloat(item.qtd);
-		});
+    itemsData.forEach((item) => {
+      totalAmount += parseFloat(item.amount);
+      totalQtd += parseFloat(item.qtd);
+    });
 
-		setAmountTotal(totalAmount);
-		setQtdTotal(totalQtd);
-	}, [itemsData]);
+    setAmountTotal(totalAmount);
+    setQtdTotal(totalQtd);
+  }, [itemsData]);
 
-	const handleEditItem = useCallback(
-		(id: string) => {
-			const filteredData = filterByID(itemsData, id);
+  const handleEditItem = useCallback(
+    (id: string) => {
+      const filteredData = filterByID(itemsData, id);
 
-			props.navigation.navigate('NewProduct', { itemData: filteredData });
-		},
-		[itemsData],
-	);
+      props.navigation.navigate('NewProduct', { itemData: filteredData });
+    },
+    [itemsData],
+  );
 
-	const handleDeleteItem = useCallback(
-		(id: string) => {
-			const filteredData = filterNotByID(itemsData, id);
+  const handleDeleteItem = useCallback(
+    (id: string) => {
+      const filteredData = filterNotByID(itemsData, id);
 
-			dispatch(setItemsData(filteredData));
-		},
-		[itemsData],
-	);
+      dispatch(setItemsData(filteredData));
+    },
+    [itemsData],
+  );
 
-	const onItemPress = useCallback(
-		(id: string) => {
-			const handlePress = {
-				edit: () => handleEditItem(id),
-				delete: () => handleDeleteItem(id),
-			};
+  const onItemPress = useCallback(
+    (id: string) => {
+      const handlePress = {
+        edit: () => handleEditItem(id),
+        delete: () => handleDeleteItem(id),
+      };
 
-			Alert.alert(strings.whatWant, strings.whatWantDo, [
-				{ text: strings.editItem, onPress: handlePress.edit },
-				{ text: strings.deleteItem, onPress: handlePress.delete },
-			]);
-		},
-		[itemsData],
-	);
+      Alert.alert(strings.whatWant, strings.whatWantDo, [
+        { text: strings.editItem, onPress: handlePress.edit },
+        { text: strings.deleteItem, onPress: handlePress.delete },
+      ]);
+    },
+    [itemsData],
+  );
 
-	useEffect(() => {
-		handleSubTotal();
-	}, [itemsData]);
+  useEffect(() => {
+    handleSubTotal();
+  }, [itemsData]);
 
-	return { itemsData, onAddButtonPress, amountTotal, qtdTotal, onItemPress };
+  return { itemsData, onAddButtonPress, amountTotal, qtdTotal, onItemPress };
 };
 
 export default useProductList;

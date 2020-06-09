@@ -12,7 +12,7 @@ const IconContainer = styled(Animated.View)`
   width: ${dimensions.size.stackMd};
 `;
 
-const Icon = styled(NativeIcon)`
+const GenericIcon = styled(NativeIcon)`
   font-size: ${fonts.size.fontSizeSm};
   color: ${({ color }) => color || colors.list.neutralDark};
 `;
@@ -21,4 +21,4 @@ const IconButton = styled.TouchableNativeFeedback``;
 
 const Ripple = TouchableNativeFeedback.Ripple(colors.list.neutralDark, true);
 
-export { IconContainer, Icon, IconButton, Ripple };
+export { IconContainer, GenericIcon, IconButton, Ripple };
