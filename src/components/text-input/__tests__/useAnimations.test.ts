@@ -16,11 +16,19 @@ describe('Testando useAnimations', () => {
   beforeEach(() => {
     mockedAnimatedTiming = jest
       .spyOn(Animated, 'timing')
-      .mockReturnValue({ start: mockStartAnimation, stop: jest.fn() });
+      .mockReturnValue({
+        start: mockStartAnimation,
+        stop: jest.fn(),
+        reset: jest.fn(),
+      });
 
     mockedAnimatedParallel = jest
       .spyOn(Animated, 'parallel')
-      .mockReturnValue({ start: mockStartAnimation, stop: jest.fn() });
+      .mockReturnValue({
+        start: mockStartAnimation,
+        stop: jest.fn(),
+        reset: jest.fn(),
+      });
   });
 
   it('deve iniciar com valores default as animacoes ', () => {

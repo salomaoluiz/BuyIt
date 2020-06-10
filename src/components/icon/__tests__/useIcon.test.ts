@@ -14,7 +14,7 @@ describe('Testando useIcon', () => {
   beforeEach(() => {
     mockAnimatedTiming = jest
       .spyOn(Animated, 'timing')
-      .mockReturnValue({ start: jest.fn(), stop: jest.fn() });
+      .mockReturnValue({ start: jest.fn(), stop: jest.fn(), reset: jest.fn() });
   });
 
   it('deve retornar o onPress corretamente', () => {
