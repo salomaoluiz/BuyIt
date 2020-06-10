@@ -3,13 +3,12 @@ import { useState, useCallback } from 'react';
 
 import { RootState } from '@store/reducers';
 import { generateUniqueID } from '@utils/id';
-import { useErrorMessage } from '@utils/handleErrors';
-import errorsString from '@locales/general-errors';
 
 import { Props } from '.';
 import { setItemsData } from '../store/actions';
 import { ItemsDataArray } from '../store/types';
 import { filterNotByID } from '@utils/filters';
+import validate, { ErrorInterface } from 'src/errors/forms';
 
 const useNewProduct = ({ navigation, route }: Props) => {
   const editName = route.params?.itemData?.name;
@@ -19,10 +18,12 @@ const useNewProduct = ({ navigation, route }: Props) => {
   const editBrand = route.params?.itemData?.brand;
 
   const qtdDefault = 1;
-  const [name, setName] = useState<string>(editName || '');
-  const [amount, setAmount] = useState<string>(editAmount || '');
-  const [qtd, setQtd] = useState<string>(editQtd || '');
-  const [brand, setBrand] = useState<string>(editBrand || '');
+  const [name, setName] = useState(editName || '');
+  const [amount, setAmount] = useState(editAmount || '');
+  const [qtd, setQtd] = useState(editQtd || '');
+  const [brand, setBrand] = useState(editBrand || '');
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorItems, setErrorItems] = useState<ErrorInterface>();
 
   const itemsData = useSelector<RootState, ItemsDataArray>(
     (state) => state.productListReducers.itemsData,
@@ -30,17 +31,18 @@ const useNewProduct = ({ navigation, route }: Props) => {
 
   const dispatch = useDispatch();
 
-  const canAddNewItem = useCallback(() => {
-    const isNaNAmount = isNaN(parseInt(amount));
-    const isEmptyName = !name;
+  const canAddNewItem = useCallback(async () => {
+    const errors = await validate({ name, amount, brand, qtd }, 'productList');
 
-    if (isEmptyName) throw new Error(errorsString.productList.insertValidName);
-    if (isNaNAmount)
-      throw new Error(errorsString.productList.insertValidAmount);
+    if (errors) {
+      setErrorItems(errors);
+      return false;
+    }
+
+    return true;
   }, [name, amount, qtd, brand]);
 
   const generateNewItemData = useCallback(() => {
-    const setDefaultQtd = qtd || qtdDefault.toString();
     const id = generateUniqueID();
     const itemsList = filterNotByID(itemsData, editId);
 
@@ -50,22 +52,41 @@ const useNewProduct = ({ navigation, route }: Props) => {
         brand,
         id,
         name,
-        qtd: setDefaultQtd,
+        qtd,
       },
     ];
 
     return itemsList.concat(newItem);
   }, [name, amount, qtd, brand]);
 
-  const onSaveButtonPress = useCallback(() => {
-    try {
-      canAddNewItem();
+  const handleFindError = useCallback(
+    (item: string, infoHelper?: string) => {
+      if (errorItems) {
+        const error = errorItems.errors.find(
+          (error) => error.errorItem === item,
+        );
 
-      const newItemsData = generateNewItemData();
-      dispatch(setItemsData(newItemsData));
-      navigation.goBack();
-    } catch (e) {
-      useErrorMessage(errorsString.error, e.message);
+        if (error) return { error: true, helperText: error?.errorMessage };
+      }
+
+      return { helperText: infoHelper };
+    },
+    [errorItems],
+  );
+
+  const onSaveButtonPress = useCallback(async () => {
+    setIsLoading(true);
+
+    try {
+      const canAdd = await canAddNewItem();
+
+      if (canAdd) {
+        const newItemsData = generateNewItemData();
+        dispatch(setItemsData(newItemsData));
+        navigation.goBack();
+      }
+    } finally {
+      setIsLoading(false);
     }
   }, [name, amount, qtd, brand]);
 
@@ -77,9 +98,12 @@ const useNewProduct = ({ navigation, route }: Props) => {
     qtd,
     setQtd,
     brand,
+    errorItems,
     setBrand,
+    handleFindError,
     qtdDefault,
     onSaveButtonPress,
+    isLoading,
   };
 };
 
