@@ -1,17 +1,16 @@
 import * as reactRedux from 'react-redux';
 import { renderHook, act } from '@testing-library/react-hooks';
-import * as errors from '@utils/handleErrors';
-import errorsString from '@locales/general-errors';
 import * as id from '@utils/id';
 
 import useNewProduct from '../useNewProduct';
 import { setItemsData } from '../../store/actions';
+import { productListErrors } from 'src/errors/forms/__mocks__/product-list';
 
 // #region Settings
 
 let getItemData: jest.SpyInstance;
 let dispatch: jest.Mock;
-let useErrorMessage: jest.SpyInstance;
+
 let goBack: jest.Mock;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let initialProps: any;
@@ -27,7 +26,7 @@ describe('Testando useNewProduct', () => {
   beforeEach(() => {
     dispatch = jest.fn();
     goBack = jest.fn();
-    useErrorMessage = jest.spyOn(errors, 'useErrorMessage');
+
     getItemData = jest
       .spyOn(reactRedux, 'useSelector')
       .mockReturnValue(itemDataMocked);
@@ -68,31 +67,32 @@ describe('Testando useNewProduct', () => {
     expect(result.current.qtd).toEqual('555');
   });
 
-  it('deve resultar em erro caso o nome nao esteja preenchido', () => {
+  it('deve resultar em erro caso o nome nao esteja preenchido', async () => {
     const { result } = renderHook(useNewProduct, {
       initialProps,
     });
 
-    result.current.onSaveButtonPress();
-    expect(useErrorMessage).toHaveBeenLastCalledWith(
-      errorsString.error,
-      errorsString.productList.insertValidName,
+    await act(() => result.current.onSaveButtonPress());
+
+    expect(result.current.errorItems).toEqual(
+      productListErrors.resultErrorRequired,
     );
   });
 
-  it('deve resultar em erro caso o preço seja um valor inválido', () => {
+  it('deve resultar em erro caso o preço seja um valor e qtd inválido', async () => {
     const { result } = renderHook(useNewProduct, { initialProps });
 
     act(() => result.current.setName('oi'));
-    result.current.onSaveButtonPress();
+    act(() => result.current.setQtd('12;'));
+    act(() => result.current.setAmount('12-='));
+    await act(() => result.current.onSaveButtonPress());
 
-    expect(useErrorMessage).toHaveBeenLastCalledWith(
-      errorsString.error,
-      errorsString.productList.insertValidAmount,
+    expect(result.current.errorItems).toEqual(
+      productListErrors.resultErrorInvalid,
     );
   });
 
-  it('deve gravar tudo corretamente se todos os valores estiverem preenchidos e o qtd for default', () => {
+  it('deve gravar tudo corretamente se todos os valores estiverem preenchidos e o qtd for default', async () => {
     const { result } = renderHook(useNewProduct, { initialProps });
 
     const itemMock = {
@@ -102,11 +102,13 @@ describe('Testando useNewProduct', () => {
       id: '3',
       qtd: '1',
     };
+
     act(() => result.current.setName(itemMock.name));
     act(() => result.current.setBrand(itemMock.brand));
     act(() => result.current.setAmount(itemMock.amount));
+    act(() => result.current.setQtd(itemMock.qtd));
 
-    result.current.onSaveButtonPress();
+    await act(() => result.current.onSaveButtonPress());
 
     const newItemsList = itemDataMocked.concat([itemMock]);
     const action = setItemsData(newItemsList);
@@ -115,7 +117,7 @@ describe('Testando useNewProduct', () => {
     expect(goBack).toHaveBeenCalled();
   });
 
-  it('deve gravar tudo corretamente se todos os valores estiverem preenchidos', () => {
+  it('deve gravar tudo corretamente se todos os valores estiverem preenchidos', async () => {
     const { result } = renderHook(useNewProduct, { initialProps });
 
     const itemMock = {
@@ -130,7 +132,7 @@ describe('Testando useNewProduct', () => {
     act(() => result.current.setBrand(itemMock.brand));
     act(() => result.current.setQtd(itemMock.qtd));
 
-    result.current.onSaveButtonPress();
+    await act(() => result.current.onSaveButtonPress());
 
     const newItemsList = itemDataMocked.concat([itemMock]);
     const action = setItemsData(newItemsList);

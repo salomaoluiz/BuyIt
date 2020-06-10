@@ -23,13 +23,18 @@ const NewProduct = (props: Props) => {
     setAmount,
     setName,
     setQtd,
-    qtdDefault,
     onSaveButtonPress,
+    handleFindError,
   } = useNewProduct(props);
 
   props.navigation.setOptions({
     headerRight: () => (
-      <Icon name="check" isVisible={true} onPress={onSaveButtonPress} color={colors.list.neutralDarkest} />
+      <Icon
+        name="check"
+        isVisible={true}
+        onPress={onSaveButtonPress}
+        color={colors.list.neutralDarkest}
+      />
     ),
   });
 
@@ -37,11 +42,17 @@ const NewProduct = (props: Props) => {
     <Background>
       <Container>
         <InputContainer>
-          <TextInput value={name} title={strings.name} onChangeText={setName} />
+          <TextInput
+            value={name}
+            title={strings.name}
+            onChangeText={setName}
+            {...handleFindError('name')}
+          />
           <TextInput
             value={brand}
             title={strings.brand}
             onChangeText={setBrand}
+            {...handleFindError('brand')}
           />
           <TextInput
             value={amount}
@@ -50,16 +61,15 @@ const NewProduct = (props: Props) => {
             title={strings.amount}
             prefix={strings.currentCurrency}
             keyboardType="decimal-pad"
+            {...handleFindError('amount')}
           />
           <TextInput
             value={qtd}
             title={strings.qtd}
             onChangeText={setQtd}
             icon="cart-outline"
-            helperText={`${strings.insertQtd} - ${strings.qtdDefault(
-              qtdDefault,
-            )}`}
             keyboardType="decimal-pad"
+            {...handleFindError('qtd')}
           />
         </InputContainer>
       </Container>

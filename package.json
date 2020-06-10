@@ -28,7 +28,8 @@
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
-    "styled-components": "^5.1.0"
+    "styled-components": "^5.1.0",
+    "yup": "^0.29.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
@@ -43,6 +44,7 @@
     "@types/redux": "^3.6.0",
     "@types/redux-persist": "^4.3.1",
     "@types/styled-components": "^5.1.0",
+    "@types/yup": "^0.29.2",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "babel-jest": "^24.9.0",

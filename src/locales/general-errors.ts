@@ -1,10 +1,12 @@
 import { errors as productListErrors } from './product-list';
 
-export const error = 'Erro';
-export const invalidValue = 'Valores Inválidos';
+const generalErrors = {
+	error: 'Erro',
+	invalidValue: 'Valores Inválidos',
+	thisValueIsRequired: 'Esse valor é obrigatório',
+};
 
 export default {
-  productList: productListErrors,
-  error,
-  invalidValue,
+	productList: productListErrors,
+	generalErrors,
 };
