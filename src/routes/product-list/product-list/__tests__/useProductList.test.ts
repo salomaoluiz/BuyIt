@@ -47,7 +47,7 @@ describe('Testando useProductList', () => {
 
     result.current.onAddButtonPress();
 
-    expect(navigate).toBeCalledWith(Routes.NewProduct);
+    expect(navigate).toBeCalledWith(Routes.NewProduct, { itemData: undefined });
   });
 
   it('deve clicar no item, aparecer o Alert e clicar em Editar, para navegar para o new-product', () => {

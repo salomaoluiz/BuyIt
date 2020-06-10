@@ -17,7 +17,7 @@ const useProductList = (props: Props) => {
   const [qtdTotal, setQtdTotal] = useState<number>(0);
 
   const onAddButtonPress = useCallback(() => {
-    props.navigation.navigate('NewProduct');
+    props.navigation.navigate('NewProduct', { itemData: undefined });
   }, []);
 
   const handleSubTotal = useCallback(() => {

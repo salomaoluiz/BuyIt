@@ -6,7 +6,7 @@ import NewProduct from '@routes/product-list/new-product';
 
 import { Routes } from '@routes';
 import { ItemsData } from '@routes/product-list/store/types';
-import navigationStyles from 'src/styles/navigation';
+import navigationStyles from 'src/styles/navigationStyles';
 
 export type RootStackParamsList = {
 	[Routes.ProductList]: undefined;
