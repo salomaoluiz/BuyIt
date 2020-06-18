@@ -2,12 +2,15 @@ import styled from 'styled-components/native';
 import { dimensions, colors } from '@styles';
 
 const Container = styled.View`
-  margin-bottom: ${dimensions.spacing.insetXxs};
+  margin-top: ${dimensions.spacing.insetSm};
+  margin-bottom: ${dimensions.spacing.insetSm};
+  margin-right: ${dimensions.spacing.insetXs};
+  margin-left: ${dimensions.spacing.insetXs};
+  flex:1;
 `;
 
 const SubContainer = styled.View`
   flex: 1;
-  padding: ${dimensions.spacing.inlineXxs};
 `;
 
 const ItensContainer = styled.View`
@@ -31,6 +34,7 @@ const InputContainer = styled.View<InputContainerProps>`
   }};
   background-color: ${colors.list.neutralLight};
   border-radius: ${dimensions.border.radiusXs};
+  max-height: ${dimensions.size.stackLg};
 `;
 
 const TextInputStyled = styled.TextInput`

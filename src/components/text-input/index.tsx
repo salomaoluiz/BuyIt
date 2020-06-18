@@ -8,20 +8,19 @@ import {
 } from './styles';
 import useTextInput from './useTextInput';
 
-import useAnimations from './useAnimations';
 import GenericIcon from '@components/icon';
 import Prefix from './components/prefix';
-import Title from './components/title';
 import HelperComponent from './components/helper-text';
 import { TextInputProps } from 'react-native';
+import AnimatedTitle from '@components/animated-title';
 
 export interface Props extends TextInputProps {
-	icon?: string;
-	title: string;
-	error?: boolean;
-	helperText?: string;
-	prefix?: string;
-	sufix?: string;
+  icon?: string;
+  title: string;
+  error?: boolean;
+  helperText?: string;
+  prefix?: string;
+  sufix?: string;
 }
 
 const TextInput = (props: Props) => {
@@ -29,7 +28,6 @@ const TextInput = (props: Props) => {
     prefix,
     sufix,
     error,
-    value,
     title,
     icon,
     helperText,
@@ -45,13 +43,6 @@ const TextInput = (props: Props) => {
     valueText,
   } = useTextInput(props);
 
-  const { titlePosition } = useAnimations({
-    isFocused,
-    hasPrefix: !!prefix,
-    hasValue: !!value,
-    startWithValue,
-  });
-
   return (
     <Container>
       <ItensContainer>
@@ -61,12 +52,14 @@ const TextInput = (props: Props) => {
         <SubContainer>
           <InputContainer isError={error} isFocused={isFocused}>
             <Prefix value={prefix} />
-            <Title
+            <AnimatedTitle
               hasPrefix={!!prefix}
-              titlePosition={titlePosition}
-              value={title}
+              title={title}
+              toPosition={{ left: -20, top: -25 }}
               isError={error}
               isFocused={isFocused}
+              hasValue={!!valueText}
+              startWithValue={startWithValue}
             />
             <TextInputStyled
               keyboardType={keyboardType}

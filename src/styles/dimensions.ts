@@ -36,6 +36,8 @@ const size = {
   stackXxl: '96px',
   stackXxs: '8px',
   stackXxxl: '128px',
+  stackXXxl: '256px',
+  stackXXxlNumber: 256,
   stackXxxs: '4px',
 };
 

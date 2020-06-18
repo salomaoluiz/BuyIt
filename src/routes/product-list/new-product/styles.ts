@@ -2,13 +2,21 @@ import styled from 'styled-components/native';
 
 import { dimensions } from '@styles';
 
-const Container = styled.View`
+const Container = styled.ScrollView`
   padding: ${dimensions.size.stackXxxs};
   flex: 1;
-  justify-content: space-between;
 `;
 
-const InputContainer = styled.View``;
+const SubContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+`;
+
+const TwoColumnsContainer = styled.View`
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+`;
 
 const TextInput = styled.TextInput`
   margin-bottom: ${dimensions.size.stackXxs};
@@ -19,4 +27,4 @@ const TextInput = styled.TextInput`
 
 const Button = styled.Button``;
 
-export { Container, TextInput, InputContainer, Button };
+export { TwoColumnsContainer, Container, TextInput, Button, SubContainer };

@@ -3,7 +3,7 @@ import { Animated } from 'react-native';
 import { colors, dimensions } from '@styles';
 
 interface TitleProps {
-  hasPrefix: boolean;
+  hasPrefix?: boolean;
   isFocused: boolean;
   isError?: boolean;
 }
