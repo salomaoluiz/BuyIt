@@ -1,18 +1,22 @@
 import React from 'react';
 
-import { Animated } from 'react-native';
 import { TitleText } from './styles';
+import useAnimatedTitle from './useAnimatedTitle';
 
 interface Props {
-  value: string;
-  hasPrefix: boolean;
-  titlePosition: { top: Animated.Value; left: Animated.Value };
+  title?: string;
+  hasPrefix?: boolean;
+  hasValue?: boolean;
   isError?: boolean;
   isFocused: boolean;
+  startWithValue?: boolean;
+  toPosition?: { left?: number; top?: number };
 }
-const Title = (props: Props) => {
-  const { value, isError, isFocused, hasPrefix, titlePosition } = props;
 
+const AnimatedTitle = (props: Props) => {
+  const { title, isError, isFocused, hasPrefix } = props;
+
+  const { titlePosition } = useAnimatedTitle(props);
   return (
     <TitleText
       isError={isError}
@@ -24,9 +28,9 @@ const Title = (props: Props) => {
         ],
       }}
       hasPrefix={hasPrefix}>
-      {value}
+      {title}
     </TitleText>
   );
 };
 
-export default Title;
+export default AnimatedTitle;

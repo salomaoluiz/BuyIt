@@ -11,8 +11,8 @@ describe('Testando useProductList', () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let initialProps: any;
   const itemDataMocked = [
-    { id: '1', brand: '', name: 'name', amount: '1.5', qtd: '13' },
-    { id: '2', brand: '', name: 'name2', amount: '2.5', qtd: '2' },
+    { id: '1', brand: '', name: 'name', amount: '1.5', qtd: '13', unit: 'g' },
+    { id: '2', brand: '', name: 'name2', amount: '2.5', qtd: '2', unit: 'g' },
   ];
   let alert: jest.SpyInstance;
   let dispatch: jest.Mock;
@@ -47,7 +47,7 @@ describe('Testando useProductList', () => {
 
     result.current.onAddButtonPress();
 
-    expect(navigate).toBeCalledWith(Routes.NewProduct, { itemData: undefined });
+    expect(navigate).toBeCalledWith(Routes.NewProduct, {});
   });
 
   it('deve clicar no item, aparecer o Alert e clicar em Editar, para navegar para o new-product', () => {
@@ -60,7 +60,14 @@ describe('Testando useProductList', () => {
 
     editButton();
     expect(navigate).toHaveBeenLastCalledWith('NewProduct', {
-      itemData: { id: '1', brand: '', name: 'name', amount: '1.5', qtd: '13' },
+      itemData: {
+        id: '1',
+        brand: '',
+        name: 'name',
+        amount: '1.5',
+        qtd: '13',
+        unit: 'g',
+      },
     });
   });
 
@@ -73,7 +80,14 @@ describe('Testando useProductList', () => {
     const deleteButton = alert.mock.calls[0][2][1].onPress;
 
     const newItemsDataMocked = [
-      { id: '2', brand: '', name: 'name2', amount: '2.5', qtd: '2' },
+      {
+        id: '2',
+        brand: '',
+        name: 'name2',
+        unit: 'g',
+        amount: '2.5',
+        qtd: '2',
+      },
     ];
     const action = setItemsData(newItemsDataMocked);
     deleteButton();

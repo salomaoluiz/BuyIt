@@ -16,12 +16,13 @@ const useNewProduct = ({ navigation, route }: Props) => {
   const editQtd = route.params?.itemData?.qtd;
   const editId = route.params?.itemData?.id;
   const editBrand = route.params?.itemData?.brand;
+  const editUnit = route.params?.itemData?.unit;
 
-  const qtdDefault = 1;
   const [name, setName] = useState(editName || '');
   const [amount, setAmount] = useState(editAmount || '');
   const [qtd, setQtd] = useState(editQtd || '');
   const [brand, setBrand] = useState(editBrand || '');
+  const [unit, setUnit] = useState(editUnit || 'un');
   const [isLoading, setIsLoading] = useState(false);
   const [errorItems, setErrorItems] = useState<ErrorInterface>();
 
@@ -29,6 +30,7 @@ const useNewProduct = ({ navigation, route }: Props) => {
     (state) => state.productListReducers.itemsData,
   );
 
+  const fieldsHook = [name, amount, qtd, unit, brand];
   const dispatch = useDispatch();
 
   const canAddNewItem = useCallback(async () => {
@@ -40,7 +42,7 @@ const useNewProduct = ({ navigation, route }: Props) => {
     }
 
     return true;
-  }, [name, amount, qtd, brand]);
+  }, fieldsHook);
 
   const generateNewItemData = useCallback(() => {
     const id = generateUniqueID();
@@ -53,11 +55,12 @@ const useNewProduct = ({ navigation, route }: Props) => {
         id,
         name,
         qtd,
+        unit,
       },
     ];
 
     return itemsList.concat(newItem);
-  }, [name, amount, qtd, brand]);
+  }, fieldsHook);
 
   const handleFindError = useCallback(
     (item: string, infoHelper?: string) => {
@@ -88,7 +91,7 @@ const useNewProduct = ({ navigation, route }: Props) => {
     } finally {
       setIsLoading(false);
     }
-  }, [name, amount, qtd, brand]);
+  }, fieldsHook);
 
   return {
     name,
@@ -101,7 +104,8 @@ const useNewProduct = ({ navigation, route }: Props) => {
     errorItems,
     setBrand,
     handleFindError,
-    qtdDefault,
+    setUnit,
+    unit,
     onSaveButtonPress,
     isLoading,
   };

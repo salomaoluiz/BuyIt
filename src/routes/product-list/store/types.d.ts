@@ -4,8 +4,9 @@ export type ItemsData = {
   id: string;
   name: string;
   amount: string;
-	qtd: string;
-	brand: string;
+  qtd: string;
+  brand: string;
+  unit: string;
 };
 
 export type ItemsDataArray = Array<ItemsData>;

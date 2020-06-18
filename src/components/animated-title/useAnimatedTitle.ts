@@ -3,13 +3,17 @@ import { Animated } from 'react-native';
 import { animation } from '@styles';
 
 interface Props {
-	isFocused: boolean;
-	hasPrefix: boolean;
-	hasValue: boolean;
-	startWithValue: boolean;
+  isFocused: boolean;
+  hasPrefix?: boolean;
+  hasValue?: boolean;
+  startWithValue?: boolean;
+  toPosition?: {
+    left?: number;
+    top?: number;
+  };
 }
-const useAnimations = (props: Props) => {
-  const { isFocused, hasPrefix, hasValue, startWithValue } = props;
+const useAnimatedTitle = (props: Props) => {
+  const { isFocused, hasPrefix, hasValue, startWithValue, toPosition } = props;
   const [titlePosition] = useState({
     top: new Animated.Value(0),
     left: new Animated.Value(0),
@@ -27,8 +31,9 @@ const useAnimations = (props: Props) => {
   );
 
   useEffect(() => {
-    const titlePositionTop = -25;
-    const titlePositionLeft = -20;
+    const titlePositionTop = (toPosition && toPosition.top) || -25;
+    const titlePositionLeft = (toPosition && toPosition.left) || -0;
+
     if (isFocused || startWithValue) {
       handleAnimation(titlePosition.top, titlePositionTop).start();
       if (hasPrefix)
@@ -50,4 +55,4 @@ const useAnimations = (props: Props) => {
   };
 };
 
-export default useAnimations;
+export default useAnimatedTitle;

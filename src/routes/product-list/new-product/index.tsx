@@ -5,11 +5,13 @@ import { RootStackParamsList } from '@navigator';
 import * as strings from '@locales/product-list';
 
 import useNewProduct from './useNewProduct';
-import { Container, InputContainer } from './styles';
+import { Container, TwoColumnsContainer, SubContainer } from './styles';
 import TextInput from '@components/text-input';
 import Background from '@components/background';
 import Icon from '@components/icon';
 import { colors } from '@styles';
+import DropdownMenu from '@components/dropdown-menu';
+import { unitList } from './constants';
 
 export type Props = StackScreenProps<RootStackParamsList, 'NewProduct'>;
 
@@ -25,6 +27,8 @@ const NewProduct = (props: Props) => {
     setQtd,
     onSaveButtonPress,
     handleFindError,
+    setUnit,
+    unit,
   } = useNewProduct(props);
 
   props.navigation.setOptions({
@@ -41,7 +45,7 @@ const NewProduct = (props: Props) => {
   return (
     <Background>
       <Container>
-        <InputContainer>
+        <SubContainer>
           <TextInput
             value={name}
             title={strings.name}
@@ -63,15 +67,25 @@ const NewProduct = (props: Props) => {
             keyboardType="decimal-pad"
             {...handleFindError('amount')}
           />
-          <TextInput
-            value={qtd}
-            title={strings.qtd}
-            onChangeText={setQtd}
-            icon="cart-outline"
-            keyboardType="decimal-pad"
-            {...handleFindError('qtd')}
-          />
-        </InputContainer>
+          <TwoColumnsContainer>
+            <TextInput
+              value={qtd}
+              title={strings.qtd}
+              onChangeText={setQtd}
+              icon="cart-outline"
+              keyboardType="decimal-pad"
+              {...handleFindError('qtd')}
+            />
+
+            <DropdownMenu
+              title="Unidade"
+              icon="file-document-outline"
+              listValues={unitList}
+              setValue={setUnit}
+              selectedValue={unit}
+            />
+          </TwoColumnsContainer>
+        </SubContainer>
       </Container>
     </Background>
   );
