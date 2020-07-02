@@ -1,17 +1,22 @@
 import productList from './product-list';
 import { ProductItem } from '@store/product-list/types';
+import login from './login';
+import register from './register';
 import { ValidationError } from 'yup';
+import { AuthLoginForm, AuthRegisterForm } from '@store/auth/types';
 
 const validationList = {
   productList,
+  login,
+  register,
 };
 
-type Forms = 'productList';
-type Values = ProductItem;
+export type FormName = 'productList' | 'login' | 'register';
+export type FormValues = ProductItem | AuthLoginForm | AuthRegisterForm;
 type ErrorList = { errorItem: string; errorMessage: string }[];
 
 export interface ErrorInterface {
-  formTested: Forms;
+  formTested: FormName;
   errors: ErrorList;
 }
 
@@ -29,9 +34,9 @@ const formatErrorList = (err: ValidationError[]) => {
   return errorList;
 };
 
-const validateForm = async (
-  value: Partial<Values>,
-  validate: Forms,
+const validate = async (
+  value: Partial<FormValues>,
+  validate: FormName,
 ): Promise<ErrorInterface | undefined> => {
   const validationResult = await validationList[validate](value);
 
@@ -42,4 +47,4 @@ const validateForm = async (
   return { formTested: validate, errors: errorsList };
 };
 
-export { validateForm };
+export default validate;

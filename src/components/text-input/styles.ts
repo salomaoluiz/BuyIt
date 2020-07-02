@@ -6,7 +6,7 @@ const Container = styled.View`
   margin-bottom: ${dimensions.spacing.insetSm};
   margin-right: ${dimensions.spacing.insetXs};
   margin-left: ${dimensions.spacing.insetXs};
-  flex:1;
+  flex: 1;
 `;
 
 const SubContainer = styled.View`

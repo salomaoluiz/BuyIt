@@ -13,6 +13,14 @@ export const mockReducerInitialState: RootState = {
   productListReducers: {
     productList: [],
   },
+  authReducer: {
+    isLoggedIn: false,
+    isAnonymously: false,
+    isOnline: false,
+    isLoading: false,
+    email: '',
+    currentUser: undefined,
+  },
   _persist: {
     version: 1,
     rehydrated: false,
