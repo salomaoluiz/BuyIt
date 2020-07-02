@@ -4,11 +4,33 @@ import styled from 'styled-components/native';
 import { dimensions, fonts, colors } from '@styles';
 import NativeIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TouchableNativeFeedback } from 'react-native';
+import { ButtonMode } from '.';
 
-const Container = styled.View`
+const buttonModeStyle = (mode?: ButtonMode) => {
+  if (mode === 'flat') {
+    return {
+      'background-color': colors.list.transparent,
+    };
+  }
+  if (mode === 'outlined') {
+    return {
+      'border-width': dimensions.border.widthMedium,
+      'border-color': colors.list.supportHighlightMedium,
+    };
+  }
+  return {
+    'background-color': colors.list.supportHighlightMedium,
+  };
+};
+
+interface ContainerProps {
+  mode?: ButtonMode;
+}
+const Container = styled.View<ContainerProps>`
   border-radius: ${dimensions.border.radiusSm};
-  elevation: ${dimensions.border.elevation};  
-  background-color: ${colors.list.supportHighlightMedium};
+  margin-top: ${dimensions.spacing.inlineXxs};
+  margin-bottom: ${dimensions.spacing.inlineXxs};
+  ${({ mode }) => buttonModeStyle(mode)}
 `;
 
 const Ripple = TouchableNativeFeedback.Ripple(colors.list.neutralDark, true);

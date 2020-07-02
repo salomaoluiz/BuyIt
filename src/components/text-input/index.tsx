@@ -11,7 +11,7 @@ import useTextInput from './useTextInput';
 import GenericIcon from '@components/icon';
 import Prefix from './components/prefix';
 import HelperComponent from './components/helper-text';
-import { TextInputProps } from 'react-native';
+import { TextInputProps, ViewStyle } from 'react-native';
 import AnimatedTitle from '@components/animated-title';
 
 export interface Props extends TextInputProps {
@@ -21,10 +21,12 @@ export interface Props extends TextInputProps {
   helperText?: string;
   prefix?: string;
   sufix?: string;
+  containerStyle?: ViewStyle;
 }
 
 const TextInput = (props: Props) => {
   const {
+    containerStyle,
     prefix,
     sufix,
     error,
@@ -44,7 +46,7 @@ const TextInput = (props: Props) => {
   } = useTextInput(props);
 
   return (
-    <Container>
+    <Container style={containerStyle}>
       <ItensContainer>
         {icon && (
           <GenericIcon isVisible={true} useAnimation={false} name={icon} />
@@ -62,6 +64,7 @@ const TextInput = (props: Props) => {
               startWithValue={startWithValue}
             />
             <TextInputStyled
+              {...props}
               keyboardType={keyboardType}
               value={valueText}
               onFocus={handleFocused}
@@ -79,7 +82,7 @@ const TextInput = (props: Props) => {
           useAnimation
         />
       </ItensContainer>
-      <HelperComponent value={helperText} isError={error} />
+      <HelperComponent hasIcon={!!icon} value={helperText} isError={error} />
     </Container>
   );
 };
