@@ -1,4 +1,4 @@
-package com.buyit;
+package br.com.jacobysoftware.buyit;
 
 import com.facebook.react.ReactActivity;
 
