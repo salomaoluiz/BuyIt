@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "872967149838",
+    "firebase_url": "https://js-buyit-dev.firebaseio.com",
+    "project_id": "js-buyit-dev",
+    "storage_bucket": "js-buyit-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872967149838:android:da86402812c803943a9f5f",
+        "android_client_info": {
+          "package_name": "br.com.jacobysoftware.buyit.staging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "872967149838-kuh8cjbj40scv21qe583c1cqpi81k4lp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.jacobysoftware.buyit.staging",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "872967149838-sgq27bgnt4k9dv2a164sv367rnl4pbfo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA46LrPXX7DbvCZSpku5IZNNGtjAkwi4nw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "872967149838-sgq27bgnt4k9dv2a164sv367rnl4pbfo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
