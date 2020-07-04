@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.buyit">
+  package="br.com.jacobysoftware.buyit">
 
     <uses-permission android:name="android.permission.INTERNET" />
 

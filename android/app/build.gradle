@@ -113,6 +113,13 @@ def enableProguardInReleaseBuilds = false
  */
 def jscFlavor = 'org.webkit:android-jsc:+'
 
+project.ext.envConfigFiles = [
+  development: '.env.development',
+  staging: '.env.staging',
+  production: '.env.production',
+]
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
 /**
  * Whether to enable the Hermes VM.
  *
@@ -129,7 +136,6 @@ crashlytics {
 }
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -141,7 +147,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode getVersionCode
-        versionName getVersionName        
+        versionName getVersionName
+        resValue "string", "build_config_package", "br.com.jacobysoftware.buyit"
     }
     splits {
         abi {
@@ -159,10 +166,14 @@ android {
             keyPassword 'android'
         }
         release {
-            storeFile file(System.getenv('HOME') + '/release.keystore')
-            storePassword System.getenv('ANDROID_KEYSTORE_PASSWORD')
-            keyAlias System.getenv('ANDROID_KEYSTORE_ALIAS')
-            keyPassword System.getenv('ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD')
+            def signingFile = new File(System.getenv('HOME') + '/buyit.keystore')
+            if (!signingFile.exists()) {
+                new URL(System.getenv('BITRISEIO_ANDROID_KEYSTORE_URL')).withInputStream{ i -> signingFile.withOutputStream{ it << i }}
+            }
+            storeFile file(System.getenv('HOME') + '/buyit.keystore')
+            storePassword System.getenv('BITRISEIO_ANDROID_KEYSTORE_PASSWORD')
+            keyAlias System.getenv('BITRISEIO_ANDROID_KEYSTORE_ALIAS')
+            keyPassword System.getenv('BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD')
         }
     }
     buildTypes {
@@ -176,6 +187,21 @@ android {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
+    }
+
+   flavorDimensions "default"
+    productFlavors {
+      development {
+        applicationIdSuffix ".development"
+        dimension "default"
+      }
+      staging {
+        applicationIdSuffix ".staging"
+        dimension "default"
+      }
+      production {
+        dimension "default"
+      }
     }
 
     packagingOptions {
