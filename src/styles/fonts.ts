@@ -31,10 +31,16 @@ const family = {
   brandPrimary: 'Roboto Regular',
 };
 
+const weight = {
+  bold: 'bold',
+  regular: 'normal',
+};
+
 const fonts = {
   family,
   lineHeight,
   size,
+  weight,
 };
 
 export default fonts;
