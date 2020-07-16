@@ -1,17 +1,16 @@
 import { useEffect, useCallback, useState } from 'react';
-import { ItemsDataArray } from '../store/types';
+
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '@store/reducers';
+
 import { Props } from '.';
 import { Alert } from 'react-native';
 import { filterByID, filterNotByID } from '@utils/filters';
-import { setItemsData } from '../store/actions';
+
 import * as strings from '@locales/product-list';
+import { productListSelectors, productListActions } from '@store/product-list';
 
 const useProductList = (props: Props) => {
-  const itemsData = useSelector<RootState, ItemsDataArray>(
-    (state) => state.productListReducers.itemsData,
-  );
+  const { productList } = useSelector(productListSelectors.getState);
   const dispatch = useDispatch();
   const [amountTotal, setAmountTotal] = useState<number>(0);
   const [qtdTotal, setQtdTotal] = useState<number>(0);
@@ -24,31 +23,31 @@ const useProductList = (props: Props) => {
     let totalAmount = 0;
     let totalQtd = 0;
 
-    itemsData.forEach((item) => {
+    productList.forEach((item) => {
       totalAmount += parseFloat(item.amount);
       totalQtd += parseFloat(item.qtd);
     });
 
     setAmountTotal(totalAmount);
     setQtdTotal(totalQtd);
-  }, [itemsData]);
+  }, [productList]);
 
   const handleEditItem = useCallback(
     (id: string) => {
-      const filteredData = filterByID(itemsData, id);
+      const filteredData = filterByID(productList, id);
 
-      props.navigation.navigate('NewProduct', { itemData: filteredData });
+      props.navigation.navigate('NewProduct', { productItem: filteredData });
     },
-    [itemsData],
+    [productList],
   );
 
   const handleDeleteItem = useCallback(
     (id: string) => {
-      const filteredData = filterNotByID(itemsData, id);
+      const filteredData = filterNotByID(productList, id);
 
-      dispatch(setItemsData(filteredData));
+      dispatch(productListActions.setProductList(filteredData));
     },
-    [itemsData],
+    [productList],
   );
 
   const onItemPress = useCallback(
@@ -63,14 +62,14 @@ const useProductList = (props: Props) => {
         { text: strings.deleteItem, onPress: handlePress.delete },
       ]);
     },
-    [itemsData],
+    [productList],
   );
 
   useEffect(() => {
     handleSubTotal();
-  }, [itemsData]);
+  }, [productList]);
 
-  return { itemsData, onAddButtonPress, amountTotal, qtdTotal, onItemPress };
+  return { productList, onAddButtonPress, amountTotal, qtdTotal, onItemPress };
 };
 
 export default useProductList;

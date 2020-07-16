@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
-import uiReducer from './general-store/ui-reducers';
-import productListReducers from '@routes/product-list/store/reducers';
+import generalReducers from './general/reducers';
+import productListReducers from '@store/product-list/reducers';
+import { PersistedState } from 'redux-persist';
 
-const reducers = combineReducers({ uiReducer, productListReducers });
+const reducers = combineReducers({ generalReducers, productListReducers });
 
 export default reducers;
 
-export type RootState = ReturnType<typeof reducers>;
+export type RootState = ReturnType<typeof reducers> & PersistedState ;
