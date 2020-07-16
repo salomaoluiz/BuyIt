@@ -1,7 +1,6 @@
 import listItemsReducer from '../reducers';
 import { initialState } from '../reducers';
-import { SET_ITEMS_DATA } from '../constants';
-import { ItemsActions } from '../types';
+import { productListActions } from '..';
 
 describe('ListItems Reducers', () => {
   it('deve setar o a lista de item se chamada a action SET_ITEM_DATA', () => {
@@ -9,14 +8,11 @@ describe('ListItems Reducers', () => {
       { id: '1', brand: '', name: 'name', amount: '1.5', unit: 'g', qtd: '13' },
       { id: '2', brand: '', name: 'name2', amount: '2.5', unit: 'g', qtd: '2' },
     ];
-    const action: ItemsActions = {
-      type: SET_ITEMS_DATA,
-      payload: { itemsData: mockData },
-    };
+    const action = productListActions.setProductList(mockData);
 
     const result = listItemsReducer(initialState, action);
 
-    expect(result.itemsData).toEqual(mockData);
+    expect(result.productList).toEqual(mockData);
   });
 
   it('deve remover um item do state se chamar SET_ITEM_DATA com menos itens', () => {
@@ -45,13 +41,20 @@ describe('ListItems Reducers', () => {
       { id: '1', brand: '', name: 'name', amount: '1.5', unit: 'g', qtd: '13' },
     ];
 
-    const action: ItemsActions = {
-      type: SET_ITEMS_DATA,
-      payload: { itemsData: mockData },
-    };
+    const action = productListActions.setProductList(mockData);
 
     const result = listItemsReducer(mockInitialState, action);
 
-    expect(result.itemsData).toEqual(mockData);
+    expect(result.productList).toEqual(mockData);
+  });
+
+  test('deve retornar o valor default', () => {
+    const action = { type: 'any', payload: {} };
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    const result = listItemsReducer(initialState, action);
+
+    expect(result).toEqual(initialState);
   });
 });
