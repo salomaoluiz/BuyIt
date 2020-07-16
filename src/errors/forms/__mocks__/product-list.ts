@@ -1,5 +1,6 @@
 import strings from '@locales/general-errors';
 import { ValidationError } from 'yup';
+import { ErrorInterface } from '..';
 
 const generateError = (errorText: string | string[], path: string) => {
   return new ValidationError(errorText, '', path);
@@ -25,7 +26,7 @@ const qtdRequired = generateError(
 const qtdInvalid = generateError(strings.generalErrors.invalidValue, 'qtd');
 const brandInvalid = generateError(strings.generalErrors.invalidValue, 'brand');
 
-const resultErrorRequired = {
+const resultErrorRequired: ErrorInterface = {
   formTested: 'productList',
   errors: [
     {
@@ -43,7 +44,7 @@ const resultErrorRequired = {
   ],
 };
 
-const resultErrorInvalid = {
+const resultErrorInvalid: ErrorInterface = {
   formTested: 'productList',
   errors: [
     {

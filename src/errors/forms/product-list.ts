@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import strings from '@locales/general-errors';
-import { ItemsData } from '@routes/product-list/store/types';
+import { ProductItem } from '@store/product-list/types';
 
 const onlyNumber = /^[0-9]*$/g;
 
@@ -17,7 +17,7 @@ const productListSchema = Yup.object().shape({
 });
 
 const productList = async (
-  value: Partial<ItemsData>,
+  value: Partial<ProductItem>,
 ): Promise<true | Yup.ValidationError[]> => {
   try {
     await productListSchema.validate(value, {
