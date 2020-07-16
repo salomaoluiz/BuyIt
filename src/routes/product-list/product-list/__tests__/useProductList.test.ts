@@ -3,17 +3,20 @@ import useProductList from '../useProductList';
 import * as reactRedux from 'react-redux';
 import { Routes } from '@routes';
 import { Alert } from 'react-native';
-import { setItemsData } from '@routes/product-list/store/actions';
+import { productListActions } from '@store/product-list';
+import { ProductListState } from '@store/product-list/types';
 
 describe('Testando useProductList', () => {
   let getItemData: jest.SpyInstance;
   let navigate: jest.Mock;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let initialProps: any;
-  const itemDataMocked = [
-    { id: '1', brand: '', name: 'name', amount: '1.5', qtd: '13', unit: 'g' },
-    { id: '2', brand: '', name: 'name2', amount: '2.5', qtd: '2', unit: 'g' },
-  ];
+  const productListStateMocked: ProductListState = {
+    productList: [
+      { id: '1', brand: '', name: 'name', amount: '1.5', qtd: '13', unit: 'g' },
+      { id: '2', brand: '', name: 'name2', amount: '2.5', qtd: '2', unit: 'g' },
+    ],
+  };
   let alert: jest.SpyInstance;
   let dispatch: jest.Mock;
   beforeEach(() => {
@@ -22,7 +25,7 @@ describe('Testando useProductList', () => {
     jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(dispatch);
     getItemData = jest
       .spyOn(reactRedux, 'useSelector')
-      .mockReturnValue(itemDataMocked);
+      .mockReturnValue(productListStateMocked);
     navigate = jest.fn();
     initialProps = { navigation: { navigate }, route: {} };
     alert = jest.spyOn(Alert, 'alert');
@@ -32,7 +35,9 @@ describe('Testando useProductList', () => {
     const { result } = renderHook(useProductList, { initialProps });
 
     expect(getItemData).toBeCalled();
-    expect(result.current.itemsData).toEqual(itemDataMocked);
+    expect(result.current.productList).toEqual(
+      productListStateMocked.productList,
+    );
   });
 
   it('deve ao iniciar calcular corretamente o valor total e quantidade total', () => {
@@ -60,7 +65,7 @@ describe('Testando useProductList', () => {
 
     editButton();
     expect(navigate).toHaveBeenLastCalledWith('NewProduct', {
-      itemData: {
+      productItem: {
         id: '1',
         brand: '',
         name: 'name',
@@ -89,7 +94,7 @@ describe('Testando useProductList', () => {
         qtd: '2',
       },
     ];
-    const action = setItemsData(newItemsDataMocked);
+    const action = productListActions.setProductList(newItemsDataMocked);
     deleteButton();
     expect(dispatch).toHaveBeenLastCalledWith(action);
   });

@@ -1,5 +1,5 @@
 import productList from './product-list';
-import { ItemsData } from '@routes/product-list/store/types';
+import { ProductItem } from '@store/product-list/types';
 import { ValidationError } from 'yup';
 
 const validationList = {
@@ -7,7 +7,7 @@ const validationList = {
 };
 
 type Forms = 'productList';
-type Values = ItemsData;
+type Values = ProductItem;
 type ErrorList = { errorItem: string; errorMessage: string }[];
 
 export interface ErrorInterface {
@@ -29,7 +29,7 @@ const formatErrorList = (err: ValidationError[]) => {
   return errorList;
 };
 
-const validate = async (
+const validateForm = async (
   value: Partial<Values>,
   validate: Forms,
 ): Promise<ErrorInterface | undefined> => {
@@ -42,4 +42,4 @@ const validate = async (
   return { formTested: validate, errors: errorsList };
 };
 
-export default validate;
+export { validateForm };

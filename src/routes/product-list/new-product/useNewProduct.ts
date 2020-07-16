@@ -1,22 +1,22 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useCallback } from 'react';
 
-import { RootState } from '@store/reducers';
 import { generateUniqueID } from '@utils/id';
 
 import { Props } from '.';
-import { setItemsData } from '../store/actions';
-import { ItemsDataArray } from '../store/types';
+
 import { filterNotByID } from '@utils/filters';
-import validate, { ErrorInterface } from 'src/errors/forms';
+import { validateForm, ErrorInterface } from 'src/errors/forms';
+import productListSelectors from '@store/product-list/selectors';
+import { productListActions } from '@store/product-list';
 
 const useNewProduct = ({ navigation, route }: Props) => {
-  const editName = route.params?.itemData?.name;
-  const editAmount = route.params?.itemData?.amount;
-  const editQtd = route.params?.itemData?.qtd;
-  const editId = route.params?.itemData?.id;
-  const editBrand = route.params?.itemData?.brand;
-  const editUnit = route.params?.itemData?.unit;
+  const editName = route.params?.productItem?.name;
+  const editAmount = route.params?.productItem?.amount;
+  const editQtd = route.params?.productItem?.qtd;
+  const editId = route.params?.productItem?.id;
+  const editBrand = route.params?.productItem?.brand;
+  const editUnit = route.params?.productItem?.unit;
 
   const [name, setName] = useState(editName || '');
   const [amount, setAmount] = useState(editAmount || '');
@@ -26,15 +26,16 @@ const useNewProduct = ({ navigation, route }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorItems, setErrorItems] = useState<ErrorInterface>();
 
-  const itemsData = useSelector<RootState, ItemsDataArray>(
-    (state) => state.productListReducers.itemsData,
-  );
+  const { productList } = useSelector(productListSelectors.getState);
 
   const fieldsHook = [name, amount, qtd, unit, brand];
   const dispatch = useDispatch();
 
   const canAddNewItem = useCallback(async () => {
-    const errors = await validate({ name, amount, brand, qtd }, 'productList');
+    const errors = await validateForm(
+      { name, amount, brand, qtd },
+      'productList',
+    );
 
     if (errors) {
       setErrorItems(errors);
@@ -46,7 +47,7 @@ const useNewProduct = ({ navigation, route }: Props) => {
 
   const generateNewItemData = useCallback(() => {
     const id = generateUniqueID();
-    const itemsList = filterNotByID(itemsData, editId);
+    const itemsList = filterNotByID(productList, editId);
 
     const newItem = [
       {
@@ -65,14 +66,12 @@ const useNewProduct = ({ navigation, route }: Props) => {
   const handleFindError = useCallback(
     (item: string, infoHelper?: string) => {
       if (errorItems) {
-        const error = errorItems.errors.find(
-          (error) => error.errorItem === item,
-        );
+        const error = errorItems.errors.find((err) => err.errorItem === item);
 
         if (error) return { error: true, helperText: error?.errorMessage };
       }
 
-      return { helperText: infoHelper };
+      return { error: false, helperText: infoHelper };
     },
     [errorItems],
   );
@@ -85,7 +84,7 @@ const useNewProduct = ({ navigation, route }: Props) => {
 
       if (canAdd) {
         const newItemsData = generateNewItemData();
-        dispatch(setItemsData(newItemsData));
+        dispatch(productListActions.setProductList(newItemsData));
         navigation.goBack();
       }
     } finally {

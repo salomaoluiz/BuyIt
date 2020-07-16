@@ -3,25 +3,32 @@ import * as React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Container, ItemContainer, ItemText, ListContainer } from './styles';
 import useProductList from './useProductList';
-import { ItemsData } from '../store/types';
+
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamsList } from '@navigator';
 import Footer from './containers/footer';
 import Background from '@components/background';
 import { colors } from '@styles';
+import { ProductItem } from '@store/product-list/types';
 
 export type Props = StackScreenProps<RootStackParamsList, 'ProductList'>;
 
 const ProductList = (props: Props) => {
   const {
-    itemsData,
+    productList,
     onAddButtonPress,
     amountTotal,
     qtdTotal,
     onItemPress,
   } = useProductList(props);
 
-  const renderItem = ({ item, index }: { item: ItemsData; index: number }) => {
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: ProductItem;
+    index: number;
+  }) => {
     const handleItemPress = () => onItemPress(item.id);
 
     return (
@@ -40,7 +47,8 @@ const ProductList = (props: Props) => {
     <Background color={colors.list.neutralMedium}>
       <Container>
         <ListContainer>
-          {itemsData.map((item, index) => renderItem({ item, index }))}
+          {productList &&
+            productList.map((item, index) => renderItem({ item, index }))}
         </ListContainer>
       </Container>
       <Footer
