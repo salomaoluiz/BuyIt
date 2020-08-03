@@ -11,8 +11,12 @@ const HelperText = styled.Text<HelperTextProps>`
   }};
 `;
 
-const HelperContainer = styled.View`
-  margin-left: ${dimensions.spacing.inlineLg};
+interface HelperContainerProps {
+  hasIcon: boolean;
+}
+const HelperContainer = styled.View<HelperContainerProps>`
+  margin-left: ${({ hasIcon }) =>
+    hasIcon ? dimensions.spacing.inlineLg : dimensions.spacing.none};
   padding-top: ${`-${dimensions.spacing.inlineXs}`};
 `;
 

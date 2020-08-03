@@ -117,7 +117,7 @@ describe('Testando fluxo do navigator', () => {
 });
 
 describe('Testando fluxos de erro', () => {
-  const mockValidate = jest.spyOn(errorsForms, 'validateForm');
+  const mockValidate = jest.spyOn(errorsForms, 'default');
 
   beforeEach(() => {
     jest.clearAllMocks();

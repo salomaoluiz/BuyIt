@@ -8,6 +8,7 @@ import { filterByID, filterNotByID } from '@utils/filters';
 
 import * as strings from '@locales/product-list';
 import { productListSelectors, productListActions } from '@store/product-list';
+import { Routes } from '@routes';
 
 const useProductList = (props: Props) => {
   const { productList } = useSelector(productListSelectors.getState);
@@ -16,7 +17,7 @@ const useProductList = (props: Props) => {
   const [qtdTotal, setQtdTotal] = useState<number>(0);
 
   const onAddButtonPress = useCallback(() => {
-    props.navigation.navigate('NewProduct', {});
+    props.navigation.navigate(Routes.NewProduct, {});
   }, []);
 
   const handleSubTotal = useCallback(() => {
@@ -36,7 +37,7 @@ const useProductList = (props: Props) => {
     (id: string) => {
       const filteredData = filterByID(productList, id);
 
-      props.navigation.navigate('NewProduct', { productItem: filteredData });
+      props.navigation.navigate(Routes.NewProduct, { productItem: filteredData });
     },
     [productList],
   );

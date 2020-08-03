@@ -5,13 +5,13 @@ import { Container, ItemContainer, ItemText, ListContainer } from './styles';
 import useProductList from './useProductList';
 
 import { StackScreenProps } from '@react-navigation/stack';
-import { RootStackParamsList } from '@navigator';
+import { ProductNavigatorParamsList } from '@navigator/product-navigator';
 import Footer from './containers/footer';
 import Background from '@components/background';
 import { colors } from '@styles';
 import { ProductItem } from '@store/product-list/types';
 
-export type Props = StackScreenProps<RootStackParamsList, 'ProductList'>;
+export type Props = StackScreenProps<ProductNavigatorParamsList, 'ProductList'>;
 
 const ProductList = (props: Props) => {
   const {

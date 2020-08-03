@@ -4,11 +4,10 @@ import { dimensions } from '@styles';
 
 const Container = styled.ScrollView`
   padding: ${dimensions.size.stackXxxs};
-  flex: 1;
 `;
 
 const SubContainer = styled.View`
-  flex: 1;
+  align-items: stretch;
   justify-content: center;
 `;
 
