@@ -64,7 +64,7 @@ describe('Testando useProductList', () => {
     const editButton = alert.mock.calls[0][2][0].onPress;
 
     editButton();
-    expect(navigate).toHaveBeenLastCalledWith('NewProduct', {
+    expect(navigate).toHaveBeenLastCalledWith(Routes.NewProduct, {
       productItem: {
         id: '1',
         brand: '',

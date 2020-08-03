@@ -46,6 +46,9 @@
       "@locales/*": [
         "src/locales/*"
       ],
+      "@assets/*": [
+        "src/assets/*"
+      ],
       "@routes": [
         "src/routes"
       ],
@@ -63,6 +66,18 @@
       ],
       "@store/*": [
         "src/store/*"
+      ],
+      "@errors": [
+        "src/errors"
+      ],
+      "@errors/*": [
+        "src/errors/*"
+      ],
+      "@models": [
+        "src/models"
+      ],
+      "@models/*": [
+        "src/models/*"
       ],
       "@styles": [
         "src/styles"

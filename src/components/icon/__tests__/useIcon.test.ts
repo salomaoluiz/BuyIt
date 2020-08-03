@@ -9,15 +9,18 @@ describe('Testando useIcon', () => {
     onPress: jest.fn(),
     useAnimation: false,
   };
+
   let mockAnimatedTiming: jest.SpyInstance;
 
   beforeEach(() => {
-    mockAnimatedTiming = jest
-      .spyOn(Animated, 'timing')
-      .mockReturnValue({ start: jest.fn(), stop: jest.fn(), reset: jest.fn() });
+    mockAnimatedTiming = jest.spyOn(Animated, 'timing').mockReturnValue({
+      start: jest.fn(),
+      stop: jest.fn(),
+      reset: jest.fn(),
+    });
   });
 
-  it('deve retornar o onPress corretamente', () => {
+  test('deve retornar o onPress corretamente', () => {
     const { result } = renderHook(useIcon, { initialProps });
 
     act(() => result.current.handlePress());
@@ -25,14 +28,14 @@ describe('Testando useIcon', () => {
     expect(initialProps.onPress).toHaveBeenCalledTimes(1);
   });
 
-  it('deve chamar a animacao para o icone aparecer', () => {
+  test('deve chamar a animacao para o icone aparecer', () => {
     const mockInitialProps = {
       ...initialProps,
       useAnimation: true,
       isVisible: true,
     };
 
-    renderHook(useIcon, { initialProps: mockInitialProps });
+    renderHook(() => useIcon(mockInitialProps));
 
     const firstAnimatedValue = mockAnimatedTiming.mock.calls[0][1].toValue;
 
@@ -40,7 +43,7 @@ describe('Testando useIcon', () => {
     expect(firstAnimatedValue).toEqual(iconScale);
   });
 
-  it('não deve chamar a animacao se useAnimation for false', () => {
+  test('não deve chamar a animacao se useAnimation for false', () => {
     const mockInitialProps = {
       ...initialProps,
       useAnimation: false,
@@ -51,7 +54,7 @@ describe('Testando useIcon', () => {
     expect(mockAnimatedTiming).not.toHaveBeenCalled();
   });
 
-  it('deve chamar a animacao para o icone sumir', () => {
+  test('deve chamar a animacao para o icone sumir', () => {
     const mockInitialProps = {
       ...initialProps,
       useAnimation: true,

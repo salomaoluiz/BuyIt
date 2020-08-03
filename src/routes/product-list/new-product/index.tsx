@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { StackScreenProps } from '@react-navigation/stack';
-import { RootStackParamsList } from '@navigator';
+import { ProductNavigatorParamsList } from '@navigator/product-navigator';
 import * as strings from '@locales/product-list';
 
 import useNewProduct from './useNewProduct';
@@ -13,7 +13,7 @@ import { colors } from '@styles';
 import DropdownMenu from '@components/dropdown-menu';
 import { unitList } from './constants';
 
-export type Props = StackScreenProps<RootStackParamsList, 'NewProduct'>;
+export type Props = StackScreenProps<ProductNavigatorParamsList, 'NewProduct'>;
 
 const NewProduct = (props: Props) => {
   const {

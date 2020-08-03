@@ -4,8 +4,10 @@ const screenHeight = Dimensions.get('screen').height;
 const screenWidth = Dimensions.get('screen').width;
 
 const spacing = {
+  none: '0px',
   inlineLg: '48px',
   inlineMd: '32px',
+  inlineMdNumber: 32,
   inlineSm: '24px',
   inlineXl: '64px',
   inlineXs: '16px',
@@ -36,6 +38,7 @@ const size = {
   stackXxl: '96px',
   stackXxs: '8px',
   stackXxxl: '128px',
+  stackXxxlNumber: 128,
   stackXXxl: '256px',
   stackXXxlNumber: 256,
   stackXxxs: '4px',

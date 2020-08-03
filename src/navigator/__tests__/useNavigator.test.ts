@@ -1,19 +1,41 @@
 import * as reactRedux from 'react-redux';
 import { renderHook } from '@testing-library/react-hooks';
 import useNavigator from '@navigator/useNavigator';
+import { authSelectors } from '@store/auth';
+import { generalSelector } from '@store/general';
+import { mockReducerInitialState } from 'src/__tests__/mocks';
 
-jest.useFakeTimers();
+jest
+  .spyOn(authSelectors, 'getState')
+  .mockReturnValueOnce(mockReducerInitialState.authReducer)
+  .mockReturnValueOnce({
+    ...mockReducerInitialState.authReducer,
+    isLoggedIn: true,
+  });
+jest
+  .spyOn(generalSelector, 'getPersistState')
+  .mockReturnValueOnce(mockReducerInitialState._persist)
+  .mockReturnValueOnce({
+    ...mockReducerInitialState._persist,
+    rehydrated: true,
+  });
+
 describe('Testando o Rehydrate', () => {
   const useSelectorMock = jest
     .spyOn(reactRedux, 'useSelector')
-    .mockReturnValue({ rehydrated: false });
+    .mockImplementation((props) => props({}));
 
-  test('deve atualizar o rehydrate', async () => {
+  test('deve atualizar o rehydrate e o isAuthenticated', async () => {
     const { result, rerender } = renderHook(useNavigator);
     expect(result.current.isRehydrated).toBe(false);
+    expect(result.current.isAuthenticated).toBe(false);
 
-    useSelectorMock.mockReturnValue({ rehydrated: true });
+    useSelectorMock
+      .mockReturnValueOnce({ isLoggedIn: true })
+      .mockReturnValueOnce({ rehydrated: true });
+
     rerender();
     expect(result.current.isRehydrated).toBe(true);
+    expect(result.current.isAuthenticated).toBe(true);
   });
 });

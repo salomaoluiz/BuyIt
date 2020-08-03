@@ -1,4 +1,4 @@
-import { validateForm } from '..';
+import validate from '..';
 import { productListErrors } from '../__mocks__/product-list';
 
 describe('Testando todo o fluxo de erros de formulários', () => {
@@ -9,7 +9,7 @@ describe('Testando todo o fluxo de erros de formulários', () => {
       qtd: '',
     };
 
-    const result = await validateForm(mock, 'productList');
+    const result = await validate(mock, 'productList');
 
     expect(result).toEqual(productListErrors.resultErrorRequired);
   });
@@ -21,7 +21,7 @@ describe('Testando todo o fluxo de erros de formulários', () => {
       qtd: '12-',
     };
 
-    const result = await validateForm(mock, 'productList');
+    const result = await validate(mock, 'productList');
 
     expect(result).toEqual(productListErrors.resultErrorInvalid);
   });

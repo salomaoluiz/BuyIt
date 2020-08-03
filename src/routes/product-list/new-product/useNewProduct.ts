@@ -6,7 +6,7 @@ import { generateUniqueID } from '@utils/id';
 import { Props } from '.';
 
 import { filterNotByID } from '@utils/filters';
-import { validateForm, ErrorInterface } from 'src/errors/forms';
+import validateForm, { ErrorInterface } from 'src/errors/forms';
 import productListSelectors from '@store/product-list/selectors';
 import { productListActions } from '@store/product-list';
 
