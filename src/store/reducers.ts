@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux';
-import generalReducers from './general/reducers';
-import productListReducers from '@store/product-list/reducers';
-import authReducer from './auth/reducers';
-import notificationReducers from '@store/notification/reducers';
+import generalReducer from './general/reducer';
+import productListReducer from '@store/product-list/reducer';
+import authReducer from './auth/reducer';
+import notificationReducer from '@store/notification/reducer';
 import { PersistedState } from 'redux-persist';
 
 const reducers = combineReducers({
-  generalReducers,
-  productListReducers,
-  notificationReducers,
+  generalReducer,
+  productListReducer,
+  notificationReducer,
   authReducer,
 });
 

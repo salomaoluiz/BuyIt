@@ -21,7 +21,9 @@ const useFirebaseError = (module: Modules) => {
     let error;
     for (const key in modules[module].errorRegex) {
       const regex = errorRegex[key];
-      errorResponse.includes(regex) ? (error = key) : undefined;
+      if (errorResponse.includes(regex)) {
+        error = key;
+      }
     }
 
     return error as ErrorPattern;
