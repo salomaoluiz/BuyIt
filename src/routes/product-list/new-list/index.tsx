@@ -14,7 +14,7 @@ const NewList = () => {
 
   return (
     <Container>
-      <SubContainer keyboardShouldPersistTaps="always">
+      <SubContainer>
         <TextInput
           title={strings.name}
           value={name}
@@ -22,7 +22,7 @@ const NewList = () => {
           {...handleErrorMessage('name')}
         />
       </SubContainer>
-      <ButtonContainer behavior="position" keyboardVerticalOffset={70}>
+      <ButtonContainer behavior="position" keyboardVerticalOffset={30}>
         <CircleButton icon="check" onPress={onAddPress} />
       </ButtonContainer>
     </Container>

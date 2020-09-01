@@ -1,16 +1,18 @@
 import * as auth from './firebase/auth';
-import { RegisterRegexValues } from './firebase/auth';
+import * as productLists from './firebase/productLists';
+import { RegexValues } from './firebase/auth';
 import strings from '@locales/general-errors';
 
-type Modules = 'auth';
+type Modules = 'auth' | 'productLists';
 export type RegexPattern = { [key: string]: string };
-type ErrorPattern = RegisterRegexValues;
+type ErrorPattern = RegexValues;
 type ModulesPattern = {
   [key: string]: { errorRegex: RegexPattern; errorStrings: RegexPattern };
 };
 
 const modules: ModulesPattern = {
   auth,
+  productLists,
 };
 
 const useFirebaseError = (module: Modules) => {
@@ -43,7 +45,11 @@ const useFirebaseError = (module: Modules) => {
     return errorMessage || strings.generalErrors.tryAgainLater;
   };
 
-  return { getErrorMessage };
+  const isFirebaseError = (error: string) => {
+    return error.includes('firebase');
+  };
+
+  return { getErrorMessage, isFirebaseError };
 };
 
 export default useFirebaseError;

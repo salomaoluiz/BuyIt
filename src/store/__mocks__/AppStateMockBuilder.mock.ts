@@ -2,7 +2,7 @@ import { ProductListState } from '@store/product-list/types';
 import { AuthState } from '@store/auth/types';
 import { GeneralState } from '@store/general/types';
 import { NotificationState } from '@store/notification/types';
-import { initialAppState } from './mockData';
+import { initialAppState } from './initialAppState.mock';
 import { PersistState } from 'redux-persist';
 
 export class AppStateMockBuilder {
