@@ -1,7 +1,7 @@
 import { productListActions } from '..';
 import { ProductListTypes } from '../types';
-import { ProductListBuilderMock } from '../__mocks__/productListBuilderMock';
-import { ProductItemBuilderMock } from '../__mocks__/productItemBuilderMock';
+import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
+import { ProductItemBuilderMock } from '../__mocks__/productItemBuilder.mock';
 
 describe('ProductList Actions', () => {
   test('deve retornar setLoading corretamente.', () => {
@@ -27,15 +27,47 @@ describe('ProductList Actions', () => {
     });
   });
 
-  test('deve retornar setProductListAsync corretamente.', () => {
-    const mockData = new ProductListBuilderMock().withName('Lista').build();
-
-    const result = productListActions.setProductListAsync(mockData);
+  test('deve retornar getProductListsAsync corretamente.', () => {
+    const result = productListActions.getProductListsAsync();
 
     expect(result).toEqual({
-      type: ProductListTypes.SET_PRODUCT_LIST_ASYNC,
+      type: ProductListTypes.GET_PRODUCT_LISTS_ASYNC,
+    });
+  });
+
+  test('deve retornar createProductListAsync corretamente.', () => {
+    const mockData = new ProductListBuilderMock().withName('Lista').build();
+
+    const result = productListActions.createProductListAsync(mockData);
+
+    expect(result).toEqual({
+      type: ProductListTypes.CREATE_PRODUCT_LIST_ASYNC,
       payload: {
         productList: mockData,
+      },
+    });
+  });
+
+  test('deve retornar updateProductListAsync corretamente.', () => {
+    const mockData = new ProductListBuilderMock().withName('Lista').build();
+
+    const result = productListActions.updateProductListAsync(mockData);
+
+    expect(result).toEqual({
+      type: ProductListTypes.UPDATE_PRODUCT_LIST_ASYNC,
+      payload: {
+        productList: mockData,
+      },
+    });
+  });
+
+  test('deve retornar deleteProductListAsync corretamente.', () => {
+    const result = productListActions.deleteProductListAsync('12345');
+
+    expect(result).toEqual({
+      type: ProductListTypes.DELETE_PRODUCT_LIST_ASYNC,
+      payload: {
+        listId: '12345',
       },
     });
   });
@@ -53,13 +85,25 @@ describe('ProductList Actions', () => {
     });
   });
 
-  test('deve retornar setProductItemAsync corretamente.', () => {
-    const mockData = new ProductItemBuilderMock().withName('Lista').build();
+  test('deve retornar getProductItemsAsync corretamente.', () => {
     const listId = '12345';
-    const result = productListActions.setProductItemAsync(mockData, listId);
+    const result = productListActions.getProductItemsAsync(listId);
 
     expect(result).toEqual({
-      type: ProductListTypes.SET_PRODUCT_ITEM_ASYNC,
+      type: ProductListTypes.GET_PRODUCT_ITEMS_ASYNC,
+      payload: {
+        listId,
+      },
+    });
+  });
+
+  test('deve retornar createProductItemAsync corretamente.', () => {
+    const mockData = new ProductItemBuilderMock().withName('Lista').build();
+    const listId = '12345';
+    const result = productListActions.createProductItemAsync(mockData, listId);
+
+    expect(result).toEqual({
+      type: ProductListTypes.CREATE_PRODUCT_ITEM_ASYNC,
       payload: {
         productItem: mockData,
         listId,
@@ -81,14 +125,19 @@ describe('ProductList Actions', () => {
     });
   });
 
-  test('deve retornar deleteProductListAsync corretamente.', () => {
+  test('deve retornar updateProductItemAsync corretamente.', () => {
+    const productItem = new ProductItemBuilderMock().withName('Lista').build();
     const listId = '12345';
-    const result = productListActions.deleteProductListAsync(listId);
+    const result = productListActions.updateProductItemAsync(
+      productItem,
+      listId,
+    );
 
     expect(result).toEqual({
-      type: ProductListTypes.DELETE_PRODUCT_LIST_ASYNC,
+      type: ProductListTypes.UPDATE_PRODUCT_ITEM_ASYNC,
       payload: {
         listId,
+        productItem,
       },
     });
   });

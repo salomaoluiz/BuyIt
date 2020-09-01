@@ -10,7 +10,7 @@ describe('NewList - useNewList', () => {
     jest.spyOn(reactRedux, 'useSelector').mockReturnValue(true);
   });
 
-  test('ao chamar onAddPress deve chamar o checkForm e disparar a action setProductListAsync', async () => {
+  test('ao chamar onAddPress sem id deve chamar o checkForm e disparar a action createProductListAsync', async () => {
     const checkForm = jest.fn().mockResolvedValue(true);
     const initialProps = {
       listParams: {
@@ -29,7 +29,7 @@ describe('NewList - useNewList', () => {
 
     expect(checkForm).toHaveBeenCalled();
     expect(dispatch).toHaveBeenCalledWith(
-      productListActions.setProductListAsync(initialProps.listParams),
+      productListActions.createProductListAsync(initialProps.listParams),
     );
   });
 });

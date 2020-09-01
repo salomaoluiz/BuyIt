@@ -1,4 +1,4 @@
-import { takeLatest, select, put, call } from 'redux-saga/effects';
+import { takeLatest, put, call } from 'redux-saga/effects';
 import {
   ProductListTypes,
   ProductListActions,
@@ -6,144 +6,73 @@ import {
   ProductLists,
   ProductItem,
 } from './types';
-import { productListSelectors, productListActions } from '.';
-import { filterNotByID, filterByID } from '@utils/filters';
-import { generateUniqueID } from '@utils/id';
+import { productListActions } from '.';
 import navigationService from '@navigator/services/navigationService';
+import { injectProductListExtraData } from './utils';
+import * as sagaServer from './sagas-server';
+import * as sagaLocal from './sagas-local';
 
-export const _generateProductList = (
-  stateProductList: ProductLists,
-  productList: ProductList,
-) => {
-  const { id } = productList;
-
-  if (id) {
-    const filteredList = filterNotByID(stateProductList, id);
-    const newProductListsArray = filteredList.concat([{ ...productList }]);
-
-    return newProductListsArray;
-  } else {
-    const randomId = generateUniqueID();
-    const newProductListsArray = stateProductList.concat([
-      { ...productList, id: randomId },
-    ]);
-
-    return newProductListsArray;
-  }
-};
-
-export function* setProductListAsync(
+export function* createProductListAsync(
   props: ProductListActions<{ productList: ProductList }>,
 ) {
   const { productList } = props.payload;
 
   try {
+    yield put(productListActions.setError());
     yield put(productListActions.setLoading(true));
 
-    const stateProductList: ProductLists = yield select(
-      productListSelectors.getProductLists,
-    );
+    const ajustedProductList = injectProductListExtraData(productList);
 
-    const newProductListsArray = _generateProductList(
-      stateProductList,
-      productList,
+    const newProductListsArray = yield call(
+      sagaLocal.createProductList,
+      ajustedProductList,
     );
 
     yield put(productListActions.setProductLists(newProductListsArray));
     yield call(navigationService.goBack);
+
+    yield call(sagaServer.createProductList, ajustedProductList);
   } catch (err) {
-    
     yield put(productListActions.setError(err));
   } finally {
     yield put(productListActions.setLoading(false));
   }
 }
 
-export function* setProductItemAsync(
-  props: ProductListActions<{ productItem: ProductItem; listId: string }>,
-) {
-  const { listId, productItem } = props.payload;
-
-  const { id } = productItem;
-  yield put(productListActions.setLoading(true));
+export function* getProductListsAsync() {
   try {
-    const stateProductList: ProductLists = yield select(
-      productListSelectors.getProductLists,
-    );
-    const currentList = filterByID(stateProductList, listId);
+    yield put(productListActions.setError());
+    yield put(productListActions.setLoading(true));
 
-    
-    if (id) {
-      const filteredListItem = filterNotByID(currentList.items, id);
-      const newProductItemsArray = filteredListItem.concat([
-        { ...productItem },
-      ]);
-      const newEditedList: ProductList = {
-        ...currentList,
-        items: newProductItemsArray,
-      };
+    const serverProductLists = yield call(sagaServer.getProductLists);
 
-      const newProductListsArray = _generateProductList(
-        stateProductList,
-        newEditedList,
-      );
-
-      yield put(productListActions.setProductLists(newProductListsArray));
-    } else {
-      
-      const randomId = generateUniqueID();
-      const newProductItemsArray = currentList.items.concat([
-        { ...productItem, id: randomId },
-      ]);
-      const newEditedList: ProductList = {
-        ...currentList,
-        items: newProductItemsArray,
-      };
-
-      const newProductListsArray = _generateProductList(
-        stateProductList,
-        newEditedList,
-      );
-      
-      yield put(productListActions.setProductLists(newProductListsArray));
-    }
-    yield call(navigationService.goBack);
+    yield put(productListActions.setProductLists(serverProductLists));
   } catch (err) {
-
-    
     yield put(productListActions.setError(err));
   } finally {
     yield put(productListActions.setLoading(false));
   }
 }
 
-export function* deleteProductItemAsync(
-  props: ProductListActions<{ listId: string; itemId: string }>,
+export function* updateProductListAsync(
+  props: ProductListActions<{ productList: ProductList }>,
 ) {
-  const { itemId, listId } = props.payload;
-
+  const { productList } = props.payload;
   try {
+    yield put(productListActions.setError());
     yield put(productListActions.setLoading(true));
 
-    const stateProductList: ProductLists = yield select(
-      productListSelectors.getProductLists,
+    const ajustedProductList = injectProductListExtraData(productList);
+
+    const updatedProductLists = yield call(
+      sagaLocal.updateProductList,
+      ajustedProductList,
     );
-    const currentList = filterByID(stateProductList, listId);
 
-    const productItems = currentList.items;
-    const filteredItems = filterNotByID(productItems, itemId);
+    yield put(productListActions.setProductLists(updatedProductLists));
+    yield call(navigationService.goBack);
 
-    const newEditedList: ProductList = {
-      ...currentList,
-      items: filteredItems,
-    };
-
-    
-    const newProductListsArray = _generateProductList(
-      stateProductList,
-      newEditedList,
-    );
-    yield put(productListActions.setProductLists(newProductListsArray));
+    yield call(sagaServer.updateProductList, ajustedProductList);
   } catch (err) {
     yield put(productListActions.setError(err));
   } finally {
@@ -155,15 +84,116 @@ export function* deleteProductListAsync(
   props: ProductListActions<{ listId: string }>,
 ) {
   const { listId } = props.payload;
-
   try {
+    yield put(productListActions.setError());
     yield put(productListActions.setLoading(true));
-    const productLists: ProductLists = yield select(
-      productListSelectors.getProductLists,
+
+    const filteredList: ProductLists = yield call(
+      sagaLocal.deleteProductList,
+      listId,
+    );
+    yield put(productListActions.setProductLists(filteredList));
+
+    yield call(sagaServer.deleteProductList, listId);
+  } catch (err) {
+    yield put(productListActions.setError(err));
+  } finally {
+    yield put(productListActions.setLoading(false));
+  }
+}
+
+export function* createProductItemAsync(
+  props: ProductListActions<{ productItem: ProductItem; listId: string }>,
+) {
+  try {
+    const { productItem, listId } = props.payload;
+    yield put(productListActions.setError());
+    yield put(productListActions.setLoading(true));
+
+    const formatedProductItem = injectProductListExtraData(productItem);
+
+    const productListsArray = yield call(
+      sagaLocal.createProductItem,
+      formatedProductItem,
+      listId,
+    );
+    yield put(productListActions.setProductLists(productListsArray));
+    yield call(navigationService.goBack);
+
+    yield call(sagaServer.createProductItem, formatedProductItem, listId);
+  } catch (err) {
+    yield put(productListActions.setError(err));
+  } finally {
+    yield put(productListActions.setLoading(false));
+  }
+}
+
+export function* getProductItemsAsync(
+  props: ProductListActions<{ listId: string }>,
+) {
+  try {
+    const { listId } = props.payload;
+    yield put(productListActions.setError());
+    yield put(productListActions.setLoading(true));
+
+    const productItems = yield call(sagaServer.getProductItems, listId);
+
+    const productListsArray = yield call(
+      sagaLocal.getProductItems,
+      productItems,
+      listId,
     );
 
-    const filteredList = filterNotByID(productLists, listId);
-    yield put(productListActions.setProductLists(filteredList));
+    yield put(productListActions.setProductLists(productListsArray));
+  } catch (err) {
+    yield put(productListActions.setError(err));
+  } finally {
+    yield put(productListActions.setLoading(false));
+  }
+}
+
+export function* deleteProductItemAsync(
+  props: ProductListActions<{ listId: string; itemId: string }>,
+) {
+  try {
+    const { listId, itemId } = props.payload;
+    yield put(productListActions.setError());
+    yield put(productListActions.setLoading(true));
+
+    const newProductItemsArray = yield call(
+      sagaLocal.deleteProductItem,
+      listId,
+      itemId,
+    );
+
+    yield put(productListActions.setProductLists(newProductItemsArray));
+
+    yield call(sagaServer.deleteProductItem, listId, itemId);
+  } catch (err) {
+    yield put(productListActions.setError(err));
+  } finally {
+    yield put(productListActions.setLoading(false));
+  }
+}
+
+export function* updateProductItemAsync(
+  props: ProductListActions<{ productItem: ProductItem; listId: string }>,
+) {
+  try {
+    const { productItem, listId } = props.payload;
+    yield put(productListActions.setError());
+    yield put(productListActions.setLoading(true));
+
+    const productListsArray = yield call(
+      sagaLocal.updateProductItem,
+      productItem,
+      listId,
+    );
+
+    yield put(productListActions.setProductLists(productListsArray));
+    yield call(navigationService.goBack);
+
+    yield call(sagaServer.updateProductItem, productItem, listId);
   } catch (err) {
     yield put(productListActions.setError(err));
   } finally {
@@ -172,14 +202,30 @@ export function* deleteProductListAsync(
 }
 
 export default [
-  takeLatest(ProductListTypes.SET_PRODUCT_LIST_ASYNC, setProductListAsync),
-  takeLatest(ProductListTypes.SET_PRODUCT_ITEM_ASYNC, setProductItemAsync),
+  takeLatest(
+    ProductListTypes.CREATE_PRODUCT_LIST_ASYNC,
+    createProductListAsync,
+  ),
+  takeLatest(ProductListTypes.GET_PRODUCT_LISTS_ASYNC, getProductListsAsync),
+  takeLatest(
+    ProductListTypes.UPDATE_PRODUCT_LIST_ASYNC,
+    updateProductListAsync,
+  ),
+  takeLatest(
+    ProductListTypes.DELETE_PRODUCT_LIST_ASYNC,
+    deleteProductListAsync,
+  ),
+  takeLatest(
+    ProductListTypes.CREATE_PRODUCT_ITEM_ASYNC,
+    createProductItemAsync,
+  ),
+  takeLatest(ProductListTypes.GET_PRODUCT_ITEMS_ASYNC, getProductItemsAsync),
   takeLatest(
     ProductListTypes.DELETE_PRODUCT_ITEM_ASYNC,
     deleteProductItemAsync,
   ),
   takeLatest(
-    ProductListTypes.DELETE_PRODUCT_LIST_ASYNC,
-    deleteProductListAsync,
+    ProductListTypes.UPDATE_PRODUCT_ITEM_ASYNC,
+    updateProductItemAsync,
   ),
 ];

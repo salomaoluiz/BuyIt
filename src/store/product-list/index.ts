@@ -1,4 +1,7 @@
 import productListSelectors from './selectors';
 import productListActions from './actions';
+import * as models from './models';
 
-export { productListActions, productListSelectors };
+const productListModels = { ...models };
+
+export { productListActions, productListSelectors, productListModels };

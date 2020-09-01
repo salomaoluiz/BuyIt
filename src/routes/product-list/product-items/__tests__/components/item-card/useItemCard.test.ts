@@ -4,7 +4,7 @@ import * as navigation from '@react-navigation/native';
 import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
 import { renderHook, act } from '@testing-library/react-hooks';
 import useItemCard from '../../../components/item-card/useItemCard';
-import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilderMock';
+import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
 import { Routes } from '@routes';
 import { productListActions } from '@store/product-list';
 import * as strings from '@locales/product-list';

@@ -15,7 +15,12 @@ const useNewList = (props: Props) => {
   const onAddPress = useCallback(async () => {
     const canSubmit = await checkForm();
     if (canSubmit) {
-      dispatch(productListActions.setProductListAsync(listParams));
+      if (listParams.id) {
+        dispatch(productListActions.updateProductListAsync(listParams));
+        return;
+      }
+      dispatch(productListActions.createProductListAsync(listParams));
+      return;
     }
   }, [props]);
 

@@ -38,6 +38,7 @@ const ProductListMap = new Map([
   [ProductListTypes.SET_ERROR, setError],
   [ProductListTypes.SET_LOADING, setLoading],
   [ProductListTypes.SET_PRODUCT_LIST, setProductList],
+  
 ]);
 
 const reducer = (

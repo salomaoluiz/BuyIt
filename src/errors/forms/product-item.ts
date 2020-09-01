@@ -2,17 +2,18 @@ import * as Yup from 'yup';
 import strings from '@locales/general-errors';
 import { ProductItem } from '@store/product-list/types';
 
-const numberWithDot = /^\d*[.]?\d$/g;
-const onlyNumber = /^\d$/g;
+const numberWithDot = /^[0-9]*[.]?[0-9]*$/g;
+const onlyNumber = /^[0-9]*$/g;
 
 const productItemSchema = Yup.object().shape({
   name: Yup.string().required(strings.generalErrors.thisValueIsRequired),
   amount: Yup.string()
     .required(strings.generalErrors.thisValueIsRequired)
+    .max(100000, strings.generalErrors.theValueIsMuchLong)
     .matches(numberWithDot, strings.generalErrors.invalidValueUseOnlyDot),
   qtd: Yup.string()
     .required(strings.generalErrors.thisValueIsRequired)
-    .typeError(strings.generalErrors.invalidValue)
+    .max(100000, strings.generalErrors.theValueIsMuchLong)
     .matches(onlyNumber, strings.generalErrors.invalidValue),
   brand: Yup.string().typeError(strings.generalErrors.invalidValue),
 });

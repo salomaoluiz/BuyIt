@@ -1,4 +1,4 @@
-import { AppStateMockBuilder } from '@store/__mocks__/AppStateMockBuilder';
+import { AppStateMockBuilder } from '@store/__mocks__/AppStateMockBuilder.mock';
 
 import { generalSelector } from '..';
 

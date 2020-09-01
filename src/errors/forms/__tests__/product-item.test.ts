@@ -26,9 +26,7 @@ describe('Testando a validação do ProductList', () => {
     expect(result).toEqual([
       productListErrors.nameRequired,
       productListErrors.amountRequired,
-      productListErrors.amountInvalid,
       productListErrors.qtdRequired,
-      productListErrors.qtdInvalid,
     ]);
   });
 
