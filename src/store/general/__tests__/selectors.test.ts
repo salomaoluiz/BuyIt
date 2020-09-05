@@ -1,16 +1,23 @@
+import { AppStateMockBuilder } from '@store/__mocks__/AppStateMockBuilder';
+
 import { generalSelector } from '..';
-import { mockReducerInitialState } from 'src/__tests__/mocks';
 
 describe('General Selectors', () => {
   it('deve retornar o general state corretamente', () => {
-    const received = generalSelector.getGeneralState(mockReducerInitialState);
+    const mockData = new AppStateMockBuilder()
+      .withGeneral({ isLoading: false })
+      .build();
+    const received = generalSelector.getGeneralState(mockData);
 
-    expect(received).toEqual(mockReducerInitialState.generalReducers);
+    expect(received).toEqual(mockData.generalReducer);
   });
 
   it('deve retornar o persistState corretamente', () => {
-    const received = generalSelector.getPersistState(mockReducerInitialState);
+    const mockData = new AppStateMockBuilder()
+      .withPersist({ rehydrated: true, version: -1 })
+      .build();
+    const received = generalSelector.getPersistState(mockData);
 
-    expect(received).toEqual(mockReducerInitialState._persist);
+    expect(received).toEqual(mockData._persist);
   });
 });

@@ -12,15 +12,15 @@ const lineHeight = {
 };
 
 const size = {
-  fontSizeXxxs: '12px',
-  fontSizeXxs: '16px',
-  fontSizeXs: '20px',
-  fontSizeSm: '24px',
-  fontSizeMd: '28px',
-  fontSizeLg: '32px',
-  fontSizeXl: '36px',
-  fontSizeXxl: '48px',
-  fontSizeXxxl: '64px',
+  fontSizeXxxs: '8px',
+  fontSizeXxs: '12px',
+  fontSizeXs: '16px',
+  fontSizeSm: '20px',
+  fontSizeMd: '24px',
+  fontSizeLg: '28px',
+  fontSizeXl: '32px',
+  fontSizeXxl: '36px',
+  fontSizeXxxl: '48px',
 };
 
 const family = {

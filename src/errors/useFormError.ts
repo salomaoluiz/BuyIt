@@ -1,11 +1,11 @@
 import { useState, useCallback } from 'react';
-import validate, { ErrorInterface, FormName, FormValues } from './forms';
+import validateForm, { ErrorInterface, FormName, FormValues } from './forms';
 
 const useFormError = (formList: FormValues, formName: FormName) => {
   const [errorItems, setErrorItems] = useState<ErrorInterface>();
 
   const validateError = useCallback(async () => {
-    const errors = await validate(formList, formName);
+    const errors = await validateForm(formList, formName);
     if (errors) {
       setErrorItems(errors);
       return false;
@@ -17,7 +17,7 @@ const useFormError = (formList: FormValues, formName: FormName) => {
     (item: string, infoHelper?: string) => {
       if (errorItems) {
         const error = errorItems.errors.find(
-          (error) => error.errorItem === item,
+          (err) => err.errorItem === item,
         );
 
         if (error) return { error: true, helperText: error?.errorMessage };
@@ -32,7 +32,7 @@ const useFormError = (formList: FormValues, formName: FormName) => {
     setErrorItems(undefined);
   }, []);
 
-  return { handleErrorMessage, clearErrors, validateError };
+  return { handleErrorMessage, clearErrors, validateError, errorItems };
 };
 
 export default useFormError;

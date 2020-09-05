@@ -1,10 +1,16 @@
+import { AppStateMockBuilder } from '@store/__mocks__/AppStateMockBuilder';
+
 import { notificationSelector } from '..';
-import { mockReducerInitialState } from 'src/__tests__/mocks';
+
 
 describe('Notification Selectors', () => {
   test('deve retornar o state corretamente', () => {
-    const response = notificationSelector.getState(mockReducerInitialState);
+    const mockData = new AppStateMockBuilder().withNotification({
+      isVisible: false,
+    });
 
-    expect(response).toEqual(mockReducerInitialState.notificationReducers);
+    const response = notificationSelector.getState(mockData);
+
+    expect(response).toEqual(mockData.notificationReducer);
   });
 });

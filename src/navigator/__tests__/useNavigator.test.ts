@@ -3,20 +3,21 @@ import { renderHook } from '@testing-library/react-hooks';
 import useNavigator from '@navigator/useNavigator';
 import { authSelectors } from '@store/auth';
 import { generalSelector } from '@store/general';
-import { mockReducerInitialState } from 'src/__tests__/mocks';
+import { AppStateMockBuilder } from '@store/__mocks__/AppStateMockBuilder';
 
+const mockState = new AppStateMockBuilder();
 jest
   .spyOn(authSelectors, 'getState')
-  .mockReturnValueOnce(mockReducerInitialState.authReducer)
+  .mockReturnValueOnce(mockState.authReducer)
   .mockReturnValueOnce({
-    ...mockReducerInitialState.authReducer,
+    ...mockState.authReducer,
     isLoggedIn: true,
   });
 jest
   .spyOn(generalSelector, 'getPersistState')
-  .mockReturnValueOnce(mockReducerInitialState._persist)
+  .mockReturnValueOnce(mockState._persist)
   .mockReturnValueOnce({
-    ...mockReducerInitialState._persist,
+    ...mockState._persist,
     rehydrated: true,
   });
 

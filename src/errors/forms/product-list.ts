@@ -2,18 +2,10 @@ import * as Yup from 'yup';
 import strings from '@locales/general-errors';
 import { ProductItem } from '@store/product-list/types';
 
-const onlyNumber = /^[0-9]*$/g;
-
 const productListSchema = Yup.object().shape({
-  name: Yup.string().required(strings.generalErrors.thisValueIsRequired),
-  amount: Yup.string()
+  name: Yup.string()
     .required(strings.generalErrors.thisValueIsRequired)
-    .matches(onlyNumber, strings.generalErrors.invalidValue),
-  qtd: Yup.string()
-    .required(strings.generalErrors.thisValueIsRequired)
-    .typeError(strings.generalErrors.invalidValue)
-    .matches(onlyNumber, strings.generalErrors.invalidValue),
-  brand: Yup.string().typeError(strings.generalErrors.invalidValue),
+    .max(100, strings.generalErrors.theValueIsMuchLong),
 });
 
 const productList = async (
