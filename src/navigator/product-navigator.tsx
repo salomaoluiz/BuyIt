@@ -3,17 +3,26 @@ import {
   createStackNavigator,
   TransitionPresets,
 } from '@react-navigation/stack';
-import ProductList from '@routes/product-list/product-list';
-import NewProduct from '@routes/product-list/new-product';
+import ProductItems from '@routes/product-list/product-items';
+import NewListItem from '@routes/product-list/new-item';
 
 import { Routes } from '@routes';
-import { ProductItem } from '@store/product-list/types';
+import { ProductItem, ProductList } from '@store/product-list/types';
 import navigationStyles from 'src/styles/navigationStyles';
+import ProductLists from '@routes/product-list/product-lists';
+import NewList from '@routes/product-list/new-list';
 
 export type ProductNavigatorParamsList = {
-  [Routes.ProductList]: undefined;
-  [Routes.NewProduct]: {
+  [Routes.ProductLists]: undefined;
+  [Routes.ProductItems]: {
+    listId: string;
+  };
+  [Routes.NewList]: {
+    productList?: ProductList;
+  };
+  [Routes.NewListItem]: {
     productItem?: ProductItem;
+    listId: string;
   };
 };
 
@@ -24,11 +33,25 @@ const ProductNavigator = () => {
     <ProductStack.Navigator
       screenOptions={{
         ...TransitionPresets.SlideFromRightIOS,
-      }}>
-      <ProductStack.Screen name={Routes.ProductList} component={ProductList} />
+      }}
+      initialRouteName="ProductLists">
       <ProductStack.Screen
-        name={Routes.NewProduct}
-        component={NewProduct}
+        name={Routes.ProductItems}
+        component={ProductItems}
+      />
+      <ProductStack.Screen
+        name={Routes.NewListItem}
+        component={NewListItem}
+        options={navigationStyles.defaultHeader}
+      />
+      <ProductStack.Screen
+        name={Routes.ProductLists}
+        component={ProductLists}
+        options={navigationStyles.defaultHeader}
+      />
+      <ProductStack.Screen
+        name={Routes.NewList}
+        component={NewList}
         options={navigationStyles.defaultHeader}
       />
     </ProductStack.Navigator>

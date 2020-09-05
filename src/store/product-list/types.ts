@@ -1,11 +1,15 @@
-import { GeneralActions } from '@store/general/types';
-
 export enum ProductListTypes {
-  SET_ITEMS_DATA = 'SET_ITEMS_DATA',
+  SET_LOADING = '@productLists/SET_LOADING',
+  SET_ERROR = '@productLists/SET_ERROR',
+  SET_PRODUCT_LIST_ASYNC = '@productLists/SET_PRODUCT_LIST_ASYNC',
+  SET_PRODUCT_LIST = '@productLists/SET_PRODUCT_LIST',
+  SET_PRODUCT_ITEM_ASYNC = '@productLists/SET_PRODUCT_ITEM_ASYNC',
+  SET_PRODUCT_ITEM = '@productLists/SET_PRODUCT_ITEM',
+  DELETE_PRODUCT_LIST_ASYNC = '@productLists/DELETE_PRODUCT_LIST_ASYNC',
+  DELETE_PRODUCT_ITEM_ASYNC = '@productLists/DELETE_PRODUCT_ITEM_ASYNC',
 }
 
-export type ProductItem = {
-  id: string;
+export type ProductItemForm = {
   name: string;
   amount: string;
   qtd: string;
@@ -13,10 +17,25 @@ export type ProductItem = {
   unit: string;
 };
 
-export type ProductList = Array<ProductItem>;
+export interface ProductItem extends ProductItemForm {
+  id: string;
+}
+
+export type ProductListForm = {
+  name: string;
+};
+export interface ProductList extends ProductListForm {
+  id: string;
+  items: ProductItems;
+}
+
+export type ProductLists = Array<ProductList>;
+export type ProductItems = Array<ProductItem>;
 
 export interface ProductListState {
-  productList: ProductList;
+  isLoading: boolean;
+  productLists: ProductLists;
+  error?: Error;
 }
 
 export type ProductListActions<Payload> = {
@@ -26,5 +45,5 @@ export type ProductListActions<Payload> = {
 
 export type ProductListReducer = (
   state: ProductListState,
-  payload: GeneralActions<ProductListState>,
+  payload: ProductListActions<ProductListState>,
 ) => ProductListState;

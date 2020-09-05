@@ -8,6 +8,8 @@ const generalErrors = {
   thisValueIsRequired: 'Esse valor é obrigatório',
   opsWeHaveAProblem: "Ops, tivemos um problema",
   tryAgainLater: "Tente novamente mais tarde",
+  theValueIsMuchLong: "O valor é muito longo",
+  invalidValueUseOnlyDot: 'Valores Inválidos, Use somente ponto para separar casas decimais'
 };
 
 const devErrors = {

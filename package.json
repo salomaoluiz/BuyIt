@@ -9,6 +9,7 @@
     "start": "react-native start --reset-cache",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "presonar:scanner": "yarn test",
     "sonar:scanner": "npx sonar-scanner -Dsonar.projectVersion=$(git rev-parse --abbrev-ref HEAD)"
   },
   "dependencies": {
