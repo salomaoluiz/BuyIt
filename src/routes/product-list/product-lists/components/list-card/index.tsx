@@ -1,6 +1,6 @@
 import React from 'react';
 import { ProductList } from '@store/product-list/types';
-import { Container, ListTitle, ListItems } from './styles';
+import { Container, ListTitle } from './styles';
 import useListCard from './useListCard';
 
 export interface Props {
@@ -11,14 +11,12 @@ const ListCard = (props: Props) => {
     onListPress,
     productList,
     handleListLongPress,
-    totalItems,
   } = useListCard(props);
 
   const { name } = productList;
   return (
     <Container onPress={onListPress} onLongPress={handleListLongPress}>
       <ListTitle>{name}</ListTitle>
-      <ListItems>{totalItems}</ListItems>
     </Container>
   );
 };

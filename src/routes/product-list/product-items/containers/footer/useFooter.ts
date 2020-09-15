@@ -16,11 +16,11 @@ const useFooter = (props: Props) => {
   const handleSubTotal = useCallback(() => {
     let totalAmount = 0;
     let totalQtd = 0;
-
-    productItems.forEach((item) => {
-      totalAmount += parseFloat(item.amount);
-      totalQtd += parseFloat(item.qtd);
-    });
+    if (productItems)
+      productItems.forEach((item) => {
+        totalAmount += parseFloat(item.amount);
+        totalQtd += parseFloat(item.qtd);
+      });
 
     setAmountTotal(totalAmount.toFixed(2));
     setQtdTotal(totalQtd.toString());

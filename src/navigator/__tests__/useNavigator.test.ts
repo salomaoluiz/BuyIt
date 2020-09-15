@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import useNavigator from '@navigator/useNavigator';
 import { authSelectors } from '@store/auth';
 import { generalSelector } from '@store/general';
-import { AppStateMockBuilder } from '@store/__mocks__/AppStateMockBuilder';
+import { AppStateMockBuilder } from '@store/__mocks__/AppStateMockBuilder.mock';
 
 const mockState = new AppStateMockBuilder();
 jest

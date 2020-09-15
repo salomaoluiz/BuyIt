@@ -31,6 +31,14 @@ module.exports = {
     'object-curly-spacing': ['error', 'always'],
     semi: 'warn',
     'react/display-name': 'off',
-    '@typescript-eslint/ban-ts-ignore': 'off'
+    '@typescript-eslint/ban-ts-ignore': 'off',
   },
+  overrides: [
+    {
+      files: ['*.test.ts', '*.test.tsx', '*.mock.ts'],
+      rules: {
+        '@typescript-eslint/no-explicit-any': 'off',
+      },
+    },
+  ],
 };

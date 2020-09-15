@@ -38,16 +38,8 @@ const resultErrorRequired: ErrorInterface = {
       errorMessage: strings.generalErrors.thisValueIsRequired,
     },
     {
-      errorItem: 'amount',
-      errorMessage: strings.generalErrors.invalidValueUseOnlyDot,
-    },
-    {
       errorItem: 'qtd',
       errorMessage: strings.generalErrors.thisValueIsRequired,
-    },
-    {
-      errorItem: 'qtd',
-      errorMessage: strings.generalErrors.invalidValue,
     },
   ],
 };
