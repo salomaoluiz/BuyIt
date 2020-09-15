@@ -1,6 +1,6 @@
 import validateForm from '..';
 import { productListErrors } from '../__mocks__/product-items.mock';
-import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilderMock';
+import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
 
 describe('Testando todo o fluxo de erros de formulários', () => {
   test('deve retornar o objeto de erro formatado para o productItem se os valores forem vazios', async () => {

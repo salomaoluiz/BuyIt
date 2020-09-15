@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback } from 'react';
 
-
 import productListSelectors from '@store/product-list/selectors';
 import { productListActions } from '@store/product-list';
-import { ProductItemForm } from '@store/product-list/types';
+import { ProductItem } from '@store/product-list/types';
 
 interface Props {
-  formParams: ProductItemForm;
+  formParams: Partial<ProductItem>;
   checkForm: () => Promise<boolean>;
   listId: string;
 }
@@ -21,7 +20,13 @@ const useNewItem = (props: Props) => {
     const isValid = await checkForm();
 
     if (isValid) {
-      dispatch(productListActions.setProductItemAsync(formParams, listId));
+      if (formParams.id) {
+        dispatch(productListActions.updateProductItemAsync(formParams, listId));
+        return;
+      }
+
+      dispatch(productListActions.createProductItemAsync(formParams, listId));
+      return;
     }
   }, [formParams]);
 

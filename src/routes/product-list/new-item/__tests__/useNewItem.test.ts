@@ -10,7 +10,7 @@ describe('NewItem - useNewItem', () => {
     jest.spyOn(reactRedux, 'useSelector').mockReturnValue(true);
   });
 
-  test('ao chamar onSaveButtonPress deve chamar o checkForm e disparar a action setProductItemAsync', async () => {
+  test('ao chamar onSaveButtonPress sem um id deve chamar o checkForm e disparar a action createProductItemAsync', async () => {
     const checkForm = jest.fn().mockResolvedValue(true);
     const initialProps = {
       formParams: {
@@ -33,7 +33,7 @@ describe('NewItem - useNewItem', () => {
 
     expect(checkForm).toHaveBeenCalled();
     expect(dispatch).toHaveBeenCalledWith(
-      productListActions.setProductItemAsync(
+      productListActions.createProductItemAsync(
         initialProps.formParams,
         initialProps.listId,
       ),

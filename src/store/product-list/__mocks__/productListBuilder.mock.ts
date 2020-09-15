@@ -3,6 +3,8 @@ import { ProductItems, ProductItem } from '../types';
 export class ProductListBuilderMock {
   id = '';
   name = '';
+  createdAt = 0;
+  updatedAt = 0;
   items: ProductItems = [];
 
   withId(id: string) {
@@ -26,11 +28,28 @@ export class ProductListBuilderMock {
     this.items = newItems;
     return this;
   }
-  build = () => {
-    return {
+
+  withCreatedAt(date: number) {
+    this.createdAt = date;
+    return this;
+  }
+
+  withUpdatedAt(date: number) {
+    this.updatedAt = date;
+    return this;
+  }
+
+  build = (props?: { inArray?: boolean }): any => {
+    const data = {
       id: this.id,
       name: this.name,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
       items: this.items,
     };
+    if (props && props.inArray) {
+      return [data];
+    }
+    return data;
   };
 }

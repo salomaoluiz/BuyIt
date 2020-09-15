@@ -1,6 +1,6 @@
 //@ts-nocheck
-import { ProductListBuilderMock } from './productListBuilderMock';
-import { ProductItemBuilderMock } from './productItemBuilderMock';
+import { ProductListBuilderMock } from './productListBuilder.mock';
+import { ProductItemBuilderMock } from './productItemBuilder.mock';
 
 export const firstProductItem = () =>
   new ProductItemBuilderMock()

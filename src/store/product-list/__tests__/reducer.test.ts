@@ -2,7 +2,7 @@
 
 import listItemsReducer from '../reducer';
 import { productListActions } from '..';
-import { ProductListBuilderMock } from '../__mocks__/productListBuilderMock';
+import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
 
 describe('ProductList Reducers', () => {
   const initialState = {

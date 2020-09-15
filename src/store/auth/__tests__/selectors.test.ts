@@ -1,5 +1,5 @@
 import { authSelectors } from '../';
-import { AppStateMockBuilder } from '@store/__mocks__/AppStateMockBuilder';
+import { AppStateMockBuilder } from '@store/__mocks__/AppStateMockBuilder.mock';
 
 describe('Testando AuthSelectors', () => {
   test('deve retornar o state correto', () => {

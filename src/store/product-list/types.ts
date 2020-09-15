@@ -1,12 +1,19 @@
 export enum ProductListTypes {
   SET_LOADING = '@productLists/SET_LOADING',
   SET_ERROR = '@productLists/SET_ERROR',
-  SET_PRODUCT_LIST_ASYNC = '@productLists/SET_PRODUCT_LIST_ASYNC',
-  SET_PRODUCT_LIST = '@productLists/SET_PRODUCT_LIST',
-  SET_PRODUCT_ITEM_ASYNC = '@productLists/SET_PRODUCT_ITEM_ASYNC',
-  SET_PRODUCT_ITEM = '@productLists/SET_PRODUCT_ITEM',
+  SET_SYNCED = '@productLists/SET_SYNCED',
+
+  CREATE_PRODUCT_LIST_ASYNC = '@productLists/CREATE_PRODUCT_LIST_ASYNC',
+  GET_PRODUCT_LISTS_ASYNC = '@productList/GET_PRODUCT_LISTS_ASYNC',
+  UPDATE_PRODUCT_LIST_ASYNC = '@productList/UPDATE_PRODUCT_LIST_ASYNC',
   DELETE_PRODUCT_LIST_ASYNC = '@productLists/DELETE_PRODUCT_LIST_ASYNC',
+
+  CREATE_PRODUCT_ITEM_ASYNC = '@productLists/CREATE_PRODUCT_ITEM_ASYNC',
+  GET_PRODUCT_ITEMS_ASYNC = '@productLists/GET_PRODUCT_ITEMS_ASYNC',
+  UPDATE_PRODUCT_ITEM_ASYNC = '@productList/UPDATE_PRODUCT_ITEM_ASYNC',
   DELETE_PRODUCT_ITEM_ASYNC = '@productLists/DELETE_PRODUCT_ITEM_ASYNC',
+
+  SET_PRODUCT_LIST = '@productLists/SET_PRODUCT_LIST',
 }
 
 export type ProductItemForm = {
@@ -26,6 +33,8 @@ export type ProductListForm = {
 };
 export interface ProductList extends ProductListForm {
   id: string;
+  createdAt: number;
+  updatedAt: number;
   items: ProductItems;
 }
 
@@ -35,7 +44,7 @@ export type ProductItems = Array<ProductItem>;
 export interface ProductListState {
   isLoading: boolean;
   productLists: ProductLists;
-  error?: Error;
+  error?: string;
 }
 
 export type ProductListActions<Payload> = {
