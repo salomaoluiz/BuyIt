@@ -1,15 +1,21 @@
 import * as React from 'react';
-
-import * as strings from '@locales/product-list';
-
 import useNewItem from './useNewItem';
-import { Container, TwoColumnsContainer, SubContainer, ButtonContainer } from './styles';
+import {
+  Container,
+  TwoColumnsContainer,
+  SubContainer,
+  ButtonContainer,
+} from './styles';
 import TextInput from '@components/text-input';
 import Background from '@components/background';
 import DropdownMenu from '@components/dropdown-menu';
 import { unitList } from './constants';
 import useForm from './useForm';
 import CircleButton from '@components/circle-button';
+import appLocale, { appCurrency } from '@locales';
+
+const strings = appLocale();
+const { currency } = appCurrency();
 
 const NewItem = () => {
   const {
@@ -37,13 +43,13 @@ const NewItem = () => {
         <SubContainer>
           <TextInput
             value={name}
-            title={strings.name}
+            title={strings.general.name}
             onChangeText={setName}
             {...handleErrorMessage('name')}
           />
           <TextInput
             value={brand}
-            title={strings.brand}
+            title={strings.productLists.brand}
             onChangeText={setBrand}
             {...handleErrorMessage('brand')}
           />
@@ -51,15 +57,15 @@ const NewItem = () => {
             value={amount}
             icon="currency-usd"
             onChangeText={setAmount}
-            title={strings.amount}
-            prefix={strings.currentCurrency}
+            title={strings.productLists.amount}
+            prefix={currency}
             keyboardType="decimal-pad"
             {...handleErrorMessage('amount')}
           />
           <TwoColumnsContainer>
             <TextInput
               value={qtd}
-              title={strings.qtd}
+              title={strings.productLists.qtd}
               onChangeText={setQtd}
               icon="cart-outline"
               keyboardType="decimal-pad"

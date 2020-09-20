@@ -3,7 +3,7 @@ import { initialState } from '../reducer';
 import generalActions from '../actions';
 
 describe('General Reducers', () => {
-  it('should set correctly the loading state', () => {
+  test('deve retornar o valor correto para o setLoading', () => {
     const action = generalActions.setLoading(true);
     const response = generalReducers(initialState, action);
 

@@ -1,13 +1,17 @@
+import appLocale from '@locales';
+
+const strings = appLocale();
+
 const unitList = [
-  { id: 'un', value: 'Unidade' },
-  { id: 'ml', value: 'Mililitro' },
-  { id: 'L', value: 'Litro' },
-  { id: 'g', value: 'Gramas' },
-  { id: 'Kg', value: 'Kilogramas' },
-  { id: 'cx', value: 'Caixa' },
-  { id: 'emb', value: 'Embalagem' },
-  { id: 'lata', value: 'Lata' },
-  { id: 'galão', value: 'Galão' },
+  { id: 'un', value: strings.unit.unit },
+  { id: 'ml', value: strings.unit.milliliter },
+  { id: 'L', value: strings.unit.liter },
+  { id: 'g', value: strings.unit.gram },
+  { id: 'Kg', value: strings.unit.kilogram },
+  { id: 'box', value: strings.unit.box },
+  { id: 'pack', value: strings.unit.pack },
+  { id: 'can', value: strings.unit.can },
+  { id: 'gallon', value: strings.unit.gallon },
 ];
 
 export { unitList };

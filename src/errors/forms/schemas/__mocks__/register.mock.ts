@@ -1,37 +1,39 @@
-import strings from '@locales/general-errors';
+import appLocale from '@locales';
 import { generateError } from './product-items.mock';
 
+const strings = appLocale();
+
 export const nameRequired = generateError(
-  strings.generalErrors.thisValueIsRequired,
+  strings.errors.general.thisValueIsRequired,
   'name',
 );
 
 export const emailRequired = generateError(
-  strings.generalErrors.thisValueIsRequired,
+  strings.errors.general.thisValueIsRequired,
   'email',
 );
 
 export const passwordRequired = generateError(
-  strings.generalErrors.thisValueIsRequired,
+  strings.errors.general.thisValueIsRequired,
   'password',
 );
 
 export const passwordShort = generateError(
-  strings.login.passwordShort,
+  strings.errors.auth.passwordShort,
   'password',
 );
 
 export const confirmPasswordRequired = generateError(
-  strings.generalErrors.thisValueIsRequired,
+  strings.errors.general.thisValueIsRequired,
   'confirmPassword',
 );
 
 export const confirmPasswordShort = generateError(
-  strings.login.passwordShort,
+  strings.errors.auth.passwordShort,
   'confirmPassword',
 );
 
 export const passwordNotEqual = generateError(
-  strings.register.passwordIsNotEqual,
+  strings.errors.auth.passwordIsNotEqual,
   'confirmPassword',
 );
