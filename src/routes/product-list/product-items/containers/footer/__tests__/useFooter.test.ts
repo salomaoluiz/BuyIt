@@ -2,7 +2,7 @@ import * as navigation from '@react-navigation/native';
 import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
-import useFooter from '../../../containers/footer/useFooter';
+import useFooter from '../useFooter';
 import { Routes } from '@routes';
 
 const mockProductItem = new ProductItemBuilderMock()

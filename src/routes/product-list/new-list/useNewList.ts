@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { productListActions } from '@store/product-list';
 import { ProductList } from '@store/product-list/types';
+import useHeader from '@navigator/components/header/useHeader';
 
 interface Props {
   listParams: Partial<ProductList>;
@@ -23,6 +24,8 @@ const useNewList = (props: Props) => {
       return;
     }
   }, [props]);
+
+  useHeader({ showHeader: true });
 
   return {
     onAddPress,

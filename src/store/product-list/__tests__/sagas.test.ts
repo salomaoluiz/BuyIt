@@ -74,7 +74,7 @@ describe('ProductList Sagas', () => {
 
     const error = new Error('error');
     expect(gen.throw(error).value).toEqual(
-      put(productListActions.setError(error)),
+      put(productListActions.setError(error.message)),
     );
 
     expect(gen.next().value).toEqual(put(productListActions.setLoading(false)));
@@ -113,7 +113,7 @@ describe('ProductList Sagas', () => {
 
     const error = new Error('error');
     expect(gen.throw(error).value).toEqual(
-      put(productListActions.setError(error)),
+      put(productListActions.setError(error.message)),
     );
 
     expect(gen.next().value).toEqual(put(productListActions.setLoading(false)));
@@ -175,7 +175,7 @@ describe('ProductList Sagas', () => {
 
     const error = new Error('error');
     expect(gen.throw(error).value).toEqual(
-      put(productListActions.setError(error)),
+      put(productListActions.setError(error.message)),
     );
 
     expect(gen.next().value).toEqual(put(productListActions.setLoading(false)));
@@ -237,7 +237,7 @@ describe('ProductList Sagas', () => {
 
     const error = new Error('error');
     expect(gen.throw(error).value).toEqual(
-      put(productListActions.setError(error)),
+      put(productListActions.setError(error.message)),
     );
 
     expect(gen.next().value).toEqual(put(productListActions.setLoading(false)));
@@ -315,7 +315,7 @@ describe('ProductList Sagas', () => {
 
     const error = new Error('error');
     expect(gen.throw(error).value).toEqual(
-      put(productListActions.setError(error)),
+      put(productListActions.setError(error.message)),
     );
 
     expect(gen.next().value).toEqual(put(productListActions.setLoading(false)));
@@ -378,7 +378,7 @@ describe('ProductList Sagas', () => {
 
     const error = new Error('error');
     expect(gen.throw(error).value).toEqual(
-      put(productListActions.setError(error)),
+      put(productListActions.setError(error.message)),
     );
 
     expect(gen.next().value).toEqual(put(productListActions.setLoading(false)));
@@ -450,7 +450,7 @@ describe('ProductList Sagas', () => {
 
     const error = new Error('error');
     expect(gen.throw(error).value).toEqual(
-      put(productListActions.setError(error)),
+      put(productListActions.setError(error.message)),
     );
 
     expect(gen.next().value).toEqual(put(productListActions.setLoading(false)));
@@ -527,7 +527,7 @@ describe('ProductList Sagas', () => {
 
     const error = new Error('error');
     expect(gen.throw(error).value).toEqual(
-      put(productListActions.setError(error)),
+      put(productListActions.setError(error.message)),
     );
 
     expect(gen.next().value).toEqual(put(productListActions.setLoading(false)));

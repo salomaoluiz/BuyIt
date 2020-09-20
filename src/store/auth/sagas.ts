@@ -1,12 +1,11 @@
 import { takeLatest, put, call, select } from 'redux-saga/effects';
-import { AuthTypes, AuthActions, AuthRegisterForm, AuthState } from './types';
+import { AuthTypes, AuthActions, AuthRegisterForm } from './types';
 import { authActions, authModels, authSelectors } from './';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import useFirebaseError from '@errors/useFirebaseError';
 import { notificationActions } from '@store/notification';
-import errorsString from '@locales/general-errors';
-import * as registerStrings from '@locales/register';
 import navigationService from '@navigator/services/navigationService';
+import { notificationMessages } from './utils';
 
 const { getErrorMessage } = useFirebaseError('auth');
 
@@ -16,28 +15,25 @@ export function* loginEmailPasswordAsync(
   const email = props.payload?.email;
   const password = props.payload?.password;
 
-  const { isLoggedIn }: AuthState = yield select(authSelectors.getState);
-  yield put(authActions.setLoading(true));
-
   try {
+    const isAnonymously = yield select(authSelectors.isAnonymously);
+    yield put(authActions.setLoading(true));
+
     if (email && password) {
-      const userCredentials: FirebaseAuthTypes.UserCredential = yield call(
+      const userCredentials = yield call(
         authModels.loginWithEmailPassword,
         email,
         password,
       );
-
-      if (isLoggedIn) navigationService.goBack();
+      
+      
       yield put(authActions.login(userCredentials.user));
-      yield put(authActions.loginEmailPassword());
+      
+      if (isAnonymously) yield call(navigationService.goBack);
     }
-  } catch (e) {
-    const errorMessage = getErrorMessage(e.message);
-
-    const notificationParams = {
-      title: errorsString.generalErrors.opsWeHaveAProblem,
-      body: errorMessage,
-    };
+  } catch (err) {
+    const errorMessage = getErrorMessage(err.message);
+    const notificationParams = notificationMessages.opsError(errorMessage);
 
     yield put(notificationActions.sendNotificationAsync(notificationParams));
   } finally {
@@ -46,22 +42,15 @@ export function* loginEmailPasswordAsync(
 }
 
 export function* logoutAsync() {
-  yield put(authActions.setLoading(true));
-  const { isAnonymously, currentUser }: AuthState = yield select(
-    authSelectors.getState,
-  );
-
   try {
-    if (isAnonymously && currentUser) {
-      yield call(authModels.deleteAccount, currentUser);
-    } else {
+    const isLogged = yield select(authSelectors.isLogged);
+
+    if (isLogged) {
       yield call(authModels.logout);
     }
     yield put(authActions.logout());
   } catch {
     yield put(authActions.logout());
-  } finally {
-    yield put(authActions.setLoading(false));
   }
 }
 
@@ -71,9 +60,10 @@ export function* registerEmailPasswordAsync(
   const email = props.payload?.email;
   const password = props.payload?.password;
   const name = props.payload?.name;
-  yield put(authActions.setLoading(true));
 
   try {
+    yield put(authActions.setLoading(true));
+
     if (email && password) {
       const userCredentials: FirebaseAuthTypes.UserCredential = yield call(
         authModels.registerEmailPassword,
@@ -84,22 +74,14 @@ export function* registerEmailPasswordAsync(
       yield call(authModels.updateUserProfile, userCredentials.user, name);
 
       yield call(authModels.sendEmailVerification, userCredentials.user);
-      const notificationParams = {
-        title: registerStrings.registerWithSuccess,
-        body: registerStrings.verifyYourEmailToConfirm,
-        icon: 'emoticon-excited-outline',
-      };
+      const notificationParams = notificationMessages.registerSuccess;
 
       yield put(notificationActions.sendNotificationAsync(notificationParams));
       yield call(navigationService.goBack);
     }
   } catch (e) {
     const errorMessage = getErrorMessage(e.message);
-
-    const notificationParams = {
-      title: errorsString.generalErrors.opsWeHaveAProblem,
-      body: errorMessage,
-    };
+    const notificationParams = notificationMessages.opsError(errorMessage);
 
     yield put(notificationActions.sendNotificationAsync(notificationParams));
   } finally {

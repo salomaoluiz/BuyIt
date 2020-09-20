@@ -18,11 +18,7 @@ const UnauthenticatedStack = createStackNavigator<UnauthenticatedParamsList>();
 const UnauthenticatedNavigator = () => {
   return (
     <UnauthenticatedStack.Navigator>
-      <UnauthenticatedStack.Screen
-        name={Routes.Login}
-        component={Login}
-        options={{ headerShown: false }}
-      />
+      <UnauthenticatedStack.Screen name={Routes.Login} component={Login} />
       <UnauthenticatedStack.Screen
         name={Routes.RegisterUser}
         component={RegisterUser}

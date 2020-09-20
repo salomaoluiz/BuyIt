@@ -3,7 +3,6 @@ import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 export enum AuthTypes {
   SET_LOADING = '@@AUTH/SET_LOADING',
   LOGIN = '@@AUTH/LOGIN',
-  LOGIN_EMAIL_PASSWORD = '@@AUTH/LOGIN_EMAIL_PASSWORD',
   LINK_EMAIL_ACCOUNT_ASYNC = '@@AUTH/LINK_EMAIL_ACCOUNT_ASYNC',
   LOGIN_EMAIL_PASSWORD_ASYNC = '@@AUTH/LOGIN_EMAIL_PASSWORD_ASYNC',
   LOGIN_ANONYMOUSLY = '@@AUTH/LOGIN_ANONYMOUSLY',
@@ -13,22 +12,22 @@ export enum AuthTypes {
 }
 
 export type AuthState = {
-  isLoggedIn?: boolean;
-  isAnonymously?: boolean;
-  isOnline?: boolean;
-  isLoading?: boolean;
-  email?: string;
+  isLogged: boolean;
+  isOnline: boolean;
+  isLoading: boolean;
+  isAnonymously: boolean;
+  email: string;
   currentUser?: FirebaseAuthTypes.User;
 };
 
 export type AuthActions<Payload> = {
   type: AuthTypes;
-  payload: Partial<Payload>;
+  payload: Payload;
 };
 
 export type AuthReducer = (
   state: AuthState,
-  actions: AuthReducerActions,
+  actions: AuthActions<AuthState>,
 ) => AuthState;
 
 export interface AuthLoginForm {
@@ -40,5 +39,3 @@ export interface AuthRegisterForm extends AuthLoginForm {
   name: string;
   confirmPassword: string;
 }
-
-export type AuthReducerActions = AuthActions<Partial<AuthState>>;

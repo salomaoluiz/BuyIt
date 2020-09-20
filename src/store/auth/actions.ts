@@ -6,7 +6,7 @@ const actions = {
     type: AuthTypes.SET_LOADING,
     payload: { isLoading },
   }),
-  logout: (): AuthActions<{}> => ({ type: AuthTypes.LOGOUT, payload: {} }),
+  logout: () => ({ type: AuthTypes.LOGOUT }),
   logoutAsync: (): AuthActions<{}> => ({
     type: AuthTypes.LOGOUT_ASYNC,
     payload: {},
@@ -17,10 +17,6 @@ const actions = {
     type: AuthTypes.LOGIN,
     payload: { currentUser },
   }),
-  loginEmailPassword: (): AuthActions<{}> => ({
-    type: AuthTypes.LOGIN_EMAIL_PASSWORD,
-    payload: {},
-  }),
   loginEmailPasswordAsync: (
     email: string,
     password: string,
@@ -30,9 +26,9 @@ const actions = {
   }),
   loginAnonymously: (
     isOnline?: boolean,
-  ): AuthActions<{ isOnline?: boolean }> => ({
+  ): AuthActions<{ isOnline: boolean }> => ({
     type: AuthTypes.LOGIN_ANONYMOUSLY,
-    payload: { isOnline },
+    payload: { isOnline: !!isOnline },
   }),
   registerEmailPasswordAsync: (
     props: AuthRegisterForm,
