@@ -6,9 +6,11 @@ import { Alert } from 'react-native';
 import * as reactRedux from 'react-redux';
 import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
 import useListCard from '../useListCard';
-import * as strings from '@locales/product-list';
 import { productListActions } from '@store/product-list';
 import { ProductList } from '@store/product-list/types';
+import appLocale from '@locales';
+
+const strings = appLocale();
 
 jest.mock('@react-navigation/native');
 describe('ProductList - useListCard', () => {
@@ -70,11 +72,11 @@ describe('ProductList - useListCard', () => {
       result.current.handleListLongPress();
     });
     expect(alertSpy).toHaveBeenCalledWith(
-      strings.whatWant,
-      strings.whatWantDo,
+      strings.general.whatWant,
+      strings.general.whatWantDo,
       [
-        { text: strings.editItem, onPress: result.current._handleEditItem },
-        { text: strings.deleteItem, onPress: result.current._handleDeleteItem },
+        { text: strings.general.editItem, onPress: result.current._handleEditItem },
+        { text: strings.general.deleteItem, onPress: result.current._handleDeleteItem },
       ],
     );
   });

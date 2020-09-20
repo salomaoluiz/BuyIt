@@ -4,9 +4,11 @@ import TextInput from '@components/text-input';
 import { Container } from './styles';
 import useRegister from './useRegister';
 import Button from '@components/button';
-import * as strings from '@locales/register';
 import FullscreenLoader from '@components/fullscreen-loader';
 import useForm from './useForm';
+import appLocale from '@locales';
+
+const strings = appLocale();
 
 const RegisterUser = () => {
   const {
@@ -34,7 +36,7 @@ const RegisterUser = () => {
       {shouldShowScreen && (
         <Container keyboardShouldPersistTaps="handled">
           <TextInput
-            title={strings.name}
+            title={strings.auth.name}
             value={name}
             onChangeText={setName}
             error={!!handleErrorMessage('name').error}
@@ -42,7 +44,7 @@ const RegisterUser = () => {
             textContentType="name"
           />
           <TextInput
-            title={strings.email}
+            title={strings.auth.email}
             value={email}
             onChangeText={setEmail}
             error={!!handleErrorMessage('email').error}
@@ -50,7 +52,7 @@ const RegisterUser = () => {
             textContentType="emailAddress"
           />
           <TextInput
-            title={strings.password}
+            title={strings.auth.password}
             value={password}
             onChangeText={setPassword}
             secureTextEntry
@@ -59,7 +61,7 @@ const RegisterUser = () => {
             textContentType="newPassword"
           />
           <TextInput
-            title={strings.confirmPassword}
+            title={strings.auth.confirmPassword}
             value={confirmPassword}
             onChangeText={setConfirmPassword}
             secureTextEntry
@@ -69,7 +71,7 @@ const RegisterUser = () => {
           />
           <Button
             onPress={handleRegisterPress}
-            title={strings.registerButton}
+            title={strings.auth.register}
           />
         </Container>
       )}

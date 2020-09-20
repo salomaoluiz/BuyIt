@@ -3,11 +3,13 @@ import { Alert } from 'react-native';
 import * as navigation from '@react-navigation/native';
 import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
 import { renderHook, act } from '@testing-library/react-hooks';
-import useItemCard from './useItemCard';
+import useItemCard from '../item-card/useItemCard';
 import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
 import { Routes } from '@routes';
 import { productListActions } from '@store/product-list';
-import * as strings from '@locales/product-list';
+import appLocale from '@locales';
+
+const strings = appLocale();
 
 jest.mock('@react-navigation/native');
 
@@ -79,11 +81,17 @@ describe('ProductItems - Components - ItemCard - useItemCard', () => {
     });
 
     expect(alert).toHaveBeenCalledWith(
-      strings.whatWant,
-      strings.whatWantDo,
+      strings.general.whatWant,
+      strings.general.whatWantDo,
       [
-        { text: strings.editItem, onPress: result.current._handleEditItem },
-        { text: strings.deleteItem, onPress: result.current._handleDeleteItem },
+        {
+          text: strings.general.editItem,
+          onPress: result.current._handleEditItem,
+        },
+        {
+          text: strings.general.deleteItem,
+          onPress: result.current._handleDeleteItem,
+        },
       ],
     );
   });

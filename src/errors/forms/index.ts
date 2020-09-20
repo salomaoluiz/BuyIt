@@ -1,17 +1,7 @@
-import productItem from './product-item';
-import productList from './product-list';
 import { ProductItemForm, ProductListForm } from '@store/product-list/types';
-import login from './login';
-import register from './register';
 import { ValidationError } from 'yup';
 import { AuthLoginForm, AuthRegisterForm } from '@store/auth/types';
-
-const validationList = {
-  productItem,
-  login,
-  register,
-  productList,
-};
+import testSchema from './testSchema';
 
 export type FormName = 'productItem' | 'login' | 'register' | 'productList';
 export type FormValues =
@@ -19,7 +9,7 @@ export type FormValues =
   | AuthLoginForm
   | AuthRegisterForm
   | ProductListForm;
-  
+
 type ErrorList = { errorItem: string; errorMessage: string }[];
 
 export interface ErrorInterface {
@@ -43,15 +33,15 @@ const formatErrorList = (err: ValidationError[]) => {
 
 const validateForm = async (
   value: Partial<FormValues>,
-  validate: FormName,
+  formName: FormName,
 ): Promise<ErrorInterface | undefined> => {
-  const validationResult = await validationList[validate](value);
+  const validationResult = await testSchema(formName, value);
 
   if (validationResult === true) return;
 
   const errorsList = formatErrorList(validationResult);
 
-  return { formTested: validate, errors: errorsList };
+  return { formTested: formName, errors: errorsList };
 };
 
 export default validateForm;

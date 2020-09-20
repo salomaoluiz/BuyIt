@@ -1,4 +1,4 @@
-import register from '../register';
+import testSchema from '../../testSchema';
 
 import * as loginErrors from '../__mocks__/register.mock';
 
@@ -11,7 +11,7 @@ describe('Testando a validação do ProductList', () => {
       confirmPassword: '123456',
     };
 
-    const result = await register(mock);
+    const result = await testSchema('register', mock);
     expect(result).toEqual(true);
   });
 
@@ -23,7 +23,7 @@ describe('Testando a validação do ProductList', () => {
       confirmPassword: '',
     };
 
-    const result = await register(mock);
+    const result = await testSchema('register', mock);
 
     expect(result).toEqual([
       loginErrors.nameRequired,
@@ -43,7 +43,7 @@ describe('Testando a validação do ProductList', () => {
       confirmPassword: '654321',
     };
 
-    const result = await register(mock);
+    const result = await testSchema('register', mock);
 
     expect(result).toEqual([loginErrors.passwordNotEqual]);
   });

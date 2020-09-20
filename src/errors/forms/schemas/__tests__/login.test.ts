@@ -1,4 +1,4 @@
-import login from '../login';
+import testSchema from '../../testSchema';
 
 import * as loginErrors from '../__mocks__/login.mock';
 
@@ -6,20 +6,20 @@ describe('Testando a validação do ProductList', () => {
   test('deve retornar true se todos os valores forem válidos', async () => {
     const mock = {
       email: 'a@a.com',
-      password: '123456'
+      password: '123456',
     };
 
-    const result = await login(mock);
+    const result = await testSchema('login', mock);
     expect(result).toEqual(true);
   });
 
   test('deve retornar um array com erros para valores vazios e que a senha é muito curta', async () => {
     const mock = {
       email: '',
-      password: ''
+      password: '',
     };
 
-    const result = await login(mock);
+    const result = await testSchema('login', mock);
 
     expect(result).toEqual([
       loginErrors.emailRequired,
@@ -27,5 +27,4 @@ describe('Testando a validação do ProductList', () => {
       loginErrors.passwordShort,
     ]);
   });
-
 });

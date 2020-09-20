@@ -1,5 +1,5 @@
 import validateForm from '..';
-import { productListErrors } from '../__mocks__/product-items.mock';
+import { productListErrors } from '../schemas/__mocks__/product-items.mock';
 import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
 
 describe('Testando todo o fluxo de erros de formulários', () => {

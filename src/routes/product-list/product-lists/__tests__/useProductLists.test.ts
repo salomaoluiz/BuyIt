@@ -1,3 +1,4 @@
+import appLocale from '@locales';
 import useHeader from '@navigator/components/header/useHeader';
 import * as navigation from '@react-navigation/native';
 import { Routes } from '@routes';
@@ -8,6 +9,7 @@ import * as reactRedux from 'react-redux';
 import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
 import useProductLists from '../useProductLists';
 
+const strings = appLocale();
 jest.mock('@react-navigation/native');
 jest.mock('@navigator/components/header/useHeader', () => jest.fn());
 describe('ProductList - useProductLists', () => {
@@ -24,7 +26,10 @@ describe('ProductList - useProductLists', () => {
   test('ao inicializar deve realizar um fetch nas listas e mostrar o header', () => {
     renderHook(useProductLists);
 
-    expect(useHeader).toHaveBeenCalledWith({ showHeader: true });
+    expect(useHeader).toHaveBeenCalledWith({
+      showHeader: true,
+      title: strings.productLists.lists,
+    });
     expect(dispatch).toHaveBeenCalledWith(
       productListActions.getProductListsAsync(),
     );

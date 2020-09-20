@@ -16,7 +16,6 @@ export function* createProductListAsync(
   props: ProductListActions<{ productList: ProductList }>,
 ) {
   const { productList } = props.payload;
-
   try {
     yield put(productListActions.setError());
     yield put(productListActions.setLoading(true));
