@@ -1,23 +1,28 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { authActions, authSelectors } from '@store/auth';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { StatusBar } from 'react-native';
-import { Props } from '.';
-import useFormError from 'src/errors/useFormError';
+
 import { Routes } from '@routes';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { UnauthenticatedParamsList } from '@navigator/unauthenticated';
+import { AuthLoginForm } from '@store/auth/types';
+import useHeader from '@navigator/components/header/useHeader';
 
-const useLogin = ({ navigation }: Props) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const formList = { email, password };
-  const { handleErrorMessage, validateError } = useFormError(formList, 'login');
+type NavProps = NavigationProp<UnauthenticatedParamsList, 'Login'>;
 
-  const { isLoading, isLoggedIn, isAnonymously } = useSelector(
-    authSelectors.getState,
-  );
-  const isLoggedAnonymously = isLoggedIn && isAnonymously;
+interface Props {
+  formParams: AuthLoginForm;
+  checkForm: () => Promise<boolean>;
+}
+const useLogin = (props: Props) => {
+  const { checkForm, formParams } = props;
+  const { email, password } = formParams;
 
+  const navigation = useNavigation<NavProps>();
+  const isLoading = useSelector(authSelectors.isLoading);
+  const isAnonymously = useSelector(authSelectors.isAnonymously);
   const dispatch = useDispatch();
 
   const handleLoginAnonymously = useCallback(() => {
@@ -25,31 +30,27 @@ const useLogin = ({ navigation }: Props) => {
   }, []);
 
   const handleLoginEmailPassword = useCallback(async () => {
-    const canDoLogin = await validateError();
+    const canDoLogin = await checkForm();
     if (canDoLogin) {
       dispatch(authActions.loginEmailPasswordAsync(email, password));
     }
-
-  }, [email, password]);
+  }, [formParams]);
 
   const handleRegisterUser = useCallback(() => {
     navigation.navigate(Routes.RegisterUser, { email });
   }, [email]);
+
+  useHeader({ showHeader: !!isAnonymously, showBackButton: true });
 
   useEffect(() => {
     StatusBar.setHidden(true);
   }, []);
 
   return {
+    isLoading,
+    isAnonymously,
     handleLoginAnonymously,
     handleLoginEmailPassword,
-    isLoading,
-    isLoggedAnonymously,
-    email,
-    setEmail,
-    password,
-    setPassword,
-    handleErrorMessage,
     handleRegisterUser,
   };
 };

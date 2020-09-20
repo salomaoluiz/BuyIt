@@ -1,56 +1,46 @@
-import {
-  AuthActions,
-  AuthState,
-  AuthTypes,
-  AuthReducer,
-  AuthReducerActions,
-} from './types';
-import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import { AuthActions, AuthState, AuthTypes, AuthReducer } from './types';
 
 const initialState: AuthState = {
-  isLoggedIn: false,
-  isAnonymously: false,
+  isLogged: false,
   isOnline: false,
   isLoading: false,
+  isAnonymously: false,
   email: '',
   currentUser: undefined,
 };
 
 const setLoading: AuthReducer = (
   state: AuthState,
-  actions: AuthReducerActions,
+  actions: AuthActions<AuthState>,
 ): AuthState => ({
   ...state,
-  isLoading: actions.payload?.isLoading,
+  isLoading: !!actions.payload.isLoading,
 });
 
-const logout: AuthReducer = (): AuthState => ({
+const logout: AuthReducer = (state: AuthState): AuthState => ({
+  ...state,
   ...initialState,
 });
 
 const login: AuthReducer = (
   state: AuthState,
-  actions: AuthActions<{ currentUser?: FirebaseAuthTypes.User }>,
+  actions: AuthActions<AuthState>,
 ): AuthState => ({
   ...state,
-  currentUser: actions.payload?.currentUser,
-});
-
-const loginEmailPassword = (state: AuthState): AuthState => ({
-  ...state,
-  isAnonymously: false,
-  isLoggedIn: true,
+  isLogged: true,
   isOnline: true,
+  isAnonymously: false,
+  currentUser: actions.payload?.currentUser,
 });
 
 const loginAnonymously = (
   state: AuthState,
-  actions: AuthReducerActions,
+  actions: AuthActions<AuthState>,
 ): AuthState => ({
   ...state,
+  isLogged: false,
+  isOnline: !!actions.payload.isOnline,
   isAnonymously: true,
-  isLoggedIn: true,
-  isOnline: !!actions.payload?.isOnline,
 });
 
 const authReducerMap = new Map<AuthTypes, AuthReducer>([
@@ -58,12 +48,11 @@ const authReducerMap = new Map<AuthTypes, AuthReducer>([
   [AuthTypes.LOGOUT, logout],
   [AuthTypes.LOGIN_ANONYMOUSLY, loginAnonymously],
   [AuthTypes.LOGIN, login],
-  [AuthTypes.LOGIN_EMAIL_PASSWORD, loginEmailPassword],
 ]);
 
 const reducer = (
   state: AuthState = initialState,
-  actions: AuthReducerActions,
+  actions: AuthActions<AuthState>,
 ): AuthState => {
   const authReducer = authReducerMap.get(actions.type);
   if (authReducer) return authReducer(state, actions);

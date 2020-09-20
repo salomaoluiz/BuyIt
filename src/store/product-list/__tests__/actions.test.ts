@@ -17,12 +17,12 @@ describe('ProductList Actions', () => {
 
   test('deve retornar setError corretamente.', () => {
     const mockError = new Error('teste');
-    const result = productListActions.setError(mockError);
+    const result = productListActions.setError(mockError.message);
 
     expect(result).toEqual({
       type: ProductListTypes.SET_ERROR,
       payload: {
-        error: mockError,
+        error: 'teste',
       },
     });
   });

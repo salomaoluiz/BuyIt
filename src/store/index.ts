@@ -17,6 +17,7 @@ const configureStore = (): { store: Store; persistor: Persistor } => {
 
   const sagaMiddleware = createSagaMiddleware();
 
+  
   const store: Store<RootState> = createStore(
     persistedReducer,
     {},

@@ -4,6 +4,7 @@ import { useCallback } from 'react';
 import productListSelectors from '@store/product-list/selectors';
 import { productListActions } from '@store/product-list';
 import { ProductItem } from '@store/product-list/types';
+import useHeader from '@navigator/components/header/useHeader';
 
 interface Props {
   formParams: Partial<ProductItem>;
@@ -29,6 +30,8 @@ const useNewItem = (props: Props) => {
       return;
     }
   }, [formParams]);
+
+  useHeader({ showHeader: true });
 
   return {
     onSaveButtonPress,

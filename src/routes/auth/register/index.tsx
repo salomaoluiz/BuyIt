@@ -6,21 +6,24 @@ import useRegister from './useRegister';
 import Button from '@components/button';
 import * as strings from '@locales/register';
 import FullscreenLoader from '@components/fullscreen-loader';
+import useForm from './useForm';
 
 const RegisterUser = () => {
   const {
-    isLoading,
-    email,
-    name,
-    password,
-    confirmPassword,
     setEmail,
     setName,
     setPassword,
     setConfirmPassword,
-    handleRegisterPress,
+    checkForm,
     handleErrorMessage,
-  } = useRegister();
+    formParams,
+  } = useForm();
+  const { confirmPassword, email, name, password } = formParams;
+
+  const { isLoading, handleRegisterPress } = useRegister({
+    formParams,
+    checkForm,
+  });
 
   const shouldShowLoading = isLoading;
   const shouldShowScreen = !isLoading;

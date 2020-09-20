@@ -13,7 +13,7 @@ const actions = {
     type: ProductListTypes.SET_LOADING,
     payload: { isLoading },
   }),
-  setError: (error?: Error): ProductListActions<{ error?: Error }> => ({
+  setError: (error?: string): ProductListActions<{ error?: string }> => ({
     type: ProductListTypes.SET_ERROR,
     payload: { error },
   }),

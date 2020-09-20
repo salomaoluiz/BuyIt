@@ -6,9 +6,6 @@ const defaultHeader: StackNavigationOptions = {
     backgroundColor: colors.list.brandPrimaryDark,
   },
   headerTintColor: colors.list.neutralDarkest,
-  headerRightContainerStyle: {
-    margin: 16,
-  },
 };
 
 const navigationStyles = {

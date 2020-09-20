@@ -1,14 +1,15 @@
+// @ts-nocheck
+
 import authReducer from '../reducer';
-import { AuthState } from '../types';
 import { authActions } from '..';
 import { mockCurrentUser } from 'src/__tests__/firebase-mocks';
 
 describe('Auth Reducer', () => {
-  const initialState: AuthState = {
-    isLoggedIn: false,
-    isAnonymously: false,
+  const initialState = {
+    isLogged: false,
     isOnline: false,
     isLoading: false,
+    isAnonymously: false,
     email: '',
     currentUser: undefined,
   };
@@ -16,8 +17,6 @@ describe('Auth Reducer', () => {
   test('deve retornar o state para uma action nao mapeada', () => {
     const action = { type: 'any', payload: {} };
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
     const response = authReducer(initialState, action);
 
     expect(response).toEqual(initialState);
@@ -46,32 +45,9 @@ describe('Auth Reducer', () => {
 
     expect(response).toEqual({
       ...initialState,
+      isOnline: true,
+      isLogged: true,
       currentUser: mockCurrentUser,
-    });
-  });
-
-  test('deve corretamente para a action loginEmailPassword', () => {
-    const action = authActions.loginEmailPassword();
-
-    const response = authReducer(initialState, action);
-
-    expect(response).toEqual({
-      ...initialState,
-      isLoggedIn: true,
-      isOnline: true,
-    });
-  });
-
-  test('deve corretamente para a action loginAnonymously quando está online', () => {
-    const action = authActions.loginAnonymously(true);
-
-    const response = authReducer(initialState, action);
-
-    expect(response).toEqual({
-      ...initialState,
-      isLoggedIn: true,
-      isOnline: true,
-      isAnonymously: true,
     });
   });
 
@@ -82,7 +58,6 @@ describe('Auth Reducer', () => {
 
     expect(response).toEqual({
       ...initialState,
-      isLoggedIn: true,
       isOnline: false,
       isAnonymously: true,
     });

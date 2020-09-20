@@ -33,7 +33,7 @@ export function* createProductListAsync(
 
     yield call(sagaServer.createProductList, ajustedProductList);
   } catch (err) {
-    yield put(productListActions.setError(err));
+    yield put(productListActions.setError(err.message));
   } finally {
     yield put(productListActions.setLoading(false));
   }
@@ -48,7 +48,7 @@ export function* getProductListsAsync() {
 
     yield put(productListActions.setProductLists(serverProductLists));
   } catch (err) {
-    yield put(productListActions.setError(err));
+    yield put(productListActions.setError(err.message));
   } finally {
     yield put(productListActions.setLoading(false));
   }
@@ -74,7 +74,7 @@ export function* updateProductListAsync(
 
     yield call(sagaServer.updateProductList, ajustedProductList);
   } catch (err) {
-    yield put(productListActions.setError(err));
+    yield put(productListActions.setError(err.message));
   } finally {
     yield put(productListActions.setLoading(false));
   }
@@ -96,7 +96,7 @@ export function* deleteProductListAsync(
 
     yield call(sagaServer.deleteProductList, listId);
   } catch (err) {
-    yield put(productListActions.setError(err));
+    yield put(productListActions.setError(err.message));
   } finally {
     yield put(productListActions.setLoading(false));
   }
@@ -122,7 +122,7 @@ export function* createProductItemAsync(
 
     yield call(sagaServer.createProductItem, formatedProductItem, listId);
   } catch (err) {
-    yield put(productListActions.setError(err));
+    yield put(productListActions.setError(err.message));
   } finally {
     yield put(productListActions.setLoading(false));
   }
@@ -146,7 +146,7 @@ export function* getProductItemsAsync(
 
     yield put(productListActions.setProductLists(productListsArray));
   } catch (err) {
-    yield put(productListActions.setError(err));
+    yield put(productListActions.setError(err.message));
   } finally {
     yield put(productListActions.setLoading(false));
   }
@@ -170,7 +170,7 @@ export function* deleteProductItemAsync(
 
     yield call(sagaServer.deleteProductItem, listId, itemId);
   } catch (err) {
-    yield put(productListActions.setError(err));
+    yield put(productListActions.setError(err.message));
   } finally {
     yield put(productListActions.setLoading(false));
   }
@@ -195,7 +195,7 @@ export function* updateProductItemAsync(
 
     yield call(sagaServer.updateProductItem, productItem, listId);
   } catch (err) {
-    yield put(productListActions.setError(err));
+    yield put(productListActions.setError(err.message));
   } finally {
     yield put(productListActions.setLoading(false));
   }
