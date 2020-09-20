@@ -19,9 +19,9 @@ const useFirebaseError = (module: Modules) => {
   const errorRegex = modules[module].errorRegex;
   const errorStrings = modules[module].errorStrings;
 
-  const filterError = (errorResponse: string) => {
+  const _filterError = (errorResponse: string) => {
     let error;
-    for (const key in modules[module].errorRegex) {
+    for (const key in errorRegex) {
       const regex = errorRegex[key];
       if (errorResponse.includes(regex)) {
         error = key;
@@ -32,7 +32,7 @@ const useFirebaseError = (module: Modules) => {
   };
 
   const filterErrorMessage = (errorResponse: string) => {
-    const errorKey = filterError(errorResponse);
+    const errorKey = _filterError(errorResponse);
 
     if (errorKey) {
       return errorStrings[errorKey];
@@ -49,7 +49,7 @@ const useFirebaseError = (module: Modules) => {
     return error.includes('firebase');
   };
 
-  return { getErrorMessage, isFirebaseError };
+  return { getErrorMessage, isFirebaseError, _filterError };
 };
 
 export default useFirebaseError;

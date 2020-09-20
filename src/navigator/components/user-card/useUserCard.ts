@@ -8,9 +8,7 @@ const useUserCard = (props: Props) => {
   const authReducer = useSelector(authSelectors.getState);
 
   const handleLoginPress = useCallback(() => {
-    props.navigation.navigate(Routes.UnauthenticatedNavigator, {
-      isLoggedIn: authReducer.isLoggedIn,
-    });
+    props.navigation.navigate(Routes.UnauthenticatedNavigator);
   }, []);
 
   return {

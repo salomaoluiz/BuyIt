@@ -1,22 +1,16 @@
 import { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  RouteProp,
-  useRoute,
-  NavigationProp,
-  useNavigation,
-} from '@react-navigation/native';
+import { RouteProp, useRoute } from '@react-navigation/native';
 
 import { filterByID } from '@utils/filters';
 import { productListSelectors, productListActions } from '@store/product-list';
 import { ProductNavigatorParamsList } from '@navigator/product-navigator';
+import useHeader from '@navigator/components/header/useHeader';
 
 type RouteProps = RouteProp<ProductNavigatorParamsList, 'ProductItems'>;
-type NavProps = NavigationProp<ProductNavigatorParamsList, 'ProductItems'>;
 
 const useProductItems = () => {
   const route = useRoute<RouteProps>();
-  const navigation = useNavigation<NavProps>();
   const dispatch = useDispatch();
   const { listId } = route.params;
   const productLists = useSelector(productListSelectors.getProductLists);
@@ -30,11 +24,10 @@ const useProductItems = () => {
   }, []);
 
   useEffect(() => {
-    navigation.setOptions({
-      title: listName,
-    });
     fetchProductItems();
   }, []);
+
+  useHeader({ showHeader: true, title: currentList.name });
 
   return { productItems, listName, listId, fetchProductItems };
 };

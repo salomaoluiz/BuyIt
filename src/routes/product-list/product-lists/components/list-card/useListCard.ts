@@ -22,19 +22,19 @@ const useListCard = (props: Props) => {
     navigation.navigate(Routes.ProductItems, { listId });
   }, []);
 
-  const handleEditItem = useCallback(() => {
+  const _handleEditItem = useCallback(() => {
     navigation.navigate(Routes.NewList, { productList });
   }, [productList]);
 
-  const handleDeleteItem = useCallback(() => {
+  const _handleDeleteItem = useCallback(() => {
     const listId = productList.id;
     dispatch(productListActions.deleteProductListAsync(listId));
   }, [productList]);
 
   const handleListLongPress = useCallback(() => {
     Alert.alert(strings.whatWant, strings.whatWantDo, [
-      { text: strings.editItem, onPress: handleEditItem },
-      { text: strings.deleteItem, onPress: handleDeleteItem },
+      { text: strings.editItem, onPress: _handleEditItem },
+      { text: strings.deleteItem, onPress: _handleDeleteItem },
     ]);
   }, [productList]);
 
@@ -44,7 +44,14 @@ const useListCard = (props: Props) => {
     setTotalItems(qtdItems);
   }, [productList]);
 
-  return { onListPress, productList, totalItems, handleListLongPress };
+  return {
+    onListPress,
+    productList,
+    totalItems,
+    handleListLongPress,
+    _handleDeleteItem,
+    _handleEditItem,
+  };
 };
 
 export default useListCard;

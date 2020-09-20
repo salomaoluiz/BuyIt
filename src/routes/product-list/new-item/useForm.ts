@@ -23,10 +23,10 @@ const useForm = () => {
 
   const formParams = { id: editId, name, amount, qtd, unit, brand };
 
-  const { validateError, handleErrorMessage } = useFormError(
+  const { validateError, handleErrorMessage } = useFormError({
     formParams,
-    'productItem',
-  );
+    formName: 'productItem',
+  });
 
   const checkForm = useCallback(async () => {
     const isValid = await validateError();

@@ -4,24 +4,20 @@ import { authSelectors } from '@store/auth';
 import { generalSelector } from '@store/general';
 
 const useNavigator = () => {
-  const { isLoggedIn } = useSelector(authSelectors.getState);
+  const isLogged = useSelector(authSelectors.isLogged);
+  const isAnonymously = useSelector(authSelectors.isAnonymously);
   const { rehydrated } = useSelector(generalSelector.getPersistState);
 
-  const [isAuthenticated, setIsAuthenticated] = useState(isLoggedIn);
   const [isRehydrated, setIsRehydrated] = useState(rehydrated);
 
   useEffect(() => {
-    setIsAuthenticated(isLoggedIn);
-
     if (rehydrated) {
       setIsRehydrated(true);
     }
-  }, [isLoggedIn, rehydrated]);
-
-
+  }, [isLogged, rehydrated]);
 
   return {
-    isAuthenticated,
+    isAuthenticated: isLogged || isAnonymously,
     isRehydrated,
   };
 };

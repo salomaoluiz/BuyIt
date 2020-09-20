@@ -8,7 +8,6 @@ import NewListItem from '@routes/product-list/new-item';
 
 import { Routes } from '@routes';
 import { ProductItem, ProductList } from '@store/product-list/types';
-import navigationStyles from 'src/styles/navigationStyles';
 import ProductLists from '@routes/product-list/product-lists';
 import NewList from '@routes/product-list/new-list';
 
@@ -39,21 +38,12 @@ const ProductNavigator = () => {
         name={Routes.ProductItems}
         component={ProductItems}
       />
-      <ProductStack.Screen
-        name={Routes.NewListItem}
-        component={NewListItem}
-        options={navigationStyles.defaultHeader}
-      />
+      <ProductStack.Screen name={Routes.NewListItem} component={NewListItem} />
       <ProductStack.Screen
         name={Routes.ProductLists}
         component={ProductLists}
-        options={navigationStyles.defaultHeader}
       />
-      <ProductStack.Screen
-        name={Routes.NewList}
-        component={NewList}
-        options={navigationStyles.defaultHeader}
-      />
+      <ProductStack.Screen name={Routes.NewList} component={NewList} />
     </ProductStack.Navigator>
   );
 };

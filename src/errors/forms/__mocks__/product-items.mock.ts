@@ -25,6 +25,14 @@ const qtdRequired = generateError(
 );
 const qtdInvalid = generateError(strings.generalErrors.invalidValue, 'qtd');
 const brandInvalid = generateError(strings.generalErrors.invalidValue, 'brand');
+const amountIsMuchLong = generateError(
+  strings.generalErrors.theValueIsMuchLong,
+  'amount',
+);
+const qtdIsMuchLong = generateError(
+  strings.generalErrors.theValueIsMuchLong,
+  'qtd',
+);
 
 const resultErrorRequired: ErrorInterface = {
   formTested: 'productItem',
@@ -67,6 +75,8 @@ const productListErrors = {
   brandInvalid,
   resultErrorInvalid,
   resultErrorRequired,
+  amountIsMuchLong,
+  qtdIsMuchLong,
 };
 
 export { generateError, productListErrors };

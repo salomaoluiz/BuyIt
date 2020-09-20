@@ -1,6 +1,8 @@
 import {
   CommonActions,
   NavigationContainerRef,
+  NavigationState,
+  PartialState,
 } from '@react-navigation/native';
 
 const config: {
@@ -16,6 +18,7 @@ export function setNavigator(nav: NavigationContainerRef) {
 function navigate(name: string, params?: object) {
   if (config.navigator && name) {
     const action = CommonActions.navigate({ name, params });
+    
     config.navigator.dispatch(action);
   }
 }
@@ -27,9 +30,17 @@ function goBack() {
   }
 }
 
+function reset(state: PartialState<NavigationState>) {
+  if (config.navigator) {
+    const action = CommonActions.reset(state);
+    config.navigator.dispatch(action);
+  }
+}
+
 const navigationService = {
   navigate,
   goBack,
+  reset,
 };
 
 export default navigationService;

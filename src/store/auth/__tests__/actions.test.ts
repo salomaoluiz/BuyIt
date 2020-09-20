@@ -28,12 +28,6 @@ describe('Auth Actions', () => {
     expect(action.payload.currentUser).toEqual(mockCurrentUser);
   });
 
-  test('deve executar loginEmailPassword corretamente', () => {
-    const action = authActions.loginEmailPassword();
-
-    expect(action.type).toEqual(AuthTypes.LOGIN_EMAIL_PASSWORD);
-  });
-
   test('deve executar loginEmailPasswordAsync corretamente', () => {
     const action = authActions.loginEmailPasswordAsync('a@a.a', '123456');
 
