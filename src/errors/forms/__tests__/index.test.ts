@@ -26,4 +26,18 @@ describe('Testando todo o fluxo de erros de formulários', () => {
 
     expect(result).toEqual(productListErrors.resultErrorInvalid);
   });
+
+  test('deve retornar undefined se não possuir erro nenhum', async () => {
+    const mock = new ProductItemBuilderMock()
+      .withName('Valid Name')
+      .withQtd('1')
+      .withAmount('23')
+      .withBrand('Marca')
+      .withUnit('un')
+      .build();
+
+    const result = await validateForm(mock, 'productItem');
+
+    expect(result).toEqual(undefined);
+  });
 });

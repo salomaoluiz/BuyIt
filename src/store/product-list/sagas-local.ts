@@ -9,139 +9,111 @@ import {
 import { filterNotByID, filterByID } from '@utils/filters';
 
 export function* createProductList(productList: ProductList) {
-  try {
-    const stateProductList: ProductLists = yield select(
-      productListSelectors.getProductLists,
-    );
+  const stateProductList: ProductLists = yield select(
+    productListSelectors.getProductLists,
+  );
 
-    const newProductListArray = createProductListArray(
-      stateProductList,
-      productList,
-    );
+  const newProductListArray = createProductListArray(
+    stateProductList,
+    productList,
+  );
 
-    return newProductListArray;
-  } catch (err) {
-    throw new Error(err);
-  }
+  return newProductListArray;
 }
 
 export function* updateProductList(productList: ProductList) {
-  try {
-    const stateProductList: ProductLists = yield select(
-      productListSelectors.getProductLists,
-    );
+  const stateProductList: ProductLists = yield select(
+    productListSelectors.getProductLists,
+  );
 
-    const formatedProductList: ProductLists = updateProductListArray(
-      stateProductList,
-      productList,
-    );
+  const formatedProductList: ProductLists = updateProductListArray(
+    stateProductList,
+    productList,
+  );
 
-    return formatedProductList;
-  } catch (err) {
-    throw new Error(err);
-  }
+  return formatedProductList;
 }
 
 export function* deleteProductList(listId: string) {
-  try {
-    const productLists = yield select(productListSelectors.getProductLists);
+  const productLists = yield select(productListSelectors.getProductLists);
 
-    const filteredList: ProductLists = filterNotByID(productLists, listId);
+  const filteredList: ProductLists = filterNotByID(productLists, listId);
 
-    return filteredList;
-  } catch (err) {
-    throw new Error(err);
-  }
+  return filteredList;
 }
 
 export function* createProductItem(productItem: ProductItem, listId: string) {
-  try {
-    const stateProductList = yield select(productListSelectors.getProductLists);
-    const currentList = filterByID(stateProductList, listId) as ProductList;
+  const stateProductList = yield select(productListSelectors.getProductLists);
+  const currentList = filterByID<ProductList>(stateProductList, listId);
 
-    const newEditedList = createProductItemArray(currentList, productItem);
+  const newEditedList = createProductItemArray(currentList, productItem);
 
-    const newProductListsArray = updateProductListArray(
-      stateProductList,
-      newEditedList,
-    );
+  const newProductListsArray = updateProductListArray(
+    stateProductList,
+    newEditedList,
+  );
 
-    return newProductListsArray as ProductLists;
-  } catch (err) {
-    throw new Error(err);
-  }
+  return newProductListsArray as ProductLists;
 }
 
 export function* getProductItems(productItems: ProductItems, listId: string) {
-  try {
-    const stateProductList: ProductLists = yield select(
-      productListSelectors.getProductLists,
-    );
-    const currentList = filterByID(stateProductList, listId);
+  const stateProductList: ProductLists = yield select(
+    productListSelectors.getProductLists,
+  );
+  const currentList = filterByID(stateProductList, listId);
 
-    const newEditedList: ProductList = {
-      ...currentList,
-      items: productItems,
-    };
+  const newEditedList: ProductList = {
+    ...currentList,
+    items: productItems,
+  };
 
-    const newProductListsArray = updateProductListArray(
-      stateProductList,
-      newEditedList,
-    );
+  const newProductListsArray = updateProductListArray(
+    stateProductList,
+    newEditedList,
+  );
 
-    return newProductListsArray;
-  } catch (err) {
-    throw new Error(err);
-  }
+  return newProductListsArray;
 }
 
 export function* deleteProductItem(listId: string, itemId: string) {
-  try {
-    const stateProductList: ProductLists = yield select(
-      productListSelectors.getProductLists,
-    );
-    const currentList = filterByID(stateProductList, listId);
+  const stateProductList: ProductLists = yield select(
+    productListSelectors.getProductLists,
+  );
+  const currentList = filterByID(stateProductList, listId);
 
-    const productItems = currentList.items;
-    const filteredItems = filterNotByID(productItems, itemId);
+  const productItems = currentList.items;
+  const filteredItems = filterNotByID(productItems, itemId);
 
-    const newEditedList: ProductList = {
-      ...currentList,
-      items: filteredItems,
-    };
+  const newEditedList: ProductList = {
+    ...currentList,
+    items: filteredItems,
+  };
 
-    const newProductListsArray = updateProductListArray(
-      stateProductList,
-      newEditedList,
-    );
+  const newProductListsArray = updateProductListArray(
+    stateProductList,
+    newEditedList,
+  );
 
-    return newProductListsArray;
-  } catch (err) {
-    throw new Error(err);
-  }
+  return newProductListsArray;
 }
 
 export function* updateProductItem(productItem: ProductItem, listId: string) {
-  try {
-    const stateProductList: ProductLists = yield select(
-      productListSelectors.getProductLists,
-    );
-    const currentList = filterByID(stateProductList, listId);
+  const stateProductList: ProductLists = yield select(
+    productListSelectors.getProductLists,
+  );
+  const currentList = filterByID(stateProductList, listId);
 
-    const filteredListItem = filterNotByID(currentList.items, productItem.id);
-    const newProductItemsArray = filteredListItem.concat([{ ...productItem }]);
-    const newEditedList: ProductList = {
-      ...currentList,
-      items: newProductItemsArray,
-    };
+  const filteredListItem = filterNotByID(currentList.items, productItem.id);
+  const newProductItemsArray = filteredListItem.concat([{ ...productItem }]);
+  const newEditedList: ProductList = {
+    ...currentList,
+    items: newProductItemsArray,
+  };
 
-    const newProductListsArray = updateProductListArray(
-      stateProductList,
-      newEditedList,
-    );
+  const newProductListsArray = updateProductListArray(
+    stateProductList,
+    newEditedList,
+  );
 
-    return newProductListsArray;
-  } catch (err) {
-    throw new Error(err);
-  }
+  return newProductListsArray;
 }

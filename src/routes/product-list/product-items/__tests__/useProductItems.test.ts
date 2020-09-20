@@ -4,13 +4,14 @@ import * as navigation from '@react-navigation/native';
 import { ProductListBuilderMock } from '@store/product-list/__mocks__/productListBuilder.mock';
 import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
 import { renderHook } from '@testing-library/react-hooks';
-import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
 
 import useProductItems from '../useProductItems';
 import { productListActions } from '@store/product-list';
+import useHeader from '@navigator/components/header/useHeader';
+
+jest.mock('@navigator/components/header/useHeader', () => jest.fn());
 
 jest.mock('@react-navigation/native');
-const setOptions = jest.fn();
 
 const mockProductItem = new ProductItemBuilderMock()
   .withName('Item 1')
@@ -33,10 +34,6 @@ describe('ProductItems - useProductItems', () => {
       name: 'ProductItems',
       params: { listId: '123456' },
     });
-    jest.spyOn(navigation, 'useNavigation').mockReturnValue({
-      ...useNavigationMocks,
-      setOptions,
-    });
   });
 
   test('ao iniciar deve obter a lista de items', () => {
@@ -50,7 +47,10 @@ describe('ProductItems - useProductItems', () => {
   test('ao iniciar deve setar o headerTitle para o nome da lista', () => {
     renderHook(useProductItems);
 
-    expect(setOptions).toHaveBeenCalledWith({ title: 'Lista 1' });
+    expect(useHeader).toHaveBeenCalledWith({
+      showHeader: true,
+      title: 'Lista 1',
+    });
   });
 
   test('ao iniciar deve disparar a action getProductItemsAsync', () => {

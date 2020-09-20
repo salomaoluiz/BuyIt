@@ -1,66 +1,37 @@
-import { useState, useCallback } from 'react';
-import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
+import { useCallback } from 'react';
 
-import { UnauthenticatedParamsList } from '@navigator/unauthenticated';
-import { StackNavigationProp } from '@react-navigation/stack';
 import * as strings from '@locales/register';
-import { colors } from '@styles';
-import useFormError from 'src/errors/useFormError';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from '@store/auth/actions';
 import { authSelectors } from '@store/auth';
+import { AuthRegisterForm } from '@store/auth/types';
+import useHeader from '@navigator/components/header/useHeader';
 
-type Params = UnauthenticatedParamsList;
-type RouteName = 'RegisterUser';
-type StackNavigation = StackNavigationProp<Params, RouteName>;
-type StackRoute = RouteProp<Params, RouteName>;
+interface Props {
+  formParams: AuthRegisterForm;
+  checkForm: () => Promise<boolean>;
+}
 
-const useRegister = () => {
-  const route = useRoute<StackRoute>();
-  const navigation = useNavigation<StackNavigation>();
-  navigation.setOptions({
-    title: strings.register,
-    headerStyle: {
-      backgroundColor: colors.list.brandPrimaryDark,
-    },
-  });
-
-  const editEmail = route.params?.email || '';
-  const { isLoading } = useSelector(authSelectors.getState);
-
-  const [email, setEmail] = useState(editEmail);
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [name, setName] = useState('');
-  const formList = { email, password, confirmPassword, name };
+const useRegister = (props: Props) => {
+  const { formParams, checkForm } = props;
+  const isLoading = useSelector(authSelectors.isLoading);
 
   const dispatch = useDispatch();
-  const { handleErrorMessage, validateError, clearErrors } = useFormError(
-    formList,
-    'register',
-  );
 
   const handleRegisterPress = useCallback(async () => {
-    const canDoRegister = await validateError();
+    const canDoRegister = await checkForm();
 
     if (canDoRegister) {
-      clearErrors();
-      dispatch(actions.registerEmailPasswordAsync(formList));
-      return;
+      dispatch(actions.registerEmailPasswordAsync(formParams));
     }
-  }, [formList]);
+  }, [formParams]);
 
+  useHeader({
+    title: strings.register,
+    showHeader: true,
+  });
   return {
-    email,
-    password,
-    confirmPassword,
-    name,
-    setEmail,
-    setPassword,
-    setConfirmPassword,
-    setName,
     handleRegisterPress,
-    handleErrorMessage,
     isLoading,
   };
 };

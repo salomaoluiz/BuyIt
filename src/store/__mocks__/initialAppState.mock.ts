@@ -12,7 +12,7 @@ export const initialAppState: RootState = {
     isVisible: false,
   },
   authReducer: {
-    isLoggedIn: false,
+    isLogged: false,
     isAnonymously: false,
     isOnline: false,
     isLoading: false,

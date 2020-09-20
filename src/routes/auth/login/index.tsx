@@ -17,22 +17,27 @@ import Button from '@components/button';
 import { StackScreenProps } from '@react-navigation/stack';
 import { UnauthenticatedParamsList } from '@navigator/unauthenticated';
 import FullscreenLoader from '@components/fullscreen-loader';
+import useForm from './useForm';
 
 export type Props = StackScreenProps<UnauthenticatedParamsList, 'Login'>;
 
-const Login = (props: Props) => {
+const Login = () => {
   const {
-    handleLoginAnonymously,
-    isLoading,
     setEmail,
-    email,
-    password,
+    formParams,
     setPassword,
+    handleErrorMessage,
+    checkForm,
+  } = useForm();
+  const { email, password } = formParams;
+
+  const {
+    isLoading,
+    isAnonymously,
+    handleLoginAnonymously,
     handleLoginEmailPassword,
     handleRegisterUser,
-    handleErrorMessage,
-    isLoggedAnonymously,
-  } = useLogin(props);
+  } = useLogin({ checkForm, formParams });
 
   const shouldShowLoading = isLoading;
   const shouldShowLoginScreen = !isLoading;
@@ -71,15 +76,16 @@ const Login = (props: Props) => {
             <Button title={strings.login} onPress={handleLoginEmailPassword} />
             <Button title={strings.register} onPress={handleRegisterUser} />
           </InputContainer>
-          {!isLoggedAnonymously && (
-            <SocialContainer>
+
+          <SocialContainer>
+            {!isAnonymously && (
               <Button
                 mode="flat"
                 title={strings.continueWithoutLogin}
                 onPress={handleLoginAnonymously}
               />
-            </SocialContainer>
-          )}
+            )}
+          </SocialContainer>
         </LoginContainer>
       )}
     </Container>
