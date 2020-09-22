@@ -1,12 +1,14 @@
-import strings from '@locales/general-errors';
+import appLocale from '@locales';
 import { generateError } from './product-items.mock';
 
+const strings = appLocale();
+
 export const nameRequired = generateError(
-  strings.generalErrors.thisValueIsRequired,
+  strings.errors.general.thisValueIsRequired,
   'name',
 );
 
 export const nameIsMuchLong = generateError(
-  strings.generalErrors.theValueIsMuchLong,
+  strings.errors.general.theValueIsMuchLong,
   'name',
 );

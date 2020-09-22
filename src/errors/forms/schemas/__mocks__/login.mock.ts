@@ -1,17 +1,19 @@
-import strings from '@locales/general-errors';
+import appLocale from '@locales';
 import { generateError } from './product-items.mock';
 
+const strings = appLocale();
+
 export const emailRequired = generateError(
-  strings.generalErrors.thisValueIsRequired,
+  strings.errors.general.thisValueIsRequired,
   'email',
 );
 
 export const passwordRequired = generateError(
-  strings.generalErrors.thisValueIsRequired,
+  strings.errors.general.thisValueIsRequired,
   'password',
 );
 
 export const passwordShort = generateError(
-  strings.login.passwordShort,
+  strings.errors.auth.passwordShort,
   'password',
 );

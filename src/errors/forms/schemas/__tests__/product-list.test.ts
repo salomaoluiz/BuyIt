@@ -1,4 +1,4 @@
-import productList from '../product-list';
+import testSchema from '../../testSchema';
 
 import * as productListErrors from '../__mocks__/product-list.mock';
 
@@ -8,7 +8,7 @@ describe('Testando a validação do ProductList', () => {
       name: 'foo',
     };
 
-    const result = await productList(mock);
+    const result = await testSchema('productList', mock);
     expect(result).toEqual(true);
   });
 
@@ -17,7 +17,7 @@ describe('Testando a validação do ProductList', () => {
       name: '',
     };
 
-    const result = await productList(mock);
+    const result = await testSchema('productList', mock);
 
     expect(result).toEqual([productListErrors.nameRequired]);
   });
@@ -28,7 +28,7 @@ describe('Testando a validação do ProductList', () => {
         'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     };
 
-    const result = await productList(mock);
+    const result = await testSchema('productList', mock);
 
     expect(result).toEqual([productListErrors.nameIsMuchLong]);
   });

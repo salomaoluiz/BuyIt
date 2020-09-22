@@ -12,12 +12,14 @@ import {
 import Logo from '@assets/images/logo.svg';
 import { dimensions } from '@styles';
 import TextInput from '@components/text-input';
-import * as strings from '@locales/login';
 import Button from '@components/button';
 import { StackScreenProps } from '@react-navigation/stack';
 import { UnauthenticatedParamsList } from '@navigator/unauthenticated';
 import FullscreenLoader from '@components/fullscreen-loader';
 import useForm from './useForm';
+import appLocale from '@locales';
+
+const strings = appLocale();
 
 export type Props = StackScreenProps<UnauthenticatedParamsList, 'Login'>;
 
@@ -53,11 +55,11 @@ const Login = () => {
               width={dimensions.size.stackXxxlNumber}
               height={dimensions.size.stackXxxlNumber}
             />
-            <Title>{strings.welcome}</Title>
+            <Title>{strings.auth.welcome}</Title>
           </LogoContainer>
           <InputContainer>
             <TextInput
-              title={strings.email}
+              title={strings.auth.email}
               onChangeText={setEmail}
               value={email}
               icon="account"
@@ -65,7 +67,7 @@ const Login = () => {
               {...handleErrorMessage('email')}
             />
             <TextInput
-              title={strings.password}
+              title={strings.auth.password}
               onChangeText={setPassword}
               value={password}
               icon="lock"
@@ -73,15 +75,21 @@ const Login = () => {
               error={!!handleErrorMessage('password').error}
               {...handleErrorMessage('password')}
             />
-            <Button title={strings.login} onPress={handleLoginEmailPassword} />
-            <Button title={strings.register} onPress={handleRegisterUser} />
+            <Button
+              title={strings.auth.login}
+              onPress={handleLoginEmailPassword}
+            />
+            <Button
+              title={strings.auth.register}
+              onPress={handleRegisterUser}
+            />
           </InputContainer>
 
           <SocialContainer>
             {!isAnonymously && (
               <Button
                 mode="flat"
-                title={strings.continueWithoutLogin}
+                title={strings.auth.continueWithoutLogin}
                 onPress={handleLoginAnonymously}
               />
             )}

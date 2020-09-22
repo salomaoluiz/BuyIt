@@ -6,8 +6,9 @@ import { ProductNavigatorParamsList } from '@navigator/product-navigator';
 import { Routes } from '@routes';
 import { productListActions } from '@store/product-list';
 import { useDispatch } from 'react-redux';
-import * as strings from '@locales/product-list';
+import appLocale from '@locales';
 
+const strings = appLocale();
 type NavProps = NavigationProp<ProductNavigatorParamsList, 'ProductLists'>;
 
 const useListCard = (props: Props) => {
@@ -32,9 +33,9 @@ const useListCard = (props: Props) => {
   }, [productList]);
 
   const handleListLongPress = useCallback(() => {
-    Alert.alert(strings.whatWant, strings.whatWantDo, [
-      { text: strings.editItem, onPress: _handleEditItem },
-      { text: strings.deleteItem, onPress: _handleDeleteItem },
+    Alert.alert(strings.general.whatWant, strings.general.whatWantDo, [
+      { text: strings.general.editItem, onPress: _handleEditItem },
+      { text: strings.general.deleteItem, onPress: _handleDeleteItem },
     ]);
   }, [productList]);
 

@@ -1,7 +1,9 @@
 import * as auth from './firebase/auth';
 import * as productLists from './firebase/productLists';
 import { RegexValues } from './firebase/auth';
-import strings from '@locales/general-errors';
+import appLocale from '@locales';
+
+const strings = appLocale();
 
 type Modules = 'auth' | 'productLists';
 export type RegexPattern = { [key: string]: string };
@@ -42,7 +44,7 @@ const useFirebaseError = (module: Modules) => {
   const getErrorMessage = (errorResponse: string) => {
     const errorMessage = filterErrorMessage(errorResponse);
 
-    return errorMessage || strings.generalErrors.tryAgainLater;
+    return errorMessage || strings.errors.general.tryAgainLater;
   };
 
   const isFirebaseError = (error: string) => {

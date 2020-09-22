@@ -3,9 +3,11 @@ import React from 'react';
 import { Container, SubContainer, ButtonContainer } from './styles';
 import TextInput from '@components/text-input';
 import useNewList from './useNewList';
-import * as strings from '@locales/product-list';
 import useForm from './useForm';
 import CircleButton from '@components/circle-button';
+import appLocale from '@locales';
+
+const strings = appLocale();
 
 const NewList = () => {
   const { listParams, setName, checkForm, handleErrorMessage } = useForm();
@@ -16,7 +18,7 @@ const NewList = () => {
     <Container>
       <SubContainer>
         <TextInput
-          title={strings.name}
+          title={strings.general.name}
           value={name}
           onChangeText={setName}
           {...handleErrorMessage('name')}

@@ -1,6 +1,8 @@
 import useFirebaseError from '@errors/useFirebaseError';
-import strings from '@locales/general-errors';
+import appLocale from '@locales';
 import * as auth from '../firebase/auth';
+
+const strings = appLocale();
 
 describe('useFirebaseError', () => {
   test('deve procurar o erro na lista de errors e retorna-lo', () => {
@@ -15,7 +17,7 @@ describe('useFirebaseError', () => {
     const { getErrorMessage } = useFirebaseError('auth');
 
     expect(getErrorMessage('email-already-in-use')).toEqual(
-      strings.register.emailAlreadyInUse,
+      strings.errors.auth.emailAlreadyInUse,
     );
   });
 
