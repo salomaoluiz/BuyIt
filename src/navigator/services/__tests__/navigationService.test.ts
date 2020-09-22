@@ -31,41 +31,82 @@ describe('Navigation Service', () => {
     },
   };
 
-  setNavigator(mockNavigator.navigator);
-
-  test('deve chamar a action navigate e realizar o dispatch dela', () => {
-    navigationService.navigate('route', { value: 'value' });
-
-    expect(navigate).toHaveBeenCalledWith({
-      name: 'route',
-      params: { value: 'value' },
+  describe('Caso nao tenha setado nenhum navigator', () => {
+    beforeEach(() => {
+      // @ts-ignore
+      setNavigator(undefined);
     });
 
-    expect(mockNavigator.navigator.dispatch).toHaveBeenCalledWith({
-      type: 'NAVIGATE',
-      payload: { name: 'route' },
+    test('nao deve conseguir executar o navigate', () => {
+      navigationService.navigate('route', { value: 'value' });
+
+      expect(navigate).not.toHaveBeenCalled();
+
+      expect(mockNavigator.navigator.dispatch).not.toHaveBeenCalled();
+    });
+
+    test('nao deve conseguir chamar a action goBack e realizar o dispatch dela', () => {
+      navigationService.goBack();
+
+      expect(goBack).not.toHaveBeenCalled();
+
+      expect(mockNavigator.navigator.dispatch).not.toHaveBeenCalledWith({
+        type: 'GO_BACK',
+      });
+    });
+
+    test('nao deve conseguir chamar a action reset e realizar o dispatch dela', () => {
+      const props = { routes: [{ name: 'route' }] };
+      navigationService.reset(props);
+
+      expect(reset).not.toHaveBeenCalledWith(props);
+
+      expect(mockNavigator.navigator.dispatch).not.toHaveBeenCalledWith({
+        type: 'RESET',
+        payload: { routes: [{ name: 'route' }] },
+      });
     });
   });
 
-  test('deve chamar a action goBack e realizar o dispatch dela', () => {
-    navigationService.goBack();
-
-    expect(goBack).toHaveBeenCalled();
-
-    expect(mockNavigator.navigator.dispatch).toHaveBeenCalledWith({
-      type: 'GO_BACK',
+  describe('Caso possua o navigator', () => {
+    beforeEach(() => {
+      setNavigator(mockNavigator.navigator);
     });
-  });
 
-  test('deve chamar a action reset e realizar o dispatch dela', () => {
-    const props = { routes: [{ name: 'route' }] };
-    navigationService.reset(props);
+    test('deve chamar a action navigate e realizar o dispatch dela', () => {
+      navigationService.navigate('route', { value: 'value' });
 
-    expect(reset).toHaveBeenCalledWith(props);
+      expect(navigate).toHaveBeenCalledWith({
+        name: 'route',
+        params: { value: 'value' },
+      });
 
-    expect(mockNavigator.navigator.dispatch).toHaveBeenCalledWith({
-      type: 'RESET',
-      payload: { routes: [{ name: 'route' }] },
+      expect(mockNavigator.navigator.dispatch).toHaveBeenCalledWith({
+        type: 'NAVIGATE',
+        payload: { name: 'route' },
+      });
+    });
+
+    test('deve chamar a action goBack e realizar o dispatch dela', () => {
+      navigationService.goBack();
+
+      expect(goBack).toHaveBeenCalled();
+
+      expect(mockNavigator.navigator.dispatch).toHaveBeenCalledWith({
+        type: 'GO_BACK',
+      });
+    });
+
+    test('deve chamar a action reset e realizar o dispatch dela', () => {
+      const props = { routes: [{ name: 'route' }] };
+      navigationService.reset(props);
+
+      expect(reset).toHaveBeenCalledWith(props);
+
+      expect(mockNavigator.navigator.dispatch).toHaveBeenCalledWith({
+        type: 'RESET',
+        payload: { routes: [{ name: 'route' }] },
+      });
     });
   });
 });
