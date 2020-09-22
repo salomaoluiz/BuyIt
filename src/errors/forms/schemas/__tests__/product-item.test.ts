@@ -1,4 +1,4 @@
-import productItem from '../product-item';
+import testSchema from '../../testSchema';
 
 import { productListErrors } from '../__mocks__/product-items.mock';
 
@@ -10,7 +10,7 @@ describe('Testando a validação do ProductList', () => {
       qtd: '1',
     };
 
-    const result = await productItem(mock);
+    const result = await testSchema('productItem', mock);
     expect(result).toEqual(true);
   });
 
@@ -21,7 +21,7 @@ describe('Testando a validação do ProductList', () => {
       qtd: '',
     };
 
-    const result = await productItem(mock);
+    const result = await testSchema('productItem', mock);
 
     expect(result).toEqual([
       productListErrors.nameRequired,
@@ -37,7 +37,7 @@ describe('Testando a validação do ProductList', () => {
       amount: '12.-',
     };
 
-    const result = await productItem(mock);
+    const result = await testSchema('productItem', mock);
 
     expect(result).toEqual([
       productListErrors.amountInvalid,
@@ -52,7 +52,7 @@ describe('Testando a validação do ProductList', () => {
       amount: '12000000000000000000000',
     };
 
-    const result = await productItem(mock);
+    const result = await testSchema('productItem', mock);
 
     expect(result).toEqual([
       productListErrors.amountIsMuchLong,

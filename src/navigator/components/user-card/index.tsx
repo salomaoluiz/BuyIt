@@ -8,10 +8,10 @@ import {
   UnauthorizedButton,
 } from './styles';
 import useUserCard from './useUserCard';
-import * as authStrings from '@locales/login';
-
+import appLocale from '@locales';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
 
+const strings = appLocale();
 export interface Props {
   navigation: DrawerNavigationHelpers;
 }
@@ -23,7 +23,7 @@ const UserCard = (props: Props) => {
     <Container>
       {isAnonymously && (
         <UnauthorizedButton onPress={handleLoginPress}>
-          <UnauthorizedText>{authStrings.login}</UnauthorizedText>
+          <UnauthorizedText>{strings.auth.login}</UnauthorizedText>
         </UnauthorizedButton>
       )}
       {userName && (

@@ -7,10 +7,12 @@ import {
 } from '../sagas';
 import { put, call, select } from 'redux-saga/effects';
 import { notificationActions } from '@store/notification';
-import errorsString from '@locales/general-errors';
 import navigationService from '@navigator/services/navigationService';
 import { notificationMessages } from '../utils';
 import useFirebaseError from '@errors/useFirebaseError';
+import appLocale from '@locales';
+
+const strings = appLocale();
 
 describe('Auth Saga - Login com Email e Senha', () => {
   jest.spyOn(authModels, 'loginWithEmailPassword');
@@ -66,8 +68,8 @@ describe('Auth Saga - Login com Email e Senha', () => {
     );
 
     const notificationParams = {
-      title: errorsString.generalErrors.opsWeHaveAProblem,
-      body: errorsString.generalErrors.tryAgainLater,
+      title: strings.errors.general.opsWeHaveAProblem,
+      body: strings.errors.general.tryAgainLater,
     };
 
     expect(await gen.next().value).toEqual(

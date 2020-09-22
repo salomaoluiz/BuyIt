@@ -1,16 +1,17 @@
 import useHeader from '@navigator/components/header/useHeader';
 import { act, renderHook } from '@testing-library/react-hooks';
-import * as strings from '@locales/register';
 import useRegister from '../useRegister';
 import * as reactRedux from 'react-redux';
 import { authActions } from '@store/auth';
+import appLocale from '@locales';
 
+const strings = appLocale();
 jest.mock('@navigator/components/header/useHeader', () => jest.fn());
 describe('Register - useRegister', () => {
   const dispatch = jest.fn();
   jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(dispatch);
   jest.spyOn(reactRedux, 'useSelector').mockReturnValue(false);
-  
+
   const initialProps = {
     formParams: {
       name: 'aaa',
@@ -25,7 +26,7 @@ describe('Register - useRegister', () => {
     renderHook(useRegister, { initialProps });
 
     expect(useHeader).toHaveBeenCalledWith({
-      title: strings.register,
+      title: strings.auth.register,
       showHeader: true,
     });
   });
