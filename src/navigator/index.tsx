@@ -7,6 +7,7 @@ import UnauthenticatedNavigator from './unauthenticated';
 import useNavigator from './useNavigator';
 import FullscreenLoader from '@components/fullscreen-loader';
 import { setNavigator } from './services/navigationService';
+import AdmobBanner from '@components/admob-banner';
 
 const AppNavigator = () => {
   const { isAuthenticated, isRehydrated } = useNavigator();
@@ -20,6 +21,7 @@ const AppNavigator = () => {
       {shouldShowLoading && <FullscreenLoader />}
       {shouldShowLogin && <UnauthenticatedNavigator />}
       {shouldShowApp && <AuthenticatedNavigator />}
+      <AdmobBanner />
     </NavigationContainer>
   );
 };
