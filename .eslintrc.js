@@ -13,6 +13,7 @@ module.exports = {
     window: true,
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
+    __DEV__: true,
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {

@@ -15,13 +15,17 @@ describe('Testando o useNotificationCard', () => {
     icon: undefined,
     isVisible: false,
   };
+
   jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(dispatch);
   const useSelectorMock = jest
     .spyOn(reactRedux, 'useSelector')
     .mockReturnValue(initialState);
-  const animatedSpring = jest
-    .spyOn(Animated, 'spring')
-    .mockReturnValue({ start: jest.fn(), stop: jest.fn(), reset: jest.fn() });
+  const mockStartAnimate = jest.fn();
+  const animatedSpring = jest.spyOn(Animated, 'spring').mockReturnValue({
+    start: mockStartAnimate,
+    stop: jest.fn(),
+    reset: jest.fn(),
+  });
 
   jest.useFakeTimers();
   test('a notificação nao pode aparecer se estiver com os valores default ', () => {
@@ -40,6 +44,8 @@ describe('Testando o useNotificationCard', () => {
         speed: animation.speed.slow,
       },
     );
+
+    expect(mockStartAnimate).toHaveBeenCalled();
   });
 
   test('deve apresentar a notificação se houver a alteração do initialState', () => {

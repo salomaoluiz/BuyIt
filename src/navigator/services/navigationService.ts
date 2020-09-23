@@ -10,15 +10,13 @@ const config: {
 } = {};
 
 export function setNavigator(nav: NavigationContainerRef) {
-  if (nav) {
-    config.navigator = nav;
-  }
+  config.navigator = nav;
 }
 
 function navigate(name: string, params?: object) {
   if (config.navigator && name) {
     const action = CommonActions.navigate({ name, params });
-    
+
     config.navigator.dispatch(action);
   }
 }

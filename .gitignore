@@ -65,3 +65,5 @@ buck-out/
 
 .scannerwork/
 coverage
+
+.env.*
