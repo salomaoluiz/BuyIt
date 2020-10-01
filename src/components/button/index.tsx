@@ -1,27 +1,23 @@
 import React from 'react';
+import { Button as PaperButton } from 'react-native-paper';
 
-import { TouchableNativeFeedback } from 'react-native';
-import { Container, Title, Icon, SubContainer, Ripple } from './styles';
-
-export type ButtonMode = 'outlined' | 'container' | 'flat';
+export type ButtonMode = 'text' | 'outlined' | 'contained';
 
 interface Props {
   onPress: () => void;
   title: string;
   icon?: string;
   mode?: ButtonMode;
+  uppercase?: boolean;
 }
+
 const Button = (props: Props) => {
-  const { onPress, title, icon, mode } = props;
+  const { onPress, title, icon, mode, uppercase } = props;
+
   return (
-    <Container mode={mode}>
-      <TouchableNativeFeedback onPress={onPress} background={Ripple}>
-        <SubContainer hasIcon={!!icon}>
-          <Title>{title}</Title>
-          {icon && <Icon name={icon} />}
-        </SubContainer>
-      </TouchableNativeFeedback>
-    </Container>
+    <PaperButton onPress={onPress} icon={icon} mode={mode}>
+      {uppercase ? title.toLocaleUpperCase() : title}
+    </PaperButton>
   );
 };
 

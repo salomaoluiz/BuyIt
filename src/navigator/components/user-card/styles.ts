@@ -1,15 +1,13 @@
 import styled from 'styled-components/native';
-import { dimensions, fonts, colors } from '@styles';
+import { dimensions } from '@styles';
 
 export const Container = styled.View`
-  padding: ${dimensions.spacing.inlineXs};
-  background-color: ${colors.list.brandPrimaryMedium};
+  padding: ${dimensions.spacing.Md};
   top: -4px;
 `;
 
 export const UnauthorizedText = styled.Text`
   align-self: center;
-  font-size: ${fonts.size.fontSizeXxs};
 `;
 
 export const UnauthorizedButton = styled.TouchableNativeFeedback``;

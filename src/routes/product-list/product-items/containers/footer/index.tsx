@@ -5,35 +5,38 @@ import {
   TextContainer,
   TextSubContainer,
   SubContainer,
-  Title,
-  Value,
 } from './styles';
-import CircleButton from '@components/circle-button';
+import FAB from '@components/FAB';
 import { ProductItems } from '@store/product-list/types';
 import useFooter from './useFooter';
+import Subheading from '@components/subheading';
+import appLocale, { appCurrency } from '@locales';
+import Text from '@components/text';
 
 export interface Props {
   productItems: ProductItems;
   listId: string;
 }
 
+const strings = appLocale();
+const currency = appCurrency();
 const Footer = (props: Props) => {
   const { amountTotal, onAddButtonPress, qtdTotal } = useFooter(props);
   return (
     <>
       <ButtonContainer>
-        <CircleButton icon="plus" onPress={onAddButtonPress} />
+        <FAB icon="plus" onPress={onAddButtonPress} />
       </ButtonContainer>
       <Container>
         <SubContainer>
           <TextContainer>
             <TextSubContainer>
-              <Title>Items</Title>
-              <Value>{qtdTotal}</Value>
+              <Subheading text={strings.productLists.items} />
+              <Text text={qtdTotal} />
             </TextSubContainer>
             <TextSubContainer>
-              <Title>Total</Title>
-              <Value>R$ {amountTotal}</Value>
+              <Subheading text={strings.productLists.total} />
+              <Text text={`${currency} ${amountTotal}`} />
             </TextSubContainer>
           </TextContainer>
         </SubContainer>

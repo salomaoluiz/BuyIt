@@ -4,10 +4,11 @@ import { notificationActions } from '..';
 
 describe('Notification Reducer', () => {
   const initialState: NotificationState = {
-    title: undefined,
     body: undefined,
     icon: undefined,
     isVisible: false,
+    firstAction: undefined,
+    secondAction: undefined,
   };
 
   test('deve retornar o state se não for passado nenhuma action', () => {
@@ -30,9 +31,14 @@ describe('Notification Reducer', () => {
 
   test('deve setar os valores se chamado o sendNotification', () => {
     const mockProps = {
-      title: 'title',
       body: 'body',
       icon: 'alert',
+      isVisible: true,
+      firstAction: {
+        label: 'Dismiss',
+        onPress: expect.any(Function),
+      },
+      secondAction: undefined,
     };
 
     const action = notificationActions.sendNotification(mockProps);

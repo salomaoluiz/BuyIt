@@ -1,10 +1,9 @@
 import styled from 'styled-components/native';
-import { colors, dimensions } from '@styles';
+import { dimensions } from '@styles';
 
 export const Container = styled.View`
   flex: 1;
-  padding: ${dimensions.size.stackXxxs};
-  background-color: ${colors.list.neutralMedium};
+  padding: ${dimensions.spacing.Xxs};
 `;
 
 export const ListContainer = styled.ScrollView``;

@@ -20,6 +20,7 @@ describe('Testando todo o fluxo de erros de formulários', () => {
       .withName('Valid Name')
       .withQtd('1;.9')
       .withAmount('23s[')
+      .withUnit({ id: 'id', title: '123' })
       .build();
 
     const result = await validateForm(mock, 'productItem');
@@ -33,7 +34,7 @@ describe('Testando todo o fluxo de erros de formulários', () => {
       .withQtd('1')
       .withAmount('23')
       .withBrand('Marca')
-      .withUnit('un')
+      .withUnit({ id: 'un', title: 'Unidade' })
       .build();
 
     const result = await validateForm(mock, 'productItem');

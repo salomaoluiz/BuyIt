@@ -6,10 +6,11 @@ import {
 } from './types';
 
 const initialState: NotificationState = {
-  title: undefined,
   body: undefined,
   icon: undefined,
   isVisible: false,
+  firstAction: undefined,
+  secondAction: undefined,
 };
 
 const sendNotification = (
@@ -17,8 +18,9 @@ const sendNotification = (
   action: NotificationReducerAction,
 ): NotificationState => ({
   body: action.payload?.body,
-  title: action.payload?.title,
   icon: action.payload?.icon,
+  firstAction: action.payload?.firstAction,
+  secondAction: action.payload?.secondAction,
   isVisible: true,
 });
 

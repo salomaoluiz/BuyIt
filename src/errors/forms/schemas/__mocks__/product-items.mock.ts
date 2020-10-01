@@ -38,6 +38,10 @@ const qtdIsMuchLong = generateError(
   strings.errors.general.theValueIsMuchLong,
   'qtd',
 );
+const unitRequired = generateError(
+  strings.errors.general.thisValueIsRequired,
+  'unit',
+);
 
 const resultErrorRequired: ErrorInterface = {
   formTested: 'productItem',
@@ -52,6 +56,10 @@ const resultErrorRequired: ErrorInterface = {
     },
     {
       errorItem: 'qtd',
+      errorMessage: strings.errors.general.thisValueIsRequired,
+    },
+    {
+      errorItem: 'unit',
       errorMessage: strings.errors.general.thisValueIsRequired,
     },
   ],
@@ -82,6 +90,7 @@ const productListErrors = {
   resultErrorRequired,
   amountIsMuchLong,
   qtdIsMuchLong,
+  unitRequired,
 };
 
 export { generateError, productListErrors };

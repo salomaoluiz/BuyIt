@@ -3,7 +3,7 @@ const productLists = {
   newList: 'Nova lista',
   items: 'Itens',
   newItem: 'Novo item',
-  totalAmount: (totalAmount: number): string => `Valor Total: ${totalAmount}`,
+  total: 'Total',
   totalQtd: (totalQtd: number): string => `Quantidade: ${totalQtd}`,
   amount: `Valor`,
   qtd: `Quantidade`,

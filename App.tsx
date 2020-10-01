@@ -3,8 +3,10 @@ import AppNavigator from '@navigator';
 import { Provider } from 'react-redux';
 import createStore from '@store';
 import RNBootSplash from 'react-native-bootsplash';
-import NotificationCard from '@components/notification-card';
+import Banner from '@components/banner';
 import firebaseInit from 'src/firebase';
+import { Provider as PaperProvider } from 'react-native-paper';
+import theme from 'src/styles/theme';
 
 const { store } = createStore();
 const App = () => {
@@ -13,9 +15,11 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <AppNavigator />
-      <NotificationCard />
-    </Provider>
+      <PaperProvider theme={theme}>
+        <Banner />
+        <AppNavigator />
+    </PaperProvider>
+      </Provider>
   );
 };
 

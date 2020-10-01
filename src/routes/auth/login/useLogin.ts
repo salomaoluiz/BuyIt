@@ -1,14 +1,11 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { authActions, authSelectors } from '@store/auth';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { StatusBar } from 'react-native';
 
 import { Routes } from '@routes';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { UnauthenticatedParamsList } from '@navigator/unauthenticated';
 import { AuthLoginForm } from '@store/auth/types';
-import useHeader from '@navigator/components/header/useHeader';
 
 type NavProps = NavigationProp<UnauthenticatedParamsList, 'Login'>;
 
@@ -39,12 +36,6 @@ const useLogin = (props: Props) => {
   const handleRegisterUser = useCallback(() => {
     navigation.navigate(Routes.RegisterUser, { email });
   }, [email]);
-
-  useHeader({ showHeader: !!isAnonymously, showBackButton: true });
-
-  useEffect(() => {
-    StatusBar.setHidden(true);
-  }, []);
 
   return {
     isLoading,

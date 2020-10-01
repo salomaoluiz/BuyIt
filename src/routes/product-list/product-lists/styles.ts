@@ -7,6 +7,6 @@ export const Container = styled.View`
 
 export const ButtonContainer = styled.KeyboardAvoidingView`
   position: absolute;
-  right: ${dimensions.spacing.inlineMd};
-  bottom: ${dimensions.spacing.inlineMd};
+  right: ${dimensions.spacing.Xl};
+  bottom: ${dimensions.spacing.Xl};
 `;
