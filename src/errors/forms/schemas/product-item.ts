@@ -33,6 +33,7 @@ const productItem = Yup.object().shape({
     )
     .matches(onlyNumber, strings.errors.general.invalidValue),
   brand: Yup.string().typeError(strings.errors.general.invalidValue),
+  unit: Yup.string().required(strings.errors.general.thisValueIsRequired),
 });
 
 export default productItem;

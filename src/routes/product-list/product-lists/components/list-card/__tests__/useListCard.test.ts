@@ -33,7 +33,7 @@ describe('ProductList - useListCard', () => {
         amount: '1.5',
         brand: 'marca',
         qtd: '1',
-        unit: 'un',
+        unit: { id: 'un', title: 'Unidade' },
       },
     ])
     .build();
@@ -75,8 +75,14 @@ describe('ProductList - useListCard', () => {
       strings.general.whatWant,
       strings.general.whatWantDo,
       [
-        { text: strings.general.editItem, onPress: result.current._handleEditItem },
-        { text: strings.general.deleteItem, onPress: result.current._handleDeleteItem },
+        {
+          text: strings.general.editItem,
+          onPress: result.current._handleEditItem,
+        },
+        {
+          text: strings.general.deleteItem,
+          onPress: result.current._handleDeleteItem,
+        },
       ],
     );
   });

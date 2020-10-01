@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import { dimensions } from '@styles';
 
 export const Container = styled.View`
-  padding: ${dimensions.size.stackXxxs};
+  padding: ${dimensions.spacing.Xs};
   flex: 1;
 `;
 
@@ -15,16 +15,9 @@ export const TwoColumnsContainer = styled.View`
   justify-content: space-between;
 `;
 
-export const TextInput = styled.TextInput`
-  margin-bottom: ${dimensions.size.stackXxs};
-  border-width: ${dimensions.border.widthMedium};
-  border-radius: ${dimensions.border.radiusSm};
-  padding: ${dimensions.spacing.inlineXs};
-`;
-
 export const ButtonContainer = styled.KeyboardAvoidingView`
   position: absolute;
-  right: ${dimensions.spacing.inlineMd};
-  bottom: ${dimensions.spacing.inlineMd};
-  z-index: 10
+  right: ${dimensions.spacing.Xl};
+  bottom: ${dimensions.spacing.Xl};
+  z-index: 10;
 `;

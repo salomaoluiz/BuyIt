@@ -1,24 +1,14 @@
 import styled from 'styled-components/native';
-import { Animated, TouchableNativeFeedback } from 'react-native';
-import { dimensions, fonts, colors } from '@styles';
-import NativeIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Animated } from 'react-native';
+import { dimensions } from '@styles';
 
-const IconContainer = styled(Animated.View)`
-  padding: ${dimensions.spacing.inlineXxxs};
-  align-items: center;
+export const KeyboardAvoidingView = styled.KeyboardAvoidingView``;
+
+interface IconContainerProps {
+  size?: number;
+}
+export const IconContainer = styled(Animated.View)<IconContainerProps>`
   justify-content: center;
-  border-radius: ${dimensions.border.radiusCircle};
-  height: ${dimensions.size.stackMd};
-  width: ${dimensions.size.stackMd};
+  max-height: ${({ size }) => (size ? `${size}px` : dimensions.size.Sm)};
+  max-width: ${({ size }) => (size ? `${size}px` : dimensions.size.Sm)};
 `;
-
-const GenericIcon = styled(NativeIcon)`
-  font-size: ${fonts.size.fontSizeSm};
-  color: ${({ color }) => color || colors.list.neutralDark};
-`;
-
-const IconButton = styled.TouchableNativeFeedback``;
-
-const Ripple = TouchableNativeFeedback.Ripple(colors.list.neutralDark, true);
-
-export { IconContainer, GenericIcon, IconButton, Ripple };

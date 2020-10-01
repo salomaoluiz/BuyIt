@@ -1,3 +1,4 @@
+import { PaperListData } from '@components/list';
 import { ProductItem } from '../types';
 
 export class ProductItemBuilderMock {
@@ -6,7 +7,7 @@ export class ProductItemBuilderMock {
   amount = '';
   qtd = '';
   brand = '';
-  unit = 'un';
+  unit?: PaperListData = undefined;
 
   withId(id: string) {
     this.id = id;
@@ -33,7 +34,7 @@ export class ProductItemBuilderMock {
     return this;
   }
 
-  withUnit(unit: string) {
+  withUnit(unit: PaperListData) {
     this.unit = unit;
     return this;
   }

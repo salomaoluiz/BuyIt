@@ -7,11 +7,10 @@ describe('Testando handleErrors', () => {
   jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(dispatch);
 
   test('deve chamar o sendNotification passando as informações de erro', () => {
-    renderHook(() => useErrorMessage('title', 'body'));
+    renderHook(() => useErrorMessage('body'));
 
     expect(dispatch).toHaveBeenLastCalledWith(
       notificationActions.sendNotificationAsync({
-        title: 'title',
         body: 'body',
         icon: 'alert',
       }),

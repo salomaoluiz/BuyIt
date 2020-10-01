@@ -11,6 +11,6 @@ describe('Locale - useLocale', () => {
   test('deve retornar a currency correta', () => {
     const result = appCurrency();
 
-    expect(result.currency).toEqual('R$');
+    expect(result).toEqual('R$');
   });
 });

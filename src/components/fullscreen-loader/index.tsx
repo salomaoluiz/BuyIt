@@ -1,12 +1,11 @@
 import * as React from 'react';
+import { ActivityIndicator as PaperActivityIndicator } from 'react-native-paper';
 import { Container } from './styles';
-import { colors } from '@styles';
-import { ActivityIndicator } from 'react-native';
 
 const FullscreenLoader = () => {
   return (
     <Container>
-      <ActivityIndicator size={'large'} color={colors.list.brandPrimaryDark} />
+      <PaperActivityIndicator size={'large'} />
     </Container>
   );
 };

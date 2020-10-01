@@ -12,7 +12,6 @@ describe('Notification Sagas', () => {
     const mockProps = {
       type: NotificationTypes.SEND_NOTIFICATION_ASYNC,
       payload: {
-        title: 'title',
         body: 'body',
         icon: 'alert',
       },
@@ -37,8 +36,7 @@ describe('Notification Sagas', () => {
 
   test('caso o title ou o body esteja vazio, deve quebrar', async () => {
     const action = notificationActions.sendNotificationAsync({
-      title: '',
-      body: 'body',
+      body: '',
       icon: 'alert',
     });
 

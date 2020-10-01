@@ -3,15 +3,18 @@ import { Container, ListContainer } from './styles';
 import useProductItems from './useProductItems';
 
 import Footer from './containers/footer';
-import Background from '@components/background';
-import { colors } from '@styles';
 import ItemCard from './components/item-card';
+import Header from '@components/header';
+import appLocale from '@locales';
+
+const strings = appLocale();
 
 const ProductItems = () => {
   const { productItems, listId } = useProductItems();
 
   return (
-    <Background color={colors.list.neutralMedium}>
+    <>
+      <Header title={strings.productLists.items} backButton/>
       <Container>
         <ListContainer>
           {productItems &&
@@ -26,7 +29,7 @@ const ProductItems = () => {
         </ListContainer>
       </Container>
       <Footer productItems={productItems} listId={listId} />
-    </Background>
+    </>
   );
 };
 

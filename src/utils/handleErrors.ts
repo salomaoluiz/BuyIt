@@ -1,11 +1,11 @@
 import { useDispatch } from 'react-redux';
 import { notificationActions } from '@store/notification';
 
-const useErrorMessage = (title: string, body: string) => {
+const useErrorMessage = (body: string) => {
   const dispatch = useDispatch();
 
   dispatch(
-    notificationActions.sendNotificationAsync({ title, body, icon: 'alert' }),
+    notificationActions.sendNotificationAsync({ body, icon: 'alert' }),
   );
 };
 

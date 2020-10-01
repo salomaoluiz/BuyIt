@@ -8,6 +8,7 @@ describe('Testando a validação do ProductList', () => {
       name: 'Nome',
       amount: '15',
       qtd: '1',
+      unit: { id: 'un', title: '123' },
     };
 
     const result = await testSchema('productItem', mock);
@@ -27,6 +28,7 @@ describe('Testando a validação do ProductList', () => {
       productListErrors.nameRequired,
       productListErrors.amountRequired,
       productListErrors.qtdRequired,
+      productListErrors.unitRequired,
     ]);
   });
 
@@ -35,6 +37,7 @@ describe('Testando a validação do ProductList', () => {
       name: 'name',
       qtd: '12,',
       amount: '12.-',
+      unit: { id: 'un', title: '123' },
     };
 
     const result = await testSchema('productItem', mock);
@@ -50,6 +53,7 @@ describe('Testando a validação do ProductList', () => {
       name: 'name',
       qtd: '120000000000000000000000',
       amount: '12000000000000000000000',
+      unit: { id: 'un', title: '123' },
     };
 
     const result = await testSchema('productItem', mock);
