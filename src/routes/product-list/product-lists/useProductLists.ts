@@ -4,10 +4,7 @@ import { useCallback, useEffect } from 'react';
 import { Routes } from '@routes';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { ProductNavigatorParamsList } from '@navigator/product-navigator';
-import useHeader from '@navigator/components/header/useHeader';
-import appLocale from '@locales';
 
-const strings = appLocale();
 type NavProps = NavigationProp<ProductNavigatorParamsList, 'ProductLists'>;
 
 const useProductLists = () => {
@@ -22,8 +19,6 @@ const useProductLists = () => {
   const fetchProductLists = useCallback(() => {
     dispatch(productListActions.getProductListsAsync());
   }, []);
-
-  useHeader({ showHeader: true, title: strings.productLists.lists });
 
   useEffect(() => {
     fetchProductLists();

@@ -19,7 +19,7 @@ const appLocale = () => {
 export const appCurrency = () => {
   const currency = 'R$';
 
-  return { currency };
+  return currency;
 };
 
 export default appLocale;

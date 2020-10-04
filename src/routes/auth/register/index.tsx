@@ -7,6 +7,8 @@ import Button from '@components/button';
 import FullscreenLoader from '@components/fullscreen-loader';
 import useForm from './useForm';
 import appLocale from '@locales';
+import Header from '@components/header';
+import Divider from '@components/divider';
 
 const strings = appLocale();
 
@@ -32,27 +34,30 @@ const RegisterUser = () => {
 
   return (
     <>
+      <Header title={strings.auth.register} backButton />
       {shouldShowLoading && <FullscreenLoader />}
       {shouldShowScreen && (
         <Container keyboardShouldPersistTaps="handled">
           <TextInput
-            title={strings.auth.name}
+            label={strings.auth.name}
             value={name}
             onChangeText={setName}
             error={!!handleErrorMessage('name').error}
             helperText={handleErrorMessage('name').helperText}
             textContentType="name"
           />
+          <Divider columnDivider />
           <TextInput
-            title={strings.auth.email}
+            label={strings.auth.email}
             value={email}
             onChangeText={setEmail}
             error={!!handleErrorMessage('email').error}
             helperText={handleErrorMessage('email').helperText}
             textContentType="emailAddress"
           />
+          <Divider columnDivider />
           <TextInput
-            title={strings.auth.password}
+            label={strings.auth.password}
             value={password}
             onChangeText={setPassword}
             secureTextEntry
@@ -60,8 +65,9 @@ const RegisterUser = () => {
             helperText={handleErrorMessage('password').helperText}
             textContentType="newPassword"
           />
+          <Divider columnDivider />
           <TextInput
-            title={strings.auth.confirmPassword}
+            label={strings.auth.confirmPassword}
             value={confirmPassword}
             onChangeText={setConfirmPassword}
             secureTextEntry
@@ -69,9 +75,11 @@ const RegisterUser = () => {
             helperText={handleErrorMessage('confirmPassword').helperText}
             textContentType="newPassword"
           />
+          <Divider columnDivider />
           <Button
             onPress={handleRegisterPress}
             title={strings.auth.register}
+            mode="contained"
           />
         </Container>
       )}

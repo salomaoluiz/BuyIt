@@ -1,88 +1,95 @@
 import React from 'react';
-import {
-  Container,
-  SubContainer,
-  ItensContainer,
-  TextInputStyled,
-  InputContainer,
-} from './styles';
+import { Container } from './styles';
+
+import HelperComponent from '@components/helper-text';
+import { KeyboardType, ViewStyle, TextInputProps } from 'react-native';
+
+import { TextInput as PaperTextInput } from 'react-native-paper';
 import useTextInput from './useTextInput';
-
-import GenericIcon from '@components/icon';
-import Prefix from './components/prefix';
-import HelperComponent from './components/helper-text';
-import { TextInputProps, ViewStyle } from 'react-native';
-import AnimatedTitle from '@components/animated-title';
-
 export interface Props extends TextInputProps {
-  icon?: string;
-  title: string;
+  label: string;
   error?: boolean;
   helperText?: string;
-  prefix?: string;
-  sufix?: string;
   containerStyle?: ViewStyle;
+  secureTextEntry?: boolean;
+  keyboardType?: KeyboardType;
+  onChangeText?: (text: string) => void;
+  value?: string;
+  hasClearButton?: boolean;
+  leftIcon?: string;
+  rightIcon?: string;
+  prefix?: string;
+  disabled?: boolean;
+  editable?: boolean;
+  fixedValue?: string;
 }
 
 const TextInput = (props: Props) => {
   const {
     containerStyle,
-    prefix,
-    sufix,
     error,
-    title,
-    icon,
+    label,
     helperText,
     keyboardType,
+    secureTextEntry,
+    leftIcon,
+    rightIcon,
+    hasClearButton,
+    prefix,
+    textContentType,
+    disabled,
+    editable,
+    fixedValue,
   } = props;
 
   const {
     isFocused,
-    handleFocused,
-    handleChangeText,
+    onChangeText,
     onClearText,
-    startWithValue,
-    valueText,
+    handleFocusStatus,
+    value,
   } = useTextInput(props);
+
+  const showClearButton = hasClearButton && isFocused;
+  const showRightIcon = (!!rightIcon && !isFocused) || !hasClearButton;
+  const showLeftButton = !!leftIcon;
+  const showPrefix =
+    (!!prefix && !!value && !isFocused) ||
+    (!!prefix && isFocused) ||
+    (!leftIcon && !!prefix);
 
   return (
     <Container style={containerStyle}>
-      <ItensContainer>
-        {icon && (
-          <GenericIcon isVisible={true} useAnimation={false} name={icon} />
-        )}
-        <SubContainer>
-          <InputContainer isError={error} isFocused={isFocused}>
-            <Prefix value={prefix} />
-            <AnimatedTitle
-              hasPrefix={!!prefix}
-              title={title}
-              toPosition={{ left: -20, top: -25 }}
-              isError={error}
-              isFocused={isFocused}
-              hasValue={!!valueText}
-              startWithValue={startWithValue}
-            />
-            <TextInputStyled
-              {...props}
-              keyboardType={keyboardType}
-              value={valueText}
-              onFocus={handleFocused}
-              onBlur={handleFocused}
-              onChangeText={handleChangeText}
-            />
-            <Prefix value={sufix} />
-          </InputContainer>
-        </SubContainer>
-
-        <GenericIcon
-          isVisible={isFocused}
-          name={'close'}
-          onPress={onClearText}
-          useAnimation
-        />
-      </ItensContainer>
-      <HelperComponent hasIcon={!!icon} value={helperText} isError={error} />
+      <PaperTextInput
+        value={fixedValue || value}
+        disabled={disabled}
+        editable={editable}
+        mode="outlined"
+        onChangeText={onChangeText}
+        label={label}
+        clearButtonMode="always"
+        error={error}
+        keyboardType={keyboardType}
+        secureTextEntry={secureTextEntry}
+        onFocus={handleFocusStatus}
+        onBlur={handleFocusStatus}
+        textContentType={textContentType}
+        left={
+          showLeftButton && !showPrefix ? (
+            <PaperTextInput.Icon name={leftIcon!} disabled />
+          ) : showPrefix ? (
+            <PaperTextInput.Affix text={prefix!} />
+          ) : undefined
+        }
+        right={
+          showClearButton ? (
+            <PaperTextInput.Icon name={'close'} onPress={onClearText} />
+          ) : showRightIcon ? (
+            <PaperTextInput.Icon name={rightIcon!} disabled />
+          ) : undefined
+        }
+      />
+      <HelperComponent value={helperText} isError={error} />
     </Container>
   );
 };

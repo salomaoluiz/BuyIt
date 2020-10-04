@@ -1,0 +1,57 @@
+import { useSelector, useDispatch } from 'react-redux';
+import { notificationSelector, notificationActions } from '@store/notification';
+import { useEffect, useState, useCallback } from 'react';
+import appLocale from '@locales';
+import { NotificationButton } from '@store/notification/types';
+
+const strings = appLocale();
+
+const useBanner = () => {
+  const notificationState = useSelector(notificationSelector.getState);
+  const [isVisible, setIsVisible] = useState(false);
+  const [body, setBody] = useState<string | undefined>(undefined);
+  const [icon, setIcon] = useState<string | undefined>(undefined);
+
+  const [bannerActions] = useState<NotificationButton[]>([]);
+
+  const dispatch = useDispatch();
+
+  const _handleDismiss = useCallback(() => {
+    dispatch(notificationActions.dismissNotification());
+  }, []);
+
+  const setNotificationData = useCallback(() => {
+    setIsVisible(notificationState.isVisible);
+    setBody(notificationState.body);
+    setIcon(notificationState.icon);
+  }, [notificationState.isVisible]);
+
+  useEffect(() => {
+    setNotificationData();
+  }, [notificationState.isVisible]);
+
+  useEffect(() => {
+    const { firstAction, secondAction } = notificationState;
+
+    if (firstAction) {
+      bannerActions.push(firstAction);
+    } else {
+      bannerActions.push({
+        onPress: _handleDismiss,
+        label: strings.general.dismiss.toLocaleUpperCase(),
+      });
+    }
+
+    if (secondAction) bannerActions.push(secondAction);
+  }, [notificationState.firstAction, notificationState.secondAction]);
+
+  return {
+    _handleDismiss,
+    isVisible,
+    body,
+    icon,
+    bannerActions,
+  };
+};
+
+export default useBanner;

@@ -7,9 +7,9 @@ export const ItemContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
   border-width: 1px;
-  padding: ${dimensions.size.stackXxxs};
+  padding: ${dimensions.spacing.Xxs};
   border-radius: ${dimensions.border.radiusXs};
-  margin: ${dimensions.size.stackXxxs};
+  margin: ${dimensions.spacing.Xxs};
 `;
 
 export const ItemText = styled.Text``;

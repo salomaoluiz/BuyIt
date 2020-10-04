@@ -2,20 +2,23 @@ import * as React from 'react';
 import useNewItem from './useNewItem';
 import {
   Container,
-  TwoColumnsContainer,
   SubContainer,
   ButtonContainer,
+  TwoColumnsContainer,
 } from './styles';
 import TextInput from '@components/text-input';
-import Background from '@components/background';
-import DropdownMenu from '@components/dropdown-menu';
-import { unitList } from './constants';
 import useForm from './useForm';
-import CircleButton from '@components/circle-button';
+import CircleButton from '@components/FAB';
 import appLocale, { appCurrency } from '@locales';
+import Header from '@components/header';
+import TouchableRipple from '@components/touchable-ripple';
+import Divider from '@components/divider';
+import UnitModal from './containers/unit-modal';
+import Dialog from '@components/dialog';
+import { Portal } from 'react-native-paper';
 
 const strings = appLocale();
-const { currency } = appCurrency();
+const currency = appCurrency();
 
 const NewItem = () => {
   const {
@@ -31,61 +34,80 @@ const NewItem = () => {
   } = useForm();
   const { amount, brand, name, qtd, unit } = formParams;
 
-  const { onSaveButtonPress } = useNewItem({
+  const { onSaveButtonPress, handleModalVisible, modalVisible } = useNewItem({
     formParams,
     checkForm,
     listId,
   });
 
   return (
-    <Background>
+    <>
+      <Header title={strings.productLists.newItem} backButton />
       <Container>
         <SubContainer>
           <TextInput
             value={name}
-            title={strings.general.name}
+            label={strings.general.name}
             onChangeText={setName}
             {...handleErrorMessage('name')}
           />
+          <Divider columnDivider />
           <TextInput
             value={brand}
-            title={strings.productLists.brand}
+            label={strings.productLists.brand}
             onChangeText={setBrand}
             {...handleErrorMessage('brand')}
           />
+          <Divider columnDivider />
           <TextInput
             value={amount}
-            icon="currency-usd"
+            leftIcon="currency-usd"
             onChangeText={setAmount}
-            title={strings.productLists.amount}
+            label={strings.productLists.amount}
             prefix={currency}
             keyboardType="decimal-pad"
             {...handleErrorMessage('amount')}
           />
+          <Divider columnDivider />
           <TwoColumnsContainer>
             <TextInput
               value={qtd}
-              title={strings.productLists.qtd}
+              label={strings.productLists.qtd}
               onChangeText={setQtd}
-              icon="cart-outline"
+              leftIcon="cart-outline"
               keyboardType="decimal-pad"
               {...handleErrorMessage('qtd')}
             />
-
-            <DropdownMenu
-              title="Unidade"
-              icon="file-document-outline"
-              listValues={unitList}
-              setValue={setUnit}
-              selectedValue={unit}
-            />
+            <Divider rowDivider />
+            <TouchableRipple withoutBackground onPress={handleModalVisible}>
+              <TextInput
+                editable={false}
+                fixedValue={unit && unit.title}
+                label={strings.unit.unit}
+                {...handleErrorMessage('unit')}
+              />
+            </TouchableRipple>
           </TwoColumnsContainer>
         </SubContainer>
       </Container>
       <ButtonContainer>
         <CircleButton icon="check" onPress={onSaveButtonPress} />
       </ButtonContainer>
-    </Background>
+
+      <Portal>
+        <Dialog
+          onDismiss={handleModalVisible}
+          isVisible={modalVisible}
+          hasCancelButton
+          scrollable>
+          <UnitModal
+            setUnit={setUnit}
+            unit={unit}
+            handleModalVisible={handleModalVisible}
+          />
+        </Dialog>
+      </Portal>
+    </>
   );
 };
 

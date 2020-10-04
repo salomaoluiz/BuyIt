@@ -5,21 +5,20 @@ describe('Testando useTextInput', () => {
   const initialProps = {
     onChangeText: jest.fn(),
     value: '',
-    title: 'title',
+    label: 'title',
   };
 
   it('deve iniciar com os valores defaults', () => {
     const { result } = renderHook(useTextInput, { initialProps });
 
     expect(result.current.isFocused).toEqual(false);
-    expect(result.current.valueText).toEqual('');
-    expect(result.current.startWithValue).toEqual(false);
+    expect(result.current.value).toEqual('');
   });
 
   it('deve alterar o isFocused', () => {
     const { result } = renderHook(useTextInput, { initialProps });
 
-    act(() => result.current.handleFocused());
+    act(() => result.current.handleFocusStatus());
 
     expect(result.current.isFocused).toEqual(true);
   });
@@ -28,14 +27,14 @@ describe('Testando useTextInput', () => {
     const { result } = renderHook(useTextInput, { initialProps });
 
     const mockValue = 'mock value';
-    act(() => result.current.handleChangeText(mockValue));
+    act(() => result.current.onChangeText(mockValue));
 
-    expect(result.current.valueText).toEqual(mockValue);
+    expect(result.current.value).toEqual(mockValue);
     expect(initialProps.onChangeText).toHaveBeenCalledWith(mockValue);
 
     act(() => result.current.onClearText());
 
-    expect(result.current.valueText).toEqual(initialProps.value);
+    expect(result.current.value).toEqual(initialProps.value);
     expect(initialProps.onChangeText).toHaveBeenCalledWith('');
   });
 });

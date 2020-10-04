@@ -4,10 +4,16 @@ export enum NotificationTypes {
   DISMISS_NOTIFICATION = '@@NOTIFICATION/DISMISS_NOTIFICATION',
 }
 
+export interface NotificationButton {
+  label: string;
+  onPress: () => void;
+}
+
 export type NotificationProps = {
-  title?: string;
   body?: string;
   icon?: string;
+  firstAction?: NotificationButton;
+  secondAction?: NotificationButton;
 };
 
 export interface NotificationState extends NotificationProps {

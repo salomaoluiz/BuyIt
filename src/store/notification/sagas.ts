@@ -15,14 +15,13 @@ export function* sendNotificationAsync(
 ) {
 
   const body = props.payload?.body;
-  const title = props.payload?.title;
-  const icon = props.payload?.icon;
+    const icon = props.payload?.icon;
 
-  if (!title || !body) {
+  if (!body) {
     throw new Error(strings.errors.general.opsWeHaveAProblem);
   }
 
-  yield put(notificationActions.sendNotification({ title, body, icon }));
+  yield put(notificationActions.sendNotification({ body, icon }));
 
   yield delay(animation.notificationVisibleTiming);
 

@@ -7,7 +7,9 @@ const general = {
   whatWant: 'O que deseja?',
   whatWantDo: 'O que deseja fazer?',
   languageUpdatedWithSuccess: 'Idioma atualizado com sucesso',
-  restartAppToHaveEffect: 'Reinicie a aplicação para surtir efeito'
+  restartAppToHaveEffect: 'Reinicie a aplicação para surtir efeito',
+  dismiss: 'Dispensar',
+  cancel: 'Cancelar',
 };
 
 export default general;

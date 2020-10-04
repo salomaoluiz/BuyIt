@@ -7,9 +7,6 @@ import { renderHook } from '@testing-library/react-hooks';
 
 import useProductItems from '../useProductItems';
 import { productListActions } from '@store/product-list';
-import useHeader from '@navigator/components/header/useHeader';
-
-jest.mock('@navigator/components/header/useHeader', () => jest.fn());
 
 jest.mock('@react-navigation/native');
 
@@ -42,15 +39,6 @@ describe('ProductItems - useProductItems', () => {
     expect(result.current.listId).toEqual('123456');
     expect(result.current.productItems).toEqual([mockProductItem]);
     expect(result.current.listName).toEqual('Lista 1');
-  });
-
-  test('ao iniciar deve setar o headerTitle para o nome da lista', () => {
-    renderHook(useProductItems);
-
-    expect(useHeader).toHaveBeenCalledWith({
-      showHeader: true,
-      title: 'Lista 1',
-    });
   });
 
   test('ao iniciar deve disparar a action getProductItemsAsync', () => {
