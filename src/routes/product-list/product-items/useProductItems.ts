@@ -5,7 +5,6 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { filterByID } from '@utils/filters';
 import { productListSelectors, productListActions } from '@store/product-list';
 import { ProductNavigatorParamsList } from '@navigator/product-navigator';
-import useHeader from '@navigator/components/header/useHeader';
 
 type RouteProps = RouteProp<ProductNavigatorParamsList, 'ProductItems'>;
 
@@ -26,8 +25,6 @@ const useProductItems = () => {
   useEffect(() => {
     fetchProductItems();
   }, []);
-
-  useHeader({ showHeader: true, title: currentList.name });
 
   return { productItems, listName, listId, fetchProductItems };
 };

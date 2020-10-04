@@ -1,10 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 import productListSelectors from '@store/product-list/selectors';
 import { productListActions } from '@store/product-list';
 import { ProductItem } from '@store/product-list/types';
-import useHeader from '@navigator/components/header/useHeader';
 
 interface Props {
   formParams: Partial<ProductItem>;
@@ -13,6 +12,7 @@ interface Props {
 }
 const useNewItem = (props: Props) => {
   const { checkForm, listId, formParams } = props;
+  const [modalVisible, setModalVisible] = useState(false);
 
   const dispatch = useDispatch();
   const isLoading = useSelector(productListSelectors.isLoading);
@@ -31,11 +31,20 @@ const useNewItem = (props: Props) => {
     }
   }, [formParams]);
 
-  useHeader({ showHeader: true });
+  const handleModalVisible = useCallback(
+    (visible?: boolean) => {
+      if (typeof visible === 'boolean') return setModalVisible(visible);
+
+      return setModalVisible(!modalVisible);
+    },
+    [modalVisible],
+  );
 
   return {
     onSaveButtonPress,
     isLoading,
+    handleModalVisible,
+    modalVisible,
   };
 };
 

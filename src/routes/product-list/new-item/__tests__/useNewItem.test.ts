@@ -2,9 +2,6 @@ import * as reactRedux from 'react-redux';
 import { renderHook, act } from '@testing-library/react-hooks';
 import useNewItem from '../useNewItem';
 import { productListActions } from '@store/product-list';
-import useHeader from '@navigator/components/header/useHeader';
-
-jest.mock('@navigator/components/header/useHeader', () => jest.fn());
 
 const dispatch = jest.fn();
 describe('NewItem - useNewItem', () => {
@@ -20,18 +17,12 @@ describe('NewItem - useNewItem', () => {
       name: '',
       amount: '',
       qtd: '',
-      unit: 'un',
+      unit: undefined,
       brand: '',
     },
     checkForm,
     listId: '123456',
   };
-
-  test('ao inicializar, deve chamar o useHeader ativando o header', () => {
-    renderHook(useNewItem, { initialProps });
-
-    expect(useHeader).toHaveBeenCalledWith({ showHeader: true });
-  });
 
   test('ao chamar onSaveButtonPress sem um id deve chamar o checkForm e disparar a action createProductItemAsync', async () => {
     const { result } = renderHook(useNewItem, { initialProps });
@@ -72,5 +63,49 @@ describe('NewItem - useNewItem', () => {
         initialProps.listId,
       ),
     );
+  });
+
+  test('ao chamar handleModalVisible passando um status, deve atualizar o status do modal para o status informado', () => {
+    const newInitialProps = {
+      ...initialProps,
+      formParams: {
+        ...initialProps.formParams,
+        id: '123456',
+      },
+    };
+
+    const { result } = renderHook(useNewItem, {
+      initialProps: newInitialProps,
+    });
+
+    expect(result.current.modalVisible).toBe(false);
+
+    act(() => {
+      result.current.handleModalVisible(true);
+    });
+
+    expect(result.current.modalVisible).toBe(true);
+  });
+
+  test('ao chamar handleModalVisible nao passando nada, deve atualizar o status do modal para o status inverso ao atual', () => {
+    const newInitialProps = {
+      ...initialProps,
+      formParams: {
+        ...initialProps.formParams,
+        id: '123456',
+      },
+    };
+
+    const { result } = renderHook(useNewItem, {
+      initialProps: newInitialProps,
+    });
+
+    expect(result.current.modalVisible).toBe(false);
+
+    act(() => {
+      result.current.handleModalVisible();
+    });
+
+    expect(result.current.modalVisible).toBe(true);
   });
 });

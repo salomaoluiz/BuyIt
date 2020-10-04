@@ -8,7 +8,7 @@ const DrawerBottom = () => {
   const { onLogoutPress } = useDrawerBottom();
   return (
     <View>
-      <Button title="Logout" onPress={onLogoutPress} mode="flat" />
+      <Button title="Logout" onPress={onLogoutPress} mode="text" />
     </View>
   );
 };

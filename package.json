@@ -28,6 +28,7 @@
     "react-native-bootsplash": "^2.2.4",
     "react-native-config": "^1.2.1",
     "react-native-gesture-handler": "^1.6.1",
+    "react-native-paper": "^4.2.0",
     "react-native-reanimated": "^1.8.0",
     "react-native-safe-area-context": "^1.0.0",
     "react-native-screens": "^2.9.0",

@@ -1,20 +1,21 @@
 import styled from 'styled-components/native';
-import { dimensions, fonts, colors } from '@styles';
+import { dimensions } from '@styles';
+import theme from 'src/styles/theme';
 
 const Container = styled.View`
-  padding-top: ${dimensions.spacing.inlineMd};
+  padding-top: ${dimensions.spacing.Xl};
 `;
 const SubContainer = styled.View`
-  padding: ${dimensions.spacing.inlineXxs};
-  background-color: ${colors.list.neutralLightest};
+  padding: ${dimensions.spacing.Xs};
   border-top-left-radius: ${dimensions.border.radiusMd};
   border-top-right-radius: ${dimensions.border.radiusMd};
+  background-color: ${theme.colors.surface}
 `;
 
 const ButtonContainer = styled.View`
   align-self: center;
   position: absolute;
-  bottom: ${dimensions.spacing.inlineMd};
+  bottom: ${dimensions.spacing.Xl};
   z-index: 10;
 `;
 
@@ -27,13 +28,9 @@ const TextSubContainer = styled.View`
   align-items: center;
 `;
 
-const Title = styled.Text`
-  font-size: ${fonts.size.fontSizeXs};
-`;
+const Title = styled.Text``;
 
-const Value = styled.Text`
-  font-size: ${fonts.size.fontSizeXxs};
-`;
+const Value = styled.Text``;
 
 export {
   ButtonContainer,

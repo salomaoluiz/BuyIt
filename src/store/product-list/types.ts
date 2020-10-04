@@ -1,3 +1,5 @@
+import { PaperListData } from '@components/list';
+
 export enum ProductListTypes {
   SET_LOADING = '@productLists/SET_LOADING',
   SET_ERROR = '@productLists/SET_ERROR',
@@ -21,7 +23,7 @@ export type ProductItemForm = {
   amount: string;
   qtd: string;
   brand: string;
-  unit: string;
+  unit?: PaperListData;
 };
 
 export interface ProductItem extends ProductItemForm {

@@ -33,6 +33,7 @@ const ProductNavigator = () => {
       screenOptions={{
         ...TransitionPresets.SlideFromRightIOS,
       }}
+      headerMode='none'
       initialRouteName="ProductLists">
       <ProductStack.Screen
         name={Routes.ProductItems}

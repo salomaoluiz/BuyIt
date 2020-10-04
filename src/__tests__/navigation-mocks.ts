@@ -11,4 +11,5 @@ export const useNavigationMocks = {
   removeListener: jest.fn(),
   reset: jest.fn(),
   setParams: jest.fn(),
+  openDrawer: jest.fn(),
 };

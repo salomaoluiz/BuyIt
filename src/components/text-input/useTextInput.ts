@@ -2,37 +2,33 @@ import { Props } from '.';
 import { useState, useCallback } from 'react';
 
 const useTextInput = (props: Props) => {
-  const { onChangeText, value } = props;
-  const startWithValue = !!value;
+  const [value, setValue] = useState(props.value || '');
+  const [isFocused, setIsFocused] = useState(false);
 
-  const [isFocused, setIsFocused] = useState<boolean>(false);
-  const [valueText, setValueText] = useState<string>(value || '');
-
-  const handleFocused = () => {
-    setIsFocused(!isFocused);
-  };
-
-  const handleChangeText = useCallback(
+  const onChangeText = useCallback(
     (valueChange: string) => {
-      setValueText(valueChange);
+      setValue(valueChange);
 
-      if (onChangeText) return onChangeText(valueChange);
+      if (props.onChangeText) return props.onChangeText(valueChange);
     },
     [value],
   );
 
-  const onClearText = () => {
-    setValueText('');
-    if (onChangeText) return onChangeText('');
-  };
+  const handleFocusStatus = useCallback(() => {
+    setIsFocused(!isFocused);
+  }, [isFocused]);
+
+  const onClearText = useCallback(() => {
+    setValue('');
+    if (props.onChangeText) return props.onChangeText('');
+  }, []);
 
   return {
-    isFocused,
-    handleFocused,
-    handleChangeText,
+    onChangeText,
     onClearText,
-    valueText,
-    startWithValue,
+    value,
+    isFocused,
+    handleFocusStatus,
   };
 };
 

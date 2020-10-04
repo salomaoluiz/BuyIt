@@ -33,6 +33,7 @@ module.exports = {
     semi: 'warn',
     'react/display-name': 'off',
     '@typescript-eslint/ban-ts-ignore': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off'
   },
   overrides: [
     {

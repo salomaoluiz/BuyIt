@@ -1,9 +1,8 @@
 import styled from 'styled-components/native';
-import { dimensions, colors, fonts } from '@styles';
+import { dimensions } from '@styles';
 
 const Container = styled.ScrollView`
-  padding: ${dimensions.spacing.inlineXxs};
-  background-color: ${colors.list.neutralLight};
+  padding: ${dimensions.spacing.Xs};
 `;
 
 const LoginContainer = styled.View`
@@ -14,29 +13,25 @@ const LogoContainer = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-  margin-top: ${dimensions.spacing.inlineXl};
-  margin-bottom: ${dimensions.spacing.inlineXl};
-`;
-const Title = styled.Text`
-  font-family: ${fonts.family.brandPrimary};
-  text-align: center;
-  font-size: ${fonts.size.fontSizeXxs};
-  margin-left: ${dimensions.spacing.insetXxs};
-  margin-right: ${dimensions.spacing.insetXxs};
+  margin-top: ${dimensions.spacing.Xll};
+  margin-bottom: ${dimensions.spacing.Xll};
 `;
 
 const InputContainer = styled.View`
-  flex: 2;
-  justify-content: flex-start;
+  min-width: ${dimensions.screenWidth / 1.5}px;
+  
 `;
 
-const SocialContainer = styled.View``;
+const SocialContainer = styled.View`
+  min-width: ${dimensions.screenWidth / 1.5}px;
+  align-self: center;
+  justify-content: flex-start;
+`;
 
 export {
   Container,
   LoginContainer,
   LogoContainer,
-  Title,
   InputContainer,
   SocialContainer,
 };

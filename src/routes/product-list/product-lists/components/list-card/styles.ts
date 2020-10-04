@@ -1,21 +1,18 @@
 import styled from 'styled-components/native';
-import { dimensions, fonts } from '@styles';
+import { dimensions } from '@styles';
 
 export const Container = styled.TouchableOpacity`
-  padding: ${dimensions.spacing.inlineXxs};
-  margin: ${dimensions.spacing.inlineXs};
+  padding: ${dimensions.spacing.Xs};
+  margin: ${dimensions.spacing.Md};
   border-width: ${dimensions.border.widthThin};
   flex: 1;
-  min-height: ${dimensions.size.stackXxl};
+  min-height: ${dimensions.size.Xl};
   border-radius: ${dimensions.border.radiusSm};
   justify-content: space-between;
 `;
 
-export const ListTitle = styled.Text`
-  font-size: ${fonts.size.fontSizeXs};
-`;
+export const ListTitle = styled.Text``;
 
 export const ListItems = styled.Text`
-  font-size: ${fonts.size.fontSizeXs};
   align-self: flex-end;
 `;
