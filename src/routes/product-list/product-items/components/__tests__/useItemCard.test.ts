@@ -45,6 +45,7 @@ describe('ProductItems - Components - ItemCard - useItemCard', () => {
 
     expect(navigate).toHaveBeenCalledWith(Routes.NewListItem, {
       productItem: mockProductItem,
+      action: productListActions,
       listId: '123456',
     });
   });
@@ -52,6 +53,7 @@ describe('ProductItems - Components - ItemCard - useItemCard', () => {
   test('ao chamar _handleDeleteItem é preciso chamar a action deleteProductItemAsync com os parâmetros corretos', () => {
     const initialProps = {
       productItem: mockProductItem,
+      action: productListActions,
       listId: '123456',
       itemIndex: 1,
     };

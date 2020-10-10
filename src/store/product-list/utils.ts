@@ -1,8 +1,8 @@
 import { QueryFirestore, DocumentFirestore } from './models';
 import { ProductLists, ProductList, ProductItem } from './types';
 import { extractObjectElement, filterNotByID } from '@utils/filters';
-import { getDateNow } from '@utils/date';
-import { generateUniqueID } from '@utils/id';
+import { injectTimeStamp } from '@utils/date';
+import { injectId } from '@utils/id';
 
 export const formatDocumentProductList = <T>(
   productList: DocumentFirestore,
@@ -41,23 +41,10 @@ export const dbProductListFormated = (productList: ProductList) => {
 export const injectProductListExtraData = <T extends { id: string }>(
   productList: T,
 ) => {
-  const updatedAt = getDateNow();
-  const createdAt = getDateNow();
-  const id = generateUniqueID();
+  const productListWithId = injectId(productList);
+  const productListWithTimeStamp = injectTimeStamp(productListWithId);
 
-  if (productList.id) {
-    return {
-      ...productList,
-      updatedAt,
-    };
-  }
-
-  return {
-    ...productList,
-    updatedAt,
-    createdAt,
-    id,
-  };
+  return productListWithTimeStamp;
 };
 
 export const updateProductListArray = (

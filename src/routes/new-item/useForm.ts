@@ -8,7 +8,7 @@ type RouteProps = RouteProp<ProductNavigatorParamsList, 'NewListItem'>;
 
 const useForm = () => {
   const route = useRoute<RouteProps>();
-  const listId = route.params.listId;
+
   const editName = route.params?.productItem?.name || '';
   const editAmount = route.params?.productItem?.amount || '';
   const editQtd = route.params?.productItem?.qtd || '';
@@ -43,7 +43,6 @@ const useForm = () => {
     setBrand,
     handleErrorMessage,
     setUnit,
-    listId,
   };
 };
 

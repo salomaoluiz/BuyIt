@@ -11,10 +11,16 @@ import { ProductItemBuilderMock } from '../__mocks__/productItemBuilder.mock';
 
 jest.mock('@utils/id', () => ({
   generateUniqueID: jest.fn().mockReturnValue('123456789'),
+  injectId: jest.fn((object) => ({ ...object, id: '123456789' })),
 }));
 
 jest.mock('@utils/date', () => ({
   getDateNow: jest.fn().mockReturnValue(12345),
+  injectTimeStamp: jest.fn((object) => ({
+    ...object,
+    updatedAt: 12345,
+    createdAt: 1234,
+  })),
 }));
 const productList = new ProductListBuilderMock().withName('Nome').build();
 
@@ -28,9 +34,7 @@ describe('ProductList Sagas', () => {
 
     const gen = sagas.createProductListAsync(action);
 
-    expect(gen.next().value).toEqual(
-      put(productListActions.setError()),
-    );
+    expect(gen.next().value).toEqual(put(productListActions.setError()));
     expect(gen.next().value).toEqual(put(productListActions.setLoading(true)));
 
     const ajustedProductList = injectProductListExtraData(productList);
@@ -61,9 +65,7 @@ describe('ProductList Sagas', () => {
 
     const gen = sagas.createProductListAsync(action);
 
-    expect(gen.next().value).toEqual(
-      put(productListActions.setError()),
-    );
+    expect(gen.next().value).toEqual(put(productListActions.setError()));
     expect(gen.next().value).toEqual(put(productListActions.setLoading(true)));
 
     const ajustedProductList = injectProductListExtraData(productList);
@@ -84,9 +86,7 @@ describe('ProductList Sagas', () => {
   test('deve chamar getProductListsAsync corretamente', () => {
     const gen = sagas.getProductListsAsync();
 
-    expect(gen.next().value).toEqual(
-      put(productListActions.setError()),
-    );
+    expect(gen.next().value).toEqual(put(productListActions.setError()));
 
     expect(gen.next().value).toEqual(put(productListActions.setLoading(true)));
 
@@ -103,9 +103,7 @@ describe('ProductList Sagas', () => {
   test('ao chamar getProductListsAsync com erro deve setar o erro corretamente', () => {
     const gen = sagas.getProductListsAsync();
 
-    expect(gen.next().value).toEqual(
-      put(productListActions.setError()),
-    );
+    expect(gen.next().value).toEqual(put(productListActions.setError()));
 
     expect(gen.next().value).toEqual(put(productListActions.setLoading(true)));
 
@@ -129,9 +127,7 @@ describe('ProductList Sagas', () => {
 
     const gen = sagas.updateProductListAsync(action);
 
-    expect(gen.next().value).toEqual(
-      put(productListActions.setError()),
-    );
+    expect(gen.next().value).toEqual(put(productListActions.setError()));
     expect(gen.next().value).toEqual(put(productListActions.setLoading(true)));
 
     const ajustedProductList = injectProductListExtraData(productList);
@@ -161,9 +157,7 @@ describe('ProductList Sagas', () => {
 
     const gen = sagas.updateProductListAsync(action);
 
-    expect(gen.next().value).toEqual(
-      put(productListActions.setError()),
-    );
+    expect(gen.next().value).toEqual(put(productListActions.setError()));
 
     expect(gen.next().value).toEqual(put(productListActions.setLoading(true)));
 
@@ -196,9 +190,7 @@ describe('ProductList Sagas', () => {
 
     const gen = sagas.deleteProductListAsync(action);
 
-    expect(gen.next().value).toEqual(
-      put(productListActions.setError()),
-    );
+    expect(gen.next().value).toEqual(put(productListActions.setError()));
     expect(gen.next().value).toEqual(put(productListActions.setLoading(true)));
 
     expect(gen.next([mockProductLists]).value).toEqual(
@@ -227,9 +219,7 @@ describe('ProductList Sagas', () => {
 
     const gen = sagas.deleteProductListAsync(action);
 
-    expect(gen.next().value).toEqual(
-      put(productListActions.setError()),
-    );
+    expect(gen.next().value).toEqual(put(productListActions.setError()));
 
     expect(gen.next().value).toEqual(put(productListActions.setLoading(true)));
 
@@ -263,9 +253,7 @@ describe('ProductList Sagas', () => {
 
     const gen = sagas.createProductItemAsync(action);
 
-    expect(gen.next().value).toEqual(
-      put(productListActions.setError()),
-    );
+    expect(gen.next().value).toEqual(put(productListActions.setError()));
     expect(gen.next().value).toEqual(put(productListActions.setLoading(true)));
 
     const ajustedProductItem = injectProductListExtraData(mockProductItem);
@@ -302,9 +290,7 @@ describe('ProductList Sagas', () => {
 
     const gen = sagas.createProductItemAsync(action);
 
-    expect(gen.next().value).toEqual(
-      put(productListActions.setError()),
-    );
+    expect(gen.next().value).toEqual(put(productListActions.setError()));
     expect(gen.next().value).toEqual(put(productListActions.setLoading(true)));
 
     const ajustedProductItem = injectProductListExtraData(mockProductItem);
@@ -339,9 +325,7 @@ describe('ProductList Sagas', () => {
 
     const gen = sagas.getProductItemsAsync(action);
 
-    expect(gen.next().value).toEqual(
-      put(productListActions.setError()),
-    );
+    expect(gen.next().value).toEqual(put(productListActions.setError()));
     expect(gen.next().value).toEqual(put(productListActions.setLoading(true)));
 
     expect(gen.next().value).toEqual(call(sagaServer.getProductItems, listId));
@@ -369,9 +353,7 @@ describe('ProductList Sagas', () => {
 
     const gen = sagas.getProductItemsAsync(action);
 
-    expect(gen.next().value).toEqual(
-      put(productListActions.setError()),
-    );
+    expect(gen.next().value).toEqual(put(productListActions.setError()));
     expect(gen.next().value).toEqual(put(productListActions.setLoading(true)));
 
     expect(gen.next().value).toEqual(call(sagaServer.getProductItems, listId));
@@ -405,9 +387,7 @@ describe('ProductList Sagas', () => {
 
     const gen = sagas.deleteProductItemAsync(action);
 
-    expect(gen.next().value).toEqual(
-      put(productListActions.setError()),
-    );
+    expect(gen.next().value).toEqual(put(productListActions.setError()));
     expect(gen.next().value).toEqual(put(productListActions.setLoading(true)));
 
     expect(gen.next().value).toEqual(
@@ -439,9 +419,7 @@ describe('ProductList Sagas', () => {
 
     const gen = sagas.deleteProductItemAsync(action);
 
-    expect(gen.next().value).toEqual(
-      put(productListActions.setError()),
-    );
+    expect(gen.next().value).toEqual(put(productListActions.setError()));
     expect(gen.next().value).toEqual(put(productListActions.setLoading(true)));
 
     expect(gen.next().value).toEqual(
@@ -476,9 +454,7 @@ describe('ProductList Sagas', () => {
 
     const gen = sagas.updateProductItemAsync(action);
 
-    expect(gen.next().value).toEqual(
-      put(productListActions.setError()),
-    );
+    expect(gen.next().value).toEqual(put(productListActions.setError()));
     expect(gen.next().value).toEqual(put(productListActions.setLoading(true)));
 
     expect(gen.next().value).toEqual(
@@ -516,9 +492,7 @@ describe('ProductList Sagas', () => {
 
     const gen = sagas.updateProductItemAsync(action);
 
-    expect(gen.next().value).toEqual(
-      put(productListActions.setError()),
-    );
+    expect(gen.next().value).toEqual(put(productListActions.setError()));
     expect(gen.next().value).toEqual(put(productListActions.setLoading(true)));
 
     expect(gen.next().value).toEqual(

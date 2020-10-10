@@ -2,16 +2,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useState } from 'react';
 
 import productListSelectors from '@store/product-list/selectors';
-import { productListActions } from '@store/product-list';
 import { ProductItem } from '@store/product-list/types';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { ProductNavigatorParamsList } from '@navigator/product-navigator';
 
 interface Props {
   formParams: Partial<ProductItem>;
   checkForm: () => Promise<boolean>;
-  listId: string;
 }
+
+type RouteProps = RouteProp<ProductNavigatorParamsList, 'NewListItem'>;
+
 const useNewItem = (props: Props) => {
-  const { checkForm, listId, formParams } = props;
+  const route = useRoute<RouteProps>();
+  const { checkForm, formParams } = props;
+  const { action, listId } = route.params;
+
   const [modalVisible, setModalVisible] = useState(false);
 
   const dispatch = useDispatch();
@@ -22,11 +28,11 @@ const useNewItem = (props: Props) => {
 
     if (isValid) {
       if (formParams.id) {
-        dispatch(productListActions.updateProductItemAsync(formParams, listId));
+        dispatch(action.updateProductItemAsync(formParams, listId));
         return;
       }
 
-      dispatch(productListActions.createProductItemAsync(formParams, listId));
+      dispatch(action.createProductItemAsync(formParams, listId));
       return;
     }
   }, [formParams]);

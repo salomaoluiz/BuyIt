@@ -4,6 +4,7 @@ import { GeneralState } from '@store/general/types';
 import { NotificationState } from '@store/notification/types';
 import { initialAppState } from './initialAppState.mock';
 import { PersistState } from 'redux-persist';
+import { StockState } from '@store/stock/types';
 
 export class AppStateMockBuilder {
   _persist: PersistState = initialAppState._persist;
@@ -11,6 +12,7 @@ export class AppStateMockBuilder {
   authReducer: AuthState = initialAppState.authReducer;
   generalReducer: GeneralState = initialAppState.generalReducer;
   notificationReducer: NotificationState = initialAppState.notificationReducer;
+  stockReducer: StockState = initialAppState.stockReducer;
 
   withPersist(state: PersistState) {
     this._persist = state;
@@ -24,6 +26,11 @@ export class AppStateMockBuilder {
 
   withNotification(state: NotificationState) {
     this.notificationReducer = state;
+    return this;
+  }
+
+  withStock(state: StockState) {
+    this.stockReducer = state;
     return this;
   }
 
@@ -44,6 +51,7 @@ export class AppStateMockBuilder {
       generalReducer: this.generalReducer,
       notificationReducer: this.notificationReducer,
       productListReducer: this.productListReducer,
+      stockReducer: this.stockReducer,
     };
   };
 }

@@ -13,15 +13,23 @@ const strings = appLocale();
 export function* sendNotificationAsync(
   props: NotificationAction<NotificationProps>,
 ) {
-
   const body = props.payload?.body;
-    const icon = props.payload?.icon;
+  const firstAction = props.payload?.firstAction;
+  const secondAction = props.payload?.secondAction;
+  const icon = props.payload?.icon;
 
   if (!body) {
     throw new Error(strings.errors.general.opsWeHaveAProblem);
   }
 
-  yield put(notificationActions.sendNotification({ body, icon }));
+  yield put(
+    notificationActions.sendNotification({
+      body,
+      icon,
+      firstAction,
+      secondAction,
+    }),
+  );
 
   yield delay(animation.notificationVisibleTiming);
 
