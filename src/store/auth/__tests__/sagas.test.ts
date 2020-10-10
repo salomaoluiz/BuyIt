@@ -73,7 +73,7 @@ describe('Auth Saga - Login com Email e Senha', () => {
     };
 
     expect(await gen.next().value).toEqual(
-      put(notificationActions.sendNotificationAsync(notificationParams)),
+      put(notificationActions.showBannerAsync(notificationParams)),
     );
 
     expect(await gen.next().value).toEqual(put(authActions.setLoading(false)));
@@ -126,7 +126,7 @@ describe('Auth Saga - Login com Email e Senha', () => {
 
     expect(gen.next().value).toEqual(
       put(
-        notificationActions.sendNotificationAsync(
+        notificationActions.showBannerAsync(
           notificationMessages.registerSuccess,
         ),
       ),
@@ -161,7 +161,7 @@ describe('Auth Saga - Login com Email e Senha', () => {
     const notificationError = notificationMessages.opsError(errorMessage);
 
     expect(gen.throw(error).value).toEqual(
-      put(notificationActions.sendNotificationAsync(notificationError)),
+      put(notificationActions.showBannerAsync(notificationError)),
     );
 
     expect(gen.next().value).toEqual(put(authActions.setLoading(false)));

@@ -2,33 +2,33 @@ import { useSelector, useDispatch } from 'react-redux';
 import { notificationSelector, notificationActions } from '@store/notification';
 import { useEffect, useState, useCallback } from 'react';
 import appLocale from '@locales';
-import { NotificationButton } from '@store/notification/types';
+import { BannerButton } from '@store/notification/types';
 
 const strings = appLocale();
 
 const useBanner = () => {
-  const notificationState = useSelector(notificationSelector.getState);
+  const notificationState = useSelector(notificationSelector.getBanner);
   const [isVisible, setIsVisible] = useState(false);
   const [body, setBody] = useState<string | undefined>(undefined);
   const [icon, setIcon] = useState<string | undefined>(undefined);
 
-  const [bannerActions] = useState<NotificationButton[]>([]);
+  const [bannerActions] = useState<BannerButton[]>([]);
 
   const dispatch = useDispatch();
 
   const _handleDismiss = useCallback(() => {
-    dispatch(notificationActions.dismissNotification());
+    dispatch(notificationActions.dismissBanner());
   }, []);
 
   const setNotificationData = useCallback(() => {
-    setIsVisible(notificationState.isVisible);
+    setIsVisible(notificationState.isVisible!!);
     setBody(notificationState.body);
     setIcon(notificationState.icon);
-  }, [notificationState.isVisible]);
+  }, [notificationState.isVisible!!]);
 
   useEffect(() => {
     setNotificationData();
-  }, [notificationState.isVisible]);
+  }, [notificationState.isVisible!!]);
 
   useEffect(() => {
     const { firstAction, secondAction } = notificationState;

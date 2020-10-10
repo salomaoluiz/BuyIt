@@ -6,6 +6,11 @@ import { injectStockItemExtraData } from './utils';
 import * as sagaServer from './sagas-server';
 import * as sagaLocal from './sagas-local';
 import { ProductItem } from '@store/product-list/types';
+import { addRemoveDays, formatDate } from '@utils/date';
+import { notificationActions } from '@store/notification';
+import appLocale from '@locales';
+
+const strings = appLocale();
 
 export function* createStockAsync(
   props: StockActions<{ stockItem: ProductItem }>,
@@ -19,6 +24,22 @@ export function* createStockAsync(
 
     const stocksArray = yield call(sagaLocal.createStockItem, formatedStock);
     yield put(stockActions.setStock(stocksArray));
+
+    if (stockItem.dueDate) {
+      const notificationDate = addRemoveDays(-2, stockItem.dueDate);
+      yield put(
+        notificationActions.scheduleLocalNotificationAsync({
+          date: notificationDate,
+          message: strings.productLists.productExpireInDay(
+            stockItem.name,
+            formatDate(stockItem.dueDate),
+          ),
+          playSound: true,
+          title: stockItem.name,
+        }),
+      );
+    }
+
     yield call(navigationService.goBack);
 
     yield call(sagaServer.createStockItem, formatedStock);

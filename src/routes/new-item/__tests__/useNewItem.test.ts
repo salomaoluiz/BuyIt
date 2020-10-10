@@ -120,4 +120,48 @@ describe('NewItem - useNewItem', () => {
 
     expect(result.current.modalVisible).toBe(true);
   });
+
+  test('ao chamar handleDatePickerVisible passando um status, deve atualizar o status do modal para o status informado', () => {
+    const newInitialProps = {
+      ...initialProps,
+      formParams: {
+        ...initialProps.formParams,
+        id: '123456',
+      },
+    };
+
+    const { result } = renderHook(useNewItem, {
+      initialProps: newInitialProps,
+    });
+
+    expect(result.current.datePickerVisible).toBe(false);
+
+    act(() => {
+      result.current.handleDatePickerVisible(true);
+    });
+
+    expect(result.current.datePickerVisible).toBe(true);
+  });
+
+  test('ao chamar handleDatePickerVisible nao passando nada, deve atualizar o status do modal para o status inverso ao atual', () => {
+    const newInitialProps = {
+      ...initialProps,
+      formParams: {
+        ...initialProps.formParams,
+        id: '123456',
+      },
+    };
+
+    const { result } = renderHook(useNewItem, {
+      initialProps: newInitialProps,
+    });
+
+    expect(result.current.datePickerVisible).toBe(false);
+
+    act(() => {
+      result.current.handleDatePickerVisible();
+    });
+
+    expect(result.current.datePickerVisible).toBe(true);
+  });
 });

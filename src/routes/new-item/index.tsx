@@ -16,6 +16,8 @@ import Divider from '@components/divider';
 import UnitModal from './containers/unit-modal';
 import Dialog from '@components/dialog';
 import { Portal } from 'react-native-paper';
+import DueDateModal from './containers/duedate-modal';
+import { formatDate } from '@utils/date';
 
 const strings = appLocale();
 const currency = appCurrency();
@@ -30,10 +32,17 @@ const NewItem = () => {
     handleErrorMessage,
     setUnit,
     checkForm,
+    setDueDate,
   } = useForm();
-  const { amount, brand, name, qtd, unit } = formParams;
+  const { amount, brand, name, qtd, unit, dueDate } = formParams;
 
-  const { onSaveButtonPress, handleModalVisible, modalVisible } = useNewItem({
+  const {
+    onSaveButtonPress,
+    handleModalVisible,
+    modalVisible,
+    datePickerVisible,
+    handleDatePickerVisible,
+  } = useNewItem({
     formParams,
     checkForm,
   });
@@ -57,15 +66,28 @@ const NewItem = () => {
             {...handleErrorMessage('brand')}
           />
           <Divider columnDivider />
-          <TextInput
-            value={amount}
-            leftIcon="currency-usd"
-            onChangeText={setAmount}
-            label={strings.productLists.amount}
-            prefix={currency}
-            keyboardType="decimal-pad"
-            {...handleErrorMessage('amount')}
-          />
+          <TwoColumnsContainer>
+            <TextInput
+              value={amount}
+              leftIcon="currency-usd"
+              onChangeText={setAmount}
+              label={strings.productLists.amount}
+              prefix={currency}
+              keyboardType="decimal-pad"
+              {...handleErrorMessage('amount')}
+            />
+            <Divider columnDivider rowDivider />
+            <TouchableRipple
+              withoutBackground
+              onPress={handleDatePickerVisible}>
+              <TextInput
+                editable={false}
+                fixedValue={dueDate && formatDate(dueDate)}
+                label={strings.productLists.dueDate}
+                {...handleErrorMessage('dueDate')}
+              />
+            </TouchableRipple>
+          </TwoColumnsContainer>
           <Divider columnDivider />
           <TwoColumnsContainer>
             <TextInput
@@ -104,6 +126,12 @@ const NewItem = () => {
             handleModalVisible={handleModalVisible}
           />
         </Dialog>
+        <DueDateModal
+          dueDate={dueDate}
+          handleModalVisible={handleDatePickerVisible}
+          isVisible={datePickerVisible}
+          setDueDate={setDueDate}
+        />
       </Portal>
     </>
   );

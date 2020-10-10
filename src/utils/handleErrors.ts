@@ -5,7 +5,7 @@ const useErrorMessage = (body: string) => {
   const dispatch = useDispatch();
 
   dispatch(
-    notificationActions.sendNotificationAsync({ body, icon: 'alert' }),
+    notificationActions.showBannerAsync({ body, icon: 'alert' }),
   );
 };
 

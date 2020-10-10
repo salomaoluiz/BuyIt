@@ -6,11 +6,11 @@ describe('Testando handleErrors', () => {
   const dispatch = jest.fn();
   jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(dispatch);
 
-  test('deve chamar o sendNotification passando as informações de erro', () => {
+  test('deve chamar o showBannerAsync passando as informações de erro', () => {
     renderHook(() => useErrorMessage('body'));
 
     expect(dispatch).toHaveBeenLastCalledWith(
-      notificationActions.sendNotificationAsync({
+      notificationActions.showBannerAsync({
         body: 'body',
         icon: 'alert',
       }),
