@@ -2,6 +2,8 @@
   package="br.com.jacobysoftware.buyit">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
       android:name=".MainApplication"
@@ -9,7 +11,35 @@
       android:icon="@mipmap/ic_launcher"
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
+      android:launchMode="singleTop"
       android:theme="@style/AppTheme">
+      <meta-data  android:name="com.dieam.reactnativepushnotification.notification_channel_name"
+                  android:value="BuyIt Notifications"/>
+      <meta-data  android:name="com.dieam.reactnativepushnotification.notification_channel_description"
+                  android:value="Notifications of app BuyIt"/>
+      <meta-data  android:name="com.dieam.reactnativepushnotification.notification_foreground"
+                  android:value="true"/>
+      <!-- Change the resource name to your App's accent color - or any other color you want -->
+      <meta-data  android:name="com.dieam.reactnativepushnotification.notification_color"
+                  android:resource="@color/notification_color"/> <!-- or @android:color/{name} to use a standard color -->
+
+      <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationActions" />
+      <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher" />
+      <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationBootEventReceiver">
+          <intent-filter>
+              <action android:name="android.intent.action.BOOT_COMPLETED" />
+              <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+              <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
+          </intent-filter>
+      </receiver>
+
+      <service
+          android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService"
+          android:exported="false" >
+          <intent-filter>
+              <action android:name="com.google.firebase.MESSAGING_EVENT" />
+          </intent-filter>
+      </service>
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"

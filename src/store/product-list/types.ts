@@ -24,6 +24,7 @@ export type ProductItemForm = {
   qtd: string;
   brand: string;
   unit?: PaperListData;
+  dueDate?: Date;
 };
 
 export interface ProductItem extends ProductItemForm {
