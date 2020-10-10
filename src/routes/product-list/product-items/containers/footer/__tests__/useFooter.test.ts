@@ -4,6 +4,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
 import useFooter from '../useFooter';
 import { Routes } from '@routes';
+import { productListActions } from '@store/product-list';
 
 const mockProductItem = new ProductItemBuilderMock()
   .withName('Produto 1')
@@ -52,6 +53,7 @@ describe('ProductItems - Containers - Footer - useFooter', () => {
 
     expect(navigate).toHaveBeenCalledWith(Routes.NewListItem, {
       listId: '123456',
+      action: productListActions,
     });
   });
 });

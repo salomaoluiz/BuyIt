@@ -7,6 +7,7 @@ import Drawer from './components/drawer';
 
 import UnauthenticatedNavigator from './unauthenticated';
 import { Routes } from '@routes';
+import StockNavigator from './stock-navigator';
 
 export type AuthenticatedParamsList = {
   [Routes.ProductNavigator]: undefined;
@@ -22,6 +23,10 @@ const AuthenticatedNavigator = () => {
         <AuthenticatedStack.Screen
           name={Routes.ProductNavigator}
           component={ProductNavigator}
+        />
+        <AuthenticatedStack.Screen
+          name={Routes.StockNavigator}
+          component={StockNavigator}
         />
         <AuthenticatedStack.Screen
           name={Routes.UnauthenticatedNavigator}
