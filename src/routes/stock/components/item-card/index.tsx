@@ -1,21 +1,23 @@
 import React from 'react';
+
 import { ProductItem } from '@store/product-list/types';
-import useItemCard from './useItemCard';
 import ProductItemComponent from '@components/product-item';
+import useItemCard from './useItemCard';
 
 export interface Props {
-  listId: string;
-  itemIndex: number;
-  productItem: ProductItem;
+  item: ProductItem;
+  index: number;
 }
 
 const ItemCard = (props: Props) => {
-  const { productItem, handleItemPress, itemIndex } = useItemCard(props);
+  const { index, item } = props;
+  const { handleItemPress } = useItemCard(props);
+
   return (
     <ProductItemComponent
-      index={itemIndex}
+      productItem={item}
+      index={index}
       onPress={handleItemPress}
-      productItem={productItem}
     />
   );
 };
