@@ -4,12 +4,14 @@ import {
   TransitionPresets,
 } from '@react-navigation/stack';
 import ProductItems from '@routes/product-list/product-items';
-import NewListItem from '@routes/product-list/new-item';
+import NewListItem from '@routes/new-item';
 
 import { Routes } from '@routes';
 import { ProductItem, ProductList } from '@store/product-list/types';
 import ProductLists from '@routes/product-list/product-lists';
 import NewList from '@routes/product-list/new-list';
+import { productListActions } from '@store/product-list';
+import { stockActions } from '@store/stock';
 
 export type ProductNavigatorParamsList = {
   [Routes.ProductLists]: undefined;
@@ -22,6 +24,7 @@ export type ProductNavigatorParamsList = {
   [Routes.NewListItem]: {
     productItem?: ProductItem;
     listId: string;
+    action: typeof productListActions | typeof stockActions;
   };
 };
 
@@ -33,7 +36,7 @@ const ProductNavigator = () => {
       screenOptions={{
         ...TransitionPresets.SlideFromRightIOS,
       }}
-      headerMode='none'
+      headerMode="none"
       initialRouteName="ProductLists">
       <ProductStack.Screen
         name={Routes.ProductItems}

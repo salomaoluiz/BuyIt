@@ -38,7 +38,6 @@ describe('NewItem - useForm', () => {
     };
 
     expect(result.current.formParams).toEqual(expected);
-    expect(result.current.listId).toEqual('123456');
   });
 
   test('ao chamar o checkForm, deve ser chamado o validateError', async () => {

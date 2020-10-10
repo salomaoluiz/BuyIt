@@ -22,4 +22,8 @@ export const initialAppState: RootState = {
     version: -1,
     rehydrated: false,
   },
+  stockReducer: {
+    isLoading: false,
+    stock: [],
+  },
 };

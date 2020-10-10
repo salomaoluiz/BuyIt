@@ -3,6 +3,7 @@ import { useCallback, useState, useEffect } from 'react';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { ProductNavigatorParamsList } from '@navigator/product-navigator';
 import { Routes } from '@routes';
+import { productListActions } from '@store/product-list';
 
 type NavProps = NavigationProp<ProductNavigatorParamsList, 'ProductItems'>;
 
@@ -27,7 +28,10 @@ const useFooter = (props: Props) => {
   }, [productItems]);
 
   const onAddButtonPress = useCallback(() => {
-    navigation.navigate(Routes.NewListItem, { listId });
+    navigation.navigate(Routes.NewListItem, {
+      listId,
+      action: productListActions,
+    });
   }, []);
 
   useEffect(() => {

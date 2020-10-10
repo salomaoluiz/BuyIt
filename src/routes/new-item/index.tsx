@@ -30,14 +30,12 @@ const NewItem = () => {
     handleErrorMessage,
     setUnit,
     checkForm,
-    listId,
   } = useForm();
   const { amount, brand, name, qtd, unit } = formParams;
 
   const { onSaveButtonPress, handleModalVisible, modalVisible } = useNewItem({
     formParams,
     checkForm,
-    listId,
   });
 
   return (

@@ -2,13 +2,26 @@ import * as reactRedux from 'react-redux';
 import { renderHook, act } from '@testing-library/react-hooks';
 import useNewItem from '../useNewItem';
 import { productListActions } from '@store/product-list';
+import * as navigation from '@react-navigation/native';
+
+jest.mock('@react-navigation/native');
 
 const dispatch = jest.fn();
+
 describe('NewItem - useNewItem', () => {
+  const listId = '123456';
   beforeAll(() => {
     jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(dispatch);
     jest.spyOn(reactRedux, 'useSelector').mockReturnValue(true);
+    jest
+      .spyOn(navigation, 'useRoute')
+      .mockReturnValue({
+        key: '',
+        name: 'NewItem',
+        params: { action: productListActions, listId },
+      });
   });
+
   const checkForm = jest.fn().mockResolvedValue(true);
 
   const initialProps = {
@@ -20,8 +33,7 @@ describe('NewItem - useNewItem', () => {
       unit: undefined,
       brand: '',
     },
-    checkForm,
-    listId: '123456',
+    checkForm
   };
 
   test('ao chamar onSaveButtonPress sem um id deve chamar o checkForm e disparar a action createProductItemAsync', async () => {
@@ -35,7 +47,7 @@ describe('NewItem - useNewItem', () => {
     expect(dispatch).toHaveBeenCalledWith(
       productListActions.createProductItemAsync(
         initialProps.formParams,
-        initialProps.listId,
+        listId,
       ),
     );
   });
@@ -60,7 +72,7 @@ describe('NewItem - useNewItem', () => {
     expect(dispatch).toHaveBeenCalledWith(
       productListActions.updateProductItemAsync(
         newInitialProps.formParams,
-        initialProps.listId,
+        listId,
       ),
     );
   });

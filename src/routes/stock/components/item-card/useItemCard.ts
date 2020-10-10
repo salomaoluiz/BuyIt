@@ -1,47 +1,44 @@
-import { Props } from '.';
-import { useCallback } from 'react';
-import { Alert } from 'react-native';
-import { ProductNavigatorParamsList } from '@navigator/product-navigator';
+import appLocale from '@locales';
+import { StockNavigatorParamsList } from '@navigator/stock-navigator';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Routes } from '@routes';
+import { stockActions } from '@store/stock';
+import { useCallback } from 'react';
+import { Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { productListActions } from '@store/product-list';
-import appLocale from '@locales';
+import { Props } from '.';
+
+type NavProps = NavigationProp<StockNavigatorParamsList, 'Stock'>;
 
 const strings = appLocale();
-type NavProps = NavigationProp<ProductNavigatorParamsList, 'ProductItems'>;
 
 const useItemCard = (props: Props) => {
-  const { productItem, listId, itemIndex } = props;
+  const { item } = props;
   const navigation = useNavigation<NavProps>();
   const dispatch = useDispatch();
 
   const _handleEditItem = useCallback(() => {
     navigation.navigate(Routes.NewListItem, {
-      productItem,
-      listId,
-      action: productListActions
+      productItem: item,
+      action: stockActions,
     });
-  }, [productItem]);
+  }, [item]);
 
   const _handleDeleteItem = useCallback(() => {
-    const itemId = productItem.id;
-    dispatch(productListActions.deleteProductItemAsync(itemId, listId));
-  }, [productItem]);
+    const itemId = item.id;
+    dispatch(stockActions.deleteProductItemAsync(itemId));
+  }, [item]);
 
   const handleItemPress = useCallback(() => {
     Alert.alert(strings.general.whatWant, strings.general.whatWantDo, [
       { text: strings.general.editItem, onPress: _handleEditItem },
       { text: strings.general.deleteItem, onPress: _handleDeleteItem },
     ]);
-  }, [productItem]);
-
+  }, [item]);
   return {
+    handleItemPress,
     _handleDeleteItem,
     _handleEditItem,
-    productItem,
-    itemIndex,
-    handleItemPress,
   };
 };
 
