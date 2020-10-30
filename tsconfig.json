@@ -79,6 +79,12 @@
       "@models/*": [
         "src/models/*"
       ],
+      "@lib": [
+        "src/lib"
+      ],
+      "@lib/*": [
+        "src/lib/*"
+      ],
       "@styles": [
         "src/styles"
       ],

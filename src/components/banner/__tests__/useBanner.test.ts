@@ -1,8 +1,7 @@
 import * as reactRedux from 'react-redux';
-import { NotificationState } from '@store/notification/types';
 import { act, renderHook } from '@testing-library/react-hooks';
 import useBanner from '../useBanner';
-import { notificationActions } from '@store/notification';
+import { notificationActions, notificationSelector } from '@store/notification';
 import appLocale from '@locales';
 
 const strings = appLocale();
@@ -10,7 +9,7 @@ const strings = appLocale();
 describe('Testando o useBanner', () => {
   const dispatch = jest.fn();
 
-  const initialState: NotificationState = {
+  const initialState = {
     body: undefined,
     icon: undefined,
     isVisible: false,
@@ -19,12 +18,11 @@ describe('Testando o useBanner', () => {
   jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(dispatch);
   const useSelectorMock = jest
     .spyOn(reactRedux, 'useSelector')
-    .mockReturnValue(initialState);
+    .mockImplementation((func) => {
+      if (func === notificationSelector.getBanner) return initialState;
+    });
 
   jest.useFakeTimers();
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
   test('a notificação nao pode aparecer se estiver com os valores default ', () => {
     const { result } = renderHook(useBanner);
 
@@ -95,8 +93,6 @@ describe('Testando o useBanner', () => {
       result.current._handleDismiss();
     });
 
-    expect(dispatch).toHaveBeenCalledWith(
-      notificationActions.dismissNotification(),
-    );
+    expect(dispatch).toHaveBeenCalledWith(notificationActions.dismissBanner());
   });
 });

@@ -1,26 +1,41 @@
-import { sendNotificationAsync } from '../sagas';
+import * as sagas from '../sagas';
 import { NotificationTypes } from '../types';
-import { put, delay } from 'redux-saga/effects';
-import { notificationActions } from '..';
+import { put, delay, select } from 'redux-saga/effects';
+import { notificationActions, notificationSelector } from '..';
 import { animation } from '@styles';
 import appLocale from '@locales';
+import { ChannelID, pushNotification } from '@lib/push-notification';
+import * as utilIds from '@utils/id';
 
 const strings = appLocale();
 
+jest.mock('react-native-push-notification', () => ({
+  localNotificationSchedule: jest.fn(),
+}));
 describe('Notification Sagas', () => {
-  test('deve enviar a notificacao e apos um tempo limpa-la ', async () => {
+  const scheduleNotificationSpy = jest.spyOn(
+    pushNotification,
+    'scheduleLocalNotification',
+  );
+  const randomNumberIdSpy = jest
+    .spyOn(utilIds, 'randomNumberId')
+    .mockReturnValue(12345);
+
+  test('deve mostrar um banner e apos um tempo limpa-la ', async () => {
     const mockProps = {
-      type: NotificationTypes.SEND_NOTIFICATION_ASYNC,
+      type: NotificationTypes.SHOW_BANNER_ASYNC,
       payload: {
-        body: 'body',
-        icon: 'alert',
+        banner: {
+          body: 'body',
+          icon: 'alert',
+        },
       },
     };
 
-    const gen = sendNotificationAsync(mockProps);
+    const gen = sagas.showBannerAsync(mockProps);
 
     expect(await gen.next().value).toEqual(
-      put(notificationActions.sendNotification({ ...mockProps.payload })),
+      put(notificationActions.showBanner({ ...mockProps.payload.banner })),
     );
 
     expect(await gen.next().value).toEqual(
@@ -28,22 +43,105 @@ describe('Notification Sagas', () => {
     );
 
     expect(await gen.next().value).toEqual(
-      put(notificationActions.dismissNotification()),
+      put(notificationActions.dismissBanner()),
     );
 
     expect(await gen.next().done).toBe(true);
   });
 
-  test('caso o title ou o body esteja vazio, deve quebrar', async () => {
-    const action = notificationActions.sendNotificationAsync({
+  test('caso o title ou o body esteja vazio, deve quebrar a exibição do banner', async () => {
+    const action = notificationActions.showBannerAsync({
       body: '',
       icon: 'alert',
     });
 
-    const gen = sendNotificationAsync(action);
+    const gen = sagas.showBannerAsync(action);
 
     expect(() => gen.next().value).toThrowError(
       new Error(strings.errors.general.opsWeHaveAProblem),
     );
+  });
+
+  test('deve agendar uma notificação e salvar no redux as notificações agendadas', async () => {
+    const notificationMock = {
+      message: 'mock message',
+      date: new Date(Date.now()),
+    };
+    const action = notificationActions.scheduleLocalNotificationAsync(
+      notificationMock,
+    );
+
+    const gen = sagas.scheduleLocalNotificationAsync(action);
+
+    expect(gen.next().value).toEqual(
+      select(notificationSelector.getScheduledNotifications),
+    );
+    expect(randomNumberIdSpy).toHaveBeenCalled();
+    const notification = {
+      ...notificationMock,
+      id: 12345,
+      playSound: true,
+    };
+    expect(scheduleNotificationSpy).toHaveReturnedWith({
+      ...notification,
+      channelId: ChannelID.MAIN_CHANNEL,
+    });
+
+    expect(gen.next([]).value).toEqual(
+      put(notificationActions.scheduleLocalNotification([notification])),
+    );
+    expect(gen.next().done).toEqual(true);
+  });
+
+  test('deve sincronizar as notificações e salvar no redux as notificações agendadas', async () => {
+    const notificationMock = [
+      {
+        message: 'mock message',
+        date: new Date(Date.now()),
+        id: 123456,
+        title: 'title',
+        body: '',
+        soundName: '',
+        repeatInterval: 0,
+        number: 0,
+      },
+    ];
+
+    const action = notificationActions.syncScheduleLocalNotificationAsync(
+      notificationMock,
+    );
+
+    const gen = sagas.syncScheduleLocalNotificationAsync(action);
+
+    expect(gen.next().value).toEqual(
+      select(notificationSelector.getScheduledNotifications),
+    );
+    const mockNewListNotification = [
+      {
+        message: 'mock message',
+        date: new Date(Date.now()),
+        id: 123456,
+        title: 'title',
+        soundName: '',
+        number: 0,
+      },
+      {
+        message: 'mock message 2',
+        date: new Date(Date.now()),
+        id: 654321,
+        title: 'title 2',
+        soundName: '',
+        number: 0,
+      },
+    ];
+
+    expect(gen.next(mockNewListNotification).value).toEqual(
+      put(
+        notificationActions.scheduleLocalNotification([
+          mockNewListNotification[0],
+        ]),
+      ),
+    );
+    expect(gen.next().done).toEqual(true);
   });
 });

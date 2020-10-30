@@ -6,29 +6,47 @@ import {
 } from './types';
 
 const initialState: NotificationState = {
-  body: undefined,
-  icon: undefined,
-  isVisible: false,
-  firstAction: undefined,
-  secondAction: undefined,
+  banner: {
+    body: undefined,
+    icon: undefined,
+    isVisible: false,
+    firstAction: undefined,
+    secondAction: undefined,
+  },
+  scheduledNotifications: [],
 };
 
-const sendNotification = (
+const showBanner = (
   state: NotificationState,
   action: NotificationReducerAction,
 ): NotificationState => ({
-  body: action.payload?.body,
-  icon: action.payload?.icon,
-  firstAction: action.payload?.firstAction,
-  secondAction: action.payload?.secondAction,
-  isVisible: true,
+  ...state,
+  banner: {
+    body: action.payload?.banner?.body,
+    icon: action.payload?.banner?.icon,
+    firstAction: action.payload?.banner?.firstAction,
+    secondAction: action.payload?.banner?.secondAction,
+    isVisible: true,
+  },
 });
 
-const dismissNotification = () => ({ ...initialState });
+const dismissBanner = (state: NotificationState): NotificationState => ({
+  ...state,
+  banner: { ...initialState.banner },
+});
+
+const scheduleNotifications = (
+  state: NotificationState,
+  action: NotificationReducerAction,
+): NotificationState => ({
+  ...state,
+  scheduledNotifications: action.payload?.scheduledNotifications || [],
+});
 
 const notificationReducerMap = new Map<NotificationTypes, NotificationReducer>([
-  [NotificationTypes.SEND_NOTIFICATION, sendNotification],
-  [NotificationTypes.DISMISS_NOTIFICATION, dismissNotification],
+  [NotificationTypes.SHOW_BANNER, showBanner],
+  [NotificationTypes.DISMISS_BANNER, dismissBanner],
+  [NotificationTypes.SCHEDULE_NOTIFICATIONS, scheduleNotifications],
 ]);
 
 const reducer = (

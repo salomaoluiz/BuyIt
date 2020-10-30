@@ -1,3 +1,11 @@
+jest.mock('react-native-push-notification', () => ({
+  cancelAllLocalNotifications: jest.fn(),
+  localNotificationSchedule: jest.fn(),
+  cancelLocalNotifications: jest.fn(),
+  getScheduledLocalNotifications: jest.fn(),
+  localNotification: jest.fn(),
+  createChannel: jest.fn(),
+}));
 jest.mock('@react-native-firebase/auth', () => ({}));
 jest.mock('@react-native-firebase/admob', () => ({}));
 

@@ -12,14 +12,13 @@ const { store } = createStore();
 const App = () => {
   RNBootSplash.hide();
   firebaseInit();
-
   return (
     <Provider store={store}>
       <PaperProvider theme={theme}>
         <Banner />
         <AppNavigator />
-    </PaperProvider>
-      </Provider>
+      </PaperProvider>
+    </Provider>
   );
 };
 

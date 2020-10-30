@@ -1,4 +1,5 @@
 import * as navigation from '@react-navigation/native';
+import { Routes } from '@routes';
 import { authActions } from '@store/auth';
 import { act, renderHook } from '@testing-library/react-hooks';
 import * as reactRedux from 'react-redux';
@@ -55,5 +56,27 @@ describe('Login - useLogin', () => {
         initialProps.formParams.password,
       ),
     );
+  });
+
+  test('se chamado handleRegisterUser deve navegar para a tela de Registro passando o email como props', async () => {
+    const initialProps = {
+      formParams: {
+        email: 'a@a.com',
+        password: '',
+      },
+      checkForm: jest.fn().mockResolvedValue(true),
+    };
+
+    const { result } = renderHook(useLogin, { initialProps });
+
+    await act(async () => {
+      await result.current.handleRegisterUser();
+    });
+
+    expect(
+      useNavigationMocks.navigate,
+    ).toHaveBeenCalledWith(Routes.RegisterUser, {
+      email: initialProps.formParams.email,
+    });
   });
 });

@@ -35,7 +35,7 @@ export function* loginEmailPasswordAsync(
     const errorMessage = getErrorMessage(err.message);
     const notificationParams = notificationMessages.opsError(errorMessage);
 
-    yield put(notificationActions.sendNotificationAsync(notificationParams));
+    yield put(notificationActions.showBannerAsync(notificationParams));
   } finally {
     yield put(authActions.setLoading(false));
   }
@@ -76,14 +76,14 @@ export function* registerEmailPasswordAsync(
       yield call(authModels.sendEmailVerification, userCredentials.user);
       const notificationParams = notificationMessages.registerSuccess;
 
-      yield put(notificationActions.sendNotificationAsync(notificationParams));
+      yield put(notificationActions.showBannerAsync(notificationParams));
       yield call(navigationService.goBack);
     }
   } catch (e) {
     const errorMessage = getErrorMessage(e.message);
     const notificationParams = notificationMessages.opsError(errorMessage);
 
-    yield put(notificationActions.sendNotificationAsync(notificationParams));
+    yield put(notificationActions.showBannerAsync(notificationParams));
   } finally {
     yield put(authActions.setLoading(false));
   }

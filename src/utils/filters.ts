@@ -6,6 +6,27 @@ export const filterNotByID = <T extends { id: string }>(
   id?: string,
 ): T[] => list.filter((item) => item.id !== id);
 
+export const syncTwoArraysByID = <
+  T extends { id?: string | number },
+  Q extends { id?: string | number }
+>(
+  array: T[],
+  arrayToCompare: Q[],
+): T[] => {
+  const newArray: T[] = [];
+
+  arrayToCompare.forEach((item) => {
+    const itemMatch = array.find(
+      (itemToCompare) => item.id === itemToCompare.id,
+    );
+    if (itemMatch) {
+      newArray.push(itemMatch);
+    }
+  });
+
+  return newArray;
+};
+
 /* 
 Extraia um elemento de um objecto
 */

@@ -11,6 +11,10 @@ import navigationService from '@navigator/services/navigationService';
 import { injectProductListExtraData } from './utils';
 import * as sagaServer from './sagas-server';
 import * as sagaLocal from './sagas-local';
+import { notificationActions } from '@store/notification';
+import appLocale from '@locales';
+import { addRemoveDays, formatDate } from '@utils/date';
+const strings = appLocale();
 
 export function* createProductListAsync(
   props: ProductListActions<{ productList: ProductList }>,
@@ -19,7 +23,6 @@ export function* createProductListAsync(
   try {
     yield put(productListActions.setError());
     yield put(productListActions.setLoading(true));
-
     const ajustedProductList = injectProductListExtraData(productList);
 
     const newProductListsArray = yield call(
@@ -117,6 +120,21 @@ export function* createProductItemAsync(
       listId,
     );
     yield put(productListActions.setProductLists(productListsArray));
+
+    if (productItem.dueDate) {
+      const notificationDate = addRemoveDays(-2, productItem.dueDate);
+      yield put(
+        notificationActions.scheduleLocalNotificationAsync({
+          date: notificationDate,
+          message: strings.productLists.productExpireInDay(
+            productItem.name,
+            formatDate(productItem.dueDate),
+          ),
+          playSound: true,
+          title: productItem.name,
+        }),
+      );
+    }
     yield call(navigationService.goBack);
 
     yield call(sagaServer.createProductItem, formatedProductItem, listId);

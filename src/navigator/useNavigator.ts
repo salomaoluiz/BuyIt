@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { authSelectors } from '@store/auth';
 import { generalSelector } from '@store/general';
+import { pushNotification } from '@lib/push-notification';
+import { notificationActions } from '@store/notification';
 
 const useNavigator = () => {
   const isLogged = useSelector(authSelectors.isLogged);
@@ -9,6 +11,17 @@ const useNavigator = () => {
   const { rehydrated } = useSelector(generalSelector.getPersistState);
 
   const [isRehydrated, setIsRehydrated] = useState(rehydrated);
+  const [channedCreated, setChannelCreated] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    pushNotification.createChannel(setChannelCreated);
+    pushNotification.getAllScheduledLocalNotifications((notifications) => {
+      dispatch(
+        notificationActions.syncScheduleLocalNotificationAsync(notifications),
+      );
+    });
+  }, []);
 
   useEffect(() => {
     if (rehydrated) {
@@ -19,6 +32,8 @@ const useNavigator = () => {
   return {
     isAuthenticated: isLogged || isAnonymously,
     isRehydrated,
+    channedCreated,
+    setChannelCreated,
   };
 };
 
