@@ -2,7 +2,6 @@ apply plugin: "com.android.application"
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
-apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'
 
 import com.android.build.OutputFile
@@ -218,7 +217,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.firebase:firebase-analytics:17.2.2'
+    implementation 'com.google.firebase:firebase-analytics:17.3.0'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
@@ -267,5 +266,6 @@ project.ext.vectoricons = [
     iconFontNames: [ 'MaterialCommunityIcons.ttf' ] // Name of the font files you want to copy
 ]
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+apply plugin: 'com.google.gms.google-services'
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

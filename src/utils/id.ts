@@ -6,6 +6,12 @@ export const generateUniqueID = () => {
   return id;
 };
 
+export const randomNumberId = () => {
+  const id = (Math.random() * 10000000).toFixed(0);
+
+  return parseInt(id, 0);
+};
+
 export const injectId = <T extends { id?: string }>(object: T) => {
   const id = generateUniqueID();
 

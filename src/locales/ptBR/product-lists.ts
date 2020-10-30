@@ -7,6 +7,8 @@ const productLists = {
   totalQtd: (totalQtd: number): string => `Quantidade: ${totalQtd}`,
   amount: `Valor`,
   qtd: `Quantidade`,
+  dueDate: "Data de vencimento",
+  productExpireInDay: (product: string, date: string) => `Atenção, o produto "${product}" está vencendo no dia ${date}`,
   brand: 'Marca',
   qtdDefault: (value: number) => `Padrão: ${value}`,
   insertQtd: 'Insira a quantidade',

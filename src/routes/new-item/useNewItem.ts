@@ -19,6 +19,7 @@ const useNewItem = (props: Props) => {
   const { action, listId } = route.params;
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [datePickerVisible, setDatePickerVisible] = useState(false);
 
   const dispatch = useDispatch();
   const isLoading = useSelector(productListSelectors.isLoading);
@@ -46,11 +47,19 @@ const useNewItem = (props: Props) => {
     [modalVisible],
   );
 
+  const handleDatePickerVisible = (visible?: boolean) => {
+    if (typeof visible === 'boolean') return setDatePickerVisible(visible);
+
+    return setDatePickerVisible(!datePickerVisible);
+  };
+
   return {
     onSaveButtonPress,
     isLoading,
     handleModalVisible,
     modalVisible,
+    datePickerVisible,
+    handleDatePickerVisible,
   };
 };
 

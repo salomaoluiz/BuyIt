@@ -26,4 +26,5 @@ export const mockCurrentUser: FirebaseAuthTypes.User = {
   updatePassword: jest.fn(),
   updatePhoneNumber: jest.fn(),
   updateProfile: jest.fn(),
+  verifyBeforeUpdateEmail: jest.fn(),
 };

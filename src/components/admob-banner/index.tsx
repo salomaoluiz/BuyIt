@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react';
 
 import { BannerAd, TestIds, BannerAdSize } from '@react-native-firebase/admob';

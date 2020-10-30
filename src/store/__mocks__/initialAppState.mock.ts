@@ -9,7 +9,8 @@ export const initialAppState: RootState = {
     productLists: [],
   },
   notificationReducer: {
-    isVisible: false,
+    banner: {},
+    scheduledNotifications: [],
   },
   authReducer: {
     isLogged: false,
