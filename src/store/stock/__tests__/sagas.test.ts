@@ -1,13 +1,13 @@
 import * as sagas from '../sagas';
 import { stockActions } from '..';
 import { put, call } from 'redux-saga/effects';
-import { StockBuilderMock } from '../__mocks__/stockItemBuilder.mock';
 import { StockActions } from '../types';
 import * as sagaServer from '../sagas-server';
 import * as sagaLocal from '../sagas-local';
 import { injectStockItemExtraData } from '../utils';
 import navigationService from '@navigator/services/navigationService';
 import { ProductItem } from '@store/product-list/types';
+import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
 
 jest.mock('@utils/id', () => ({
   generateUniqueID: jest.fn().mockReturnValue('123456789'),
@@ -23,7 +23,7 @@ jest.mock('@utils/date', () => ({
   })),
 }));
 
-const stock = new StockBuilderMock().withName('Nome').build();
+const stock = new ProductItemBuilderMock().withName('Nome').build();
 
 describe('Stock Sagas', () => {
   test('deve chamar createStockAsync corretamente', () => {
@@ -172,7 +172,7 @@ describe('Stock Sagas', () => {
 
   test('deve chamar deleteStockAsync corretamente', () => {
     const itemId = '123456';
-    const mockStocks = new StockBuilderMock().withName('Lista').build();
+    const mockStocks = new ProductItemBuilderMock().withName('Lista').build();
 
     const action = stockActions.deleteProductItemAsync(itemId) as StockActions<{
       itemId: string;

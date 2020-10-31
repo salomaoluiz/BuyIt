@@ -2,15 +2,15 @@ import { select } from 'redux-saga/effects';
 import { stockSelectors } from '..';
 import * as sagaLocal from '../sagas-local';
 import { ProductItem, ProductItems } from '@store/product-list/types';
-import { StockBuilderMock } from '../__mocks__/stockItemBuilder.mock';
+import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
 
 describe('Stock Sagas Local', () => {
   test('deve adicionar um novo item no array do stock e retornar o novo array', () => {
-    const mockCurrentStockItems = new StockBuilderMock()
+    const mockCurrentStockItems = new ProductItemBuilderMock()
       .withId('12345')
       .build();
 
-    const mockNewStockItem = new StockBuilderMock().withId('2222').build();
+    const mockNewStockItem = new ProductItemBuilderMock().withId('2222').build();
 
     const gen = sagaLocal.createStockItem(mockNewStockItem);
 
@@ -25,7 +25,7 @@ describe('Stock Sagas Local', () => {
   });
 
   test('deve retornar a lista de items no stock local', () => {
-    const mockCurrentStockItems = new StockBuilderMock()
+    const mockCurrentStockItems = new ProductItemBuilderMock()
       .withId('12345')
       .build();
 
@@ -43,10 +43,10 @@ describe('Stock Sagas Local', () => {
 
   test('deve atualizar um elemento já existente no array do stock e retornar o array atualizado', () => {
     const mockCurrentStockItemsArray = [
-      new StockBuilderMock().withName('Current Name').withId('2222').build(),
+      new ProductItemBuilderMock().withName('Current Name').withId('2222').build(),
     ] as ProductItems;
 
-    const mockEditedStockItem = new StockBuilderMock()
+    const mockEditedStockItem = new ProductItemBuilderMock()
       .withName('New Name')
       .withId('2222')
       .build() as ProductItem;
@@ -62,10 +62,10 @@ describe('Stock Sagas Local', () => {
   });
 
   test('deve retornar uma nova lista sem o elemento referente no itemId', () => {
-    const mockStockItem1 = new StockBuilderMock()
+    const mockStockItem1 = new ProductItemBuilderMock()
       .withId('12345')
       .build() as ProductItem;
-    const mockStockItem2 = new StockBuilderMock()
+    const mockStockItem2 = new ProductItemBuilderMock()
       .withId('111111')
       .build() as ProductItem;
 

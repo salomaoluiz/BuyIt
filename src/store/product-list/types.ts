@@ -25,6 +25,8 @@ export type ProductItemForm = {
   brand: string;
   unit?: PaperListData;
   dueDate?: Date;
+  createdAt: number;
+  updatedAt: number;
 };
 
 export interface ProductItem extends ProductItemForm {

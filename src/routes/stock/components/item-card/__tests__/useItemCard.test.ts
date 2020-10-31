@@ -4,11 +4,11 @@ import useItemCard from '../useItemCard';
 jest.mock('@react-navigation/native');
 import * as reactRedux from 'react-redux';
 import { act, renderHook } from '@testing-library/react-hooks';
-import { StockBuilderMock } from '@store/stock/__mocks__/stockItemBuilder.mock';
 import { Routes } from '@routes';
 import { stockActions } from '@store/stock';
 import { Alert } from 'react-native';
 import appLocale from '@locales';
+import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
 
 const dispatch = jest.fn();
 const strings = appLocale();
@@ -22,7 +22,7 @@ describe('useItemCard', () => {
 
   test('ao chamar _handleEditItem deve navegar para a tela de NewListItem com os parâmetros corretos', () => {
     const initialProps = {
-      item: new StockBuilderMock().build(),
+      item: new ProductItemBuilderMock().build(),
       index: 1,
     };
 
@@ -43,7 +43,7 @@ describe('useItemCard', () => {
 
   test('ao chamar _handleDeleteItem deve disparar a action para apagar o item', () => {
     const initialProps = {
-      item: new StockBuilderMock().build(),
+      item: new ProductItemBuilderMock().build(),
       index: 1,
     };
 
@@ -60,7 +60,7 @@ describe('useItemCard', () => {
 
   test('ao chamar handleItemPress deve mostrar uma action com os textos e botões para apagar e editar', () => {
     const initialProps = {
-      item: new StockBuilderMock().build(),
+      item: new ProductItemBuilderMock().build(),
       index: 1,
     };
 

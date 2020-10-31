@@ -13,7 +13,7 @@ import appLocale from '@locales';
 const strings = appLocale();
 
 const ProductLists = () => {
-  const { productLists, onNewButtonPress } = useProductLists();
+  const { ordenedList, onNewButtonPress } = useProductLists();
 
   const renderItem = ({ item }: { item: ProductList }) => (
     <ListCard key={item.id} productList={item} />
@@ -22,7 +22,7 @@ const ProductLists = () => {
   return (
     <Container>
       <Header title={strings.productLists.lists} drawerButton />
-      <FlatList data={productLists} renderItem={renderItem} numColumns={2} />
+      <FlatList data={ordenedList} renderItem={renderItem} numColumns={2} />
 
       <ButtonContainer behavior="position" keyboardVerticalOffset={40}>
         <CircleButton icon="plus" onPress={onNewButtonPress} />

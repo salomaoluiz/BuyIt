@@ -201,16 +201,18 @@ export function* updateProductItemAsync(
     yield put(productListActions.setError());
     yield put(productListActions.setLoading(true));
 
+    const formatedProductItem = injectProductListExtraData(productItem);
+
     const productListsArray = yield call(
       sagaLocal.updateProductItem,
-      productItem,
+      formatedProductItem,
       listId,
     );
 
     yield put(productListActions.setProductLists(productListsArray));
     yield call(navigationService.goBack);
 
-    yield call(sagaServer.updateProductItem, productItem, listId);
+    yield call(sagaServer.updateProductItem, formatedProductItem, listId);
   } catch (err) {
     yield put(productListActions.setError(err.message));
   } finally {
