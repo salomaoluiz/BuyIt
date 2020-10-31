@@ -7,6 +7,8 @@ export class ProductItemBuilderMock {
   amount = '';
   qtd = '';
   brand = '';
+  createdAt = 0;
+  updatedAt = 0;
   unit?: PaperListData = undefined;
 
   withId(id: string) {
@@ -38,6 +40,14 @@ export class ProductItemBuilderMock {
     this.unit = unit;
     return this;
   }
+  withCreatedAt(createdAt: number) {
+    this.createdAt = createdAt;
+    return this;
+  }
+  withUpdatedAt(updatedAt: number) {
+    this.updatedAt = updatedAt;
+    return this;
+  }
 
   build = (): ProductItem => {
     return {
@@ -47,6 +57,8 @@ export class ProductItemBuilderMock {
       qtd: this.qtd,
       brand: this.brand,
       unit: this.unit,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   };
 }

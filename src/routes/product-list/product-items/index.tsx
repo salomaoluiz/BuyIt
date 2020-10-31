@@ -6,29 +6,43 @@ import Footer from './containers/footer';
 import ItemCard from './components/item-card';
 import Header from '@components/header';
 import appLocale from '@locales';
+import { ProductItem } from '@store/product-list/types';
+import { FlatList } from 'react-native';
 
 const strings = appLocale();
 
 const ProductItems = () => {
-  const { productItems, listId } = useProductItems();
+  const { ordenedList, listId } = useProductItems();
 
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: ProductItem;
+    index: number;
+  }) => {
+    return (
+      <ItemCard
+        key={item.id}
+        itemIndex={index}
+        listId={listId}
+        productItem={item}
+      />
+    );
+  };
   return (
     <>
-      <Header title={strings.productLists.items} backButton/>
+      <Header title={strings.productLists.items} backButton />
       <Container>
         <ListContainer>
-          {productItems &&
-            productItems.map((item, index) => (
-              <ItemCard
-                key={item.id}
-                itemIndex={index}
-                listId={listId}
-                productItem={item}
-              />
-            ))}
+          <FlatList
+            data={ordenedList}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          />
         </ListContainer>
       </Container>
-      <Footer productItems={productItems} listId={listId} />
+      <Footer productItems={ordenedList} listId={listId} />
     </>
   );
 };

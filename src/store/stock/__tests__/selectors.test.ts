@@ -1,6 +1,6 @@
 import { stockSelectors } from '..';
 import { AppStateMockBuilder } from '@store/__mocks__/AppStateMockBuilder.mock';
-import { StockBuilderMock } from '../__mocks__/stockItemBuilder.mock';
+import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
 
 describe('Stock Selector', () => {
   test('deve obter o state do stockReducer', () => {
@@ -14,7 +14,7 @@ describe('Stock Selector', () => {
   });
 
   test('deve obter os stocks do stockReducer', () => {
-    const mockedList = new StockBuilderMock().withName('name').build();
+    const mockedList = new ProductItemBuilderMock().withName('name').build();
     const mockState = new AppStateMockBuilder()
       .withStock({ isLoading: false, stock: [mockedList] })
       .build();
