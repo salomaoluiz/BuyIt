@@ -1,6 +1,6 @@
+import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
 import { stockActions } from '..';
 import { StockTypes } from '../types';
-import { StockBuilderMock } from '../__mocks__/stockItemBuilder.mock';
 
 describe('Stock Actions', () => {
   test('deve retornar setLoading corretamente.', () => {
@@ -35,7 +35,7 @@ describe('Stock Actions', () => {
   });
 
   test('deve retornar createProductItemAsync corretamente.', () => {
-    const mockData = new StockBuilderMock().withName('Lista').build();
+    const mockData = new ProductItemBuilderMock().withName('Lista').build();
 
     const result = stockActions.createProductItemAsync(mockData);
 
@@ -48,7 +48,7 @@ describe('Stock Actions', () => {
   });
 
   test('deve retornar updateProductItemAsync corretamente.', () => {
-    const mockData = new StockBuilderMock().withName('Lista').build();
+    const mockData = new ProductItemBuilderMock().withName('Lista').build();
 
     const result = stockActions.updateProductItemAsync(mockData);
 
@@ -73,7 +73,7 @@ describe('Stock Actions', () => {
 
   test('deve retornar setStock corretamente.', () => {
     const mockData = [
-      new StockBuilderMock()
+      new ProductItemBuilderMock()
         .withId('12345')
         .withAmount('11')
         .withBrand('BR')

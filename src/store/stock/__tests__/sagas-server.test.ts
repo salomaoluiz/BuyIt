@@ -1,16 +1,16 @@
 // @ts-nocheck
 
 import { authSelectors } from '@store/auth';
+import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
 import { extractObjectElement } from '@utils/filters';
 import { call, select } from 'redux-saga/effects';
 import { stockModels } from '..';
 import * as sagaServer from '../sagas-server';
 import { appStockItemsFormater, dbStockItemFormated } from '../utils';
-import { StockBuilderMock } from '../__mocks__/stockItemBuilder.mock';
 
 describe('Stock Sagas Server', () => {
   describe('createStock', () => {
-    const mockNewStock = new StockBuilderMock()
+    const mockNewStock = new ProductItemBuilderMock()
       .withName('Name')
       .withId('1111')
       .build();
@@ -45,7 +45,7 @@ describe('Stock Sagas Server', () => {
   });
 
   describe('getStocks', () => {
-    const mockNewStock = new StockBuilderMock()
+    const mockNewStock = new ProductItemBuilderMock()
       .withName('Name')
       .withId('1111')
       .build();
@@ -83,7 +83,7 @@ describe('Stock Sagas Server', () => {
   });
 
   describe('updateStock', () => {
-    const mockNewStock = new StockBuilderMock()
+    const mockNewStock = new ProductItemBuilderMock()
       .withName('Name')
       .withId('1111')
       .build();

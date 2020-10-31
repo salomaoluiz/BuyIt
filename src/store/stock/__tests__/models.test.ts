@@ -1,6 +1,6 @@
 import * as models from '../models';
 import * as firestore from '@react-native-firebase/firestore';
-import { StockBuilderMock } from '../__mocks__/stockItemBuilder.mock';
+import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
 
 describe('StockItems Models', () => {
   const docSet = jest.fn();
@@ -33,7 +33,7 @@ describe('StockItems Models', () => {
     });
 
     test('ao chamar createStockItem deve chamar o set do doc', async () => {
-      const mockStockItem = new StockBuilderMock().build();
+      const mockStockItem = new ProductItemBuilderMock().build();
       await models.createStockItem(userId, mockStockItem.id, mockStockItem);
 
       expect(collectionSpy).toHaveBeenCalledWith(`users/${userId}/stock`);
@@ -41,7 +41,7 @@ describe('StockItems Models', () => {
     });
 
     test('ao chamar findStockItem deve chamar o get do doc', async () => {
-      const mockStockItem = new StockBuilderMock().build();
+      const mockStockItem = new ProductItemBuilderMock().build();
 
       await models.findStockItem(userId, mockStockItem.id);
 
@@ -50,7 +50,7 @@ describe('StockItems Models', () => {
     });
 
     test('ao chamar updateStockItem deve chamar o update do doc', async () => {
-      const mockStockItem = new StockBuilderMock().build();
+      const mockStockItem = new ProductItemBuilderMock().build();
       await models.updateStockItem(userId, mockStockItem.id, mockStockItem);
 
       expect(collectionSpy).toHaveBeenCalledWith(`users/${userId}/stock`);
@@ -58,7 +58,7 @@ describe('StockItems Models', () => {
     });
 
     test('ao chamar deleteStockItem deve chamar o delete do doc', async () => {
-      const mockStockItem = new StockBuilderMock().build();
+      const mockStockItem = new ProductItemBuilderMock().build();
       await models.deleteStockItem(userId, mockStockItem.id);
 
       expect(collectionSpy).toHaveBeenCalledWith(`users/${userId}/stock`);

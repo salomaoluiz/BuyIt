@@ -2,7 +2,7 @@
 
 import stockReducer from '../reducer';
 import { stockActions } from '..';
-import { StockBuilderMock } from '../__mocks__/stockItemBuilder.mock';
+import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
 
 describe('ProductList Reducers', () => {
   const initialState = {
@@ -51,7 +51,7 @@ describe('ProductList Reducers', () => {
   });
 
   test('deve retornar o state correto para o setProductList', () => {
-    const mockData = new StockBuilderMock()
+    const mockData = new ProductItemBuilderMock()
       .withId('123456')
       .withName('Teste')
       .build();

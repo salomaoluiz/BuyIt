@@ -1,10 +1,11 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RouteProp, useRoute } from '@react-navigation/native';
 
 import { filterByID } from '@utils/filters';
 import { productListSelectors, productListActions } from '@store/product-list';
 import { ProductNavigatorParamsList } from '@navigator/product-navigator';
+import { sortByDate } from '@utils/sort';
 
 type RouteProps = RouteProp<ProductNavigatorParamsList, 'ProductItems'>;
 
@@ -17,6 +18,7 @@ const useProductItems = () => {
   const currentList = filterByID(productLists, listId);
   const listName = currentList.name;
   const productItems = currentList.items;
+  const [ordenedList, setOrdenedList] = useState(productItems);
 
   const fetchProductItems = useCallback(() => {
     dispatch(productListActions.getProductItemsAsync(listId));
@@ -26,7 +28,14 @@ const useProductItems = () => {
     fetchProductItems();
   }, []);
 
-  return { productItems, listName, listId, fetchProductItems };
+  useEffect(() => {
+    if (productItems) {
+      const newOrdenedList = sortByDate(productItems, 'updatedAt');
+      setOrdenedList(newOrdenedList);
+    }
+  }, [productItems]);
+
+  return { ordenedList, listName, listId, fetchProductItems };
 };
 
 export default useProductItems;
