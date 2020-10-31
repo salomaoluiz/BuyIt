@@ -2,7 +2,7 @@ import { select, call } from 'redux-saga/effects';
 import { authSelectors } from '@store/auth';
 import { ProductItem, ProductList, ProductLists } from './types';
 import { extractObjectElement } from '@utils/filters';
-import { productListModels } from '.';
+import { productListModels, productListSelectors } from '.';
 import { QueryFirestore } from './models';
 import { appProductListFormater, dbProductListFormated } from './utils';
 
@@ -23,7 +23,8 @@ export function* createProductList(productList: ProductList) {
 
 export function* getProductLists() {
   const isAnonymously = yield select(authSelectors.isAnonymously);
-  if (isAnonymously) return [];
+  const productLists = yield select(productListSelectors.getProductLists);
+  if (isAnonymously) return productLists;
 
   const userId: string = yield select(authSelectors.getUserId);
   if (userId) {
