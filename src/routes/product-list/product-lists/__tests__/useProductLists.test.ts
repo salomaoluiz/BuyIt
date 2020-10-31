@@ -16,7 +16,16 @@ describe('ProductList - useProductLists', () => {
   const dispatch = jest.fn();
   jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(dispatch);
 
-  const mockProductList = new ProductListBuilderMock().build();
+  const mockProductList1 = new ProductListBuilderMock()
+    .withId('1')
+    .withUpdatedAt(1111)
+    .build();
+  const mockProductList2 = new ProductListBuilderMock()
+    .withId('2')
+    .withUpdatedAt(2222)
+    .build();
+
+  const mockProductList = [mockProductList1, mockProductList2];
   jest.spyOn(reactRedux, 'useSelector').mockReturnValue(mockProductList);
 
   test('ao inicializar deve realizar um fetch nas listas', () => {
@@ -25,6 +34,18 @@ describe('ProductList - useProductLists', () => {
     expect(dispatch).toHaveBeenCalledWith(
       productListActions.getProductListsAsync(),
     );
+  });
+
+  test('ao inicializar ordenar as listas e retornar elas ordenadas', () => {
+    const { result, rerender } = renderHook(useProductLists);
+
+    expect(result.current.ordenedList).toEqual(mockProductList);
+
+    rerender();
+
+    const expectedProductList = [mockProductList2, mockProductList1];
+
+    expect(result.current.ordenedList).toEqual(expectedProductList);
   });
 
   test('ao pressionar o botão de nova lista deve navegar para a tela de nova lista', () => {

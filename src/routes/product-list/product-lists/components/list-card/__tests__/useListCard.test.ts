@@ -9,6 +9,7 @@ import useListCard from '../useListCard';
 import { productListActions } from '@store/product-list';
 import { ProductList } from '@store/product-list/types';
 import appLocale from '@locales';
+import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
 
 const strings = appLocale();
 
@@ -26,16 +27,7 @@ describe('ProductList - useListCard', () => {
     .mockImplementation((value) => value);
   const mockProductList: ProductList = new ProductListBuilderMock()
     .withId('12345')
-    .withItems([
-      {
-        id: '1111',
-        name: 'name',
-        amount: '1.5',
-        brand: 'marca',
-        qtd: '1',
-        unit: { id: 'un', title: 'Unidade' },
-      },
-    ])
+    .withItems([new ProductItemBuilderMock().build()])
     .build();
 
   test('ao inicializar deve setar a quantidade de itens', () => {
