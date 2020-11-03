@@ -33,4 +33,15 @@ describe('Stock Selector', () => {
 
     expect(response).toEqual(false);
   });
+
+  test('deve obter o error do stockReducer', () => {
+    const error = 'Error';
+    const mockState = new AppStateMockBuilder()
+      .withStock({ isLoading: false, stock: [], error })
+      .build();
+
+    const response = stockSelectors.getError(mockState);
+
+    expect(response).toEqual('Error');
+  });
 });

@@ -2,14 +2,13 @@ import styled from 'styled-components/native';
 import { dimensions } from '@styles';
 import theme from 'src/styles/theme';
 
-const Container = styled.View`
-  padding-top: ${dimensions.spacing.Xl};
-`;
+const Container = styled.View``;
+
 const SubContainer = styled.View`
   padding: ${dimensions.spacing.Xs};
   border-top-left-radius: ${dimensions.border.radiusMd};
   border-top-right-radius: ${dimensions.border.radiusMd};
-  background-color: ${theme.colors.surface}
+  background-color: ${theme.colors.surface};
 `;
 
 const ButtonContainer = styled.View`

@@ -31,11 +31,11 @@ const Footer = (props: Props) => {
         <SubContainer>
           <TextContainer>
             <TextSubContainer>
-              <Subheading text={strings.productLists.items} />
+              <Subheading text={strings.productItems.items} />
               <Text text={qtdTotal} />
             </TextSubContainer>
             <TextSubContainer>
-              <Subheading text={strings.productLists.total} />
+              <Subheading text={strings.productItems.total} />
               <Text text={`${currency} ${amountTotal}`} />
             </TextSubContainer>
           </TextContainer>

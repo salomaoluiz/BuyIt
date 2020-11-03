@@ -37,11 +37,7 @@ describe('ProductList - useProductLists', () => {
   });
 
   test('ao inicializar ordenar as listas e retornar elas ordenadas', () => {
-    const { result, rerender } = renderHook(useProductLists);
-
-    expect(result.current.ordenedList).toEqual(mockProductList);
-
-    rerender();
+    const { result } = renderHook(useProductLists);
 
     const expectedProductList = [mockProductList2, mockProductList1];
 

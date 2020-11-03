@@ -27,10 +27,12 @@ export type ProductItemForm = {
   dueDate?: Date;
   createdAt: number;
   updatedAt: number;
+  image?: string;
 };
 
 export interface ProductItem extends ProductItemForm {
   id: string;
+  checkState?: boolean;
 }
 
 export type ProductListForm = {
