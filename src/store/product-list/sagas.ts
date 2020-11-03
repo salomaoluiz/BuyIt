@@ -126,7 +126,7 @@ export function* createProductItemAsync(
       yield put(
         notificationActions.scheduleLocalNotificationAsync({
           date: notificationDate,
-          message: strings.productLists.productExpireInDay(
+          message: strings.productItems.productExpireInDay(
             productItem.name,
             formatDate(productItem.dueDate),
           ),

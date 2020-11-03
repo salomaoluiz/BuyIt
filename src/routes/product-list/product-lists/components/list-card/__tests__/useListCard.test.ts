@@ -68,11 +68,11 @@ describe('ProductList - useListCard', () => {
       strings.general.whatWantDo,
       [
         {
-          text: strings.general.editItem,
+          text: strings.general.edit,
           onPress: result.current._handleEditItem,
         },
         {
-          text: strings.general.deleteItem,
+          text: strings.general.delete,
           onPress: result.current._handleDeleteItem,
         },
       ],

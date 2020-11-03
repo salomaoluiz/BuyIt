@@ -22,7 +22,13 @@ const mockProductItem2 = new ProductItemBuilderMock()
   .withUpdatedAt(2222)
   .build();
 
-const mockProductItem = [mockProductItem1, mockProductItem2];
+const mockProductItem3 = new ProductItemBuilderMock()
+  .withName('Item 1')
+  .withId('123456')
+  .withUpdatedAt(3333)
+  .build();
+
+const mockProductItem = [mockProductItem1, mockProductItem3, mockProductItem2];
 const mockProductList = new ProductListBuilderMock()
   .withName('Lista 1')
   .withId('123456')
@@ -42,14 +48,16 @@ describe('ProductItems - useProductItems', () => {
   });
 
   test('ao iniciar deve obter a lista de items ordenada', () => {
-    const { result, rerender } = renderHook(useProductItems);
+    const { result } = renderHook(useProductItems);
+
+    const expectedOrdenedList = [
+      mockProductItem3,
+      mockProductItem2,
+      mockProductItem1,
+    ];
 
     expect(result.current.listId).toEqual('123456');
-    expect(result.current.ordenedList).toEqual(mockProductItem);
     expect(result.current.listName).toEqual('Lista 1');
-
-    rerender();
-    const expectedOrdenedList = [mockProductItem2, mockProductItem1];
     expect(result.current.ordenedList).toEqual(expectedOrdenedList);
   });
 

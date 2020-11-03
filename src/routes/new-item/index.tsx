@@ -49,7 +49,7 @@ const NewItem = () => {
 
   return (
     <>
-      <Header title={strings.productLists.newItem} backButton />
+      <Header title={strings.productItems.newItem} backButton />
       <Container>
         <SubContainer>
           <TextInput
@@ -61,7 +61,7 @@ const NewItem = () => {
           <Divider columnDivider />
           <TextInput
             value={brand}
-            label={strings.productLists.brand}
+            label={strings.productItems.brand}
             onChangeText={setBrand}
             {...handleErrorMessage('brand')}
           />
@@ -71,7 +71,7 @@ const NewItem = () => {
               value={amount}
               leftIcon="currency-usd"
               onChangeText={setAmount}
-              label={strings.productLists.amount}
+              label={strings.productItems.amount}
               prefix={currency}
               keyboardType="decimal-pad"
               {...handleErrorMessage('amount')}
@@ -83,7 +83,7 @@ const NewItem = () => {
               <TextInput
                 editable={false}
                 fixedValue={dueDate && formatDate(dueDate)}
-                label={strings.productLists.dueDate}
+                label={strings.productItems.dueDate}
                 {...handleErrorMessage('dueDate')}
               />
             </TouchableRipple>
@@ -92,7 +92,7 @@ const NewItem = () => {
           <TwoColumnsContainer>
             <TextInput
               value={qtd}
-              label={strings.productLists.qtd}
+              label={strings.productItems.qtd}
               onChangeText={setQtd}
               leftIcon="cart-outline"
               keyboardType="decimal-pad"
