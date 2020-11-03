@@ -35,6 +35,7 @@ const Icon = (props: Props) => {
         color={color}
         size={size}
         onPress={handlePress}
+        style={{ margin: 0 }}
       />
     </IconContainer>
   );

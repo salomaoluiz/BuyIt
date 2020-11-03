@@ -30,7 +30,7 @@ export function* createStockAsync(
       yield put(
         notificationActions.scheduleLocalNotificationAsync({
           date: notificationDate,
-          message: strings.productLists.productExpireInDay(
+          message: strings.productItems.productExpireInDay(
             stockItem.name,
             formatDate(stockItem.dueDate),
           ),

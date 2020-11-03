@@ -34,8 +34,8 @@ const useListCard = (props: Props) => {
 
   const handleListLongPress = useCallback(() => {
     Alert.alert(strings.general.whatWant, strings.general.whatWantDo, [
-      { text: strings.general.editItem, onPress: _handleEditItem },
-      { text: strings.general.deleteItem, onPress: _handleDeleteItem },
+      { text: strings.general.edit, onPress: _handleEditItem },
+      { text: strings.general.delete, onPress: _handleDeleteItem },
     ]);
   }, [productList]);
 

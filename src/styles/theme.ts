@@ -1,7 +1,15 @@
 import { DefaultTheme } from 'react-native-paper';
 import { Theme } from 'react-native-paper/src/types';
 
-const theme: Theme = {
+interface CustomTheme extends Theme {
+  emphasis: {
+    high: number;
+    medium: number;
+    disabled: number;
+  };
+}
+
+const theme: CustomTheme = {
   ...DefaultTheme,
   fonts: {
     regular: {
@@ -28,6 +36,11 @@ const theme: Theme = {
     ...DefaultTheme.colors,
     primary: '#ba68c8',
     accent: '#42a5f5',
+  },
+  emphasis: {
+    disabled: 0.38,
+    high: 0.87,
+    medium: 0.6,
   },
 };
 
