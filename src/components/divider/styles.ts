@@ -1,15 +1,32 @@
-import { dimensions } from '@styles';
+import { dimensions, getStyleAsNumber } from '@styles';
 import styled from 'styled-components/native';
 
 interface ContainerProps {
   rowDivider?: boolean;
   columnDivider?: boolean;
+  halfSize?: boolean;
 }
+
+export const _setSpacing = (divider?: boolean, halfSize?: boolean) => {
+  const spacing = getStyleAsNumber(dimensions.spacing.Sm);
+
+  if (divider) {
+    if (halfSize) {
+      return `${spacing / 2}px`;
+    }
+    return `${spacing}px`;
+  }
+
+  return `0px`;
+};
+
 export const Container = styled.View<ContainerProps>`
-  margin-left: ${({ rowDivider }) => (rowDivider ? dimensions.spacing.Sm : 0)};
-  margin-right: ${({ rowDivider }) => (rowDivider ? dimensions.spacing.Sm : 0)};
-  margin-top: ${({ columnDivider }) =>
-    columnDivider ? dimensions.spacing.Sm : 0};
-  margin-bottom: ${({ columnDivider }) =>
-    columnDivider ? dimensions.spacing.Sm : 0};
+  margin-left: ${({ rowDivider, halfSize }) =>
+    _setSpacing(rowDivider, halfSize)};
+  margin-right: ${({ rowDivider, halfSize }) =>
+    _setSpacing(rowDivider, halfSize)};
+  margin-top: ${({ columnDivider, halfSize }) =>
+    _setSpacing(columnDivider, halfSize)};
+  margin-bottom: ${({ columnDivider, halfSize }) =>
+    _setSpacing(columnDivider, halfSize)};
 `;

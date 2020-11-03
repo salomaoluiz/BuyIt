@@ -10,11 +10,12 @@ export interface Props {
 }
 
 const ItemCard = (props: Props) => {
-  const { productItem, handleItemPress, itemIndex } = useItemCard(props);
+  const { productItem, handleDeleteItem, handleEditItem, itemIndex } = useItemCard(props);
   return (
     <ProductItemComponent
       index={itemIndex}
-      onPress={handleItemPress}
+      onDeleteItem={handleDeleteItem}
+      onEditItem={handleEditItem}
       productItem={productItem}
     />
   );

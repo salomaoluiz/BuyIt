@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, ListContainer } from './styles';
+import { Container } from './styles';
 import useProductItems from './useProductItems';
 
 import Footer from './containers/footer';
@@ -21,26 +21,18 @@ const ProductItems = () => {
     item: ProductItem;
     index: number;
   }) => {
-    return (
-      <ItemCard
-        key={item.id}
-        itemIndex={index}
-        listId={listId}
-        productItem={item}
-      />
-    );
+    return <ItemCard itemIndex={index} listId={listId} productItem={item} />;
   };
   return (
     <>
-      <Header title={strings.productLists.items} backButton />
+      <Header title={strings.productItems.items} backButton />
       <Container>
-        <ListContainer>
-          <FlatList
-            data={ordenedList}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-          />
-        </ListContainer>
+        <FlatList
+          data={ordenedList}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          overScrollMode="never"
+        />
       </Container>
       <Footer productItems={ordenedList} listId={listId} />
     </>

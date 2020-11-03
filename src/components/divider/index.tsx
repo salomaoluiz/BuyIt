@@ -6,12 +6,16 @@ interface Props {
   rowDivider?: boolean;
   columnDivider?: boolean;
   showHorizontalDivider?: boolean;
+  halfSize?: boolean;
 }
 const Divider = (props: Props) => {
-  const { rowDivider, columnDivider, showHorizontalDivider } = props;
+  const { rowDivider, columnDivider, showHorizontalDivider, halfSize } = props;
 
   return (
-    <Container rowDivider={rowDivider} columnDivider={columnDivider}>
+    <Container
+      rowDivider={rowDivider}
+      columnDivider={columnDivider}
+      halfSize={halfSize}>
       {showHorizontalDivider && <PaperDivider />}
     </Container>
   );
