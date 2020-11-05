@@ -3,11 +3,12 @@ import { ProductLists, ProductList, ProductItem } from './types';
 import { extractObjectElement, filterNotByID } from '@utils/filters';
 import { injectTimeStamp } from '@utils/date';
 import { injectId } from '@utils/id';
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 
 export const formatDocumentProductList = <T>(
-  productList: DocumentFirestore,
-) => {
-  const productData = productList.data() as T;
+  productList: DocumentFirestore<T>,
+): T => {
+  const productData = productList.data();
   const id = productList.id;
   return {
     ...productData,
@@ -15,14 +16,28 @@ export const formatDocumentProductList = <T>(
   };
 };
 
-export const appProductListFormater = <T>(productListsData: QueryFirestore) => {
+export const formatDueDate = <T>(
+  productData: T & { dueDate?: FirebaseFirestoreTypes.Timestamp },
+): T => {
+  if (productData.dueDate) {
+    return {
+      ...productData,
+      dueDate: productData.dueDate.toDate(),
+    };
+  }
+  return { ...productData };
+};
+
+export const appProductListFormater = <T>(
+  productListsData: QueryFirestore<T>,
+) => {
   const productLists: T[] = [];
 
   productListsData.forEach((item) => {
     const productData = formatDocumentProductList<T>(item);
-
+    const productList = formatDueDate<T>(productData);
     productLists.push({
-      ...productData,
+      ...productList,
     });
   });
 
@@ -38,9 +53,7 @@ export const dbProductListFormated = (productList: ProductList) => {
   return filteredData;
 };
 
-export const injectProductListExtraData = <T extends { id: string }>(
-  productList: T,
-) => {
+export const injectProductListExtraData = <T>(productList: T) => {
   const productListWithId = injectId(productList);
   const productListWithTimeStamp = injectTimeStamp(productListWithId);
 

@@ -17,6 +17,7 @@ export const addRemoveMinutes = (minutes: number, date: Date) => {
 export const isBeforeThan = (date: Date, dateToCompare: Date) => {
   return isBefore(date, dateToCompare);
 };
+
 export const injectTimeStamp = <
   T extends { id?: string; updatedAt?: number; createdAt?: number }
 >(

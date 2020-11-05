@@ -3,9 +3,9 @@ import firestore, {
 } from '@react-native-firebase/firestore';
 import { ProductList, ProductItem } from './types';
 
-export type QueryFirestore = FirebaseFirestoreTypes.QuerySnapshot;
-export type DocumentFirestore = FirebaseFirestoreTypes.QueryDocumentSnapshot;
-export type DocumentReference = FirebaseFirestoreTypes.DocumentReference;
+export type QueryFirestore<T> = FirebaseFirestoreTypes.QuerySnapshot<T>;
+export type DocumentFirestore<T> = FirebaseFirestoreTypes.QueryDocumentSnapshot<T>;
+export type DocumentReference<T> = FirebaseFirestoreTypes.DocumentReference<T>;
 
 const getProductLists = (userId: string) =>
   firestore().collection(`users/${userId}/productLists`).get();

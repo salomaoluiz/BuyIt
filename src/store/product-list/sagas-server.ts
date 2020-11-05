@@ -28,7 +28,7 @@ export function* getProductLists() {
 
   const userId: string = yield select(authSelectors.getUserId);
   if (userId) {
-    const productList: QueryFirestore = yield call(
+    const productList: QueryFirestore<ProductLists> = yield call(
       productListModels.getProductLists,
       userId,
     );
