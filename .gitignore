@@ -67,3 +67,4 @@ buck-out/
 coverage
 
 .env.*
+google-services.json
