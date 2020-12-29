@@ -1,4 +1,5 @@
 # Projeto Buy It
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=salomaoluiz_BuyIt&metric=alert_status)](https://sonarcloud.io/dashboard?id=salomaoluiz_BuyIt)
 
 Esse projeto foi criado como forma de estudo de caso de diversos quesitos de desenvolvimento. Caso deseje utilizar esse projeto para estudos e/ou comercialmente, fique a vontade, desde que siga as regras da [LICENSE](https://github.com/salomaoluiz/BuyIt/blob/main/LICENSE). Esse projeto está com as descrições inteiramente em português para que seja mais fácil para quem está começando na area de desenvolvimento entender os conceitos sem ter a trava da linguagem, apenas o código é inteiramente em inglês.
 
