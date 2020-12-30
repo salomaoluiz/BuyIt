@@ -9,7 +9,7 @@ import {
   SocialContainer,
 } from './styles';
 import Logo from '@assets/images/logo.svg';
-import { dimensions, getStyleAsNumber } from '@styles';
+import { dimensions } from '@styles';
 import TextInput from '@components/text-input';
 import Button from '@components/button';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -19,7 +19,6 @@ import useForm from './useForm';
 import appLocale from '@locales';
 import Divider from '@components/divider';
 import Header from '@components/header';
-import Title from '@components/title';
 
 const strings = appLocale();
 
@@ -52,6 +51,7 @@ const Login = () => {
         title={strings.auth.login}
         hidden={!isAnonymously}
         hiddenStatusBar={!isAnonymously}
+        drawerButton
       />
       <Container keyboardShouldPersistTaps="handled">
         {shouldShowLoading && <FullscreenLoader />}
@@ -59,11 +59,7 @@ const Login = () => {
         {shouldShowLoginScreen && (
           <LoginContainer>
             <LogoContainer>
-              <Logo
-                width={getStyleAsNumber(dimensions.size.XXl)}
-                height={getStyleAsNumber(dimensions.size.XXl)}
-              />
-              <Title text={strings.auth.welcome} alignCenter />
+              <Logo height={dimensions.screenWidth / 5} />
             </LogoContainer>
             <InputContainer>
               <TextInput
