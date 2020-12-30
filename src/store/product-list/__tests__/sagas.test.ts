@@ -1,6 +1,6 @@
 import * as sagas from '../sagas';
 import { productListActions } from '..';
-import { put, call } from 'redux-saga/effects';
+import { put, call, select } from 'redux-saga/effects';
 import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
 import { ProductListActions, ProductList, ProductItem } from '../types';
 import * as sagaServer from '../sagas-server';
@@ -8,6 +8,7 @@ import * as sagaLocal from '../sagas-local';
 import { injectProductListExtraData } from '../utils';
 import navigationService from '@navigator/services/navigationService';
 import { ProductItemBuilderMock } from '../__mocks__/productItemBuilder.mock';
+import selectors from '../selectors';
 
 jest.mock('@utils/id', () => ({
   generateUniqueID: jest.fn().mockReturnValue('123456789'),
@@ -108,6 +109,23 @@ describe('ProductList Sagas', () => {
       );
 
       expect(gen.next().value).toEqual(
+        put(productListActions.setLoading(false)),
+      );
+      expect(gen.next().done).toBe(true);
+    });
+
+    test('caso nao tenha produtos no servidor, não deve realizar alterações na lista de produtos', () => {
+      const gen = sagas.getProductListsAsync();
+
+      expect(gen.next().value).toEqual(put(productListActions.setError()));
+
+      expect(gen.next().value).toEqual(
+        put(productListActions.setLoading(true)),
+      );
+
+      expect(gen.next().value).toEqual(call(sagaServer.getProductLists));
+
+      expect(gen.next(undefined).value).toEqual(
         put(productListActions.setLoading(false)),
       );
       expect(gen.next().done).toBe(true);
@@ -376,6 +394,9 @@ describe('ProductList Sagas', () => {
       );
 
       expect(gen.next().value).toEqual(
+        select(selectors.getProductItems, listId),
+      );
+      expect(gen.next().value).toEqual(
         call(sagaServer.getProductItems, listId),
       );
 
@@ -408,6 +429,9 @@ describe('ProductList Sagas', () => {
       expect(gen.next().value).toEqual(
         put(productListActions.setLoading(true)),
       );
+      expect(gen.next().value).toEqual(
+        select(selectors.getProductItems, listId),
+      );
 
       expect(gen.next().value).toEqual(
         call(sagaServer.getProductItems, listId),
@@ -416,6 +440,49 @@ describe('ProductList Sagas', () => {
       const error = new Error('error');
       expect(gen.throw(error).value).toEqual(
         put(productListActions.setError(error.message)),
+      );
+
+      expect(gen.next().value).toEqual(
+        put(productListActions.setLoading(false)),
+      );
+      expect(gen.next().done).toBe(true);
+    });
+
+    test('deve chamar getProductItemsAsync corretamente, mas nao deve substituir o cache local caso nao possua dados no servidor', () => {
+      const listId = '123456';
+      const cachedProductItems = new ProductItemBuilderMock()
+        .withName('Lista')
+        .build();
+      const mockProductList = new ProductListBuilderMock()
+        .withItems([cachedProductItems])
+        .build();
+
+      const action = productListActions.getProductItemsAsync(
+        listId,
+      ) as ProductListActions<{
+        listId: string;
+      }>;
+
+      const gen = sagas.getProductItemsAsync(action);
+
+      expect(gen.next().value).toEqual(put(productListActions.setError()));
+      expect(gen.next().value).toEqual(
+        put(productListActions.setLoading(true)),
+      );
+
+      expect(gen.next().value).toEqual(
+        select(selectors.getProductItems, listId),
+      );
+      expect(gen.next([cachedProductItems]).value).toEqual(
+        call(sagaServer.getProductItems, listId),
+      );
+
+      expect(gen.next(undefined).value).toEqual(
+        call(sagaLocal.getProductItems, [cachedProductItems], listId),
+      );
+
+      expect(gen.next([mockProductList]).value).toEqual(
+        put(productListActions.setProductLists([mockProductList])),
       );
 
       expect(gen.next().value).toEqual(

@@ -30,10 +30,10 @@ module.exports = {
     'no-console': 'warn',
     'no-unused-vars': 'error',
     'object-curly-spacing': ['error', 'always'],
-    semi: 'warn',
+    semi: 'error',
     'react/display-name': 'off',
     '@typescript-eslint/ban-ts-ignore': 'off',
-    '@typescript-eslint/no-non-null-assertion': 'off'
+    '@typescript-eslint/no-non-null-assertion': 'off',
   },
   overrides: [
     {
