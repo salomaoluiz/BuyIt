@@ -17,7 +17,7 @@ const AppNavigator = () => {
   const shouldShowApp = isRehydrated && isAuthenticated;
 
   return (
-    <NavigationContainer ref={setNavigator}>
+    <NavigationContainer ref={setNavigator} independent>
       {shouldShowLoading && <FullscreenLoader />}
       {shouldShowLogin && <UnauthenticatedNavigator />}
       {shouldShowApp && <AuthenticatedNavigator />}

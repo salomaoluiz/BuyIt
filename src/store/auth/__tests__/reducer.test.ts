@@ -1,65 +1,61 @@
-// @ts-nocheck
-
 import authReducer from '../reducer';
 import { authActions } from '..';
 import { mockCurrentUser } from 'src/__tests__/firebase-mocks';
+import { AuthAction, AuthState, AuthTypes } from '../types';
 
 describe('Auth Reducer', () => {
-  const initialState = {
+  const initialState: AuthState = {
     isLogged: false,
-    isOnline: false,
     isLoading: false,
     isAnonymously: false,
     email: '',
     currentUser: undefined,
   };
 
-  test('deve retornar o state para uma action nao mapeada', () => {
-    const action = { type: 'any', payload: {} };
+  test.each([
+    ['any', { type: 'any' as AuthTypes }, initialState],
+    ['logout', authActions.logout(), initialState],
+    [
+      'login',
+      authActions.login(mockCurrentUser),
+      { isLogged: true, isLoading: false, currentUser: mockCurrentUser },
+    ],
+    [
+      'requestLoginEmailPassword',
+      authActions.requestLoginEmailPassword('email', 'pass'),
+      { isLoading: true, error: undefined },
+    ],
+    [
+      'requestLoginAnonymously',
+      authActions.requestLoginAnonymously(),
+      { isLoading: false, isAnonymously: true },
+    ],
+    [
+      'requestRegisterEmailPassword',
+      authActions.requestRegisterEmailPassword({
+        email: 'email',
+        name: 'name',
+        password: 'pass',
+        confirmPassword: 'pass',
+      }),
+      { isLogged: false, isLoading: true, error: undefined },
+    ],
+    [
+      'registerSuccess',
+      authActions.registerSuccess(),
+      { isLogged: false, isLoading: false, error: undefined },
+    ],
+    [
+      'authError',
+      authActions.authError(new Error('error')),
+      { isLoading: false, error: new Error('error') },
+    ],
+  ] as Array<[string, AuthAction<AuthState>, AuthState]>)(
+    'Deve executar corretamente o reducer para a action %s',
+    (description, action, expected) => {
+      const response = authReducer(initialState, action);
 
-    const response = authReducer(initialState, action);
-
-    expect(response).toEqual(initialState);
-  });
-
-  test('deve corretamente para a action setLoading', () => {
-    const action = authActions.setLoading(true);
-
-    const response = authReducer(initialState, action);
-
-    expect(response).toEqual({ ...initialState, isLoading: true });
-  });
-
-  test('deve corretamente para a action logout', () => {
-    const action = authActions.logout();
-
-    const response = authReducer(initialState, action);
-
-    expect(response).toEqual(initialState);
-  });
-
-  test('deve corretamente para a action login', () => {
-    const action = authActions.login(mockCurrentUser);
-
-    const response = authReducer(initialState, action);
-
-    expect(response).toEqual({
-      ...initialState,
-      isOnline: true,
-      isLogged: true,
-      currentUser: mockCurrentUser,
-    });
-  });
-
-  test('deve corretamente para a action loginAnonymously quando está offline', () => {
-    const action = authActions.loginAnonymously(false);
-
-    const response = authReducer(initialState, action);
-
-    expect(response).toEqual({
-      ...initialState,
-      isOnline: false,
-      isAnonymously: true,
-    });
-  });
+      expect(response).toEqual({ ...initialState, ...expected });
+    },
+  );
 });

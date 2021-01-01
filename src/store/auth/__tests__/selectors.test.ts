@@ -6,7 +6,6 @@ describe('Testando AuthSelectors', () => {
   test('deve retornar o state correto', () => {
     const mockData = new AppStateMockBuilder()
       .withAuth({
-        isOnline: true,
         isAnonymously: false,
         isLoading: false,
         isLogged: true,
@@ -25,7 +24,6 @@ describe('Testando AuthSelectors', () => {
           ...mockCurrentUser,
           uid: '123456',
         },
-        isOnline: true,
         isAnonymously: false,
         isLoading: false,
         isLogged: true,
@@ -41,7 +39,6 @@ describe('Testando AuthSelectors', () => {
   test('deve retornar se esta logado corretamente', () => {
     const mockData = new AppStateMockBuilder()
       .withAuth({
-        isOnline: true,
         isAnonymously: false,
         isLoading: false,
         isLogged: true,
@@ -57,7 +54,6 @@ describe('Testando AuthSelectors', () => {
   test('deve retornar o estado do loading corretamente', () => {
     const mockData = new AppStateMockBuilder()
       .withAuth({
-        isOnline: true,
         isAnonymously: false,
         isLoading: false,
         isLogged: true,
@@ -70,26 +66,9 @@ describe('Testando AuthSelectors', () => {
     expect(response).toEqual(mockData.authReducer.isLoading);
   });
 
-  test('deve retornar se está online corretamente', () => {
-    const mockData = new AppStateMockBuilder()
-      .withAuth({
-        isOnline: true,
-        isAnonymously: false,
-        isLoading: false,
-        isLogged: true,
-        email: '',
-      })
-      .build();
-
-    const response = authSelectors.isOnline(mockData);
-
-    expect(response).toEqual(mockData.authReducer.isOnline);
-  });
-
   test('deve retornar se está logado anonimamente corretamente', () => {
     const mockData = new AppStateMockBuilder()
       .withAuth({
-        isOnline: true,
         isAnonymously: false,
         isLoading: false,
         isLogged: true,

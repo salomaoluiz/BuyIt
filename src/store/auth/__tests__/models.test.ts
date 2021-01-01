@@ -34,12 +34,6 @@ describe('Auth Models', () => {
     );
   });
 
-  test('deve executar o signInAnonymously do firebase ', () => {
-    models.loginAnonymously();
-
-    expect(auth().signInAnonymously).toHaveBeenCalledTimes(1);
-  });
-
   test('deve executar o signOut do firebase ', () => {
     models.logout();
 

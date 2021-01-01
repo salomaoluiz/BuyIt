@@ -1,40 +1,37 @@
-import { AuthTypes, AuthActions, AuthRegisterForm } from './types';
+import { AuthTypes, AuthAction, AuthRegisterForm } from './types';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
 const actions = {
-  setLoading: (isLoading: boolean): AuthActions<{ isLoading: boolean }> => ({
-    type: AuthTypes.SET_LOADING,
-    payload: { isLoading },
-  }),
   logout: () => ({ type: AuthTypes.LOGOUT }),
-  logoutAsync: (): AuthActions<{}> => ({
-    type: AuthTypes.LOGOUT_ASYNC,
-    payload: {},
-  }),
+  requestLogout: () => ({ type: AuthTypes.REQUEST_LOGOUT }),
   login: (
     currentUser: FirebaseAuthTypes.User,
-  ): AuthActions<{ currentUser: FirebaseAuthTypes.User }> => ({
+  ): AuthAction<{ currentUser: FirebaseAuthTypes.User }> => ({
     type: AuthTypes.LOGIN,
     payload: { currentUser },
   }),
-  loginEmailPasswordAsync: (
+  requestLoginEmailPassword: (
     email: string,
     password: string,
-  ): AuthActions<{ email: string; password: string }> => ({
-    type: AuthTypes.LOGIN_EMAIL_PASSWORD_ASYNC,
+  ): AuthAction<{ email: string; password: string }> => ({
+    type: AuthTypes.REQUEST_LOGIN_EMAIL_PASSWORD,
     payload: { email, password },
   }),
-  loginAnonymously: (
-    isOnline?: boolean,
-  ): AuthActions<{ isOnline: boolean }> => ({
-    type: AuthTypes.LOGIN_ANONYMOUSLY,
-    payload: { isOnline: !!isOnline },
+  requestLoginAnonymously: () => ({
+    type: AuthTypes.REQUEST_LOGIN_ANONYMOUSLY,
   }),
-  registerEmailPasswordAsync: (
+  requestRegisterEmailPassword: (
     props: AuthRegisterForm,
-  ): AuthActions<AuthRegisterForm> => ({
-    type: AuthTypes.REGISTER_EMAIL_PASSWORD_ASYNC,
+  ): AuthAction<AuthRegisterForm> => ({
+    type: AuthTypes.REQUEST_REGISTER_EMAIL_PASSWORD,
     payload: { ...props },
+  }),
+  registerSuccess: () => ({
+    type: AuthTypes.REGISTER_SUCCESS
+  }),
+  authError: (error: Error) => ({
+    type: AuthTypes.AUTH_ERROR,
+    payload: { error },
   }),
 };
 

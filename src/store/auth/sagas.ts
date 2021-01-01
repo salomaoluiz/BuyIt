@@ -1,5 +1,5 @@
 import { takeLatest, put, call, select } from 'redux-saga/effects';
-import { AuthTypes, AuthActions, AuthRegisterForm } from './types';
+import { AuthTypes, AuthAction, AuthRegisterForm } from './types';
 import { authActions, authModels, authSelectors } from './';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import useFirebaseError from '@errors/useFirebaseError';
@@ -9,15 +9,14 @@ import { notificationMessages } from './utils';
 
 const { getErrorMessage } = useFirebaseError('auth');
 
-export function* loginEmailPasswordAsync(
-  props: AuthActions<{ email: string; password: string }>,
+export function* requestLoginEmailPassword(
+  props: AuthAction<{ email: string; password: string }>,
 ) {
   const email = props.payload?.email;
   const password = props.payload?.password;
 
   try {
     const isAnonymously = yield select(authSelectors.isAnonymously);
-    yield put(authActions.setLoading(true));
 
     if (email && password) {
       const userCredentials = yield call(
@@ -25,10 +24,9 @@ export function* loginEmailPasswordAsync(
         email,
         password,
       );
-      
-      
+
       yield put(authActions.login(userCredentials.user));
-      
+
       if (isAnonymously) yield call(navigationService.goBack);
     }
   } catch (err) {
@@ -36,34 +34,32 @@ export function* loginEmailPasswordAsync(
     const notificationParams = notificationMessages.opsError(errorMessage);
 
     yield put(notificationActions.showBannerAsync(notificationParams));
-  } finally {
-    yield put(authActions.setLoading(false));
+    yield put(authActions.authError(err));
   }
 }
 
-export function* logoutAsync() {
+export function* requestLogout() {
   try {
     const isLogged = yield select(authSelectors.isLogged);
 
     if (isLogged) {
       yield call(authModels.logout);
     }
+
     yield put(authActions.logout());
   } catch {
     yield put(authActions.logout());
   }
 }
 
-export function* registerEmailPasswordAsync(
-  props: AuthActions<AuthRegisterForm>,
+export function* requestRegisterEmailPassword(
+  props: AuthAction<AuthRegisterForm>,
 ) {
   const email = props.payload?.email;
   const password = props.payload?.password;
   const name = props.payload?.name;
 
   try {
-    yield put(authActions.setLoading(true));
-
     if (email && password) {
       const userCredentials: FirebaseAuthTypes.UserCredential = yield call(
         authModels.registerEmailPassword,
@@ -77,23 +73,23 @@ export function* registerEmailPasswordAsync(
       const notificationParams = notificationMessages.registerSuccess;
 
       yield put(notificationActions.showBannerAsync(notificationParams));
+      yield put(authActions.registerSuccess());
       yield call(navigationService.goBack);
     }
-  } catch (e) {
-    const errorMessage = getErrorMessage(e.message);
+  } catch (err) {
+    const errorMessage = getErrorMessage(err.message);
     const notificationParams = notificationMessages.opsError(errorMessage);
 
     yield put(notificationActions.showBannerAsync(notificationParams));
-  } finally {
-    yield put(authActions.setLoading(false));
+    yield put(authActions.authError(err));
   }
 }
 
 export default [
-  takeLatest(AuthTypes.LOGIN_EMAIL_PASSWORD_ASYNC, loginEmailPasswordAsync),
-  takeLatest(AuthTypes.LOGOUT_ASYNC, logoutAsync),
+  takeLatest(AuthTypes.REQUEST_LOGIN_EMAIL_PASSWORD, requestLoginEmailPassword),
+  takeLatest(AuthTypes.REQUEST_LOGOUT, requestLogout),
   takeLatest(
-    AuthTypes.REGISTER_EMAIL_PASSWORD_ASYNC,
-    registerEmailPasswordAsync,
+    AuthTypes.REQUEST_REGISTER_EMAIL_PASSWORD,
+    requestRegisterEmailPassword,
   ),
 ];

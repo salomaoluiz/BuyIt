@@ -1,33 +1,33 @@
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
 export enum AuthTypes {
-  SET_LOADING = '@@AUTH/SET_LOADING',
-  LOGIN = '@@AUTH/LOGIN',
-  LINK_EMAIL_ACCOUNT_ASYNC = '@@AUTH/LINK_EMAIL_ACCOUNT_ASYNC',
-  LOGIN_EMAIL_PASSWORD_ASYNC = '@@AUTH/LOGIN_EMAIL_PASSWORD_ASYNC',
-  LOGIN_ANONYMOUSLY = '@@AUTH/LOGIN_ANONYMOUSLY',
-  LOGOUT = '@@AUTH/LOGOUT',
-  LOGOUT_ASYNC = '@@AUTH/LOGOUT_ASYNC',
-  REGISTER_EMAIL_PASSWORD_ASYNC = '@@AUTH/REGISTER_EMAIL_PASSWORD_ASYNC',
+  LOGIN = '@auth/LOGIN',
+  REQUEST_LOGIN_EMAIL_PASSWORD = '@auth/REQUEST_LOGIN_EMAIL_PASSWORD',
+  REQUEST_LOGIN_ANONYMOUSLY = '@auth/REQUEST_LOGIN_ANONYMOUSLY',
+  LOGOUT = '@auth/LOGOUT',
+  AUTH_ERROR = '@auth/AUTH_ERROR',
+  REQUEST_LOGOUT = '@auth/REQUEST_LOGOUT',
+  REQUEST_REGISTER_EMAIL_PASSWORD = '@auth/REQUEST_REGISTER_EMAIL_PASSWORD',
+  REGISTER_SUCCESS = '@auth/REGISTER_SUCCESS'
 }
 
 export type AuthState = {
   isLogged: boolean;
-  isOnline: boolean;
   isLoading: boolean;
   isAnonymously: boolean;
   email: string;
   currentUser?: FirebaseAuthTypes.User;
+  error?: Error;
 };
 
-export type AuthActions<Payload> = {
+export type AuthAction<Payload> = {
   type: AuthTypes;
   payload: Payload;
 };
 
 export type AuthReducer = (
   state: AuthState,
-  actions: AuthActions<AuthState>,
+  actions: AuthAction<AuthState>,
 ) => AuthState;
 
 export interface AuthLoginForm {

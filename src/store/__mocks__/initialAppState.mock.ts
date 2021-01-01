@@ -15,7 +15,6 @@ export const initialAppState: RootState = {
   authReducer: {
     isLogged: false,
     isAnonymously: false,
-    isOnline: false,
     isLoading: false,
     email: '',
   },

@@ -1,9 +1,9 @@
 import { authModels, authActions, authSelectors } from '../';
 import { mockCurrentUser } from 'src/__tests__/firebase-mocks';
 import {
-  loginEmailPasswordAsync,
-  logoutAsync,
-  registerEmailPasswordAsync,
+  requestLoginEmailPassword,
+  requestLogout,
+  requestRegisterEmailPassword,
 } from '../sagas';
 import { put, call, select } from 'redux-saga/effects';
 import { notificationActions } from '@store/notification';
@@ -25,12 +25,11 @@ describe('Auth Saga - Login com Email e Senha', () => {
   });
 
   test('deve logar corretamente', () => {
-    const action = authActions.loginEmailPasswordAsync('a@a.a', '123456');
+    const action = authActions.requestLoginEmailPassword('a@a.a', '123456');
 
-    const gen = loginEmailPasswordAsync(action);
+    const gen = requestLoginEmailPassword(action);
 
     expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
-    expect(gen.next().value).toEqual(put(authActions.setLoading(true)));
 
     expect(gen.next().value).toEqual(
       call(
@@ -44,22 +43,17 @@ describe('Auth Saga - Login com Email e Senha', () => {
       put(authActions.login(mockCurrentUser)),
     );
 
-    expect(gen.next().value).toEqual(put(authActions.setLoading(false)));
-
     expect(gen.next().done).toBe(true);
   });
 
-  test('deve apresentar uma notificação caso dê erro', async () => {
-    const error = new Error('auth/invalid-email');
-    const action = authActions.loginEmailPasswordAsync('a@a.a', '123456');
+  test('deve apresentar uma notificação caso dê erro', () => {
+    const error = new TypeError('auth/invalid-email');
+    const action = authActions.requestLoginEmailPassword('a@a.a', '123456');
 
-    const gen = loginEmailPasswordAsync(action);
-    expect(await gen.next().value).toEqual(select(authSelectors.isAnonymously));
-    expect(await gen.next({ user: mockCurrentUser }).value).toEqual(
-      put(authActions.setLoading(true)),
-    );
+    const gen = requestLoginEmailPassword(action);
+    expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
 
-    expect(await gen.next(error).value).toEqual(
+    expect(gen.next(error).value).toEqual(
       call(
         authModels.loginWithEmailPassword,
         action.payload.email,
@@ -69,19 +63,19 @@ describe('Auth Saga - Login com Email e Senha', () => {
 
     const notificationParams = {
       title: strings.errors.general.opsWeHaveAProblem,
-      body: strings.errors.general.tryAgainLater,
+      body: strings.errors.auth.emailInvalid,
     };
 
-    expect(await gen.next().value).toEqual(
+    expect(gen.throw(error).value).toEqual(
       put(notificationActions.showBannerAsync(notificationParams)),
     );
 
-    expect(await gen.next().value).toEqual(put(authActions.setLoading(false)));
-    expect(await gen.next().done).toBe(true);
+    expect(gen.next(error).value).toEqual(put(authActions.authError(error)));
+    expect(gen.next().done).toBe(true);
   });
 
   test('se estiver logado deve chamar o model de logout seguido pela action de logout', () => {
-    const gen = logoutAsync();
+    const gen = requestLogout();
 
     expect(gen.next().value).toEqual(select(authSelectors.isLogged));
     expect(gen.next(true).value).toEqual(call(authModels.logout));
@@ -92,22 +86,21 @@ describe('Auth Saga - Login com Email e Senha', () => {
   test('caso de problema com o model de logout deve executar somente a action de logout', () => {
     const error = new Error('auth/invalid-email');
 
-    const gen = logoutAsync();
+    const gen = requestLogout();
 
     expect(gen.next().value).toEqual(select(authSelectors.isLogged));
     expect(gen.throw(error).value).toEqual(put(authActions.logout()));
   });
 
   test('deve se registrar, atualizar o nome, enviar o email de verificação e retornar a tela anterior se tudo for bem sucedido', () => {
-    const action = authActions.registerEmailPasswordAsync({
+    const action = authActions.requestRegisterEmailPassword({
       email: 'a@a.a',
       confirmPassword: '123456',
       name: 'aaaa',
       password: '123456',
     });
-    const gen = registerEmailPasswordAsync(action);
+    const gen = requestRegisterEmailPassword(action);
 
-    expect(gen.next().value).toEqual(put(authActions.setLoading(true)));
     expect(gen.next().value).toEqual(
       call(
         authModels.registerEmailPassword,
@@ -132,21 +125,20 @@ describe('Auth Saga - Login com Email e Senha', () => {
       ),
     );
 
+    expect(gen.next().value).toEqual(put(authActions.registerSuccess()));
     expect(gen.next().value).toEqual(call(navigationService.goBack));
-    expect(gen.next().value).toEqual(put(authActions.setLoading(false)));
     expect(gen.next().done).toBe(true);
   });
 
   test('em caso de erro, deve disparar uma notificação informando', () => {
-    const action = authActions.registerEmailPasswordAsync({
+    const action = authActions.requestRegisterEmailPassword({
       email: 'a@a.a',
       confirmPassword: '123456',
       name: 'aaaa',
       password: '123456',
     });
-    const gen = registerEmailPasswordAsync(action);
+    const gen = requestRegisterEmailPassword(action);
 
-    expect(gen.next().value).toEqual(put(authActions.setLoading(true)));
     expect(gen.next().value).toEqual(
       call(
         authModels.registerEmailPassword,
@@ -164,7 +156,7 @@ describe('Auth Saga - Login com Email e Senha', () => {
       put(notificationActions.showBannerAsync(notificationError)),
     );
 
-    expect(gen.next().value).toEqual(put(authActions.setLoading(false)));
+    expect(gen.next().value).toEqual(put(authActions.authError(error)));
     expect(gen.next().done).toBe(true);
   });
 });
