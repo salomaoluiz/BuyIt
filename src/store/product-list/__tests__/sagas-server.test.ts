@@ -3,7 +3,7 @@
 import { authSelectors } from '@store/auth';
 import { extractObjectElement } from '@utils/filters';
 import { call, select } from 'redux-saga/effects';
-import { productListModels, productListSelectors } from '..';
+import { productListModels } from '..';
 import * as sagaServer from '../sagas-server';
 import { appProductListFormater, dbProductListFormated } from '../utils';
 import { ProductItemBuilderMock } from '../__mocks__/productItemBuilder.mock';
@@ -56,9 +56,6 @@ describe('ProductList Sagas Server', () => {
         const gen = sagaServer.getProductLists();
 
         expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
-        expect(gen.next().value).toEqual(
-          select(productListSelectors.getProductLists),
-        );
         expect(gen.next().value).toEqual(select(authSelectors.getUserId));
 
         const userId = '1234' as any;
@@ -84,11 +81,8 @@ describe('ProductList Sagas Server', () => {
         const gen = sagaServer.getProductLists();
 
         expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
-        expect(gen.next(true).value).toEqual(
-          select(productListSelectors.getProductLists),
-        );
 
-        expect(gen.next().done).toBe(true);
+        expect(gen.next(true).done).toBe(true);
       });
     });
 

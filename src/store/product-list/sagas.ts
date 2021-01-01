@@ -1,4 +1,4 @@
-import { takeLatest, put, call } from 'redux-saga/effects';
+import { takeLatest, put, call, select } from 'redux-saga/effects';
 import {
   ProductListTypes,
   ProductListActions,
@@ -14,6 +14,8 @@ import * as sagaLocal from './sagas-local';
 import { notificationActions } from '@store/notification';
 import appLocale from '@locales';
 import { addRemoveDays, formatDate } from '@utils/date';
+import selectors from './selectors';
+
 const strings = appLocale();
 
 export function* createProductListAsync(
@@ -48,7 +50,9 @@ export function* getProductListsAsync() {
 
     const serverProductLists = yield call(sagaServer.getProductLists);
 
-    yield put(productListActions.setProductLists(serverProductLists));
+    if (serverProductLists) {
+      yield put(productListActions.setProductLists(serverProductLists));
+    }
   } catch (err) {
     yield put(productListActions.setError(err.message));
   } finally {
@@ -152,8 +156,11 @@ export function* getProductItemsAsync(
     const { listId } = props.payload;
     yield put(productListActions.setError());
     yield put(productListActions.setLoading(true));
+    const cachedProductItems = yield select(selectors.getProductItems, listId);
 
-    const productItems = yield call(sagaServer.getProductItems, listId);
+    const serverProductItems = yield call(sagaServer.getProductItems, listId);
+
+    const productItems = serverProductItems || cachedProductItems;
 
     const productListsArray = yield call(
       sagaLocal.getProductItems,
