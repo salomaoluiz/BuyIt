@@ -14,6 +14,6 @@ describe('Drawer Bottom - useDrawerBottom', () => {
       result.current.onLogoutPress();
     });
 
-    expect(dispatch).toHaveBeenCalledWith(authActions.logoutAsync());
+    expect(dispatch).toHaveBeenCalledWith(authActions.requestLogout());
   });
 });

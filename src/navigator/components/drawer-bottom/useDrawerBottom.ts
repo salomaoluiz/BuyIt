@@ -6,7 +6,7 @@ const useDrawerBottom = () => {
   const dispatch = useDispatch();
 
   const onLogoutPress = useCallback(async () => {
-    dispatch(authActions.logoutAsync());
+    dispatch(authActions.requestLogout());
   }, []);
 
   return { onLogoutPress };

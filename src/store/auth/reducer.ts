@@ -1,61 +1,89 @@
-import { AuthActions, AuthState, AuthTypes, AuthReducer } from './types';
+import { AuthAction, AuthState, AuthTypes, AuthReducer } from './types';
+import { authActions } from '.';
 
 const initialState: AuthState = {
   isLogged: false,
-  isOnline: false,
   isLoading: false,
   isAnonymously: false,
   email: '',
   currentUser: undefined,
+  error: undefined,
 };
 
-const setLoading: AuthReducer = (
-  state: AuthState,
-  actions: AuthActions<AuthState>,
-): AuthState => ({
-  ...state,
-  isLoading: !!actions.payload.isLoading,
-});
-
-const logout: AuthReducer = (state: AuthState): AuthState => ({
-  ...state,
-  ...initialState,
-});
-
-const login: AuthReducer = (
-  state: AuthState,
-  actions: AuthActions<AuthState>,
-): AuthState => ({
-  ...state,
-  isLogged: true,
-  isOnline: true,
-  isAnonymously: false,
-  currentUser: actions.payload?.currentUser,
-});
-
-const loginAnonymously = (
-  state: AuthState,
-  actions: AuthActions<AuthState>,
-): AuthState => ({
+const logout: AuthReducer = (state) => ({
   ...state,
   isLogged: false,
-  isOnline: !!actions.payload.isOnline,
+  isLoading: false,
+  isAnonymously: false,
+  currentUser: undefined,
+  error: undefined,
+});
+
+const login: AuthReducer = (state, action) => {
+  const { payload } = action as ReturnType<typeof authActions.login>;
+
+  return {
+    ...state,
+    isLogged: true,
+    isAnonymously: false,
+    isLoading: false,
+    currentUser: payload.currentUser,
+  };
+};
+
+const requestLoginEmailPassword: AuthReducer = (state) => ({
+  ...state,
+  isLoading: true,
+  error: undefined,
+});
+
+const requestLoginAnonymously: AuthReducer = (state) => ({
+  ...state,
+  isLogged: false,
+  isLoading: false,
   isAnonymously: true,
 });
 
+const requestRegisterEmailPassword: AuthReducer = (state) => ({
+  ...state,
+  isLogged: false,
+  isLoading: true,
+  error: undefined,
+});
+
+const registerSuccess: AuthReducer = (state) => ({
+  ...state,
+  isLogged: false,
+  isLoading: false,
+  error: undefined,
+});
+
+const authError: AuthReducer = (state, action) => {
+  const { payload } = action as ReturnType<typeof authActions.authError>;
+
+  return {
+    ...state,
+    isLoading: false,
+    error: payload.error,
+  };
+};
+
 const authReducerMap = new Map<AuthTypes, AuthReducer>([
-  [AuthTypes.SET_LOADING, setLoading],
   [AuthTypes.LOGOUT, logout],
-  [AuthTypes.LOGIN_ANONYMOUSLY, loginAnonymously],
+  [AuthTypes.REQUEST_LOGIN_ANONYMOUSLY, requestLoginAnonymously],
+  [AuthTypes.REQUEST_LOGIN_EMAIL_PASSWORD, requestLoginEmailPassword],
   [AuthTypes.LOGIN, login],
+  [AuthTypes.AUTH_ERROR, authError],
+  [AuthTypes.REQUEST_REGISTER_EMAIL_PASSWORD, requestRegisterEmailPassword],
+  [AuthTypes.REGISTER_SUCCESS, registerSuccess],
 ]);
 
 const reducer = (
   state: AuthState = initialState,
-  actions: AuthActions<AuthState>,
+  action: AuthAction<AuthState>,
 ): AuthState => {
-  const authReducer = authReducerMap.get(actions.type);
-  if (authReducer) return authReducer(state, actions);
+  const authReducer = authReducerMap.get(action.type);
+  if (authReducer) return authReducer(state, action);
   return state;
 };
 

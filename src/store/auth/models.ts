@@ -6,8 +6,6 @@ const loginWithEmailPassword = (email: string, password: string) =>
 const registerEmailPassword = (email: string, password: string) =>
   auth().createUserWithEmailAndPassword(email, password);
 
-const loginAnonymously = () => auth().signInAnonymously();
-
 const logout = async () => {
   await auth().signOut();
 };
@@ -31,7 +29,6 @@ const updateUserProfile = (
   });
 
 export {
-  loginAnonymously,
   loginWithEmailPassword,
   registerEmailPassword,
   logout,

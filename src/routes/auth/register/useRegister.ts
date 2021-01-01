@@ -20,7 +20,7 @@ const useRegister = (props: Props) => {
     const canDoRegister = await checkForm();
 
     if (canDoRegister) {
-      dispatch(actions.registerEmailPasswordAsync(formParams));
+      dispatch(actions.requestRegisterEmailPassword(formParams));
     }
   }, [formParams]);
 

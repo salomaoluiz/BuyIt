@@ -23,13 +23,13 @@ const useLogin = (props: Props) => {
   const dispatch = useDispatch();
 
   const handleLoginAnonymously = useCallback(() => {
-    dispatch(authActions.loginAnonymously());
+    dispatch(authActions.requestLoginAnonymously());
   }, []);
 
   const handleLoginEmailPassword = useCallback(async () => {
     const canDoLogin = await checkForm();
     if (canDoLogin) {
-      dispatch(authActions.loginEmailPasswordAsync(email, password));
+      dispatch(authActions.requestLoginEmailPassword(email, password));
     }
   }, [formParams]);
 

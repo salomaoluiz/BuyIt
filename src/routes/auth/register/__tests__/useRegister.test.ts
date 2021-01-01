@@ -26,7 +26,7 @@ describe('Register - useRegister', () => {
     });
 
     expect(dispatch).toHaveBeenCalledWith(
-      authActions.registerEmailPasswordAsync(initialProps.formParams),
+      authActions.requestRegisterEmailPassword(initialProps.formParams),
     );
   });
 });

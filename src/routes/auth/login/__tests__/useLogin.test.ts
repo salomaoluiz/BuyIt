@@ -31,7 +31,7 @@ describe('Login - useLogin', () => {
       result.current.handleLoginAnonymously();
     });
 
-    expect(dispatch).toHaveBeenCalledWith(authActions.loginAnonymously());
+    expect(dispatch).toHaveBeenCalledWith(authActions.requestLoginAnonymously());
   });
 
   test('se chamado handleLoginEmailPassword e o form estiver correto, deve disparar a action do login com email e senha', async () => {
@@ -51,7 +51,7 @@ describe('Login - useLogin', () => {
 
     expect(initialProps.checkForm).toHaveBeenCalled();
     expect(dispatch).toHaveBeenCalledWith(
-      authActions.loginEmailPasswordAsync(
+      authActions.requestLoginEmailPassword(
         initialProps.formParams.email,
         initialProps.formParams.password,
       ),
