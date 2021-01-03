@@ -1,8 +1,10 @@
-import * as reactRedux from 'react-redux';
-import { renderHook, act } from '@testing-library/react-hooks';
-import useNewItem from '../useNewItem';
-import { productListActions } from '@store/product-list';
 import * as navigation from '@react-navigation/native';
+import { renderHook, act } from '@testing-library/react-hooks';
+import * as reactRedux from 'react-redux';
+
+import { productListActions } from '@store/product-list';
+
+import useNewItem from '../useNewItem';
 
 jest.mock('@react-navigation/native');
 

@@ -1,10 +1,12 @@
-import { ProductListState } from '@store/product-list/types';
+import { PersistState } from 'redux-persist';
+
 import { AuthState } from '@store/auth/types';
 import { GeneralState } from '@store/general/types';
 import { NotificationState } from '@store/notification/types';
-import { initialAppState } from './initialAppState.mock';
-import { PersistState } from 'redux-persist';
+import { ProductListState } from '@store/product-list/types';
 import { StockState } from '@store/stock/types';
+
+import { initialAppState } from './initialAppState.mock';
 
 export class AppStateMockBuilder {
   _persist: PersistState = initialAppState._persist;

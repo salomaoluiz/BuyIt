@@ -1,8 +1,8 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useCallback, useEffect, useState } from 'react';
-import { useTheme } from 'react-native-paper';
 import { StatusBar } from 'react-native';
+import { useTheme } from 'react-native-paper';
 
 type NavProps = NavigationProp<{}> & DrawerNavigationProp<{}>;
 

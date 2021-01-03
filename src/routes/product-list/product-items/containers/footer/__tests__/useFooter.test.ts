@@ -1,10 +1,12 @@
 import * as navigation from '@react-navigation/native';
-import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
-import useFooter from '../useFooter';
+
 import { Routes } from '@routes';
 import { productListActions } from '@store/product-list';
+import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
+import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
+
+import useFooter from '../useFooter';
 
 const mockProductItem = new ProductItemBuilderMock()
   .withName('Produto 1')

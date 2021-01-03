@@ -1,6 +1,8 @@
-import { authActions } from '@store/auth';
 import { act, renderHook } from '@testing-library/react-hooks';
 import * as reactRedux from 'react-redux';
+
+import { authActions } from '@store/auth';
+
 import useDrawerBottom from '../useDrawerBottom';
 
 describe('Drawer Bottom - useDrawerBottom', () => {

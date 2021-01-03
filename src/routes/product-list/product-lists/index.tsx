@@ -1,14 +1,14 @@
 import React from 'react';
-
-import { Container, ButtonContainer } from './styles';
-import useProductLists from './useProductLists';
-import ListCard from './components/list-card';
-
 import { FlatList } from 'react-native';
-import { ProductList } from '@store/product-list/types';
+
 import CircleButton from '@components/FAB';
 import Header from '@components/header';
 import appLocale from '@locales';
+import { ProductList } from '@store/product-list/types';
+
+import ListCard from './components/list-card';
+import { Container, ButtonContainer } from './styles';
+import useProductLists from './useProductLists';
 
 const strings = appLocale();
 

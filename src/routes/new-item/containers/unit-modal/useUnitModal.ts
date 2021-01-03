@@ -1,6 +1,8 @@
-import { PaperListData } from '@components/list';
 import { useCallback, useState } from 'react';
-import { Props } from '.';
+
+import { PaperListData } from '@components/list';
+
+import { Props } from './';
 
 const useUnitModal = (props: Props) => {
   const [units] = useState(props.unit ? [props.unit] : []);

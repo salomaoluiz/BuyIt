@@ -1,11 +1,12 @@
 import React from 'react';
-import { Container } from './styles';
+import { KeyboardType, ViewStyle, TextInputProps } from 'react-native';
+import { TextInput as PaperTextInput } from 'react-native-paper';
 
 import HelperComponent from '@components/helper-text';
-import { KeyboardType, ViewStyle, TextInputProps } from 'react-native';
 
-import { TextInput as PaperTextInput } from 'react-native-paper';
+import { Container } from './styles';
 import useTextInput from './useTextInput';
+
 export interface Props extends TextInputProps {
   label: string;
   error?: boolean;

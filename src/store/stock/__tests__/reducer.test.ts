@@ -1,8 +1,9 @@
 // @ts-nocheck
 
-import stockReducer from '../reducer';
-import { stockActions } from '..';
 import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
+
+import { stockActions } from '../';
+import stockReducer from '../reducer';
 
 describe('ProductList Reducers', () => {
   const initialState = {

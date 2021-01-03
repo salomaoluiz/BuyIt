@@ -23,7 +23,12 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
-  plugins: ['react', 'typescript', '@typescript-eslint'],
+  plugins: [
+    'react',
+    'typescript',
+    '@typescript-eslint',
+    'eslint-plugin-import-helpers',
+  ],
   rules: {
     // disable the rule for all files
     '@typescript-eslint/explicit-function-return-type': 'off',
@@ -34,6 +39,14 @@ module.exports = {
     'react/display-name': 'off',
     '@typescript-eslint/ban-ts-ignore': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
+    'import-helpers/order-imports': [
+      'error',
+      {
+        newlinesBetween: 'always',
+        groups: ['module', '/^@(components|locales|routes|navigator|styles|store|utils|models|lib|assets|errors)|src/', ['parent', 'sibling', 'index']],
+        alphabetize: { order: 'asc', ignoreCase: true },
+      },
+    ],
   },
   overrides: [
     {

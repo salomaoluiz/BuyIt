@@ -1,7 +1,8 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { notificationSelector, notificationActions } from '@store/notification';
 import { useEffect, useState, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
 import appLocale from '@locales';
+import { notificationSelector, notificationActions } from '@store/notification';
 import { BannerButton } from '@store/notification/types';
 
 const strings = appLocale();

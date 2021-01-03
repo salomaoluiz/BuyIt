@@ -1,9 +1,10 @@
 import { select } from 'redux-saga/effects';
-import { productListSelectors } from '..';
-import * as sagaLocal from '../sagas-local';
-import { ProductItem, ProductList, ProductLists } from '../types';
+
+import { productListSelectors } from '../';
 import { ProductItemBuilderMock } from '../__mocks__/productItemBuilder.mock';
 import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
+import * as sagaLocal from '../sagas-local';
+import { ProductItem, ProductList, ProductLists } from '../types';
 
 describe('ProductList Sagas Local', () => {
   describe('Product Lists', () => {

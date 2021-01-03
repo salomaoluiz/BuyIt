@@ -1,9 +1,10 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { productListSelectors, productListActions } from '@store/product-list';
-import { useCallback, useEffect, useState } from 'react';
-import { Routes } from '@routes';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { useCallback, useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { ProductNavigatorParamsList } from '@navigator/product-navigator';
+import { Routes } from '@routes';
+import { productListSelectors, productListActions } from '@store/product-list';
 import { sortByDate } from '@utils/sort';
 
 type NavProps = NavigationProp<ProductNavigatorParamsList, 'ProductLists'>;

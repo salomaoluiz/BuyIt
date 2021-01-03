@@ -1,14 +1,16 @@
 import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
-import DocumentFirestoreBuilder from 'src/firebase/__mocks__/documentFirestoreBuilder.mock';
-import QueryFirestoreBuilder from 'src/firebase/__mocks__/queryFirestoreBuilder.mock';
-import { ProductList } from '../types';
-import * as utils from '../utils';
-import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
+
 import * as utilsDate from '@utils/date';
 import * as utilsID from '@utils/id';
+import DocumentFirestoreBuilder from 'src/firebase/__mocks__/documentFirestoreBuilder.mock';
+import QueryFirestoreBuilder from 'src/firebase/__mocks__/queryFirestoreBuilder.mock';
+
 import { ProductItemBuilderMock } from '../__mocks__/productItemBuilder.mock';
+import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
+import { ProductList } from '../types';
+import * as utils from '../utils';
 
 jest.mock('@react-native-firebase/firestore', () => ({
   Timestamp: {

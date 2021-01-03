@@ -1,6 +1,6 @@
+import generalActions from '../actions';
 import generalReducers from '../reducer';
 import { initialState } from '../reducer';
-import generalActions from '../actions';
 
 describe('General Reducers', () => {
   test('deve retornar o valor correto para o setLoading', () => {

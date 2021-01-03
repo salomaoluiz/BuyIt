@@ -1,8 +1,10 @@
-import * as reactRedux from 'react-redux';
 import { act, renderHook } from '@testing-library/react-hooks';
-import useBanner from '../useBanner';
-import { notificationActions, notificationSelector } from '@store/notification';
+import * as reactRedux from 'react-redux';
+
 import appLocale from '@locales';
+import { notificationActions, notificationSelector } from '@store/notification';
+
+import useBanner from '../useBanner';
 
 const strings = appLocale();
 

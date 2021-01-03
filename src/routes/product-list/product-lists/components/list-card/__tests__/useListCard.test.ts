@@ -1,15 +1,17 @@
 import * as navigation from '@react-navigation/native';
-import { Routes } from '@routes';
-import { ProductListBuilderMock } from '@store/product-list/__mocks__/productListBuilder.mock';
 import { act, renderHook } from '@testing-library/react-hooks';
 import { Alert } from 'react-native';
 import * as reactRedux from 'react-redux';
-import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
-import useListCard from '../useListCard';
-import { productListActions } from '@store/product-list';
-import { ProductList } from '@store/product-list/types';
+
 import appLocale from '@locales';
+import { Routes } from '@routes';
+import { productListActions } from '@store/product-list';
 import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
+import { ProductListBuilderMock } from '@store/product-list/__mocks__/productListBuilder.mock';
+import { ProductList } from '@store/product-list/types';
+import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
+
+import useListCard from '../useListCard';
 
 const strings = appLocale();
 

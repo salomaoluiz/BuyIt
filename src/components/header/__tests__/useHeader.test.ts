@@ -1,10 +1,12 @@
-import { act, renderHook } from '@testing-library/react-hooks';
-import useHeader from '../useHeader';
-import { StatusBar } from 'react-native';
 import * as navigation from '@react-navigation/native';
+import { act, renderHook } from '@testing-library/react-hooks';
+import { StatusBar } from 'react-native';
 import * as paper from 'react-native-paper';
+
 import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
 import { useThemeMocks } from 'src/__tests__/paper-mocks';
+
+import useHeader from '../useHeader';
 
 jest.mock('@react-navigation/native');
 jest.mock('react-native-paper');

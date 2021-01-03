@@ -1,4 +1,5 @@
 import { ProductItem, ProductItems } from '@store/product-list/types';
+
 import { StockActions, StockTypes } from './types';
 
 const actions = {

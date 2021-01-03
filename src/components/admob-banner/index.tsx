@@ -1,7 +1,6 @@
 // @ts-nocheck
-import React from 'react';
-
 import { BannerAd, TestIds, BannerAdSize } from '@react-native-firebase/admob';
+import React from 'react';
 import Config from 'react-native-config';
 
 const AdmobBanner = () => {

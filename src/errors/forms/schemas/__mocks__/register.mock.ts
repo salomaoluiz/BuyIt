@@ -1,4 +1,5 @@
 import appLocale from '@locales';
+
 import { generateError } from './product-items.mock';
 
 const strings = appLocale();

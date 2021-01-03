@@ -1,11 +1,13 @@
-import * as reactRedux from 'react-redux';
 import * as navigation from '@react-navigation/native';
-import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
 import { renderHook, act } from '@testing-library/react-hooks';
-import useItemCard from '../useItemCard';
-import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
+import * as reactRedux from 'react-redux';
+
 import { Routes } from '@routes';
 import { productListActions } from '@store/product-list';
+import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
+import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
+
+import useItemCard from '../useItemCard';
 
 jest.mock('@react-navigation/native');
 

@@ -1,6 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
+
+import { Props } from '../';
 import useList from '../useList';
-import { Props } from '..';
 
 describe('testando useList', () => {
   test('ao receber uma lista de selectedItems, deve retornar um data informando quais os elementos estão selecionados', () => {

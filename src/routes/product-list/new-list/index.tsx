@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { Container, SubContainer, ButtonContainer } from './styles';
-import TextInput from '@components/text-input';
-import useNewList from './useNewList';
-import useForm from './useForm';
 import CircleButton from '@components/FAB';
-import appLocale from '@locales';
 import Header from '@components/header';
+import TextInput from '@components/text-input';
+import appLocale from '@locales';
+
+import { Container, SubContainer, ButtonContainer } from './styles';
+import useForm from './useForm';
+import useNewList from './useNewList';
 
 const strings = appLocale();
 

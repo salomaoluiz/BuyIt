@@ -1,5 +1,6 @@
-import React from 'react';
 import NativeDateTimePicker from '@react-native-community/datetimepicker';
+import React from 'react';
+
 import useDateTimePicker from './useDateTimePicker';
 
 type DateMode = 'date' | 'time' | 'datetime' | 'countdown' | undefined;

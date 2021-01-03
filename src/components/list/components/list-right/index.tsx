@@ -1,7 +1,8 @@
+import React from 'react';
+
 import Icon from '@components/icon';
 import { RightIcon } from '@components/list';
 import { dimensions, getStyleAsNumber } from '@styles';
-import React from 'react';
 
 interface Props {
   rightProps: {

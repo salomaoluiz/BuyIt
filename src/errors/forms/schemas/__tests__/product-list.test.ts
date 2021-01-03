@@ -1,6 +1,5 @@
-import testSchema from '../../testSchema';
-
 import * as productListErrors from '../__mocks__/product-list.mock';
+import testSchema from '../../testSchema';
 
 describe('Testando a validação do ProductList', () => {
   test('deve retornar true se todos os valores forem válidos', async () => {

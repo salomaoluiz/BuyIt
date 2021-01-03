@@ -1,7 +1,8 @@
-import * as auth from './firebase/auth';
-import * as productLists from './firebase/productLists';
-import { RegexValues } from './firebase/auth';
 import appLocale from '@locales';
+
+import * as auth from './firebase/auth';
+import { RegexValues } from './firebase/auth';
+import * as productLists from './firebase/productLists';
 
 const strings = appLocale();
 

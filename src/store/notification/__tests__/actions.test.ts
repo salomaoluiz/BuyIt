@@ -1,4 +1,4 @@
-import { notificationActions } from '..';
+import { notificationActions } from '../';
 import { NotificationTypes } from '../types';
 
 describe('Notification Actions', () => {

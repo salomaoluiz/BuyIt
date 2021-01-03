@@ -1,5 +1,5 @@
-import dimensions from './dimensions';
 import animation from './animation';
+import dimensions from './dimensions';
 import theme from './theme';
 
 const getStyleAsNumber = (pxElement: string) => {

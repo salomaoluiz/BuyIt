@@ -1,6 +1,7 @@
-import { authSelectors } from '../';
 import { AppStateMockBuilder } from '@store/__mocks__/AppStateMockBuilder.mock';
 import { mockCurrentUser } from 'src/__tests__/firebase-mocks';
+
+import { authSelectors } from '../';
 
 describe('Testando AuthSelectors', () => {
   test('deve retornar o state correto', () => {

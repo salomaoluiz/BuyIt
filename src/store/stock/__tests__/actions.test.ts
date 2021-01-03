@@ -1,5 +1,6 @@
 import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
-import { stockActions } from '..';
+
+import { stockActions } from '../';
 import { StockTypes } from '../types';
 
 describe('Stock Actions', () => {

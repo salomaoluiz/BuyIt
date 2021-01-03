@@ -1,7 +1,9 @@
-import * as reactRedux from 'react-redux';
 import { renderHook } from '@testing-library/react-hooks';
-import { useErrorMessage } from '@utils/handleErrors';
+import * as reactRedux from 'react-redux';
+
 import { notificationActions } from '@store/notification';
+import { useErrorMessage } from '@utils/handleErrors';
+
 describe('Testando handleErrors', () => {
   const dispatch = jest.fn();
   jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(dispatch);

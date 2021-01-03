@@ -1,8 +1,10 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import * as reactRedux from 'react-redux';
-import useUserCard from '../useUserCard';
-import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
+
 import { Routes } from '@routes';
+import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
+
+import useUserCard from '../useUserCard';
 
 describe('User Card - useUserCard', () => {
   jest.spyOn(reactRedux, 'useSelector').mockReturnValue({

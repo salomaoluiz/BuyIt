@@ -1,9 +1,11 @@
 import * as navigation from '@react-navigation/native';
-import { Routes } from '@routes';
-import { authActions } from '@store/auth';
 import { act, renderHook } from '@testing-library/react-hooks';
 import * as reactRedux from 'react-redux';
+
+import { Routes } from '@routes';
+import { authActions } from '@store/auth';
 import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
+
 import useLogin from '../useLogin';
 
 jest.mock('@react-navigation/native');

@@ -1,15 +1,17 @@
-import { BannerProps, NotificationTypes, NotificationAction } from './types';
-import { put, delay, takeLatest, select } from 'redux-saga/effects';
-import { notificationActions, notificationSelector } from '.';
-import { animation } from '@styles';
-import appLocale from '@locales';
 import {
   PushNotificationScheduledLocalObject,
   PushNotificationScheduleObject,
 } from 'react-native-push-notification';
-import { randomNumberId } from '@utils/id';
+import { put, delay, takeLatest, select } from 'redux-saga/effects';
+
 import { pushNotification } from '@lib/push-notification';
+import appLocale from '@locales';
+import { animation } from '@styles';
 import { syncTwoArraysByID } from '@utils/filters';
+import { randomNumberId } from '@utils/id';
+
+import { notificationActions, notificationSelector } from './';
+import { BannerProps, NotificationTypes, NotificationAction } from './types';
 
 const strings = appLocale();
 

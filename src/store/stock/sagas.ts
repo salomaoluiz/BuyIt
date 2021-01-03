@@ -1,14 +1,16 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
-import { StockTypes, StockActions } from './types';
-import { stockActions } from '.';
+
+import appLocale from '@locales';
 import navigationService from '@navigator/services/navigationService';
-import { injectStockItemExtraData } from './utils';
-import * as sagaServer from './sagas-server';
-import * as sagaLocal from './sagas-local';
+import { notificationActions } from '@store/notification';
 import { ProductItem } from '@store/product-list/types';
 import { addRemoveDays, formatDate } from '@utils/date';
-import { notificationActions } from '@store/notification';
-import appLocale from '@locales';
+
+import { stockActions } from './';
+import * as sagaLocal from './sagas-local';
+import * as sagaServer from './sagas-server';
+import { StockTypes, StockActions } from './types';
+import { injectStockItemExtraData } from './utils';
 
 const strings = appLocale();
 

@@ -1,7 +1,8 @@
-import useFormError from '@errors/useFormError';
-import { UnauthenticatedParamsList } from '@navigator/unauthenticated';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
+
+import useFormError from '@errors/useFormError';
+import { UnauthenticatedParamsList } from '@navigator/unauthenticated';
 
 type RouteProps = RouteProp<UnauthenticatedParamsList, 'RegisterUser'>;
 

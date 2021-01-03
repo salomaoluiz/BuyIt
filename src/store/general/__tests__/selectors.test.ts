@@ -1,6 +1,6 @@
 import { AppStateMockBuilder } from '@store/__mocks__/AppStateMockBuilder.mock';
 
-import { generalSelector } from '..';
+import { generalSelector } from '../';
 
 describe('General Selectors', () => {
   it('deve retornar o general state corretamente', () => {

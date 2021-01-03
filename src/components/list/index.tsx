@@ -1,5 +1,6 @@
 import React from 'react';
 import { List as PaperList } from 'react-native-paper';
+
 import ListLeft from './components/list-left';
 import ListRight from './components/list-right';
 import useList from './useList';

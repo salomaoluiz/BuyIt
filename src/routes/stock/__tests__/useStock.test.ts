@@ -1,11 +1,13 @@
-import { stockActions, stockSelectors } from '@store/stock';
-import { AppStateMockBuilder } from '@store/__mocks__/AppStateMockBuilder.mock';
-import * as reactRedux from 'react-redux';
 import * as navigation from '@react-navigation/native';
-import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
 import { act, renderHook } from '@testing-library/react-hooks';
-import useStock from '../useStock';
+import * as reactRedux from 'react-redux';
+
 import { Routes } from '@routes';
+import { AppStateMockBuilder } from '@store/__mocks__/AppStateMockBuilder.mock';
+import { stockActions, stockSelectors } from '@store/stock';
+import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
+
+import useStock from '../useStock';
 
 jest.mock('@react-navigation/native');
 

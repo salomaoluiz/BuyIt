@@ -1,10 +1,12 @@
-import { StockNavigatorParamsList } from '@navigator/stock-navigator';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { Routes } from '@routes';
-import { stockActions } from '@store/stock';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { Props } from '.';
+
+import { StockNavigatorParamsList } from '@navigator/stock-navigator';
+import { Routes } from '@routes';
+import { stockActions } from '@store/stock';
+
+import { Props } from './';
 
 type NavProps = NavigationProp<StockNavigatorParamsList, 'Stock'>;
 

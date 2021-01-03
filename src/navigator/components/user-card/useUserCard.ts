@@ -1,8 +1,10 @@
-import { useSelector } from 'react-redux';
-import { authSelectors } from '@store/auth';
 import { useCallback } from 'react';
-import { Props } from '.';
+import { useSelector } from 'react-redux';
+
 import { Routes } from '@routes';
+import { authSelectors } from '@store/auth';
+
+import { Props } from './';
 
 const useUserCard = (props: Props) => {
   const authReducer = useSelector(authSelectors.getState);

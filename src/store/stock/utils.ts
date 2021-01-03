@@ -1,8 +1,9 @@
-import { QueryFirestore, DocumentFirestore } from './models';
-import { extractObjectElement, filterNotByID } from '@utils/filters';
-import { injectTimeStamp } from '@utils/date';
-import { injectId } from '@utils/id';
 import { ProductItem, ProductItems } from '@store/product-list/types';
+import { injectTimeStamp } from '@utils/date';
+import { extractObjectElement, filterNotByID } from '@utils/filters';
+import { injectId } from '@utils/id';
+
+import { QueryFirestore, DocumentFirestore } from './models';
 
 export const formatDocumentProductList = <T>(stockItems: DocumentFirestore) => {
   const productData = stockItems.data() as T;

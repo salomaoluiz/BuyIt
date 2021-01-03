@@ -1,8 +1,7 @@
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 
-import { createStackNavigator } from '@react-navigation/stack';
 import { Routes } from '@routes';
-
 import Login from '@routes/auth/login';
 import RegisterUser from '@routes/auth/register';
 

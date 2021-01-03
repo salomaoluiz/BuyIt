@@ -1,11 +1,13 @@
+import { put, delay, select } from 'redux-saga/effects';
+
+import { ChannelID, pushNotification } from '@lib/push-notification';
+import appLocale from '@locales';
+import { animation } from '@styles';
+import * as utilIds from '@utils/id';
+
+import { notificationActions, notificationSelector } from '../';
 import * as sagas from '../sagas';
 import { NotificationTypes } from '../types';
-import { put, delay, select } from 'redux-saga/effects';
-import { notificationActions, notificationSelector } from '..';
-import { animation } from '@styles';
-import appLocale from '@locales';
-import { ChannelID, pushNotification } from '@lib/push-notification';
-import * as utilIds from '@utils/id';
 
 const strings = appLocale();
 

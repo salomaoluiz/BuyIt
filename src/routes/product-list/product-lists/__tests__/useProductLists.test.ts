@@ -1,10 +1,12 @@
 import * as navigation from '@react-navigation/native';
+import { act, renderHook } from '@testing-library/react-hooks';
+import * as reactRedux from 'react-redux';
+
 import { Routes } from '@routes';
 import { productListActions } from '@store/product-list';
 import { ProductListBuilderMock } from '@store/product-list/__mocks__/productListBuilder.mock';
-import { act, renderHook } from '@testing-library/react-hooks';
-import * as reactRedux from 'react-redux';
 import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
+
 import useProductLists from '../useProductLists';
 
 jest.mock('@react-navigation/native');

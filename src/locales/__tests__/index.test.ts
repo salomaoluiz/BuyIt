@@ -1,4 +1,5 @@
 import appLocale, { appCurrency } from '@locales';
+
 import stringsPTBR from '../ptBR';
 
 describe('Locale - useLocale', () => {

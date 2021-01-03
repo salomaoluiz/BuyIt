@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { pushNotification } from '@lib/push-notification';
 import { authSelectors } from '@store/auth';
 import { generalSelector } from '@store/general';
-import { pushNotification } from '@lib/push-notification';
 import { notificationActions } from '@store/notification';
 
 const useNavigator = () => {

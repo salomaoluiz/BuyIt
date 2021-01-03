@@ -1,5 +1,6 @@
-import { dimensions } from '@styles';
 import styled from 'styled-components/native';
+
+import { dimensions } from '@styles';
 
 export const Container = styled.ScrollView``;
 

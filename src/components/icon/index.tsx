@@ -1,8 +1,9 @@
 import React from 'react';
 import { ViewStyle } from 'react-native';
+import { IconButton as PaperIconButton } from 'react-native-paper';
+
 import { IconContainer } from './styles';
 import useIcon from './useIcon';
-import { IconButton as PaperIconButton } from 'react-native-paper';
 
 export interface Props {
   isVisible: boolean;

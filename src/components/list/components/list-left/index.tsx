@@ -1,6 +1,7 @@
 import React from 'react';
-import { ListCheckMode } from '../..';
 import { List as PaperList } from 'react-native-paper';
+
+import { ListCheckMode } from '../../';
 
 interface Props {
   leftProps: {

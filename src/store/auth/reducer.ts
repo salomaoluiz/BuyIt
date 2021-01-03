@@ -1,5 +1,5 @@
+import { authActions } from './';
 import { AuthAction, AuthState, AuthTypes, AuthReducer } from './types';
-import { authActions } from '.';
 
 const initialState: AuthState = {
   isLogged: false,

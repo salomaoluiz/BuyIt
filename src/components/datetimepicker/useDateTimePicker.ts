@@ -1,5 +1,6 @@
 import { Event } from '@react-native-community/datetimepicker';
-import { Props } from '.';
+
+import { Props } from './';
 
 const useDateTimePicker = (props: Props) => {
   const handleChange = (event: Event, newDate?: Date) => {

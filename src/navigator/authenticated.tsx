@@ -1,13 +1,12 @@
-import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import React from 'react';
 
-import ProductNavigator from './product-navigator';
+import { Routes } from '@routes';
 
 import Drawer from './components/drawer';
-
-import UnauthenticatedNavigator from './unauthenticated';
-import { Routes } from '@routes';
+import ProductNavigator from './product-navigator';
 import StockNavigator from './stock-navigator';
+import UnauthenticatedNavigator from './unauthenticated';
 
 export type AuthenticatedParamsList = {
   [Routes.ProductNavigator]: undefined;

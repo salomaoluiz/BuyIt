@@ -1,7 +1,8 @@
 import styled from 'styled-components/native';
-import { colors, dimensions } from '@styles';
+
 import NativeTitle from '@components/subheading';
 import NativeText from '@components/text';
+import { colors, dimensions } from '@styles';
 import theme from 'src/styles/theme';
 
 export const ItemButton = styled.TouchableOpacity`

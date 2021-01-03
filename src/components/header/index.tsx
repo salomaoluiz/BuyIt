@@ -1,6 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 import { Appbar as PaperAppBar } from 'react-native-paper';
+
 import useHeader from './useHeader';
 
 export interface Props {

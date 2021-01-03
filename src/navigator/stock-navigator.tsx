@@ -1,15 +1,15 @@
-import React from 'react';
 import {
   createStackNavigator,
   TransitionPresets,
 } from '@react-navigation/stack';
-import NewListItem from '@routes/new-item';
+import React from 'react';
 
 import { Routes } from '@routes';
-import { ProductItem } from '@store/product-list/types';
-import { productListActions } from '@store/product-list';
-import { stockActions } from '@store/stock';
+import NewListItem from '@routes/new-item';
 import Stock from '@routes/stock';
+import { productListActions } from '@store/product-list';
+import { ProductItem } from '@store/product-list/types';
+import { stockActions } from '@store/stock';
 
 export type StockNavigatorParamsList = {
   [Routes.Stock]: undefined;

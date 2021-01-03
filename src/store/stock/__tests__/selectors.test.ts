@@ -1,6 +1,7 @@
-import { stockSelectors } from '..';
 import { AppStateMockBuilder } from '@store/__mocks__/AppStateMockBuilder.mock';
 import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
+
+import { stockSelectors } from '../';
 
 describe('Stock Selector', () => {
   test('deve obter o state do stockReducer', () => {

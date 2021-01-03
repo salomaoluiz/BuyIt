@@ -1,5 +1,7 @@
-import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
 import { renderHook } from '@testing-library/react-hooks';
+
+import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
+
 import useProductItem from '../useProductItem';
 
 describe('useProductItem', () => {

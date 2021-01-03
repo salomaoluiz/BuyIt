@@ -1,5 +1,6 @@
 import React from 'react';
 import { TouchableRipple as PaperTouchableRipple } from 'react-native-paper';
+
 import { Container } from './styles';
 
 interface Props {

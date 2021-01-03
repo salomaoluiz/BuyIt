@@ -1,5 +1,6 @@
-import { dimensions, getStyleAsNumber } from '@styles';
 import styled from 'styled-components/native';
+
+import { dimensions, getStyleAsNumber } from '@styles';
 
 interface ContainerProps {
   rowDivider?: boolean;

@@ -1,8 +1,10 @@
 import { select } from 'redux-saga/effects';
-import { stockSelectors } from '..';
-import * as sagaLocal from '../sagas-local';
-import { ProductItem, ProductItems } from '@store/product-list/types';
+
 import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
+import { ProductItem, ProductItems } from '@store/product-list/types';
+
+import { stockSelectors } from '../';
+import * as sagaLocal from '../sagas-local';
 
 describe('Stock Sagas Local', () => {
   test('deve adicionar um novo item no array do stock e retornar o novo array', () => {

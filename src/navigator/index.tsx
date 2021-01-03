@@ -1,13 +1,13 @@
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import React from 'react';
+
+import AdmobBanner from '@components/admob-banner';
+import FullscreenLoader from '@components/fullscreen-loader';
 
 import AuthenticatedNavigator from './authenticated';
-import UnauthenticatedNavigator from './unauthenticated';
-
-import useNavigator from './useNavigator';
-import FullscreenLoader from '@components/fullscreen-loader';
 import { setNavigator } from './services/navigationService';
-import AdmobBanner from '@components/admob-banner';
+import UnauthenticatedNavigator from './unauthenticated';
+import useNavigator from './useNavigator';
 
 const AppNavigator = () => {
   const { isAuthenticated, isRehydrated } = useNavigator();

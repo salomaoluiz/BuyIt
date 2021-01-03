@@ -1,10 +1,10 @@
 import auth from './auth';
 import errors from './errors';
 import general from './general';
-import unit from './unit';
-import stock from './stock';
 import productItems from './product-items';
 import productLists from './product-lists';
+import stock from './stock';
+import unit from './unit';
 
 export default {
   auth,

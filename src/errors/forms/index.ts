@@ -1,6 +1,8 @@
-import { ProductItemForm, ProductListForm } from '@store/product-list/types';
 import { ValidationError } from 'yup';
+
 import { AuthLoginForm, AuthRegisterForm } from '@store/auth/types';
+import { ProductItemForm, ProductListForm } from '@store/product-list/types';
+
 import testSchema from './testSchema';
 
 export type FormName = 'productItem' | 'login' | 'register' | 'productList';

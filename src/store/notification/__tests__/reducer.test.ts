@@ -1,6 +1,6 @@
+import { notificationActions } from '../';
 import notificationReducers from '../reducer';
 import { NotificationState } from '../types';
-import { notificationActions } from '..';
 
 describe('Notification Reducer', () => {
   const initialState: NotificationState = {

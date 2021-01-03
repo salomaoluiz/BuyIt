@@ -1,7 +1,8 @@
 import * as React from 'react';
-
 import { View } from 'react-native';
+
 import Button from '@components/button';
+
 import useDrawerBottom from './useDrawerBottom';
 
 const DrawerBottom = () => {

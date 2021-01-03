@@ -1,10 +1,12 @@
-import { Props } from '.';
-import { useCallback } from 'react';
-import { ProductNavigatorParamsList } from '@navigator/product-navigator';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { Routes } from '@routes';
+import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+
+import { ProductNavigatorParamsList } from '@navigator/product-navigator';
+import { Routes } from '@routes';
 import { productListActions } from '@store/product-list';
+
+import { Props } from './';
 
 type NavProps = NavigationProp<ProductNavigatorParamsList, 'ProductItems'>;
 

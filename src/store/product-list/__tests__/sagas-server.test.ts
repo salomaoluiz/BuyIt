@@ -1,13 +1,14 @@
 // @ts-nocheck
+import { call, select } from 'redux-saga/effects';
 
 import { authSelectors } from '@store/auth';
 import { extractObjectElement } from '@utils/filters';
-import { call, select } from 'redux-saga/effects';
-import { productListModels } from '..';
-import * as sagaServer from '../sagas-server';
-import { appProductListFormater, dbProductListFormated } from '../utils';
+
+import { productListModels } from '../';
 import { ProductItemBuilderMock } from '../__mocks__/productItemBuilder.mock';
 import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
+import * as sagaServer from '../sagas-server';
+import { appProductListFormater, dbProductListFormated } from '../utils';
 
 describe('ProductList Sagas Server', () => {
   describe('Product Lists', () => {

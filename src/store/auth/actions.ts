@@ -1,5 +1,6 @@
-import { AuthTypes, AuthAction, AuthRegisterForm } from './types';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+
+import { AuthTypes, AuthAction, AuthRegisterForm } from './types';
 
 const actions = {
   logout: () => ({ type: AuthTypes.LOGOUT }),
