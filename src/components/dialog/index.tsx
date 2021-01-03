@@ -1,9 +1,10 @@
-import Button from '@components/button';
-import Paragraph from '@components/paragraph';
-import appLocale from '@locales';
 import React from 'react';
 import { ScrollView } from 'react-native';
 import { Dialog as PaperDialog } from 'react-native-paper';
+
+import Button from '@components/button';
+import Paragraph from '@components/paragraph';
+import appLocale from '@locales';
 
 const strings = appLocale();
 

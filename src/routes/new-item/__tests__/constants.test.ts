@@ -1,5 +1,6 @@
-import { unitList } from '../constants';
 import appLocale from '@locales';
+
+import { unitList } from '../constants';
 
 const strings = appLocale();
 

@@ -1,6 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useIcon from '../useIcon';
 import { Animated } from 'react-native';
+
+import useIcon from '../useIcon';
 
 describe('Testando useIcon', () => {
   const initialProps = {

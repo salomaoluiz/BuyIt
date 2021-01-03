@@ -1,5 +1,6 @@
-import useFormError from '@errors/useFormError';
 import { useCallback, useState } from 'react';
+
+import useFormError from '@errors/useFormError';
 
 const useForm = () => {
   const [email, setEmail] = useState('');

@@ -1,5 +1,6 @@
-import { Props } from '.';
 import { useState, useCallback } from 'react';
+
+import { Props } from './';
 
 const useTextInput = (props: Props) => {
   const [value, setValue] = useState(props.value || '');

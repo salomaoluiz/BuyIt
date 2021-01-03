@@ -1,6 +1,16 @@
+import { StackScreenProps } from '@react-navigation/stack';
 import * as React from 'react';
 
-import useLogin from './useLogin';
+import Logo from '@assets/images/logo.svg';
+import Button from '@components/button';
+import Divider from '@components/divider';
+import FullscreenLoader from '@components/fullscreen-loader';
+import Header from '@components/header';
+import TextInput from '@components/text-input';
+import appLocale from '@locales';
+import { UnauthenticatedParamsList } from '@navigator/unauthenticated';
+import { dimensions } from '@styles';
+
 import {
   Container,
   LogoContainer,
@@ -8,17 +18,8 @@ import {
   LoginContainer,
   SocialContainer,
 } from './styles';
-import Logo from '@assets/images/logo.svg';
-import { dimensions } from '@styles';
-import TextInput from '@components/text-input';
-import Button from '@components/button';
-import { StackScreenProps } from '@react-navigation/stack';
-import { UnauthenticatedParamsList } from '@navigator/unauthenticated';
-import FullscreenLoader from '@components/fullscreen-loader';
 import useForm from './useForm';
-import appLocale from '@locales';
-import Divider from '@components/divider';
-import Header from '@components/header';
+import useLogin from './useLogin';
 
 const strings = appLocale();
 

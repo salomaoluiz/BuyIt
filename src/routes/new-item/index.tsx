@@ -1,23 +1,25 @@
 import * as React from 'react';
-import useNewItem from './useNewItem';
+import { Portal } from 'react-native-paper';
+
+import Dialog from '@components/dialog';
+import Divider from '@components/divider';
+import CircleButton from '@components/FAB';
+import Header from '@components/header';
+import TextInput from '@components/text-input';
+import TouchableRipple from '@components/touchable-ripple';
+import appLocale, { appCurrency } from '@locales';
+import { formatDate } from '@utils/date';
+
+import DueDateModal from './containers/duedate-modal';
+import UnitModal from './containers/unit-modal';
 import {
   Container,
   SubContainer,
   ButtonContainer,
   TwoColumnsContainer,
 } from './styles';
-import TextInput from '@components/text-input';
 import useForm from './useForm';
-import CircleButton from '@components/FAB';
-import appLocale, { appCurrency } from '@locales';
-import Header from '@components/header';
-import TouchableRipple from '@components/touchable-ripple';
-import Divider from '@components/divider';
-import UnitModal from './containers/unit-modal';
-import Dialog from '@components/dialog';
-import { Portal } from 'react-native-paper';
-import DueDateModal from './containers/duedate-modal';
-import { formatDate } from '@utils/date';
+import useNewItem from './useNewItem';
 
 const strings = appLocale();
 const currency = appCurrency();

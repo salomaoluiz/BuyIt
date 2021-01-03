@@ -1,6 +1,8 @@
-import appLocale from '@locales';
 import { ValidationError } from 'yup';
-import { ErrorInterface } from '../..';
+
+import appLocale from '@locales';
+
+import { ErrorInterface } from '../../';
 
 const strings = appLocale();
 

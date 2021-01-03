@@ -1,8 +1,9 @@
 // @ts-nocheck
-import { productListSelectors } from '..';
 import { AppStateMockBuilder } from '@store/__mocks__/AppStateMockBuilder.mock';
-import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
+
+import { productListSelectors } from '../';
 import { ProductItemBuilderMock } from '../__mocks__/productItemBuilder.mock';
+import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
 
 describe('ProductList Selector', () => {
   test('deve obter o state do productListReducer', () => {

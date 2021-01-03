@@ -1,7 +1,8 @@
 import * as React from 'react';
-import useBanner from './useBanner';
-import { Container } from './styles';
 import { Banner as PaperBanner } from 'react-native-paper';
+
+import { Container } from './styles';
+import useBanner from './useBanner';
 
 const Banner = () => {
   const { body, icon, isVisible, bannerActions } = useBanner();

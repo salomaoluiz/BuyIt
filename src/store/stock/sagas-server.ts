@@ -1,9 +1,10 @@
 import { select, call } from 'redux-saga/effects';
-import { authSelectors } from '@store/auth';
 
-import { extractObjectElement } from '@utils/filters';
-import { stockModels } from '.';
+import { authSelectors } from '@store/auth';
 import { ProductItem } from '@store/product-list/types';
+import { extractObjectElement } from '@utils/filters';
+
+import { stockModels } from './';
 import { appStockItemsFormater } from './utils';
 
 export function* createStockItem(stockItem: ProductItem) {

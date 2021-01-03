@@ -1,10 +1,12 @@
-import { takeLatest, put, call, select } from 'redux-saga/effects';
-import { AuthTypes, AuthAction, AuthRegisterForm } from './types';
-import { authActions, authModels, authSelectors } from './';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import { takeLatest, put, call, select } from 'redux-saga/effects';
+
 import useFirebaseError from '@errors/useFirebaseError';
-import { notificationActions } from '@store/notification';
 import navigationService from '@navigator/services/navigationService';
+import { notificationActions } from '@store/notification';
+
+import { authActions, authModels, authSelectors } from './';
+import { AuthTypes, AuthAction, AuthRegisterForm } from './types';
 import { notificationMessages } from './utils';
 
 const { getErrorMessage } = useFirebaseError('auth');

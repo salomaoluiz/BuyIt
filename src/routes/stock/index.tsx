@@ -1,11 +1,13 @@
 import React from 'react';
 import { FlatList } from 'react-native';
+
+import FABButton from '@components/FAB';
 import Header from '@components/header';
 import appLocale from '@locales';
-import FABButton from '@components/FAB';
+
+import ItemCard from './components/item-card';
 import { ButtonContainer } from './styles';
 import useStock from './useStock';
-import ItemCard from './components/item-card';
 
 const strings = appLocale();
 const Stock = () => {

@@ -1,4 +1,5 @@
 import { PaperListData } from '@components/list';
+
 import { ProductItem } from '../types';
 
 export class ProductItemBuilderMock {

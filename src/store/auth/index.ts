@@ -1,6 +1,6 @@
 import actions from './actions';
-import * as selectors from './selectors';
 import * as models from './models';
+import * as selectors from './selectors';
 
 const authSelectors = { ...selectors };
 const authModels = { ...models };

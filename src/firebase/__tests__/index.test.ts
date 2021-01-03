@@ -1,4 +1,4 @@
-import firebaseInit from '..';
+import firebaseInit from '../';
 import * as admob from '../admob';
 
 jest.mock('../admob', () => jest.fn());

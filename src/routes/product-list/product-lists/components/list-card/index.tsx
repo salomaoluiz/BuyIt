@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { ProductList } from '@store/product-list/types';
+
 import { Container, ListTitle } from './styles';
 import useListCard from './useListCard';
 

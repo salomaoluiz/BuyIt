@@ -1,10 +1,10 @@
-import { useCallback, useEffect } from 'react';
 import admob, {
   MaxAdContentRating,
   InterstitialAd,
   AdEventType,
   TestIds,
 } from '@react-native-firebase/admob';
+import { useCallback, useEffect } from 'react';
 import Config from 'react-native-config';
 
 const admobInit = () => {

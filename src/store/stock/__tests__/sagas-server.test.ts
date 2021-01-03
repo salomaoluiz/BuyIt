@@ -1,10 +1,11 @@
 // @ts-nocheck
+import { call, select } from 'redux-saga/effects';
 
 import { authSelectors } from '@store/auth';
 import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
 import { extractObjectElement } from '@utils/filters';
-import { call, select } from 'redux-saga/effects';
-import { stockModels } from '..';
+
+import { stockModels } from '../';
 import * as sagaServer from '../sagas-server';
 import { appStockItemsFormater, dbStockItemFormated } from '../utils';
 

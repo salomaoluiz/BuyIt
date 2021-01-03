@@ -1,7 +1,9 @@
-import { Props } from '.';
-import { Animated } from 'react-native';
 import { useState, useEffect, useCallback } from 'react';
+import { Animated } from 'react-native';
+
 import { animation } from '@styles';
+
+import { Props } from './';
 
 const useIcon = (props: Props) => {
   const { isVisible, onPress, useAnimation } = props;

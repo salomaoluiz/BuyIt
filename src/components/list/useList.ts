@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { PaperListData, Props } from '.';
+
+import { PaperListData, Props } from './';
 
 const useList = (props: Props) => {
   const [data, setData] = useState(props.data);

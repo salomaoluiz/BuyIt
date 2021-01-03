@@ -1,7 +1,9 @@
 import { act, renderHook } from '@testing-library/react-hooks';
-import useRegister from '../useRegister';
 import * as reactRedux from 'react-redux';
+
 import { authActions } from '@store/auth';
+
+import useRegister from '../useRegister';
 
 describe('Register - useRegister', () => {
   const dispatch = jest.fn();

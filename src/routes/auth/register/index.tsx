@@ -1,14 +1,15 @@
 import * as React from 'react';
 
-import TextInput from '@components/text-input';
-import { Container } from './styles';
-import useRegister from './useRegister';
 import Button from '@components/button';
-import FullscreenLoader from '@components/fullscreen-loader';
-import useForm from './useForm';
-import appLocale from '@locales';
-import Header from '@components/header';
 import Divider from '@components/divider';
+import FullscreenLoader from '@components/fullscreen-loader';
+import Header from '@components/header';
+import TextInput from '@components/text-input';
+import appLocale from '@locales';
+
+import { Container } from './styles';
+import useForm from './useForm';
+import useRegister from './useRegister';
 
 const strings = appLocale();
 

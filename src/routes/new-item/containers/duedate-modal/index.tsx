@@ -1,5 +1,6 @@
-import DateTimePicker from '@components/datetimepicker';
 import React from 'react';
+
+import DateTimePicker from '@components/datetimepicker';
 
 export interface Props {
   setDueDate: (date: Date) => void;

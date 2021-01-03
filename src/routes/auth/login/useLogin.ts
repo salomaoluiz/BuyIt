@@ -1,10 +1,10 @@
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useCallback } from 'react';
-import { authActions, authSelectors } from '@store/auth';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Routes } from '@routes';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { UnauthenticatedParamsList } from '@navigator/unauthenticated';
+import { Routes } from '@routes';
+import { authActions, authSelectors } from '@store/auth';
 import { AuthLoginForm } from '@store/auth/types';
 
 type NavProps = NavigationProp<UnauthenticatedParamsList, 'Login'>;

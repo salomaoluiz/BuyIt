@@ -1,7 +1,8 @@
-import * as models from '../models';
 import * as firestore from '@react-native-firebase/firestore';
-import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
+
 import { ProductItemBuilderMock } from '../__mocks__/productItemBuilder.mock';
+import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
+import * as models from '../models';
 
 describe('ProductLists Models', () => {
   const docSet = jest.fn();

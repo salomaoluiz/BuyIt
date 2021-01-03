@@ -1,8 +1,10 @@
-import * as reactRedux from 'react-redux';
 import { renderHook, act } from '@testing-library/react-hooks';
-import useNewList from '../useNewList';
+import * as reactRedux from 'react-redux';
+
 import { productListActions } from '@store/product-list';
 import * as admob from 'src/firebase/admob';
+
+import useNewList from '../useNewList';
 
 const dispatch = jest.fn();
 const showAd = jest.fn();

@@ -1,16 +1,18 @@
-import { authModels, authActions, authSelectors } from '../';
+import { put, call, select } from 'redux-saga/effects';
+
+import useFirebaseError from '@errors/useFirebaseError';
+import appLocale from '@locales';
+import navigationService from '@navigator/services/navigationService';
+import { notificationActions } from '@store/notification';
 import { mockCurrentUser } from 'src/__tests__/firebase-mocks';
+
+import { authModels, authActions, authSelectors } from '../';
 import {
   requestLoginEmailPassword,
   requestLogout,
   requestRegisterEmailPassword,
 } from '../sagas';
-import { put, call, select } from 'redux-saga/effects';
-import { notificationActions } from '@store/notification';
-import navigationService from '@navigator/services/navigationService';
 import { notificationMessages } from '../utils';
-import useFirebaseError from '@errors/useFirebaseError';
-import appLocale from '@locales';
 
 const strings = appLocale();
 

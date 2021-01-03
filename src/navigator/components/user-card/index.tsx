@@ -1,5 +1,8 @@
 import React from 'react';
 
+import appLocale from '@locales';
+import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
+
 import {
   Container,
   UnauthorizedText,
@@ -8,8 +11,6 @@ import {
   UnauthorizedButton,
 } from './styles';
 import useUserCard from './useUserCard';
-import appLocale from '@locales';
-import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
 
 const strings = appLocale();
 export interface Props {

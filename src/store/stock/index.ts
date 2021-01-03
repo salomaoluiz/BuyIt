@@ -1,6 +1,6 @@
 import actions from './actions';
-import * as stockSelectors from './selectors';
 import * as stockModels from './models';
+import * as stockSelectors from './selectors';
 
 const stockActions = actions;
 

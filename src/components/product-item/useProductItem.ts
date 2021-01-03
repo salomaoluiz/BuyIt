@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Props } from '.';
+
+import { Props } from './';
 
 const useProductItem = (props: Props) => {
   const { productItem } = props;

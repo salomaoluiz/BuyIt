@@ -2,7 +2,9 @@ import {
   CommonActions,
   NavigationContainerRef,
 } from '@react-navigation/native';
+
 import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
+
 import navigationService, { setNavigator } from '../navigationService';
 
 jest.mock('@react-navigation/native');

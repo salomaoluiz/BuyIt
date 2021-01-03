@@ -1,4 +1,11 @@
 import React from 'react';
+
+import FAB from '@components/FAB';
+import Subheading from '@components/subheading';
+import Text from '@components/text';
+import appLocale, { appCurrency } from '@locales';
+import { ProductItems } from '@store/product-list/types';
+
 import {
   Container,
   ButtonContainer,
@@ -6,12 +13,7 @@ import {
   TextSubContainer,
   SubContainer,
 } from './styles';
-import FAB from '@components/FAB';
-import { ProductItems } from '@store/product-list/types';
 import useFooter from './useFooter';
-import Subheading from '@components/subheading';
-import appLocale, { appCurrency } from '@locales';
-import Text from '@components/text';
 
 export interface Props {
   productItems: ProductItems;

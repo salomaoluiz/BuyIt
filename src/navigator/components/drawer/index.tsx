@@ -1,13 +1,15 @@
-import * as React from 'react';
 import {
   DrawerContentScrollView,
   DrawerItemList,
   DrawerContentComponentProps,
   DrawerContentOptions,
 } from '@react-navigation/drawer';
+import * as React from 'react';
+
+import { Routes } from '@routes';
+
 import DrawerBottom from '../drawer-bottom';
 import UserCard from '../user-card';
-import { Routes } from '@routes';
 
 const Drawer = (props: DrawerContentComponentProps<DrawerContentOptions>) => {
   const { state, ...rest } = props;

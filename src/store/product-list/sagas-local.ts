@@ -1,12 +1,14 @@
-import { ProductList, ProductLists, ProductItem, ProductItems } from './types';
 import { select } from 'redux-saga/effects';
-import { productListSelectors } from '.';
+
+import { filterNotByID, filterByID } from '@utils/filters';
+
+import { productListSelectors } from './';
+import { ProductList, ProductLists, ProductItem, ProductItems } from './types';
 import {
   createProductItemArray,
   createProductListArray,
   updateProductListArray,
 } from './utils';
-import { filterNotByID, filterByID } from '@utils/filters';
 
 export function* createProductList(productList: ProductList) {
   const stateProductList: ProductLists = yield select(

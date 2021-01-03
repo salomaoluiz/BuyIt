@@ -1,7 +1,7 @@
-import { productListActions } from '..';
-import { ProductListTypes } from '../types';
-import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
+import { productListActions } from '../';
 import { ProductItemBuilderMock } from '../__mocks__/productItemBuilder.mock';
+import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
+import { ProductListTypes } from '../types';
 
 describe('ProductList Actions', () => {
   test('deve retornar setLoading corretamente.', () => {

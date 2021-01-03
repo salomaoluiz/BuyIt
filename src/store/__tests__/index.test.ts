@@ -1,8 +1,9 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import configureStore from '@store';
+import * as redux from 'redux';
 import * as reduxPersist from 'redux-persist';
 import * as reduxSaga from 'redux-saga';
-import * as redux from 'redux';
+
+import configureStore from '@store';
 
 jest.mock('@react-native-community/async-storage', () => ({}));
 

@@ -1,9 +1,10 @@
 import * as Yup from 'yup';
-import { FormName, FormValues } from '.';
+
+import { FormName, FormValues } from './';
+import login from './schemas/login';
 import productItem from './schemas/product-item';
 import productList from './schemas/product-list';
 import register from './schemas/register';
-import login from './schemas/login';
 
 const validationSchemas = {
   productItem,

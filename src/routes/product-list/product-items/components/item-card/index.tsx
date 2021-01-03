@@ -1,7 +1,9 @@
 import React from 'react';
-import { ProductItem } from '@store/product-list/types';
-import useItemCard from './useItemCard';
+
 import ProductItemComponent from '@components/product-item';
+import { ProductItem } from '@store/product-list/types';
+
+import useItemCard from './useItemCard';
 
 export interface Props {
   listId: string;

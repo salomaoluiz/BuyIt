@@ -1,14 +1,16 @@
-import * as sagas from '../sagas';
-import { productListActions } from '..';
 import { put, call, select } from 'redux-saga/effects';
-import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
-import { ProductListActions, ProductList, ProductItem } from '../types';
-import * as sagaServer from '../sagas-server';
-import * as sagaLocal from '../sagas-local';
-import { injectProductListExtraData } from '../utils';
+
 import navigationService from '@navigator/services/navigationService';
+
+import { productListActions } from '../';
 import { ProductItemBuilderMock } from '../__mocks__/productItemBuilder.mock';
+import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
+import * as sagas from '../sagas';
+import * as sagaLocal from '../sagas-local';
+import * as sagaServer from '../sagas-server';
 import selectors from '../selectors';
+import { ProductListActions, ProductList, ProductItem } from '../types';
+import { injectProductListExtraData } from '../utils';
 
 jest.mock('@utils/id', () => ({
   generateUniqueID: jest.fn().mockReturnValue('123456789'),

@@ -1,5 +1,6 @@
-import { ChannelID, pushNotification } from '@lib/push-notification';
 import PushNotification from 'react-native-push-notification';
+
+import { ChannelID, pushNotification } from '@lib/push-notification';
 
 describe('Testes da lib PushNotification', () => {
   const localNotificationScheduleSpy = jest.spyOn(

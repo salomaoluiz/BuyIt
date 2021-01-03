@@ -1,8 +1,10 @@
-import { renderHook, act } from '@testing-library/react-hooks';
-import useForm from '../useForm';
-import * as useErrorForm from '@errors/useFormError';
 import * as navigation from '@react-navigation/native';
+import { renderHook, act } from '@testing-library/react-hooks';
+
+import * as useErrorForm from '@errors/useFormError';
 import { Routes } from '@routes';
+
+import useForm from '../useForm';
 
 const validateError = jest.fn().mockResolvedValue(true);
 const handleErrorMessage = jest.fn();

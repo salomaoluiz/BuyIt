@@ -1,12 +1,14 @@
 import * as navigation from '@react-navigation/native';
-import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
-import useItemCard from '../useItemCard';
-import * as reactRedux from 'react-redux';
 import { act, renderHook } from '@testing-library/react-hooks';
-import { Routes } from '@routes';
-import { stockActions } from '@store/stock';
 import { Alert } from 'react-native';
+import * as reactRedux from 'react-redux';
+
+import { Routes } from '@routes';
 import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
+import { stockActions } from '@store/stock';
+import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
+
+import useItemCard from '../useItemCard';
 
 const dispatch = jest.fn();
 

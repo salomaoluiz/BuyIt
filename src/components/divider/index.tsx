@@ -1,5 +1,6 @@
 import React from 'react';
 import { Divider as PaperDivider } from 'react-native-paper';
+
 import { Container } from './styles';
 
 interface Props {

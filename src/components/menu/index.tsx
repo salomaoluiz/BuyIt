@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { Divider, Menu as PaperMenu } from 'react-native-paper';
+
 import { ItemsContainer } from './styles';
 import useMenu from './useMenu';
 

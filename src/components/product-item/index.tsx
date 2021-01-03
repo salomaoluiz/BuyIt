@@ -1,5 +1,9 @@
 import React from 'react';
 
+import Divider from '@components/divider';
+import Icon from '@components/icon';
+import Menu from '@components/menu';
+import appLocale, { appCurrency } from '@locales';
 import { ProductItem } from '@store/product-list/types';
 
 import {
@@ -16,11 +20,8 @@ import {
   Title,
   TopContainer,
 } from './styles';
-import Divider from '@components/divider';
-import Icon from '@components/icon';
 import useProductItem from './useProductItem';
-import appLocale, { appCurrency } from '@locales';
-import Menu from '@components/menu';
+
 export interface Props {
   onPress?: () => void;
   index: number;

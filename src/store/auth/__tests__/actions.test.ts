@@ -1,6 +1,8 @@
+import { mockCurrentUser } from 'src/__tests__/firebase-mocks';
+
 import { authActions } from '../';
 import { AuthTypes } from '../types';
-import { mockCurrentUser } from 'src/__tests__/firebase-mocks';
+
 describe('Auth Actions', () => {
   test.each([
     ['logout', authActions.logout(), { type: AuthTypes.LOGOUT }],

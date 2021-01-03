@@ -1,4 +1,14 @@
 import { takeLatest, put, call, select } from 'redux-saga/effects';
+
+import appLocale from '@locales';
+import navigationService from '@navigator/services/navigationService';
+import { notificationActions } from '@store/notification';
+import { addRemoveDays, formatDate } from '@utils/date';
+
+import { productListActions } from './';
+import * as sagaLocal from './sagas-local';
+import * as sagaServer from './sagas-server';
+import selectors from './selectors';
 import {
   ProductListTypes,
   ProductListActions,
@@ -6,15 +16,7 @@ import {
   ProductLists,
   ProductItem,
 } from './types';
-import { productListActions } from '.';
-import navigationService from '@navigator/services/navigationService';
 import { injectProductListExtraData } from './utils';
-import * as sagaServer from './sagas-server';
-import * as sagaLocal from './sagas-local';
-import { notificationActions } from '@store/notification';
-import appLocale from '@locales';
-import { addRemoveDays, formatDate } from '@utils/date';
-import selectors from './selectors';
 
 const strings = appLocale();
 

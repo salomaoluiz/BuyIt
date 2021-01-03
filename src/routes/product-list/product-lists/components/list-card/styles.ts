@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+
 import { dimensions } from '@styles';
 
 export const Container = styled.TouchableOpacity`

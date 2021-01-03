@@ -1,6 +1,7 @@
 import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
+
 import { ProductList, ProductItem } from './types';
 
 export type QueryFirestore<T> = FirebaseFirestoreTypes.QuerySnapshot<T>;

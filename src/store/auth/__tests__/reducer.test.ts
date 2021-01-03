@@ -1,6 +1,7 @@
-import authReducer from '../reducer';
-import { authActions } from '..';
 import { mockCurrentUser } from 'src/__tests__/firebase-mocks';
+
+import { authActions } from '../';
+import authReducer from '../reducer';
 import { AuthAction, AuthState, AuthTypes } from '../types';
 
 describe('Auth Reducer', () => {

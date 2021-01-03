@@ -1,9 +1,10 @@
-import * as reactRedux from 'react-redux';
 import { renderHook } from '@testing-library/react-hooks';
+import * as reactRedux from 'react-redux';
+
+import { pushNotification } from '@lib/push-notification';
 import useNavigator from '@navigator/useNavigator';
 import { authSelectors } from '@store/auth';
 import { generalSelector } from '@store/general';
-import { pushNotification } from '@lib/push-notification';
 
 describe('Testando o Rehydrate', () => {
   const dispatch = jest.fn();

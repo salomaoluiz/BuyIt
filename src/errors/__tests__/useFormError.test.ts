@@ -1,6 +1,8 @@
+import { act, renderHook } from '@testing-library/react-hooks';
+
 import useFormError from '@errors/useFormError';
 import { ProductListForm } from '@store/product-list/types';
-import { act, renderHook } from '@testing-library/react-hooks';
+
 import * as forms from '../forms';
 
 describe('useFormError', () => {

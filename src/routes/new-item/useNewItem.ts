@@ -1,10 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { ProductNavigatorParamsList } from '@navigator/product-navigator';
 import productListSelectors from '@store/product-list/selectors';
 import { ProductItem } from '@store/product-list/types';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import { ProductNavigatorParamsList } from '@navigator/product-navigator';
 
 interface Props {
   formParams: Partial<ProductItem>;

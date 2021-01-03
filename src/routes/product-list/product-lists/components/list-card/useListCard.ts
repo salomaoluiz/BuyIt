@@ -1,12 +1,14 @@
-import { useCallback, useState, useEffect } from 'react';
-import { Props } from '.';
-import { Alert } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { useCallback, useState, useEffect } from 'react';
+import { Alert } from 'react-native';
+import { useDispatch } from 'react-redux';
+
+import appLocale from '@locales';
 import { ProductNavigatorParamsList } from '@navigator/product-navigator';
 import { Routes } from '@routes';
 import { productListActions } from '@store/product-list';
-import { useDispatch } from 'react-redux';
-import appLocale from '@locales';
+
+import { Props } from './';
 
 const strings = appLocale();
 type NavProps = NavigationProp<ProductNavigatorParamsList, 'ProductLists'>;

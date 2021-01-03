@@ -1,6 +1,6 @@
 import { AppStateMockBuilder } from '@store/__mocks__/AppStateMockBuilder.mock';
 
-import { notificationSelector } from '..';
+import { notificationSelector } from '../';
 
 describe('Notification Selectors', () => {
   test('deve retornar o state corretamente', () => {

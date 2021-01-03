@@ -1,16 +1,16 @@
-import React from 'react';
 import {
   createStackNavigator,
   TransitionPresets,
 } from '@react-navigation/stack';
-import ProductItems from '@routes/product-list/product-items';
-import NewListItem from '@routes/new-item';
+import React from 'react';
 
 import { Routes } from '@routes';
-import { ProductItem, ProductList } from '@store/product-list/types';
-import ProductLists from '@routes/product-list/product-lists';
+import NewListItem from '@routes/new-item';
 import NewList from '@routes/product-list/new-list';
+import ProductItems from '@routes/product-list/product-items';
+import ProductLists from '@routes/product-list/product-lists';
 import { productListActions } from '@store/product-list';
+import { ProductItem, ProductList } from '@store/product-list/types';
 import { stockActions } from '@store/stock';
 
 export type ProductNavigatorParamsList = {

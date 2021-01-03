@@ -1,8 +1,9 @@
 import { select } from 'redux-saga/effects';
-import { stockSelectors } from '.';
 
-import { filterNotByID } from '@utils/filters';
 import { ProductItem, ProductItems } from '@store/product-list/types';
+import { filterNotByID } from '@utils/filters';
+
+import { stockSelectors } from './';
 import { createStockItemArray, updateStockItemArray } from './utils';
 
 export function* createStockItem(stockItem: ProductItem) {

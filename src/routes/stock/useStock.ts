@@ -1,8 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
-import { Routes } from '@routes';
-import { stockActions, stockSelectors } from '@store/stock';
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { Routes } from '@routes';
+import { stockActions, stockSelectors } from '@store/stock';
 
 const useStock = () => {
   const isLoading = useSelector(stockSelectors.isLoading);

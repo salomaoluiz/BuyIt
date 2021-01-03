@@ -1,5 +1,6 @@
 import useFirebaseError from '@errors/useFirebaseError';
 import appLocale from '@locales';
+
 import * as auth from '../firebase/auth';
 
 const strings = appLocale();

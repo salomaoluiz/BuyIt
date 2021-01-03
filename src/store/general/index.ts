@@ -1,5 +1,5 @@
-import { getGeneralState, getPersistState } from './selectors';
 import generalActions from './actions';
+import { getGeneralState, getPersistState } from './selectors';
 
 const generalSelector = { getGeneralState, getPersistState };
 

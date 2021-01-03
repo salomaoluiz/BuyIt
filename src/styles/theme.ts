@@ -1,4 +1,5 @@
 import { DefaultTheme } from 'react-native-paper';
+
 import { Theme } from 'react-native-paper/src/types';
 
 interface CustomTheme extends Theme {

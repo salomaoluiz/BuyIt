@@ -1,6 +1,8 @@
-import * as models from '../models';
 import auth from '@react-native-firebase/auth';
+
 import { mockCurrentUser } from 'src/__tests__/firebase-mocks';
+
+import * as models from '../models';
 
 jest.mock('@react-native-firebase/auth', () =>
   jest.fn().mockReturnValue({

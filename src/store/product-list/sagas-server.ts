@@ -1,9 +1,11 @@
 import { select, call } from 'redux-saga/effects';
+
 import { authSelectors } from '@store/auth';
-import { ProductItem, ProductList, ProductLists } from './types';
 import { extractObjectElement } from '@utils/filters';
-import { productListModels } from '.';
+
+import { productListModels } from './';
 import { QueryFirestore } from './models';
+import { ProductItem, ProductList, ProductLists } from './types';
 import { appProductListFormater, dbProductListFormated } from './utils';
 
 export function* createProductList(productList: ProductList) {

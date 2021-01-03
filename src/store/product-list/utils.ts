@@ -1,9 +1,11 @@
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
+
+import { injectTimeStamp } from '@utils/date';
+import { extractObjectElement, filterNotByID } from '@utils/filters';
+import { injectId } from '@utils/id';
+
 import { QueryFirestore, DocumentFirestore } from './models';
 import { ProductLists, ProductList, ProductItem } from './types';
-import { extractObjectElement, filterNotByID } from '@utils/filters';
-import { injectTimeStamp } from '@utils/date';
-import { injectId } from '@utils/id';
-import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 
 export const formatDocumentProductList = <T>(
   productList: DocumentFirestore<T>,

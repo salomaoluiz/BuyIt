@@ -1,9 +1,11 @@
-import { Props } from '.';
-import { useCallback, useState, useEffect } from 'react';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { useCallback, useState, useEffect } from 'react';
+
 import { ProductNavigatorParamsList } from '@navigator/product-navigator';
 import { Routes } from '@routes';
 import { productListActions } from '@store/product-list';
+
+import { Props } from './';
 
 type NavProps = NavigationProp<ProductNavigatorParamsList, 'ProductItems'>;
 

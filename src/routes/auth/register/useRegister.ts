@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
-import actions from '@store/auth/actions';
+
 import { authSelectors } from '@store/auth';
+import actions from '@store/auth/actions';
 import { AuthRegisterForm } from '@store/auth/types';
 
 interface Props {
