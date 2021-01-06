@@ -7,11 +7,10 @@ interface Props {
 }
 const HelperComponent = (props: Props) => {
   const { value, isError } = props;
-  if (!value) return null;
 
   const type = isError ? 'error' : 'info';
   
-  return <PaperHelperText type={type}>{value}</PaperHelperText>;
+  return <PaperHelperText type={type} visible={!!value}>{value}</PaperHelperText>;
 };
 
 export default HelperComponent;
