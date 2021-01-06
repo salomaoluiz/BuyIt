@@ -3,8 +3,12 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      branch_name:
+        description: 'Branch Name'
+        required: true
+        default: ''
     
 jobs:
   sonarcloud:
