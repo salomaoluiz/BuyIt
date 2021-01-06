@@ -11,3 +11,5 @@ Caso algum desses requisitos não seja cumprido o PR será imediatamente reprova
 - Commit seguindo o padrão "[#ISSUE_ID] Descricao do commit", por exemplo: "[#49] Edited Readme"
 - Tudo, exceto os textos, deve estar escrito em inglês
 - Imports precisam estar organizado em grupos e cada grupo em ordem alfabética, seguindo o padrão do projeto
+
+test 2
