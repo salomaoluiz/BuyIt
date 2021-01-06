@@ -10,6 +10,7 @@ Primeiro é preciso criar um projeto no firebase (dois projetos se você deseja 
 
 Realizada essas configurações iniciais é preciso também ajustar o ADMOB para as publicidades dentro do projeto, para configurar isso é preciso que crie 3 arquivos, sendo cada um deles com as seguintes informações:
 
+test
 - **firebase.json**
 ```
 {
