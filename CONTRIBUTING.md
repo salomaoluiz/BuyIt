@@ -1,6 +1,7 @@
 # Como contribuir
 Para contribuir com esse projeto realize um fork dele observe se existe uma issue sobre o que você deseja implementar, caso não exista, crie uma, em seguida realize um fork do projeto, crie uma branch nesse fork e realize suas alterações desejadas, quando tiver tudo alterado e funcionando corretamente, realize um squash dos commits e abra um PR para mergear no projeto principal.
 
+# Configurando Secrets
 # Requisitos minimos para o PR ser aprovado
 Caso algum desses requisitos não seja cumprido o PR será imediatamente reprovado até que seja feita as correções:
 - Não possuir qualquer conteúdo ofensivo ou desrespeitoso em qualquer ponto, seja no texto do commit como no projeto
