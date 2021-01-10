@@ -24,7 +24,7 @@ const useItemCard = (props: Props) => {
 
   const handleDeleteItem = useCallback(() => {
     const itemId = item.id;
-    dispatch(stockActions.deleteProductItemAsync(itemId));
+    dispatch(stockActions.deleteItem(itemId));
   }, [item]);
 
   return {

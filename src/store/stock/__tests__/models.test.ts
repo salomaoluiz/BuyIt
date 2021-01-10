@@ -28,7 +28,7 @@ describe('StockItems Models', () => {
   const userId = '12345';
   describe('Product Lists', () => {
     test('ao chamar getStockItems deve chamar o get da collection', async () => {
-      await models.getStock(userId);
+      await models.requestStock(userId);
 
       expect(collectionSpy).toHaveBeenCalledWith(`users/${userId}/stock`);
       expect(collectionGet).toHaveBeenCalled();
@@ -36,7 +36,7 @@ describe('StockItems Models', () => {
 
     test('ao chamar createStockItem deve chamar o set do doc', async () => {
       const mockStockItem = new ProductItemBuilderMock().build();
-      await models.createStockItem(userId, mockStockItem.id, mockStockItem);
+      await models.createItem(userId, mockStockItem.id, mockStockItem);
 
       expect(collectionSpy).toHaveBeenCalledWith(`users/${userId}/stock`);
       expect(docSet).toHaveBeenCalledWith({ ...mockStockItem });
@@ -45,7 +45,7 @@ describe('StockItems Models', () => {
     test('ao chamar findStockItem deve chamar o get do doc', async () => {
       const mockStockItem = new ProductItemBuilderMock().build();
 
-      await models.findStockItem(userId, mockStockItem.id);
+      await models.findItem(userId, mockStockItem.id);
 
       expect(collectionSpy).toHaveBeenCalledWith(`users/${userId}/stock`);
       expect(docGet).toHaveBeenCalled();
@@ -53,7 +53,7 @@ describe('StockItems Models', () => {
 
     test('ao chamar updateStockItem deve chamar o update do doc', async () => {
       const mockStockItem = new ProductItemBuilderMock().build();
-      await models.updateStockItem(userId, mockStockItem.id, mockStockItem);
+      await models.updateItem(userId, mockStockItem.id, mockStockItem);
 
       expect(collectionSpy).toHaveBeenCalledWith(`users/${userId}/stock`);
       expect(docUpdate).toHaveBeenCalledWith({ ...mockStockItem });
@@ -61,7 +61,7 @@ describe('StockItems Models', () => {
 
     test('ao chamar deleteStockItem deve chamar o delete do doc', async () => {
       const mockStockItem = new ProductItemBuilderMock().build();
-      await models.deleteStockItem(userId, mockStockItem.id);
+      await models.deleteItem(userId, mockStockItem.id);
 
       expect(collectionSpy).toHaveBeenCalledWith(`users/${userId}/stock`);
       expect(docDelete).toHaveBeenCalled();

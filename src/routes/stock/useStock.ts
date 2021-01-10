@@ -13,7 +13,7 @@ const useStock = () => {
   const dispatch = useDispatch();
 
   const fetchStockData = useCallback(() => {
-    dispatch(stockActions.getStockAsync());
+    dispatch(stockActions.requestStock());
   }, []);
 
   const handleAddButtonPress = useCallback(() => {

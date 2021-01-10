@@ -6,7 +6,7 @@ import { filterNotByID } from '@utils/filters';
 import { stockSelectors } from './';
 import { createStockItemArray, updateStockItemArray } from './utils';
 
-export function* createStockItem(stockItem: ProductItem) {
+export function* createItem(stockItem: ProductItem) {
   const stateStockItems = yield select(stockSelectors.getStock);
 
   const newEditedList = createStockItemArray(stateStockItems, stockItem);
@@ -14,13 +14,13 @@ export function* createStockItem(stockItem: ProductItem) {
   return newEditedList as ProductItems;
 }
 
-export function* getStockItems() {
+export function* requestStock() {
   const stateStockItems: ProductItems = yield select(stockSelectors.getStock);
 
   return stateStockItems;
 }
 
-export function* deleteStockItem(itemId: string) {
+export function* deleteItem(itemId: string) {
   const stateStockItems: ProductItems = yield select(stockSelectors.getStock);
 
   const newStockItemsArray = filterNotByID(stateStockItems, itemId);
@@ -28,7 +28,7 @@ export function* deleteStockItem(itemId: string) {
   return newStockItemsArray;
 }
 
-export function* updateStockItem(stockItem: ProductItem) {
+export function* updateItem(stockItem: ProductItem) {
   const stateStockItems: ProductItems = yield select(stockSelectors.getStock);
 
   const newStockItemsArray = updateStockItemArray(stateStockItems, stockItem);

@@ -14,7 +14,7 @@ describe('Stock Sagas Local', () => {
 
     const mockNewStockItem = new ProductItemBuilderMock().withId('2222').build();
 
-    const gen = sagaLocal.createStockItem(mockNewStockItem);
+    const gen = sagaLocal.createItem(mockNewStockItem);
 
     expect(gen.next([mockCurrentStockItems]).value).toEqual(
       select(stockSelectors.getStock),
@@ -31,7 +31,7 @@ describe('Stock Sagas Local', () => {
       .withId('12345')
       .build();
 
-    const gen = sagaLocal.getStockItems();
+    const gen = sagaLocal.requestStock();
 
     expect(gen.next([mockCurrentStockItems]).value).toEqual(
       select(stockSelectors.getStock),
@@ -53,7 +53,7 @@ describe('Stock Sagas Local', () => {
       .withId('2222')
       .build() as ProductItem;
 
-    const gen = sagaLocal.updateStockItem(mockEditedStockItem);
+    const gen = sagaLocal.updateItem(mockEditedStockItem);
 
     expect(gen.next().value).toEqual(select(stockSelectors.getStock));
 
@@ -74,7 +74,7 @@ describe('Stock Sagas Local', () => {
     const mockStockItemsArray = [mockStockItem1, mockStockItem2];
     const itemId = '12345';
 
-    const gen = sagaLocal.deleteStockItem(itemId);
+    const gen = sagaLocal.deleteItem(itemId);
 
     expect(gen.next().value).toEqual(select(stockSelectors.getStock));
 

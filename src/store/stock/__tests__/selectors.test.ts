@@ -1,48 +1,34 @@
 import { AppStateMockBuilder } from '@store/__mocks__/AppStateMockBuilder.mock';
 import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
 
-import { stockSelectors } from '../';
+import * as selectors from '../selectors';
 
 describe('Stock Selector', () => {
-  test('deve obter o state do stockReducer', () => {
-    const mockState = new AppStateMockBuilder()
-      .withStock({ isLoading: false, stock: [] })
-      .build();
+  const mockedList = new ProductItemBuilderMock().withName('name').build();
+  const error = 'Error';
 
-    const response = stockSelectors.getState(mockState);
+  const mockState = new AppStateMockBuilder()
+    .withStock({ isLoading: false, stock: [mockedList], error })
+    .build();
 
-    expect(response).toEqual(mockState.stockReducer);
-  });
+  const getState = [
+    'getState',
+    selectors.getState(mockState),
+    { isLoading: false, stock: [mockedList], error },
+  ];
 
-  test('deve obter os stocks do stockReducer', () => {
-    const mockedList = new ProductItemBuilderMock().withName('name').build();
-    const mockState = new AppStateMockBuilder()
-      .withStock({ isLoading: false, stock: [mockedList] })
-      .build();
+  const isLoading = ['isLoading', selectors.isLoading(mockState), false];
 
-    const response = stockSelectors.getStock(mockState);
+  const getStock = ['getStock', selectors.getStock(mockState), [mockedList]];
 
-    expect(response).toEqual([mockedList]);
-  });
+  const getError = ['getError', selectors.getError(mockState), error];
 
-  test('deve obter o isLoading do stockReducer', () => {
-    const mockState = new AppStateMockBuilder()
-      .withStock({ isLoading: false, stock: [] })
-      .build();
-
-    const response = stockSelectors.isLoading(mockState);
-
-    expect(response).toEqual(false);
-  });
-
-  test('deve obter o error do stockReducer', () => {
-    const error = 'Error';
-    const mockState = new AppStateMockBuilder()
-      .withStock({ isLoading: false, stock: [], error })
-      .build();
-
-    const response = stockSelectors.getError(mockState);
-
-    expect(response).toEqual('Error');
-  });
+  test.each([getState, isLoading, getStock, getError] as Array<
+    [string, typeof selectors, any]
+  >)(
+    'deve retornar o state correto para o selector %s',
+    (describe, selector, expected) => {
+      expect(selector).toEqual(expected);
+    },
+  );
 });

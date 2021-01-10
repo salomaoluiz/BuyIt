@@ -8,12 +8,14 @@ import { stockActions } from '../';
 import * as sagas from '../sagas';
 import * as sagaLocal from '../sagas-local';
 import * as sagaServer from '../sagas-server';
-import { StockActions } from '../types';
+import { StockAction } from '../types';
 import { injectStockItemExtraData } from '../utils';
 
 jest.mock('@utils/id', () => ({
   generateUniqueID: jest.fn().mockReturnValue('123456789'),
-  injectId: jest.fn().mockImplementation((object) => ({ ...object, id: '123456789' })),
+  injectId: jest
+    .fn()
+    .mockImplementation((object) => ({ ...object, id: '123456789' })),
 }));
 
 jest.mock('@utils/date', () => ({
@@ -29,19 +31,18 @@ const stock = new ProductItemBuilderMock().withName('Nome').build();
 
 describe('Stock Sagas', () => {
   test('deve chamar createStockAsync corretamente', () => {
-    const action = stockActions.createProductItemAsync(stock) as StockActions<{
+    const action = stockActions.createItem(stock) as StockAction<{
       stockItem: ProductItem;
     }>;
 
-    const gen = sagas.createStockAsync(action);
+    const gen = sagas.createItem(action);
 
     expect(gen.next().value).toEqual(put(stockActions.setError()));
-    expect(gen.next().value).toEqual(put(stockActions.setLoading(true)));
 
     const ajustedStock = injectStockItemExtraData(stock);
 
     expect(gen.next(ajustedStock).value).toEqual(
-      call(sagaLocal.createStockItem, ajustedStock),
+      call(sagaLocal.createItem, ajustedStock),
     );
 
     expect(gen.next([ajustedStock]).value).toEqual(
@@ -50,27 +51,25 @@ describe('Stock Sagas', () => {
     expect(gen.next().value).toEqual(call(navigationService.goBack));
 
     expect(gen.next(ajustedStock).value).toEqual(
-      call(sagaServer.createStockItem, ajustedStock),
+      call(sagaServer.createItem, ajustedStock),
     );
 
-    expect(gen.next().value).toEqual(put(stockActions.setLoading(false)));
     expect(gen.next().done).toBe(true);
   });
 
   test('ao chamar createStockAsync com erro deve setar o erro corretamente', () => {
-    const action = stockActions.createProductItemAsync(stock) as StockActions<{
+    const action = stockActions.createItem(stock) as StockAction<{
       stockItem: ProductItem;
     }>;
 
-    const gen = sagas.createStockAsync(action);
+    const gen = sagas.createItem(action);
 
     expect(gen.next().value).toEqual(put(stockActions.setError()));
-    expect(gen.next().value).toEqual(put(stockActions.setLoading(true)));
 
     const ajustedStock = injectStockItemExtraData(stock);
 
     expect(gen.next(ajustedStock).value).toEqual(
-      call(sagaLocal.createStockItem, ajustedStock),
+      call(sagaLocal.createItem, ajustedStock),
     );
 
     const error = new Error('error');
@@ -78,60 +77,52 @@ describe('Stock Sagas', () => {
       put(stockActions.setError(error.message)),
     );
 
-    expect(gen.next().value).toEqual(put(stockActions.setLoading(false)));
     expect(gen.next().done).toBe(true);
   });
 
   test('deve chamar getStocksAsync corretamente', () => {
-    const gen = sagas.getStocksAsync();
- 
+    const gen = sagas.requestStock();
+
     expect(gen.next().value).toEqual(put(stockActions.setError()));
 
-    expect(gen.next().value).toEqual(put(stockActions.setLoading(true)));
-
-    expect(gen.next().value).toEqual(call(sagaServer.getStockItems));
-    expect(gen.next().value).toEqual(call(sagaLocal.getStockItems));
+    expect(gen.next().value).toEqual(call(sagaServer.requestStock));
+    expect(gen.next().value).toEqual(call(sagaLocal.requestStock));
 
     expect(gen.next([stock]).value).toEqual(
       put(stockActions.setStock([stock])),
     );
 
-    expect(gen.next().value).toEqual(put(stockActions.setLoading(false)));
     expect(gen.next().done).toBe(true);
   });
 
   test('ao chamar getStocksAsync com erro deve setar o erro corretamente', () => {
-    const gen = sagas.getStocksAsync();
+    const gen = sagas.requestStock();
 
     expect(gen.next().value).toEqual(put(stockActions.setError()));
 
-    expect(gen.next().value).toEqual(put(stockActions.setLoading(true)));
-
-    expect(gen.next().value).toEqual(call(sagaServer.getStockItems));
+    expect(gen.next().value).toEqual(call(sagaServer.requestStock));
 
     const error = new Error('error');
     expect(gen.throw(error).value).toEqual(
       put(stockActions.setError(error.message)),
     );
 
-    expect(gen.next().value).toEqual(put(stockActions.setLoading(false)));
     expect(gen.next().done).toBe(true);
   });
 
   test('deve chamar updateStockAsync corretamente', () => {
-    const action = stockActions.updateProductItemAsync(stock) as StockActions<{
+    const action = stockActions.updateItem(stock) as StockAction<{
       stockItem: ProductItem;
     }>;
 
-    const gen = sagas.updateStockAsync(action);
+    const gen = sagas.updateItem(action);
 
     expect(gen.next().value).toEqual(put(stockActions.setError()));
-    expect(gen.next().value).toEqual(put(stockActions.setLoading(true)));
 
     const ajustedStock = injectStockItemExtraData(stock);
 
     expect(gen.next(ajustedStock).value).toEqual(
-      call(sagaLocal.updateStockItem, ajustedStock),
+      call(sagaLocal.updateItem, ajustedStock),
     );
     expect(gen.next([ajustedStock]).value).toEqual(
       put(stockActions.setStock([ajustedStock])),
@@ -139,28 +130,25 @@ describe('Stock Sagas', () => {
     expect(gen.next().value).toEqual(call(navigationService.goBack));
 
     expect(gen.next(ajustedStock).value).toEqual(
-      call(sagaServer.updateStockItem, ajustedStock),
+      call(sagaServer.updateItem, ajustedStock),
     );
 
-    expect(gen.next().value).toEqual(put(stockActions.setLoading(false)));
     expect(gen.next().done).toBe(true);
   });
 
   test('ao chamar updateStockAsync com erro deve setar o erro corretamente', () => {
-    const action = stockActions.updateProductItemAsync(stock) as StockActions<{
+    const action = stockActions.updateItem(stock) as StockAction<{
       stockItem: ProductItem;
     }>;
 
-    const gen = sagas.updateStockAsync(action);
+    const gen = sagas.updateItem(action);
 
     expect(gen.next().value).toEqual(put(stockActions.setError()));
-
-    expect(gen.next().value).toEqual(put(stockActions.setLoading(true)));
 
     const ajustedStock = injectStockItemExtraData(stock);
 
     expect(gen.next(ajustedStock).value).toEqual(
-      call(sagaLocal.updateStockItem, ajustedStock),
+      call(sagaLocal.updateItem, ajustedStock),
     );
 
     const error = new Error('error');
@@ -168,7 +156,6 @@ describe('Stock Sagas', () => {
       put(stockActions.setError(error.message)),
     );
 
-    expect(gen.next().value).toEqual(put(stockActions.setLoading(false)));
     expect(gen.next().done).toBe(true);
   });
 
@@ -176,49 +163,44 @@ describe('Stock Sagas', () => {
     const itemId = '123456';
     const mockStocks = new ProductItemBuilderMock().withName('Lista').build();
 
-    const action = stockActions.deleteProductItemAsync(itemId) as StockActions<{
+    const action = stockActions.deleteItem(itemId) as StockAction<{
       itemId: string;
     }>;
 
-    const gen = sagas.deleteStockAsync(action);
+    const gen = sagas.deleteItem(action);
 
     expect(gen.next().value).toEqual(put(stockActions.setError()));
-    expect(gen.next().value).toEqual(put(stockActions.setLoading(true)));
 
     expect(gen.next([mockStocks]).value).toEqual(
-      call(sagaLocal.deleteStockItem, itemId),
+      call(sagaLocal.deleteItem, itemId),
     );
 
     expect(gen.next([mockStocks]).value).toEqual(
       put(stockActions.setStock([mockStocks])),
     );
 
-    expect(gen.next().value).toEqual(call(sagaServer.deleteStockItem, itemId));
+    expect(gen.next().value).toEqual(call(sagaServer.deleteItem, itemId));
 
-    expect(gen.next().value).toEqual(put(stockActions.setLoading(false)));
     expect(gen.next().done).toBe(true);
   });
 
   test('ao chamar deleteStockAsync com erro deve setar o erro corretamente', () => {
     const itemId = '123456';
-    const action = stockActions.deleteProductItemAsync(itemId) as StockActions<{
+    const action = stockActions.deleteItem(itemId) as StockAction<{
       itemId: string;
     }>;
 
-    const gen = sagas.deleteStockAsync(action);
+    const gen = sagas.deleteItem(action);
 
     expect(gen.next().value).toEqual(put(stockActions.setError()));
 
-    expect(gen.next().value).toEqual(put(stockActions.setLoading(true)));
-
-    expect(gen.next().value).toEqual(call(sagaLocal.deleteStockItem, itemId));
+    expect(gen.next().value).toEqual(call(sagaLocal.deleteItem, itemId));
 
     const error = new Error('error');
     expect(gen.throw(error).value).toEqual(
       put(stockActions.setError(error.message)),
     );
 
-    expect(gen.next().value).toEqual(put(stockActions.setLoading(false)));
     expect(gen.next().done).toBe(true);
   });
 });
