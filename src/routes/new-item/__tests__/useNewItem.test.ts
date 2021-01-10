@@ -3,6 +3,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import * as reactRedux from 'react-redux';
 
 import { productListActions } from '@store/product-list';
+import { stockActions } from '@store/stock';
 
 import useNewItem from '../useNewItem';
 
@@ -12,16 +13,19 @@ const dispatch = jest.fn();
 
 describe('NewItem - useNewItem', () => {
   const listId = '123456';
-  beforeAll(() => {
+  let useRouteSpy: jest.SpyInstance;
+  beforeEach(() => {
     jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(dispatch);
     jest.spyOn(reactRedux, 'useSelector').mockReturnValue(true);
-    jest
-      .spyOn(navigation, 'useRoute')
-      .mockReturnValue({
-        key: '',
-        name: 'NewItem',
-        params: { action: productListActions, listId },
-      });
+    useRouteSpy = jest.spyOn(navigation, 'useRoute').mockReturnValue({
+      key: '',
+      name: 'NewItem',
+      params: { action: productListActions, listId },
+    });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   const checkForm = jest.fn().mockResolvedValue(true);
@@ -35,7 +39,7 @@ describe('NewItem - useNewItem', () => {
       unit: undefined,
       brand: '',
     },
-    checkForm
+    checkForm,
   };
 
   test('ao chamar onSaveButtonPress sem um id deve chamar o checkForm e disparar a action createProductItemAsync', async () => {
@@ -51,6 +55,25 @@ describe('NewItem - useNewItem', () => {
         initialProps.formParams,
         listId,
       ),
+    );
+  });
+
+  test('ao chamar onSaveButtonPress a partir do stock sem um id deve chamar o checkForm e disparar a action createItem do stock', async () => {
+    useRouteSpy.mockReturnValue({
+      key: '',
+      name: 'NewItem',
+      params: { action: stockActions },
+    });
+
+    const { result } = renderHook(useNewItem, { initialProps });
+
+    await act(async () => {
+      await result.current.onSaveButtonPress();
+    });
+
+    expect(checkForm).toHaveBeenCalled();
+    expect(dispatch).toHaveBeenCalledWith(
+      stockActions.createItem(initialProps.formParams),
     );
   });
 
@@ -76,6 +99,31 @@ describe('NewItem - useNewItem', () => {
         newInitialProps.formParams,
         listId,
       ),
+    );
+  });
+
+  test('ao chamar onSaveButtonPress a partir do stock com um id deve chamar o checkForm e disparar a action updateItem do stock', async () => {
+    useRouteSpy.mockReturnValue({
+      key: '',
+      name: 'NewItem',
+      params: { action: stockActions },
+    });
+
+    const newInitialProps = {
+      ...initialProps,
+      formParams: { ...initialProps.formParams, id: '123456' },
+    };
+    const { result } = renderHook(useNewItem, {
+      initialProps: newInitialProps,
+    });
+
+    await act(async () => {
+      await result.current.onSaveButtonPress();
+    });
+
+    expect(checkForm).toHaveBeenCalled();
+    expect(dispatch).toHaveBeenCalledWith(
+      stockActions.updateItem(newInitialProps.formParams),
     );
   });
 

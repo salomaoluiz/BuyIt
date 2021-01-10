@@ -4,93 +4,67 @@ import { stockActions } from '../';
 import { StockTypes } from '../types';
 
 describe('Stock Actions', () => {
-  test('deve retornar setLoading corretamente.', () => {
-    const result = stockActions.setLoading(true);
+  const mockError = new Error('teste');
+  const mockData = new ProductItemBuilderMock()
+    .withId('12345')
+    .withAmount('11')
+    .withBrand('BR')
+    .withName('Name')
+    .withQtd('1')
+    .withUnit({ id: 'UN', title: 'Unidade' })
+    .build();
 
-    expect(result).toEqual({
-      type: StockTypes.SET_LOADING,
-      payload: {
-        isLoading: true,
-      },
-    });
-  });
+  //#region actions
 
-  test('deve retornar setError corretamente.', () => {
-    const mockError = new Error('teste');
-    const result = stockActions.setError(mockError.message);
+  const setError = [
+    'setError',
+    stockActions.setError(mockError.message),
+    { type: StockTypes.SET_ERROR, payload: { error: 'teste' } },
+  ];
 
-    expect(result).toEqual({
-      type: StockTypes.SET_ERROR,
-      payload: {
-        error: 'teste',
-      },
-    });
-  });
+  const requestStock = [
+    'requestStock',
+    stockActions.requestStock(),
+    { type: StockTypes.REQUEST_STOCK },
+  ];
 
-  test('deve retornar getStockAsync corretamente.', () => {
-    const result = stockActions.getStockAsync();
+  const createItem = [
+    'createItem',
+    stockActions.createItem(mockData),
+    { type: StockTypes.CREATE_ITEM, payload: { stockItem: mockData } },
+  ];
 
-    expect(result).toEqual({
-      type: StockTypes.GET_STOCK_ASYNC,
-    });
-  });
+  const updateItem = [
+    'updateItem',
+    stockActions.updateItem(mockData),
+    { type: StockTypes.UPDATE_ITEM, payload: { stockItem: mockData } },
+  ];
 
-  test('deve retornar createProductItemAsync corretamente.', () => {
-    const mockData = new ProductItemBuilderMock().withName('Lista').build();
+  const deleteItem = [
+    'deleteItem',
+    stockActions.deleteItem('12345'),
+    { type: StockTypes.DELETE_ITEM, payload: { itemId: '12345' } },
+  ];
 
-    const result = stockActions.createProductItemAsync(mockData);
+  const setStock = [
+    'setStock',
+    stockActions.setStock([mockData]),
+    { type: StockTypes.SET_STOCK, payload: { stock: [mockData] } },
+  ];
 
-    expect(result).toEqual({
-      type: StockTypes.CREATE_ITEM_ASYNC,
-      payload: {
-        stockItem: mockData,
-      },
-    });
-  });
+  //#endregion
 
-  test('deve retornar updateProductItemAsync corretamente.', () => {
-    const mockData = new ProductItemBuilderMock().withName('Lista').build();
-
-    const result = stockActions.updateProductItemAsync(mockData);
-
-    expect(result).toEqual({
-      type: StockTypes.UPDATE_ITEM_ASYNC,
-      payload: {
-        stockItem: mockData,
-      },
-    });
-  });
-
-  test('deve retornar deleteProductItemAsync corretamente.', () => {
-    const result = stockActions.deleteProductItemAsync('12345');
-
-    expect(result).toEqual({
-      type: StockTypes.DELETE_ITEM_ASYNC,
-      payload: {
-        itemId: '12345',
-      },
-    });
-  });
-
-  test('deve retornar setStock corretamente.', () => {
-    const mockData = [
-      new ProductItemBuilderMock()
-        .withId('12345')
-        .withAmount('11')
-        .withBrand('BR')
-        .withName('Name')
-        .withQtd('1')
-        .withUnit({ id: 'UN', title: 'Unidade' })
-        .build(),
-    ];
-
-    const result = stockActions.setStock(mockData);
-
-    expect(result).toEqual({
-      type: StockTypes.SET_STOCK,
-      payload: {
-        stock: mockData,
-      },
-    });
-  });
+  test.each([
+    setError,
+    requestStock,
+    createItem,
+    updateItem,
+    deleteItem,
+    setStock,
+  ])(
+    'deve retornar corretamente para a action %s',
+    (describe, action, expected) => {
+      expect(action).toEqual(expected);
+    },
+  );
 });

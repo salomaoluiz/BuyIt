@@ -9,22 +9,19 @@ import { addRemoveDays, formatDate } from '@utils/date';
 import { stockActions } from './';
 import * as sagaLocal from './sagas-local';
 import * as sagaServer from './sagas-server';
-import { StockTypes, StockActions } from './types';
+import { StockTypes, StockAction } from './types';
 import { injectStockItemExtraData } from './utils';
 
 const strings = appLocale();
 
-export function* createStockAsync(
-  props: StockActions<{ stockItem: ProductItem }>,
-) {
+export function* createItem(props: StockAction<{ stockItem: ProductItem }>) {
   try {
     const { stockItem } = props.payload;
     yield put(stockActions.setError());
-    yield put(stockActions.setLoading(true));
 
     const formatedStock = injectStockItemExtraData(stockItem);
 
-    const stocksArray = yield call(sagaLocal.createStockItem, formatedStock);
+    const stocksArray = yield call(sagaLocal.createItem, formatedStock);
     yield put(stockActions.setStock(stocksArray));
 
     if (stockItem.dueDate) {
@@ -44,75 +41,62 @@ export function* createStockAsync(
 
     yield call(navigationService.goBack);
 
-    yield call(sagaServer.createStockItem, formatedStock);
+    yield call(sagaServer.createItem, formatedStock);
   } catch (err) {
     yield put(stockActions.setError(err.message));
-  } finally {
-    yield put(stockActions.setLoading(false));
   }
 }
 
-export function* getStocksAsync() {
+export function* requestStock() {
   try {
     yield put(stockActions.setError());
-    yield put(stockActions.setLoading(true));
 
-    const productItems = yield call(sagaServer.getStockItems);
+    const productItems = yield call(sagaServer.requestStock);
 
-    const stocksArray = yield call(sagaLocal.getStockItems);
+    const stocksArray = yield call(sagaLocal.requestStock);
 
     yield put(stockActions.setStock(productItems || stocksArray));
   } catch (err) {
     yield put(stockActions.setError(err.message));
-  } finally {
-    yield put(stockActions.setLoading(false));
   }
 }
 
-export function* deleteStockAsync(props: StockActions<{ itemId: string }>) {
+export function* deleteItem(props: StockAction<{ itemId: string }>) {
   try {
     const { itemId } = props.payload;
     yield put(stockActions.setError());
-    yield put(stockActions.setLoading(true));
 
-    const newStocksArray = yield call(sagaLocal.deleteStockItem, itemId);
+    const newStocksArray = yield call(sagaLocal.deleteItem, itemId);
 
     yield put(stockActions.setStock(newStocksArray));
 
-    yield call(sagaServer.deleteStockItem, itemId);
+    yield call(sagaServer.deleteItem, itemId);
   } catch (err) {
     yield put(stockActions.setError(err.message));
-  } finally {
-    yield put(stockActions.setLoading(false));
   }
 }
 
-export function* updateStockAsync(
-  props: StockActions<{ stockItem: ProductItem }>,
-) {
+export function* updateItem(props: StockAction<{ stockItem: ProductItem }>) {
   try {
     const { stockItem } = props.payload;
     yield put(stockActions.setError());
-    yield put(stockActions.setLoading(true));
 
     const updatedStockItem = injectStockItemExtraData(stockItem);
 
-    const stocksArray = yield call(sagaLocal.updateStockItem, updatedStockItem);
+    const stocksArray = yield call(sagaLocal.updateItem, updatedStockItem);
 
     yield put(stockActions.setStock(stocksArray));
     yield call(navigationService.goBack);
 
-    yield call(sagaServer.updateStockItem, updatedStockItem);
+    yield call(sagaServer.updateItem, updatedStockItem);
   } catch (err) {
     yield put(stockActions.setError(err.message));
-  } finally {
-    yield put(stockActions.setLoading(false));
   }
 }
 
 export default [
-  takeLatest(StockTypes.CREATE_ITEM_ASYNC, createStockAsync),
-  takeLatest(StockTypes.GET_STOCK_ASYNC, getStocksAsync),
-  takeLatest(StockTypes.DELETE_ITEM_ASYNC, deleteStockAsync),
-  takeLatest(StockTypes.UPDATE_ITEM_ASYNC, updateStockAsync),
+  takeLatest(StockTypes.CREATE_ITEM, createItem),
+  takeLatest(StockTypes.REQUEST_STOCK, requestStock),
+  takeLatest(StockTypes.DELETE_ITEM, deleteItem),
+  takeLatest(StockTypes.UPDATE_ITEM, updateItem),
 ];

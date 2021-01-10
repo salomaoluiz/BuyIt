@@ -8,39 +8,33 @@ export type QueryFirestore = FirebaseFirestoreTypes.QuerySnapshot;
 export type DocumentFirestore = FirebaseFirestoreTypes.QueryDocumentSnapshot;
 export type DocumentReference = FirebaseFirestoreTypes.DocumentReference;
 
-const getStock = (userId: string) =>
+const requestStock = (userId: string) =>
   firestore().collection(`users/${userId}/stock`).get();
 
-const createStockItem = (
+const createItem = (
   userId: string,
   itemId: string,
-  stockItem: Omit<ProductItem, 'id'>,
+  item: Omit<ProductItem, 'id'>,
 ) =>
   firestore()
     .collection(`users/${userId}/stock`)
     .doc(itemId)
-    .set({ ...stockItem });
+    .set({ ...item });
 
-const findStockItem = (userId: string, itemId: string) =>
+const findItem = (userId: string, itemId: string) =>
   firestore().collection(`users/${userId}/stock`).doc(itemId).get();
 
-const updateStockItem = (
+const updateItem = (
   userId: string,
   itemId: string,
-  stockItem: Omit<ProductItem, 'id'>,
+  item: Omit<ProductItem, 'id'>,
 ) =>
   firestore()
     .collection(`users/${userId}/stock`)
     .doc(itemId)
-    .update({ ...stockItem });
+    .update({ ...item });
 
-const deleteStockItem = (userId: string, itemId: string) =>
+const deleteItem = (userId: string, itemId: string) =>
   firestore().collection(`users/${userId}/stock`).doc(itemId).delete();
 
-export {
-  createStockItem,
-  getStock,
-  deleteStockItem,
-  updateStockItem,
-  findStockItem,
-};
+export { createItem, requestStock, deleteItem, updateItem, findItem };

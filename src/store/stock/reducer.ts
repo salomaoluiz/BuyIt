@@ -1,8 +1,5 @@
-import {
-  StockState,
-  StockActions,
-  StockTypes,
-} from './types';
+import { stockActions } from './';
+import { StockState, StockAction, StockTypes, StockReducer } from './types';
 
 const initialState: StockState = {
   isLoading: false,
@@ -10,40 +7,41 @@ const initialState: StockState = {
   error: undefined,
 };
 
-const setStock = (
-  state: StockState,
-  action: StockActions<StockState>,
-): StockState => ({
-  ...state,
-  stock: action.payload.stock,
-});
+const setStock: StockReducer = (state, action) => {
+  const { payload } = action as ReturnType<typeof stockActions.setStock>;
 
-const setLoading = (
-  state: StockState,
-  action: StockActions<StockState>,
-): StockState => ({
-  ...state,
-  isLoading: action.payload.isLoading,
-});
+  return {
+    ...state,
+    stock: payload.stock,
+    isLoading: false,
+  };
+};
 
-const setError = (
-  state: StockState,
-  action: StockActions<StockState>,
-): StockState => ({
+const setError: StockReducer = (state, action) => {
+  const { payload } = action as ReturnType<typeof stockActions.setError>;
+
+  return {
+    ...state,
+    error: payload.error,
+    isLoading: false,
+  };
+};
+
+const requestStock: StockReducer = (state) => ({
   ...state,
-  error: action.payload.error,
+  isLoading: true,
+  error: undefined,
 });
 
 const StockMap = new Map([
+  [StockTypes.REQUEST_STOCK, requestStock],
   [StockTypes.SET_ERROR, setError],
-  [StockTypes.SET_LOADING, setLoading],
   [StockTypes.SET_STOCK, setStock],
-  
 ]);
 
 const reducer = (
   state: StockState = initialState,
-  action: StockActions<StockState>,
+  action: StockAction<StockState>,
 ): StockState => {
   const stockReducer = StockMap.get(action.type);
 

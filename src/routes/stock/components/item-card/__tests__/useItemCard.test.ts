@@ -54,7 +54,7 @@ describe('useItemCard', () => {
     });
 
     expect(dispatch).toHaveBeenCalledWith(
-      stockActions.deleteProductItemAsync(initialProps.item.id),
+      stockActions.deleteItem(initialProps.item.id),
     );
   });
 });

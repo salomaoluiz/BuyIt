@@ -17,7 +17,7 @@ describe('Stock Sagas Server', () => {
       .build();
 
     test('deve formatar a lista modo que o DB entenda e chamar o model para criar um novo item', () => {
-      const gen = sagaServer.createStockItem(mockNewStock);
+      const gen = sagaServer.createItem(mockNewStock);
 
       expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
       expect(gen.next().value).toEqual(select(authSelectors.getUserId));
@@ -27,7 +27,7 @@ describe('Stock Sagas Server', () => {
       const userId = '1234';
       expect(gen.next(userId).value).toEqual(
         call(
-          stockModels.createStockItem,
+          stockModels.createItem,
           userId,
           mockNewStock.id,
           formatedStock,
@@ -37,7 +37,7 @@ describe('Stock Sagas Server', () => {
     });
 
     test('caso esteja anonimo, nao deve prosseguir com a saga', () => {
-      const gen = sagaServer.createStockItem(mockNewStock);
+      const gen = sagaServer.createItem(mockNewStock);
 
       expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
 
@@ -52,14 +52,14 @@ describe('Stock Sagas Server', () => {
       .build();
 
     test('deve obter o stock do DB e retornar formado de modo que o app entenda', () => {
-      const gen = sagaServer.getStockItems();
+      const gen = sagaServer.requestStock();
 
       expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
       expect(gen.next().value).toEqual(select(authSelectors.getUserId));
 
       const userId = '1234' as any;
       expect(gen.next(userId).value).toEqual(
-        call(stockModels.getStock, userId),
+        call(stockModels.requestStock, userId),
       );
 
       const mockServerData: any = [
@@ -75,7 +75,7 @@ describe('Stock Sagas Server', () => {
     });
 
     test('caso esteja anonimo, nao deve prosseguir com a saga', () => {
-      const gen = sagaServer.getStockItems();
+      const gen = sagaServer.requestStock();
 
       expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
 
@@ -90,7 +90,7 @@ describe('Stock Sagas Server', () => {
       .build();
 
     test('deve extrair o ID enviar o restante para o DB', () => {
-      const gen = sagaServer.updateStockItem(mockNewStock);
+      const gen = sagaServer.updateItem(mockNewStock);
 
       expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
       expect(gen.next().value).toEqual(select(authSelectors.getUserId));
@@ -100,7 +100,7 @@ describe('Stock Sagas Server', () => {
 
       expect(gen.next(userId).value).toEqual(
         call(
-          stockModels.updateStockItem,
+          stockModels.updateItem,
           userId,
           mockNewStock.id,
           formatedStock,
@@ -111,7 +111,7 @@ describe('Stock Sagas Server', () => {
     });
 
     test('caso esteja anonimo, nao deve prosseguir com a saga', () => {
-      const gen = sagaServer.updateStockItem(mockNewStock);
+      const gen = sagaServer.updateItem(mockNewStock);
 
       expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
 
@@ -122,21 +122,21 @@ describe('Stock Sagas Server', () => {
   describe('deleteStock', () => {
     const itemId = '12345';
     test('deve chamar o model para deletar um item do DB', () => {
-      const gen = sagaServer.deleteStockItem(itemId);
+      const gen = sagaServer.deleteItem(itemId);
 
       expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
       expect(gen.next().value).toEqual(select(authSelectors.getUserId));
 
       const userId = '1234';
       expect(gen.next(userId).value).toEqual(
-        call(stockModels.deleteStockItem, userId, itemId),
+        call(stockModels.deleteItem, userId, itemId),
       );
 
       expect(gen.next().done).toBe(true);
     });
 
     test('caso esteja anonimo, nao deve prosseguir com a saga', () => {
-      const gen = sagaServer.deleteStockItem(itemId);
+      const gen = sagaServer.deleteItem(itemId);
 
       expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
 

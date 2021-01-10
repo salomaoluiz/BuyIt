@@ -1,9 +1,8 @@
-// @ts-nocheck
-
 import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
 
 import { stockActions } from '../';
 import stockReducer from '../reducer';
+import { StockAction, StockState, StockTypes } from '../types';
 
 describe('ProductList Reducers', () => {
   const initialState = {
@@ -12,62 +11,34 @@ describe('ProductList Reducers', () => {
     error: undefined,
   };
 
-  test('deve retornar o state para uma action default', () => {
-    const action = { type: 'any' };
+  const mockData = new ProductItemBuilderMock()
+    .withId('123456')
+    .withName('Teste')
+    .build();
 
-    const response = stockReducer(initialState, action);
+  const mockError = new Error('error');
 
-    const expected = {
-      ...initialState,
-    };
+  const any = ['any', { type: 'any' as StockTypes }, { ...initialState }];
+  const setError = [
+    'setError',
+    stockActions.setError(mockError.message),
+    { ...initialState, error: mockError.message },
+  ];
 
-    expect(response).toEqual(expected);
-  });
+  const setStock = [
+    'setStock',
+    stockActions.setStock([mockData]),
+    { ...initialState, stock: [mockData] },
+  ];
 
-  test('deve retornar o state correto para o setLoading', () => {
-    const action = stockActions.setLoading(true);
+  test.each([any, setError, setStock] as Array<
+    [string, StockAction<StockState>, StockState]
+  >)(
+    'deve retornar o state correto para a actions %s',
+    (describe, action, expected) => {
+      const response = stockReducer(initialState, action);
 
-    const response = stockReducer(initialState, action);
-
-    const expected = {
-      ...initialState,
-      isLoading: true,
-    };
-
-    expect(response).toEqual(expected);
-  });
-
-  test('deve retornar o state correto para o setError', () => {
-    const mockError = new Error('error');
-    const action = stockActions.setError(mockError.message);
-
-    const response = stockReducer(initialState, action);
-
-    const expected = {
-      ...initialState,
-      error: mockError.message,
-    };
-
-    expect(response).toEqual(expected);
-  });
-
-  test('deve retornar o state correto para o setProductList', () => {
-    const mockData = new ProductItemBuilderMock()
-      .withId('123456')
-      .withName('Teste')
-      .build();
-
-    const mockProductLists = [mockData];
-
-    const action = stockActions.setStock(mockProductLists);
-
-    const response = stockReducer(initialState, action);
-
-    const expected = {
-      ...initialState,
-      stock: mockProductLists,
-    };
-
-    expect(response).toEqual(expected);
-  });
+      expect(response).toEqual(expected);
+    },
+  );
 });

@@ -27,7 +27,7 @@ describe('useStock', () => {
   test('ao inicializar deve fazer um fetch para o stockData', () => {
     renderHook(useStock);
 
-    expect(dispatch).toHaveBeenCalledWith(stockActions.getStockAsync());
+    expect(dispatch).toHaveBeenCalledWith(stockActions.requestStock());
   });
 
   test('ao pressionar o botao de add deve navegar para a tela de novo item com os parâmetros corretos', () => {

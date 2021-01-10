@@ -7,35 +7,35 @@ import { extractObjectElement } from '@utils/filters';
 import { stockModels } from './';
 import { appStockItemsFormater } from './utils';
 
-export function* createStockItem(stockItem: ProductItem) {
+export function* createItem(item: ProductItem) {
   const isAnonymously = yield select(authSelectors.isAnonymously);
   if (isAnonymously) return;
 
   const userId: string = yield select(authSelectors.getUserId);
-  const filteredStockItem = extractObjectElement(stockItem, ['id']);
+  const filteredItem = extractObjectElement(item, ['id']);
 
   yield call(
-    stockModels.createStockItem,
+    stockModels.createItem,
     userId,
-    stockItem.id,
-    filteredStockItem,
+    item.id,
+    filteredItem,
   );
 }
 
-export function* getStockItems() {
+export function* requestStock() {
   const isAnonymously = yield select(authSelectors.isAnonymously);
   if (isAnonymously) return;
 
   const userId = yield select(authSelectors.getUserId);
 
-  const document = yield call(stockModels.getStock, userId);
+  const document = yield call(stockModels.requestStock, userId);
 
   const formatedList = appStockItemsFormater<ProductItem>(document);
 
   return formatedList;
 }
 
-export function* updateStockItem(stockItem: ProductItem) {
+export function* updateItem(stockItem: ProductItem) {
   const isAnonymously = yield select(authSelectors.isAnonymously);
   if (isAnonymously) return;
 
@@ -43,17 +43,17 @@ export function* updateStockItem(stockItem: ProductItem) {
   const formatedStockItem = extractObjectElement(stockItem, ['id']);
 
   yield call(
-    stockModels.updateStockItem,
+    stockModels.updateItem,
     userId,
     stockItem.id,
     formatedStockItem,
   );
 }
 
-export function* deleteStockItem(itemId: string) {
+export function* deleteItem(itemId: string) {
   const isAnonymously = yield select(authSelectors.isAnonymously);
   if (isAnonymously) return;
 
   const userId = yield select(authSelectors.getUserId);
-  yield call(stockModels.deleteStockItem, userId, itemId);
+  yield call(stockModels.deleteItem, userId, itemId);
 }
