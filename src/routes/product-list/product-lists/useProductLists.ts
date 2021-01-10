@@ -20,7 +20,7 @@ const useProductLists = () => {
   }, []);
 
   const fetchProductLists = useCallback(() => {
-    dispatch(productListActions.getProductListsAsync());
+    dispatch(productListActions.requestLists());
   }, []);
 
   useEffect(() => {

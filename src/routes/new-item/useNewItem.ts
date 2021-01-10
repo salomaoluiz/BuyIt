@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ProductNavigatorParamsList } from '@navigator/product-navigator';
-import productListSelectors from '@store/product-list/selectors';
+import { productListSelectors } from '@store/product-list';
 import { ProductItem } from '@store/product-list/types';
 
 interface Props {
@@ -29,22 +29,10 @@ const useNewItem = (props: Props) => {
 
     if (isValid) {
       if (formParams.id) {
-        // #TODO Após refatorar o productListActions, deve manter o mesmo nome e remover esse if
-        if ('updateItem' in action) {
-          dispatch(action.updateItem(formParams));
-        } else {
-          dispatch(action.updateProductItemAsync(formParams, listId));
-        }
-
+        dispatch(action.updateItem(formParams, listId));
         return;
       }
-
-      if ('createItem' in action) {
-        dispatch(action.createItem(formParams));
-      } else {
-        dispatch(action.createProductItemAsync(formParams, listId));
-      }
-
+      dispatch(action.createItem(formParams, listId));
       return;
     }
   }, [formParams]);

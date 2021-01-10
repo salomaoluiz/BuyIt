@@ -18,10 +18,10 @@ const useNewList = (props: Props) => {
     const canSubmit = await checkForm();
     if (canSubmit) {
       if (listParams.id) {
-        dispatch(productListActions.updateProductListAsync(listParams));
+        dispatch(productListActions.updateList(listParams));
         return;
       }
-      dispatch(productListActions.createProductListAsync(listParams));
+      dispatch(productListActions.createList(listParams));
       showAd();
       return;
     }

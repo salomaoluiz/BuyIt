@@ -33,7 +33,7 @@ describe('NewList - useNewList', () => {
 
     expect(checkForm).toHaveBeenCalled();
     expect(dispatch).toHaveBeenCalledWith(
-      productListActions.createProductListAsync(initialProps.listParams),
+      productListActions.createList(initialProps.listParams),
     );
     expect(showAd).toHaveBeenCalled();
   });
@@ -56,7 +56,7 @@ describe('NewList - useNewList', () => {
 
     expect(checkForm).toHaveBeenCalled();
     expect(dispatch).toHaveBeenCalledWith(
-      productListActions.updateProductListAsync(newInitialProps.listParams),
+      productListActions.updateList(newInitialProps.listParams),
     );
     expect(showAd).not.toHaveBeenCalled();
   });

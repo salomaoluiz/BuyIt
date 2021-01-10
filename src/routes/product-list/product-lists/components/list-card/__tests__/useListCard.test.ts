@@ -107,7 +107,7 @@ describe('ProductList - useListCard', () => {
     });
 
     expect(dispatch).toHaveBeenCalledWith(
-      productListActions.deleteProductListAsync(mockProductList.id),
+      productListActions.deleteList(mockProductList.id),
     );
   });
 });

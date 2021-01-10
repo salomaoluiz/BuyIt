@@ -17,7 +17,7 @@ describe('ProductList Sagas Local', () => {
         .withId('2222')
         .build();
 
-      const gen = sagaLocal.createProductList(mockNewProductList);
+      const gen = sagaLocal.createList(mockNewProductList);
 
       expect(gen.next([mockCurrentProductLists]).value).toEqual(
         select(productListSelectors.getProductLists),
@@ -40,7 +40,7 @@ describe('ProductList Sagas Local', () => {
         .withId('2222')
         .build() as ProductList;
 
-      const gen = sagaLocal.updateProductList(mockEditedProductList);
+      const gen = sagaLocal.updateList(mockEditedProductList);
 
       expect(gen.next().value).toEqual(
         select(productListSelectors.getProductLists),
@@ -63,7 +63,7 @@ describe('ProductList Sagas Local', () => {
       const mockProductListsArray = [mockProductList1, mockProductList2];
       const listId = '12345';
 
-      const gen = sagaLocal.deleteProductList(listId);
+      const gen = sagaLocal.deleteList(listId);
 
       expect(gen.next().value).toEqual(
         select(productListSelectors.getProductLists),
@@ -85,7 +85,7 @@ describe('ProductList Sagas Local', () => {
         .build({ inArray: true }) as ProductLists;
 
       const listId = '2222';
-      const gen = sagaLocal.createProductItem(mockProductItem, listId);
+      const gen = sagaLocal.createItem(mockProductItem, listId);
 
       expect(gen.next(mockProductListArray).value).toEqual(
         select(productListSelectors.getProductLists),
@@ -116,7 +116,7 @@ describe('ProductList Sagas Local', () => {
 
       const listId = '12345';
 
-      const gen = sagaLocal.getProductItems(mockItemsArray, listId);
+      const gen = sagaLocal.requestItems(mockItemsArray, listId);
 
       expect(gen.next(mockProductList).value).toEqual(
         select(productListSelectors.getProductLists),
@@ -148,7 +148,7 @@ describe('ProductList Sagas Local', () => {
       const listId = '12345';
       const itemId = '2222';
 
-      const gen = sagaLocal.deleteProductItem(listId, itemId);
+      const gen = sagaLocal.deleteItem(listId, itemId);
 
       expect(gen.next(mockProductList).value).toEqual(
         select(productListSelectors.getProductLists),
@@ -181,7 +181,7 @@ describe('ProductList Sagas Local', () => {
 
       const listId = '12345';
 
-      const gen = sagaLocal.updateProductItem(newProductItem, listId);
+      const gen = sagaLocal.updateItem(newProductItem, listId);
 
       expect(gen.next(mockProductList).value).toEqual(
         select(productListSelectors.getProductLists),

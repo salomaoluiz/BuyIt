@@ -12,14 +12,14 @@ import { appProductListFormater, dbProductListFormated } from '../utils';
 
 describe('ProductList Sagas Server', () => {
   describe('Product Lists', () => {
-    describe('createProductList', () => {
+    describe('createList', () => {
       const mockNewProductList = new ProductListBuilderMock()
         .withName('Name')
         .withId('1111')
         .build();
 
       test('deve formatar a lista modo que o DB entenda e chamar o model para criar nova lista', () => {
-        const gen = sagaServer.createProductList(mockNewProductList);
+        const gen = sagaServer.createList(mockNewProductList);
 
         expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
         expect(gen.next().value).toEqual(select(authSelectors.getUserId));
@@ -29,7 +29,7 @@ describe('ProductList Sagas Server', () => {
         const userId = '1234';
         expect(gen.next(userId).value).toEqual(
           call(
-            productListModels.createProductList,
+            productListModels.createList,
             userId,
             mockNewProductList.id,
             formatedProductList,
@@ -39,7 +39,7 @@ describe('ProductList Sagas Server', () => {
       });
 
       test('caso esteja anonimo, nao deve prosseguir com a saga', () => {
-        const gen = sagaServer.createProductList(mockNewProductList);
+        const gen = sagaServer.createList(mockNewProductList);
 
         expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
 
@@ -47,21 +47,21 @@ describe('ProductList Sagas Server', () => {
       });
     });
 
-    describe('getProductLists', () => {
+    describe('requestLists', () => {
       const mockNewProductList = new ProductListBuilderMock()
         .withName('Name')
         .withId('1111')
         .build();
 
       test('deve obter as listas do DB e retornar elas formadas de modo que o app entenda', () => {
-        const gen = sagaServer.getProductLists();
+        const gen = sagaServer.requestLists();
 
         expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
         expect(gen.next().value).toEqual(select(authSelectors.getUserId));
 
         const userId = '1234' as any;
         expect(gen.next(userId).value).toEqual(
-          call(productListModels.getProductLists, userId),
+          call(productListModels.requestLists, userId),
         );
 
         const mockServerData: any = [
@@ -79,7 +79,7 @@ describe('ProductList Sagas Server', () => {
       });
 
       test('caso esteja anonimo, nao deve prosseguir com a saga', () => {
-        const gen = sagaServer.getProductLists();
+        const gen = sagaServer.requestLists();
 
         expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
 
@@ -87,14 +87,14 @@ describe('ProductList Sagas Server', () => {
       });
     });
 
-    describe('updateProductList', () => {
+    describe('updateList', () => {
       const mockNewProductList = new ProductListBuilderMock()
         .withName('Name')
         .withId('1111')
         .build();
 
       test('deve extrair o ID e os items da lista e enviar o restante para o DB', () => {
-        const gen = sagaServer.updateProductList(mockNewProductList);
+        const gen = sagaServer.updateList(mockNewProductList);
 
         expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
         expect(gen.next().value).toEqual(select(authSelectors.getUserId));
@@ -107,7 +107,7 @@ describe('ProductList Sagas Server', () => {
 
         expect(gen.next(userId).value).toEqual(
           call(
-            productListModels.updateProductList,
+            productListModels.updateList,
             userId,
             mockNewProductList.id,
             formatedProductList,
@@ -118,7 +118,7 @@ describe('ProductList Sagas Server', () => {
       });
 
       test('caso esteja anonimo, nao deve prosseguir com a saga', () => {
-        const gen = sagaServer.updateProductList(mockNewProductList);
+        const gen = sagaServer.updateList(mockNewProductList);
 
         expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
 
@@ -126,24 +126,24 @@ describe('ProductList Sagas Server', () => {
       });
     });
 
-    describe('deleteProductList', () => {
+    describe('deleteList', () => {
       const listId = '12345';
       test('deve chamar o model para deletar um item do DB', () => {
-        const gen = sagaServer.deleteProductList(listId);
+        const gen = sagaServer.deleteList(listId);
 
         expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
         expect(gen.next().value).toEqual(select(authSelectors.getUserId));
 
         const userId = '1234';
         expect(gen.next(userId).value).toEqual(
-          call(productListModels.deleteProductList, userId, listId),
+          call(productListModels.deleteList, userId, listId),
         );
 
         expect(gen.next().done).toBe(true);
       });
 
       test('caso esteja anonimo, nao deve prosseguir com a saga', () => {
-        const gen = sagaServer.deleteProductList(listId);
+        const gen = sagaServer.deleteList(listId);
 
         expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
 
@@ -153,7 +153,7 @@ describe('ProductList Sagas Server', () => {
   });
 
   describe('Product Items', () => {
-    describe('createProductItem', () => {
+    describe('createItem', () => {
       const mockProductItem = new ProductItemBuilderMock()
         .withName('name')
         .withId('1234')
@@ -161,7 +161,7 @@ describe('ProductList Sagas Server', () => {
       const listId = '12345';
 
       test('deve extrair o id do item e criar um novo item no DB', () => {
-        const gen = sagaServer.createProductItem(mockProductItem, listId);
+        const gen = sagaServer.createItem(mockProductItem, listId);
 
         expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
         expect(gen.next().value).toEqual(select(authSelectors.getUserId));
@@ -172,7 +172,7 @@ describe('ProductList Sagas Server', () => {
         const userId = '1234' as any;
         expect(gen.next(userId).value).toEqual(
           call(
-            productListModels.createProductItem,
+            productListModels.createItem,
             userId,
             listId,
             mockProductItem.id,
@@ -184,7 +184,7 @@ describe('ProductList Sagas Server', () => {
       });
 
       test('caso esteja anonimo, nao deve prosseguir com a saga', () => {
-        const gen = sagaServer.createProductItem(mockProductItem, listId);
+        const gen = sagaServer.createItem(mockProductItem, listId);
 
         expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
 
@@ -192,7 +192,7 @@ describe('ProductList Sagas Server', () => {
       });
     });
 
-    describe('getProductItem', () => {
+    describe('requestItems', () => {
       const mockProductItem = new ProductItemBuilderMock()
         .withName('name')
         .withId('1234')
@@ -200,14 +200,14 @@ describe('ProductList Sagas Server', () => {
       const listId = '12345';
 
       test('deve obter do DB a lista de items e retornar formatado de modo que o app entenda', () => {
-        const gen = sagaServer.getProductItems(listId);
+        const gen = sagaServer.requestItems(listId);
 
         expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
         expect(gen.next().value).toEqual(select(authSelectors.getUserId));
 
         const userId = '1234' as any;
         expect(gen.next(userId).value).toEqual(
-          call(productListModels.getProductItems, userId, listId),
+          call(productListModels.requestItems, userId, listId),
         );
 
         const mockServerData: any = [
@@ -223,7 +223,7 @@ describe('ProductList Sagas Server', () => {
       });
 
       test('caso esteja anonimo, nao deve prosseguir com a saga', () => {
-        const gen = sagaServer.getProductItems(listId);
+        const gen = sagaServer.requestItems(listId);
 
         expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
 
@@ -231,14 +231,14 @@ describe('ProductList Sagas Server', () => {
       });
     });
 
-    describe('updateProductItem', () => {
+    describe('updateItem', () => {
       const mockProductItem = new ProductItemBuilderMock()
         .withName('name')
         .withId('1234')
         .build();
       const listId = '12345';
       test('deve extrair o id do item e atualizar o item no DB', () => {
-        const gen = sagaServer.updateProductItem(mockProductItem, listId);
+        const gen = sagaServer.updateItem(mockProductItem, listId);
 
         expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
         expect(gen.next().value).toEqual(select(authSelectors.getUserId));
@@ -250,7 +250,7 @@ describe('ProductList Sagas Server', () => {
         const userId = '1234' as any;
         expect(gen.next(userId).value).toEqual(
           call(
-            productListModels.updateProductItem,
+            productListModels.updateItem,
             userId,
             listId,
             mockProductItem.id,
@@ -262,7 +262,7 @@ describe('ProductList Sagas Server', () => {
       });
 
       test('caso esteja anonimo, nao deve prosseguir com a saga', () => {
-        const gen = sagaServer.updateProductItem(mockProductItem, listId);
+        const gen = sagaServer.updateItem(mockProductItem, listId);
 
         expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
 
@@ -270,26 +270,26 @@ describe('ProductList Sagas Server', () => {
       });
     });
 
-    describe('deleteProductItem', () => {
+    describe('deleteItem', () => {
       const listId = '12345';
       const itemId = '12345';
 
       test('deve deletar o item do DB', () => {
-        const gen = sagaServer.deleteProductItem(listId, itemId);
+        const gen = sagaServer.deleteItem(listId, itemId);
 
         expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
         expect(gen.next().value).toEqual(select(authSelectors.getUserId));
 
         const userId = '1234' as any;
         expect(gen.next(userId).value).toEqual(
-          call(productListModels.deleteProductItem, userId, listId, itemId),
+          call(productListModels.deleteItem, userId, listId, itemId),
         );
 
         expect(gen.next().done).toBe(true);
       });
 
       test('caso esteja anonimo, nao deve prosseguir com a saga', () => {
-        const gen = sagaServer.deleteProductItem(listId, itemId);
+        const gen = sagaServer.deleteItem(listId, itemId);
 
         expect(gen.next().value).toEqual(select(authSelectors.isAnonymously));
 

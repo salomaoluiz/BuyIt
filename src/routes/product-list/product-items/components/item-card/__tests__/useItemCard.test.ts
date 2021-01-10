@@ -62,7 +62,7 @@ describe('ProductItems - Components - ItemCard - useItemCard', () => {
     const itemId = '654321';
     const listId = '123456';
     expect(dispatch).toHaveBeenCalledWith(
-      productListActions.deleteProductItemAsync(itemId, listId),
+      productListActions.deleteItem(itemId, listId),
     );
   });
 });
