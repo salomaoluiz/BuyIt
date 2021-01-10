@@ -34,7 +34,7 @@ describe('ProductList - useProductLists', () => {
     renderHook(useProductLists);
 
     expect(dispatch).toHaveBeenCalledWith(
-      productListActions.getProductListsAsync(),
+      productListActions.requestLists(),
     );
   });
 

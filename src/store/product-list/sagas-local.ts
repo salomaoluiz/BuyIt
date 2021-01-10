@@ -10,7 +10,7 @@ import {
   updateProductListArray,
 } from './utils';
 
-export function* createProductList(productList: ProductList) {
+export function* createList(productList: ProductList) {
   const stateProductList: ProductLists = yield select(
     productListSelectors.getProductLists,
   );
@@ -23,7 +23,7 @@ export function* createProductList(productList: ProductList) {
   return newProductListArray;
 }
 
-export function* updateProductList(productList: ProductList) {
+export function* updateList(productList: ProductList) {
   const stateProductList: ProductLists = yield select(
     productListSelectors.getProductLists,
   );
@@ -36,7 +36,7 @@ export function* updateProductList(productList: ProductList) {
   return formatedProductList;
 }
 
-export function* deleteProductList(listId: string) {
+export function* deleteList(listId: string) {
   const productLists = yield select(productListSelectors.getProductLists);
 
   const filteredList: ProductLists = filterNotByID(productLists, listId);
@@ -44,7 +44,7 @@ export function* deleteProductList(listId: string) {
   return filteredList;
 }
 
-export function* createProductItem(productItem: ProductItem, listId: string) {
+export function* createItem(productItem: ProductItem, listId: string) {
   const stateProductList = yield select(productListSelectors.getProductLists);
   const currentList = filterByID<ProductList>(stateProductList, listId);
 
@@ -58,7 +58,7 @@ export function* createProductItem(productItem: ProductItem, listId: string) {
   return newProductListsArray as ProductLists;
 }
 
-export function* getProductItems(productItems: ProductItems, listId: string) {
+export function* requestItems(productItems: ProductItems, listId: string) {
   const stateProductList: ProductLists = yield select(
     productListSelectors.getProductLists,
   );
@@ -77,7 +77,7 @@ export function* getProductItems(productItems: ProductItems, listId: string) {
   return newProductListsArray;
 }
 
-export function* deleteProductItem(listId: string, itemId: string) {
+export function* deleteItem(listId: string, itemId: string) {
   const stateProductList: ProductLists = yield select(
     productListSelectors.getProductLists,
   );
@@ -99,7 +99,7 @@ export function* deleteProductItem(listId: string, itemId: string) {
   return newProductListsArray;
 }
 
-export function* updateProductItem(productItem: ProductItem, listId: string) {
+export function* updateItem(productItem: ProductItem, listId: string) {
   const stateProductList: ProductLists = yield select(
     productListSelectors.getProductLists,
   );

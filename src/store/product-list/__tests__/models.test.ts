@@ -27,8 +27,8 @@ describe('ProductLists Models', () => {
 
   const userId = '12345';
   describe('Product Lists', () => {
-    test('ao chamar getProductLists deve chamar o get da collection', async () => {
-      await models.getProductLists(userId);
+    test('ao chamar requestLists deve chamar o get da collection', async () => {
+      await models.requestLists(userId);
 
       expect(collectionSpy).toHaveBeenCalledWith(
         `users/${userId}/productLists`,
@@ -36,12 +36,12 @@ describe('ProductLists Models', () => {
       expect(collectionGet).toHaveBeenCalled();
     });
 
-    test('ao chamar createProductList deve chamar o set do doc', async () => {
+    test('ao chamar createList deve chamar o set do doc', async () => {
       const mockProductList = new ProductListBuilderMock()
         .withId('1234')
         .build();
       const listId = '1234';
-      await models.createProductList(userId, listId, mockProductList);
+      await models.createList(userId, listId, mockProductList);
 
       expect(collectionSpy).toHaveBeenCalledWith(
         `users/${userId}/productLists`,
@@ -50,9 +50,9 @@ describe('ProductLists Models', () => {
       expect(docSet).toHaveBeenCalledWith({ ...mockProductList });
     });
 
-    test('ao chamar findProductList deve chamar o get do doc', async () => {
+    test('ao chamar findList deve chamar o get do doc', async () => {
       const listId = '1234';
-      await models.findProductList(userId, listId);
+      await models.findList(userId, listId);
 
       expect(collectionSpy).toHaveBeenCalledWith(
         `users/${userId}/productLists`,
@@ -61,10 +61,10 @@ describe('ProductLists Models', () => {
       expect(docGet).toHaveBeenCalled();
     });
 
-    test('ao chamar updateProductList deve chamar o update do doc', async () => {
+    test('ao chamar updateList deve chamar o update do doc', async () => {
       const mockProductList = new ProductListBuilderMock().build();
       const listId = '1234';
-      await models.updateProductList(userId, listId, mockProductList);
+      await models.updateList(userId, listId, mockProductList);
 
       expect(collectionSpy).toHaveBeenCalledWith(
         `users/${userId}/productLists`,
@@ -73,9 +73,9 @@ describe('ProductLists Models', () => {
       expect(docUpdate).toHaveBeenCalledWith({ ...mockProductList });
     });
 
-    test('ao chamar deleteProductList deve chamar o delete do doc', async () => {
+    test('ao chamar deleteList deve chamar o delete do doc', async () => {
       const listId = '1234';
-      await models.deleteProductList(userId, listId);
+      await models.deleteList(userId, listId);
 
       expect(collectionSpy).toHaveBeenCalledWith(
         `users/${userId}/productLists`,
@@ -86,9 +86,9 @@ describe('ProductLists Models', () => {
   });
 
   describe('Product Items', () => {
-    test('ao chamar getProductItems deve chamar o get da collection', async () => {
+    test('ao chamar requestItems deve chamar o get da collection', async () => {
       const listId = '1234';
-      await models.getProductItems(userId, listId);
+      await models.requestItems(userId, listId);
 
       expect(collectionSpy).toHaveBeenCalledWith(
         `users/${userId}/productLists/${listId}/items`,
@@ -96,7 +96,7 @@ describe('ProductLists Models', () => {
       expect(collectionGet).toHaveBeenCalled();
     });
 
-    test('ao chamar createProductItem deve chamar o set do doc', async () => {
+    test('ao chamar createItem deve chamar o set do doc', async () => {
       const mockProductItem = new ProductItemBuilderMock()
         .withId('1234')
         .build();
@@ -104,7 +104,7 @@ describe('ProductLists Models', () => {
       const listId = '1234';
       const itemId = '1234';
 
-      await models.createProductItem(userId, listId, itemId, mockProductItem);
+      await models.createItem(userId, listId, itemId, mockProductItem);
 
       expect(collectionSpy).toHaveBeenCalledWith(
         `users/${userId}/productLists/${listId}/items`,
@@ -113,11 +113,11 @@ describe('ProductLists Models', () => {
       expect(docSet).toHaveBeenCalledWith({ ...mockProductItem });
     });
 
-    test('ao chamar findProductItem deve chamar o get do doc', async () => {
+    test('ao chamar findItem deve chamar o get do doc', async () => {
       const listId = '1234';
       const itemId = '1234';
 
-      await models.findProductItem(userId, listId, itemId);
+      await models.findItem(userId, listId, itemId);
 
       expect(collectionSpy).toHaveBeenCalledWith(
         `users/${userId}/productLists/${listId}/items`,
@@ -126,14 +126,14 @@ describe('ProductLists Models', () => {
       expect(docGet).toHaveBeenCalled();
     });
 
-    test('ao chamar updateProductItem deve chamar o update do doc', async () => {
+    test('ao chamar updateItem deve chamar o update do doc', async () => {
       const mockProductItem = new ProductItemBuilderMock()
         .withId('1234')
         .build();
       const listId = '1234';
       const itemId = '1234';
 
-      await models.updateProductItem(userId, listId, itemId, mockProductItem);
+      await models.updateItem(userId, listId, itemId, mockProductItem);
 
       expect(collectionSpy).toHaveBeenCalledWith(
         `users/${userId}/productLists/${listId}/items`,
@@ -142,11 +142,11 @@ describe('ProductLists Models', () => {
       expect(docUpdate).toHaveBeenCalledWith({ ...mockProductItem });
     });
 
-    test('ao chamar deleteProductItem deve chamar o delete do doc', async () => {
+    test('ao chamar deleteItem deve chamar o delete do doc', async () => {
       const listId = '1234';
       const itemId = '1234';
 
-      await models.deleteProductItem(userId, listId, itemId);
+      await models.deleteItem(userId, listId, itemId);
 
       expect(collectionSpy).toHaveBeenCalledWith(
         `users/${userId}/productLists/${listId}/items`,

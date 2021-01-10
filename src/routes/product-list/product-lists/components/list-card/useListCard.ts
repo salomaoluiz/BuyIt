@@ -31,7 +31,7 @@ const useListCard = (props: Props) => {
 
   const _handleDeleteItem = useCallback(() => {
     const listId = productList.id;
-    dispatch(productListActions.deleteProductListAsync(listId));
+    dispatch(productListActions.deleteList(listId));
   }, [productList]);
 
   const handleListLongPress = useCallback(() => {

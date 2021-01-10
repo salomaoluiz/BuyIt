@@ -8,7 +8,7 @@ import { QueryFirestore } from './models';
 import { ProductItem, ProductList, ProductLists } from './types';
 import { appProductListFormater, dbProductListFormated } from './utils';
 
-export function* createProductList(productList: ProductList) {
+export function* createList(productList: ProductList) {
   const isAnonymously = yield select(authSelectors.isAnonymously);
   if (isAnonymously) return;
 
@@ -16,21 +16,21 @@ export function* createProductList(productList: ProductList) {
   const formatedProductList = dbProductListFormated(productList);
 
   yield call(
-    productListModels.createProductList,
+    productListModels.createList,
     userId,
     productList.id,
     formatedProductList,
   );
 }
 
-export function* getProductLists() {
+export function* requestLists() {
   const isAnonymously = yield select(authSelectors.isAnonymously);
   if (isAnonymously) return;
 
   const userId: string = yield select(authSelectors.getUserId);
   if (userId) {
     const productList: QueryFirestore<ProductLists> = yield call(
-      productListModels.getProductLists,
+      productListModels.requestLists,
       userId,
     );
 
@@ -42,7 +42,7 @@ export function* getProductLists() {
   }
 }
 
-export function* updateProductList(productList: ProductList) {
+export function* updateList(productList: ProductList) {
   const isAnonymously = yield select(authSelectors.isAnonymously);
   if (isAnonymously) return;
 
@@ -54,7 +54,7 @@ export function* updateProductList(productList: ProductList) {
     ]);
 
     yield call(
-      productListModels.updateProductList,
+      productListModels.updateList,
       userId,
       productList.id,
       formatedProductList,
@@ -62,24 +62,24 @@ export function* updateProductList(productList: ProductList) {
   }
 }
 
-export function* deleteProductList(listId: string) {
+export function* deleteList(listId: string) {
   const isAnonymously = yield select(authSelectors.isAnonymously);
   if (isAnonymously) return;
 
   const userId: string = yield select(authSelectors.getUserId);
   if (userId) {
-    yield call(productListModels.deleteProductList, userId, listId);
+    yield call(productListModels.deleteList, userId, listId);
   }
 }
 
-export function* createProductItem(productItem: ProductItem, listId: string) {
+export function* createItem(productItem: ProductItem, listId: string) {
   const isAnonymously = yield select(authSelectors.isAnonymously);
   if (isAnonymously) return;
 
   const userId: string = yield select(authSelectors.getUserId);
   const filteredProductItem = extractObjectElement(productItem, ['id']);
   yield call(
-    productListModels.createProductItem,
+    productListModels.createItem,
     userId,
     listId,
     productItem.id,
@@ -87,24 +87,20 @@ export function* createProductItem(productItem: ProductItem, listId: string) {
   );
 }
 
-export function* getProductItems(listId: string) {
+export function* requestItems(listId: string) {
   const isAnonymously = yield select(authSelectors.isAnonymously);
   if (isAnonymously) return;
 
   const userId = yield select(authSelectors.getUserId);
 
-  const document = yield call(
-    productListModels.getProductItems,
-    userId,
-    listId,
-  );
+  const document = yield call(productListModels.requestItems, userId, listId);
 
   const formatedList = appProductListFormater<ProductItem>(document);
 
   return formatedList;
 }
 
-export function* updateProductItem(productItem: ProductItem, listId: string) {
+export function* updateItem(productItem: ProductItem, listId: string) {
   const isAnonymously = yield select(authSelectors.isAnonymously);
   if (isAnonymously) return;
 
@@ -112,7 +108,7 @@ export function* updateProductItem(productItem: ProductItem, listId: string) {
   const formatedProductItem = extractObjectElement(productItem, ['id']);
 
   yield call(
-    productListModels.updateProductItem,
+    productListModels.updateItem,
     userId,
     listId,
     productItem.id,
@@ -120,10 +116,10 @@ export function* updateProductItem(productItem: ProductItem, listId: string) {
   );
 }
 
-export function* deleteProductItem(listId: string, itemId: string) {
+export function* deleteItem(listId: string, itemId: string) {
   const isAnonymously = yield select(authSelectors.isAnonymously);
   if (isAnonymously) return;
 
   const userId = yield select(authSelectors.getUserId);
-  yield call(productListModels.deleteProductItem, userId, listId, itemId);
+  yield call(productListModels.deleteItem, userId, listId, itemId);
 }

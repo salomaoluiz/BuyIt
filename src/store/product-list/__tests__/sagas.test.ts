@@ -8,8 +8,8 @@ import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
 import * as sagas from '../sagas';
 import * as sagaLocal from '../sagas-local';
 import * as sagaServer from '../sagas-server';
-import selectors from '../selectors';
-import { ProductListActions, ProductList, ProductItem } from '../types';
+import * as selectors from '../selectors';
+import { ProductListAction, ProductList, ProductItem } from '../types';
 import { injectProductListExtraData } from '../utils';
 
 jest.mock('@utils/id', () => ({
@@ -29,629 +29,525 @@ const productList = new ProductListBuilderMock().withName('Nome').build();
 
 describe('ProductList Sagas', () => {
   describe('Product List', () => {
-    test('deve chamar createProductListAsync corretamente', () => {
-      const action = productListActions.createProductListAsync(
-        productList,
-      ) as ProductListActions<{
-        productList: ProductList;
-      }>;
+    describe('Create List', () => {
+      test('deve criar uma nova lista corretamente', () => {
+        const action = productListActions.createList(
+          productList,
+        ) as ProductListAction<{
+          productList: ProductList;
+        }>;
 
-      const gen = sagas.createProductListAsync(action);
+        const gen = sagas.createList(action);
 
-      expect(gen.next().value).toEqual(put(productListActions.setError()));
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(true)),
-      );
+        expect(gen.next().value).toEqual(put(productListActions.setError()));
 
-      const ajustedProductList = injectProductListExtraData(productList);
+        const ajustedProductList = injectProductListExtraData(productList);
 
-      expect(gen.next(ajustedProductList).value).toEqual(
-        call(sagaLocal.createProductList, ajustedProductList),
-      );
+        expect(gen.next(ajustedProductList).value).toEqual(
+          call(sagaLocal.createList, ajustedProductList),
+        );
 
-      expect(gen.next([ajustedProductList]).value).toEqual(
-        put(productListActions.setProductLists([ajustedProductList])),
-      );
-      expect(gen.next().value).toEqual(call(navigationService.goBack));
+        expect(gen.next([ajustedProductList]).value).toEqual(
+          put(productListActions.setProductLists([ajustedProductList])),
+        );
+        expect(gen.next().value).toEqual(call(navigationService.goBack));
 
-      expect(gen.next(ajustedProductList).value).toEqual(
-        call(sagaServer.createProductList, ajustedProductList),
-      );
+        expect(gen.next(ajustedProductList).value).toEqual(
+          call(sagaServer.createList, ajustedProductList),
+        );
 
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(false)),
-      );
-      expect(gen.next().done).toBe(true);
+        expect(gen.next().done).toBe(true);
+      });
+
+      test('em caso de erro ao criar a lista, deve seta-lo corretamente', () => {
+        const action = productListActions.createList(
+          productList,
+        ) as ProductListAction<{
+          productList: ProductList;
+        }>;
+
+        const gen = sagas.createList(action);
+
+        expect(gen.next().value).toEqual(put(productListActions.setError()));
+
+        const ajustedProductList = injectProductListExtraData(productList);
+
+        expect(gen.next(ajustedProductList).value).toEqual(
+          call(sagaLocal.createList, ajustedProductList),
+        );
+
+        const error = new Error('error');
+        expect(gen.throw(error).value).toEqual(
+          put(productListActions.setError(error.message)),
+        );
+
+        expect(gen.next().done).toBe(true);
+      });
     });
 
-    test('ao chamar createProductListAsync com erro deve setar o erro corretamente', () => {
-      const action = productListActions.createProductListAsync(
-        productList,
-      ) as ProductListActions<{
-        productList: ProductList;
-      }>;
+    describe('Request Lists', () => {
+      test('deve realizar o request para as listas corretamente', () => {
+        const gen = sagas.requestLists();
 
-      const gen = sagas.createProductListAsync(action);
+        expect(gen.next().value).toEqual(put(productListActions.setError()));
 
-      expect(gen.next().value).toEqual(put(productListActions.setError()));
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(true)),
-      );
+        expect(gen.next().value).toEqual(call(sagaServer.requestLists));
 
-      const ajustedProductList = injectProductListExtraData(productList);
+        expect(gen.next([productList]).value).toEqual(
+          put(productListActions.setProductLists([productList])),
+        );
 
-      expect(gen.next(ajustedProductList).value).toEqual(
-        call(sagaLocal.createProductList, ajustedProductList),
-      );
+        expect(gen.next().done).toBe(true);
+      });
 
-      const error = new Error('error');
-      expect(gen.throw(error).value).toEqual(
-        put(productListActions.setError(error.message)),
-      );
+      test('caso nao tenha produtos no servidor, não deve realizar alterações na lista de produtos', () => {
+        const gen = sagas.requestLists();
 
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(false)),
-      );
-      expect(gen.next().done).toBe(true);
+        expect(gen.next().value).toEqual(put(productListActions.setError()));
+
+        expect(gen.next().value).toEqual(call(sagaServer.requestLists));
+
+        expect(gen.next().done).toBe(true);
+      });
+
+      test('caso tenha erro ao requisitar as listas, deve seta-lo corretamente', () => {
+        const gen = sagas.requestLists();
+
+        expect(gen.next().value).toEqual(put(productListActions.setError()));
+
+        expect(gen.next().value).toEqual(call(sagaServer.requestLists));
+
+        const error = new Error('error');
+        expect(gen.throw(error).value).toEqual(
+          put(productListActions.setError(error.message)),
+        );
+
+        expect(gen.next().done).toBe(true);
+      });
     });
 
-    test('deve chamar getProductListsAsync corretamente', () => {
-      const gen = sagas.getProductListsAsync();
+    describe('Update List', () => {
+      test('deve atualizar a lista corretamente', () => {
+        const action = productListActions.updateList(
+          productList,
+        ) as ProductListAction<{
+          productList: ProductList;
+        }>;
 
-      expect(gen.next().value).toEqual(put(productListActions.setError()));
+        const gen = sagas.updateList(action);
 
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(true)),
-      );
+        expect(gen.next().value).toEqual(put(productListActions.setError()));
 
-      expect(gen.next().value).toEqual(call(sagaServer.getProductLists));
+        const ajustedProductList = injectProductListExtraData(productList);
 
-      expect(gen.next([productList]).value).toEqual(
-        put(productListActions.setProductLists([productList])),
-      );
+        expect(gen.next(ajustedProductList).value).toEqual(
+          call(sagaLocal.updateList, ajustedProductList),
+        );
+        expect(gen.next([ajustedProductList]).value).toEqual(
+          put(productListActions.setProductLists([ajustedProductList])),
+        );
+        expect(gen.next().value).toEqual(call(navigationService.goBack));
 
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(false)),
-      );
-      expect(gen.next().done).toBe(true);
+        expect(gen.next(ajustedProductList).value).toEqual(
+          call(sagaServer.updateList, ajustedProductList),
+        );
+
+        expect(gen.next().done).toBe(true);
+      });
+
+      test('caso tenha erro ao atualizar a lista, deve seta-lo corretamente', () => {
+        const action = productListActions.updateList(
+          productList,
+        ) as ProductListAction<{
+          productList: ProductList;
+        }>;
+
+        const gen = sagas.updateList(action);
+
+        expect(gen.next().value).toEqual(put(productListActions.setError()));
+
+        const ajustedProductList = injectProductListExtraData(productList);
+
+        expect(gen.next(ajustedProductList).value).toEqual(
+          call(sagaLocal.updateList, ajustedProductList),
+        );
+
+        const error = new Error('error');
+        expect(gen.throw(error).value).toEqual(
+          put(productListActions.setError(error.message)),
+        );
+
+        expect(gen.next().done).toBe(true);
+      });
     });
 
-    test('caso nao tenha produtos no servidor, não deve realizar alterações na lista de produtos', () => {
-      const gen = sagas.getProductListsAsync();
+    describe('Delete List', () => {
+      test('deve deletar uma lista com sucesso', () => {
+        const listId = '123456';
+        const mockProductLists = new ProductListBuilderMock()
+          .withName('Lista')
+          .build();
 
-      expect(gen.next().value).toEqual(put(productListActions.setError()));
+        const action = productListActions.deleteList(
+          listId,
+        ) as ProductListAction<{
+          listId: string;
+        }>;
 
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(true)),
-      );
+        const gen = sagas.deleteList(action);
 
-      expect(gen.next().value).toEqual(call(sagaServer.getProductLists));
+        expect(gen.next().value).toEqual(put(productListActions.setError()));
 
-      expect(gen.next(undefined).value).toEqual(
-        put(productListActions.setLoading(false)),
-      );
-      expect(gen.next().done).toBe(true);
-    });
+        expect(gen.next([mockProductLists]).value).toEqual(
+          call(sagaLocal.deleteList, listId),
+        );
 
-    test('ao chamar getProductListsAsync com erro deve setar o erro corretamente', () => {
-      const gen = sagas.getProductListsAsync();
+        expect(gen.next([mockProductLists]).value).toEqual(
+          put(productListActions.setProductLists([mockProductLists])),
+        );
 
-      expect(gen.next().value).toEqual(put(productListActions.setError()));
+        expect(gen.next().value).toEqual(call(sagaServer.deleteList, listId));
 
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(true)),
-      );
+        expect(gen.next().done).toBe(true);
+      });
 
-      expect(gen.next().value).toEqual(call(sagaServer.getProductLists));
+      test('em caso de erro ao deletar uma lista, deve seta-lo corretamente', () => {
+        const listId = '123456';
+        const action = productListActions.deleteList(
+          listId,
+        ) as ProductListAction<{
+          listId: string;
+        }>;
 
-      const error = new Error('error');
-      expect(gen.throw(error).value).toEqual(
-        put(productListActions.setError(error.message)),
-      );
+        const gen = sagas.deleteList(action);
 
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(false)),
-      );
-      expect(gen.next().done).toBe(true);
-    });
+        expect(gen.next().value).toEqual(put(productListActions.setError()));
 
-    test('deve chamar updateProductListAsync corretamente', () => {
-      const action = productListActions.updateProductListAsync(
-        productList,
-      ) as ProductListActions<{
-        productList: ProductList;
-      }>;
+        expect(gen.next().value).toEqual(call(sagaLocal.deleteList, listId));
 
-      const gen = sagas.updateProductListAsync(action);
+        const error = new Error('error');
+        expect(gen.throw(error).value).toEqual(
+          put(productListActions.setError(error.message)),
+        );
 
-      expect(gen.next().value).toEqual(put(productListActions.setError()));
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(true)),
-      );
-
-      const ajustedProductList = injectProductListExtraData(productList);
-
-      expect(gen.next(ajustedProductList).value).toEqual(
-        call(sagaLocal.updateProductList, ajustedProductList),
-      );
-      expect(gen.next([ajustedProductList]).value).toEqual(
-        put(productListActions.setProductLists([ajustedProductList])),
-      );
-      expect(gen.next().value).toEqual(call(navigationService.goBack));
-
-      expect(gen.next(ajustedProductList).value).toEqual(
-        call(sagaServer.updateProductList, ajustedProductList),
-      );
-
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(false)),
-      );
-      expect(gen.next().done).toBe(true);
-    });
-
-    test('ao chamar updateProductListAsync com erro deve setar o erro corretamente', () => {
-      const action = productListActions.updateProductListAsync(
-        productList,
-      ) as ProductListActions<{
-        productList: ProductList;
-      }>;
-
-      const gen = sagas.updateProductListAsync(action);
-
-      expect(gen.next().value).toEqual(put(productListActions.setError()));
-
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(true)),
-      );
-
-      const ajustedProductList = injectProductListExtraData(productList);
-
-      expect(gen.next(ajustedProductList).value).toEqual(
-        call(sagaLocal.updateProductList, ajustedProductList),
-      );
-
-      const error = new Error('error');
-      expect(gen.throw(error).value).toEqual(
-        put(productListActions.setError(error.message)),
-      );
-
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(false)),
-      );
-      expect(gen.next().done).toBe(true);
-    });
-
-    test('deve chamar deleteProductListAsync corretamente', () => {
-      const listId = '123456';
-      const mockProductLists = new ProductListBuilderMock()
-        .withName('Lista')
-        .build();
-
-      const action = productListActions.deleteProductListAsync(
-        listId,
-      ) as ProductListActions<{
-        listId: string;
-      }>;
-
-      const gen = sagas.deleteProductListAsync(action);
-
-      expect(gen.next().value).toEqual(put(productListActions.setError()));
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(true)),
-      );
-
-      expect(gen.next([mockProductLists]).value).toEqual(
-        call(sagaLocal.deleteProductList, listId),
-      );
-
-      expect(gen.next([mockProductLists]).value).toEqual(
-        put(productListActions.setProductLists([mockProductLists])),
-      );
-
-      expect(gen.next().value).toEqual(
-        call(sagaServer.deleteProductList, listId),
-      );
-
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(false)),
-      );
-      expect(gen.next().done).toBe(true);
-    });
-
-    test('ao chamar deleteProductListAsync com erro deve setar o erro corretamente', () => {
-      const listId = '123456';
-      const action = productListActions.deleteProductListAsync(
-        listId,
-      ) as ProductListActions<{
-        listId: string;
-      }>;
-
-      const gen = sagas.deleteProductListAsync(action);
-
-      expect(gen.next().value).toEqual(put(productListActions.setError()));
-
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(true)),
-      );
-
-      expect(gen.next().value).toEqual(
-        call(sagaLocal.deleteProductList, listId),
-      );
-
-      const error = new Error('error');
-      expect(gen.throw(error).value).toEqual(
-        put(productListActions.setError(error.message)),
-      );
-
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(false)),
-      );
-      expect(gen.next().done).toBe(true);
+        expect(gen.next().done).toBe(true);
+      });
     });
   });
 
   describe('Product Items', () => {
-    test('deve chamar createProductItemAsync corretamente', () => {
-      const listId = '123456';
-      const mockProductItem = new ProductItemBuilderMock()
-        .withName('Lista')
-        .build();
-      const mockProductList = new ProductListBuilderMock()
-        .withItems([mockProductItem])
-        .build();
+    describe('Create Item', () => {
+      test('deve criar um item em uma lista corretamente', () => {
+        const listId = '123456';
+        const mockProductItem = new ProductItemBuilderMock()
+          .withName('Lista')
+          .build();
+        const mockProductList = new ProductListBuilderMock()
+          .withItems([mockProductItem])
+          .build();
 
-      const action = productListActions.createProductItemAsync(
-        mockProductItem,
-        listId,
-      ) as ProductListActions<{
-        productItem: ProductItem;
-        listId: string;
-      }>;
+        const action = productListActions.createItem(
+          mockProductItem,
+          listId,
+        ) as ProductListAction<{
+          productItem: ProductItem;
+          listId: string;
+        }>;
 
-      const gen = sagas.createProductItemAsync(action);
+        const gen = sagas.createItem(action);
 
-      expect(gen.next().value).toEqual(put(productListActions.setError()));
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(true)),
-      );
+        expect(gen.next().value).toEqual(put(productListActions.setError()));
 
-      const ajustedProductItem = injectProductListExtraData(mockProductItem);
+        const ajustedProductItem = injectProductListExtraData(mockProductItem);
 
-      expect(gen.next([ajustedProductItem]).value).toEqual(
-        call(sagaLocal.createProductItem, ajustedProductItem, listId),
-      );
+        expect(gen.next([ajustedProductItem]).value).toEqual(
+          call(sagaLocal.createItem, ajustedProductItem, listId),
+        );
 
-      expect(gen.next([mockProductList]).value).toEqual(
-        put(productListActions.setProductLists([mockProductList])),
-      );
-      expect(gen.next().value).toEqual(call(navigationService.goBack));
-      expect(gen.next().value).toEqual(
-        call(sagaServer.createProductItem, ajustedProductItem, listId),
-      );
+        expect(gen.next([mockProductList]).value).toEqual(
+          put(productListActions.setProductLists([mockProductList])),
+        );
+        expect(gen.next().value).toEqual(call(navigationService.goBack));
+        expect(gen.next().value).toEqual(
+          call(sagaServer.createItem, ajustedProductItem, listId),
+        );
 
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(false)),
-      );
-      expect(gen.next().done).toBe(true);
+        expect(gen.next().done).toBe(true);
+      });
+
+      test('caso tenha erro ao criar o item, deve setar o erro corretamente', () => {
+        const listId = '123456';
+        const mockProductItem = new ProductItemBuilderMock()
+          .withName('Lista')
+          .build();
+
+        const action = productListActions.createItem(
+          mockProductItem,
+          listId,
+        ) as ProductListAction<{
+          productItem: ProductItem;
+          listId: string;
+        }>;
+
+        const gen = sagas.createItem(action);
+
+        expect(gen.next().value).toEqual(put(productListActions.setError()));
+
+        const ajustedProductItem = injectProductListExtraData(mockProductItem);
+
+        expect(gen.next(ajustedProductItem).value).toEqual(
+          call(sagaLocal.createItem, ajustedProductItem, listId),
+        );
+
+        const error = new Error('error');
+        expect(gen.throw(error).value).toEqual(
+          put(productListActions.setError(error.message)),
+        );
+
+        expect(gen.next().done).toBe(true);
+      });
     });
 
-    test('ao chamar createProductItemAsync com erro deve setar o erro corretamente', () => {
-      const listId = '123456';
-      const mockProductItem = new ProductItemBuilderMock()
-        .withName('Lista')
-        .build();
+    describe('Request Items', () => {
+      test('deve requisitar a lista de itens de uma lista com sucesso', () => {
+        const listId = '123456';
+        const mockProductItem = new ProductItemBuilderMock()
+          .withName('Lista')
+          .build();
+        const mockProductList = new ProductListBuilderMock()
+          .withItems([mockProductItem])
+          .build();
 
-      const action = productListActions.createProductItemAsync(
-        mockProductItem,
-        listId,
-      ) as ProductListActions<{
-        productItem: ProductItem;
-        listId: string;
-      }>;
+        const action = productListActions.requestItems(
+          listId,
+        ) as ProductListAction<{
+          listId: string;
+        }>;
 
-      const gen = sagas.createProductItemAsync(action);
+        const gen = sagas.requestItems(action);
 
-      expect(gen.next().value).toEqual(put(productListActions.setError()));
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(true)),
-      );
+        expect(gen.next().value).toEqual(put(productListActions.setError()));
 
-      const ajustedProductItem = injectProductListExtraData(mockProductItem);
+        expect(gen.next().value).toEqual(
+          select(selectors.getProductItems, listId),
+        );
+        expect(gen.next().value).toEqual(call(sagaServer.requestItems, listId));
 
-      expect(gen.next(ajustedProductItem).value).toEqual(
-        call(sagaLocal.createProductItem, ajustedProductItem, listId),
-      );
+        expect(gen.next([mockProductItem]).value).toEqual(
+          call(sagaLocal.requestItems, [mockProductItem], listId),
+        );
 
-      const error = new Error('error');
-      expect(gen.throw(error).value).toEqual(
-        put(productListActions.setError(error.message)),
-      );
+        expect(gen.next([mockProductList]).value).toEqual(
+          put(productListActions.setProductLists([mockProductList])),
+        );
 
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(false)),
-      );
-      expect(gen.next().done).toBe(true);
+        expect(gen.next().done).toBe(true);
+      });
+
+      test('em caso de erro ao requisitar uma lista, deve setar o erro corretamente', () => {
+        const listId = '123456';
+
+        const action = productListActions.requestItems(
+          listId,
+        ) as ProductListAction<{
+          listId: string;
+        }>;
+
+        const gen = sagas.requestItems(action);
+
+        expect(gen.next().value).toEqual(put(productListActions.setError()));
+
+        expect(gen.next().value).toEqual(
+          select(selectors.getProductItems, listId),
+        );
+
+        expect(gen.next().value).toEqual(call(sagaServer.requestItems, listId));
+
+        const error = new Error('error');
+        expect(gen.throw(error).value).toEqual(
+          put(productListActions.setError(error.message)),
+        );
+
+        expect(gen.next().done).toBe(true);
+      });
+
+      test('deve requisitar a lista de itens de uma lista corretamente, mas nao deve substituir o cache local caso nao possua dados no servidor', () => {
+        const listId = '123456';
+        const cachedProductItems = new ProductItemBuilderMock()
+          .withName('Lista')
+          .build();
+        const mockProductList = new ProductListBuilderMock()
+          .withItems([cachedProductItems])
+          .build();
+
+        const action = productListActions.requestItems(
+          listId,
+        ) as ProductListAction<{
+          listId: string;
+        }>;
+
+        const gen = sagas.requestItems(action);
+
+        expect(gen.next().value).toEqual(put(productListActions.setError()));
+
+        expect(gen.next().value).toEqual(
+          select(selectors.getProductItems, listId),
+        );
+        expect(gen.next([cachedProductItems]).value).toEqual(
+          call(sagaServer.requestItems, listId),
+        );
+
+        expect(gen.next(undefined).value).toEqual(
+          call(sagaLocal.requestItems, [cachedProductItems], listId),
+        );
+
+        expect(gen.next([mockProductList]).value).toEqual(
+          put(productListActions.setProductLists([mockProductList])),
+        );
+
+        expect(gen.next().done).toBe(true);
+      });
     });
 
-    test('deve chamar getProductItemsAsync corretamente', () => {
-      const listId = '123456';
-      const mockProductItem = new ProductItemBuilderMock()
-        .withName('Lista')
-        .build();
-      const mockProductList = new ProductListBuilderMock()
-        .withItems([mockProductItem])
-        .build();
+    describe('Delete Item', () => {
+      test('deve deletar um item de uma lista com sucesso', () => {
+        const listId = '123456';
+        const itemId = '123456';
+        const mockProductItem = new ProductItemBuilderMock()
+          .withName('Lista')
+          .build();
+        const mockProductList = new ProductListBuilderMock()
+          .withItems([mockProductItem])
+          .build();
 
-      const action = productListActions.getProductItemsAsync(
-        listId,
-      ) as ProductListActions<{
-        listId: string;
-      }>;
+        const action = productListActions.deleteItem(
+          listId,
+          itemId,
+        ) as ProductListAction<{
+          listId: string;
+          itemId: string;
+        }>;
 
-      const gen = sagas.getProductItemsAsync(action);
+        const gen = sagas.deleteItem(action);
 
-      expect(gen.next().value).toEqual(put(productListActions.setError()));
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(true)),
-      );
+        expect(gen.next().value).toEqual(put(productListActions.setError()));
 
-      expect(gen.next().value).toEqual(
-        select(selectors.getProductItems, listId),
-      );
-      expect(gen.next().value).toEqual(
-        call(sagaServer.getProductItems, listId),
-      );
+        expect(gen.next().value).toEqual(
+          call(sagaLocal.deleteItem, listId, itemId),
+        );
+        expect(gen.next([mockProductList]).value).toEqual(
+          put(productListActions.setProductLists([mockProductList])),
+        );
 
-      expect(gen.next([mockProductItem]).value).toEqual(
-        call(sagaLocal.getProductItems, [mockProductItem], listId),
-      );
+        expect(gen.next().value).toEqual(
+          call(sagaServer.deleteItem, listId, itemId),
+        );
 
-      expect(gen.next([mockProductList]).value).toEqual(
-        put(productListActions.setProductLists([mockProductList])),
-      );
+        expect(gen.next().done).toBe(true);
+      });
 
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(false)),
-      );
-      expect(gen.next().done).toBe(true);
+      test('caso nao consiga deletar um item de uma lista, deve setar o erro com sucesso', () => {
+        const listId = '123456';
+        const itemId = '123456';
+
+        const action = productListActions.deleteItem(
+          listId,
+          itemId,
+        ) as ProductListAction<{
+          listId: string;
+          itemId: string;
+        }>;
+
+        const gen = sagas.deleteItem(action);
+
+        expect(gen.next().value).toEqual(put(productListActions.setError()));
+
+        expect(gen.next().value).toEqual(
+          call(sagaLocal.deleteItem, listId, itemId),
+        );
+
+        const error = new Error('error');
+        expect(gen.throw(error).value).toEqual(
+          put(productListActions.setError(error.message)),
+        );
+
+        expect(gen.next().done).toBe(true);
+      });
     });
 
-    test('ao chamar getProductItemsAsync com erro deve setar o erro corretamente', () => {
-      const listId = '123456';
+    describe('Update Item', () => {
+      test('deve atualizar um item de uma lista com sucesso', () => {
+        const listId = '123456';
+        const mockProductItem = new ProductItemBuilderMock()
+          .withName('Lista')
+          .build();
+        const mockProductList = new ProductListBuilderMock()
+          .withItems([mockProductItem])
+          .build();
 
-      const action = productListActions.getProductItemsAsync(
-        listId,
-      ) as ProductListActions<{
-        listId: string;
-      }>;
+        const action = productListActions.updateItem(
+          mockProductItem,
+          listId,
+        ) as ProductListAction<{
+          productItem: ProductItem;
+          listId: string;
+        }>;
 
-      const gen = sagas.getProductItemsAsync(action);
+        const gen = sagas.updateItem(action);
 
-      expect(gen.next().value).toEqual(put(productListActions.setError()));
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(true)),
-      );
-      expect(gen.next().value).toEqual(
-        select(selectors.getProductItems, listId),
-      );
+        expect(gen.next().value).toEqual(put(productListActions.setError()));
 
-      expect(gen.next().value).toEqual(
-        call(sagaServer.getProductItems, listId),
-      );
+        const ajustedProductItem = injectProductListExtraData(mockProductItem);
 
-      const error = new Error('error');
-      expect(gen.throw(error).value).toEqual(
-        put(productListActions.setError(error.message)),
-      );
+        expect(gen.next(ajustedProductItem).value).toEqual(
+          call(sagaLocal.updateItem, ajustedProductItem, listId),
+        );
 
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(false)),
-      );
-      expect(gen.next().done).toBe(true);
-    });
+        expect(gen.next([mockProductList]).value).toEqual(
+          put(productListActions.setProductLists([mockProductList])),
+        );
 
-    test('deve chamar getProductItemsAsync corretamente, mas nao deve substituir o cache local caso nao possua dados no servidor', () => {
-      const listId = '123456';
-      const cachedProductItems = new ProductItemBuilderMock()
-        .withName('Lista')
-        .build();
-      const mockProductList = new ProductListBuilderMock()
-        .withItems([cachedProductItems])
-        .build();
+        expect(gen.next().value).toEqual(call(navigationService.goBack));
 
-      const action = productListActions.getProductItemsAsync(
-        listId,
-      ) as ProductListActions<{
-        listId: string;
-      }>;
+        expect(gen.next().value).toEqual(
+          call(sagaServer.updateItem, ajustedProductItem, listId),
+        );
 
-      const gen = sagas.getProductItemsAsync(action);
+        expect(gen.next().done).toBe(true);
+      });
 
-      expect(gen.next().value).toEqual(put(productListActions.setError()));
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(true)),
-      );
+      test('caso nao consiga atualizar um item de uma lista, deve setar o erro com sucesso', () => {
+        const listId = '123456';
 
-      expect(gen.next().value).toEqual(
-        select(selectors.getProductItems, listId),
-      );
-      expect(gen.next([cachedProductItems]).value).toEqual(
-        call(sagaServer.getProductItems, listId),
-      );
+        const mockProductItem = new ProductItemBuilderMock()
+          .withName('Lista')
+          .build();
 
-      expect(gen.next(undefined).value).toEqual(
-        call(sagaLocal.getProductItems, [cachedProductItems], listId),
-      );
+        const action = productListActions.updateItem(
+          mockProductItem,
+          listId,
+        ) as ProductListAction<{
+          productItem: ProductItem;
+          listId: string;
+        }>;
 
-      expect(gen.next([mockProductList]).value).toEqual(
-        put(productListActions.setProductLists([mockProductList])),
-      );
+        const gen = sagas.updateItem(action);
 
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(false)),
-      );
-      expect(gen.next().done).toBe(true);
-    });
+        expect(gen.next().value).toEqual(put(productListActions.setError()));
 
-    test('deve chamar deleteProductItemAsync corretamente', () => {
-      const listId = '123456';
-      const itemId = '123456';
-      const mockProductItem = new ProductItemBuilderMock()
-        .withName('Lista')
-        .build();
-      const mockProductList = new ProductListBuilderMock()
-        .withItems([mockProductItem])
-        .build();
+        const ajustedProductItem = injectProductListExtraData(mockProductItem);
 
-      const action = productListActions.deleteProductItemAsync(
-        listId,
-        itemId,
-      ) as ProductListActions<{
-        listId: string;
-        itemId: string;
-      }>;
+        expect(gen.next(ajustedProductItem).value).toEqual(
+          call(sagaLocal.updateItem, ajustedProductItem, listId),
+        );
 
-      const gen = sagas.deleteProductItemAsync(action);
+        const error = new Error('error');
+        expect(gen.throw(error).value).toEqual(
+          put(productListActions.setError(error.message)),
+        );
 
-      expect(gen.next().value).toEqual(put(productListActions.setError()));
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(true)),
-      );
-
-      expect(gen.next().value).toEqual(
-        call(sagaLocal.deleteProductItem, listId, itemId),
-      );
-      expect(gen.next([mockProductList]).value).toEqual(
-        put(productListActions.setProductLists([mockProductList])),
-      );
-
-      expect(gen.next().value).toEqual(
-        call(sagaServer.deleteProductItem, listId, itemId),
-      );
-
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(false)),
-      );
-      expect(gen.next().done).toBe(true);
-    });
-
-    test('ao chamar deleteProductItemAsync com erro deve setar o erro corretamente', () => {
-      const listId = '123456';
-      const itemId = '123456';
-
-      const action = productListActions.deleteProductItemAsync(
-        listId,
-        itemId,
-      ) as ProductListActions<{
-        listId: string;
-        itemId: string;
-      }>;
-
-      const gen = sagas.deleteProductItemAsync(action);
-
-      expect(gen.next().value).toEqual(put(productListActions.setError()));
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(true)),
-      );
-
-      expect(gen.next().value).toEqual(
-        call(sagaLocal.deleteProductItem, listId, itemId),
-      );
-
-      const error = new Error('error');
-      expect(gen.throw(error).value).toEqual(
-        put(productListActions.setError(error.message)),
-      );
-
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(false)),
-      );
-      expect(gen.next().done).toBe(true);
-    });
-
-    test('deve chamar updateProductItemAsync corretamente', () => {
-      const listId = '123456';
-      const mockProductItem = new ProductItemBuilderMock()
-        .withName('Lista')
-        .build();
-      const mockProductList = new ProductListBuilderMock()
-        .withItems([mockProductItem])
-        .build();
-
-      const action = productListActions.updateProductItemAsync(
-        mockProductItem,
-        listId,
-      ) as ProductListActions<{
-        productItem: ProductItem;
-        listId: string;
-      }>;
-
-      const gen = sagas.updateProductItemAsync(action);
-
-      expect(gen.next().value).toEqual(put(productListActions.setError()));
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(true)),
-      );
-
-      const ajustedProductItem = injectProductListExtraData(mockProductItem);
-
-      expect(gen.next(ajustedProductItem).value).toEqual(
-        call(sagaLocal.updateProductItem, ajustedProductItem, listId),
-      );
-
-      expect(gen.next([mockProductList]).value).toEqual(
-        put(productListActions.setProductLists([mockProductList])),
-      );
-
-      expect(gen.next().value).toEqual(call(navigationService.goBack));
-
-      expect(gen.next().value).toEqual(
-        call(sagaServer.updateProductItem, ajustedProductItem, listId),
-      );
-
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(false)),
-      );
-      expect(gen.next().done).toBe(true);
-    });
-
-    test('ao chamar updateProductItemAsync com erro deve setar o erro corretamente', () => {
-      const listId = '123456';
-
-      const mockProductItem = new ProductItemBuilderMock()
-        .withName('Lista')
-        .build();
-
-      const action = productListActions.updateProductItemAsync(
-        mockProductItem,
-        listId,
-      ) as ProductListActions<{
-        productItem: ProductItem;
-        listId: string;
-      }>;
-
-      const gen = sagas.updateProductItemAsync(action);
-
-      expect(gen.next().value).toEqual(put(productListActions.setError()));
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(true)),
-      );
-
-      const ajustedProductItem = injectProductListExtraData(mockProductItem);
-
-      expect(gen.next(ajustedProductItem).value).toEqual(
-        call(sagaLocal.updateProductItem, ajustedProductItem, listId),
-      );
-
-      const error = new Error('error');
-      expect(gen.throw(error).value).toEqual(
-        put(productListActions.setError(error.message)),
-      );
-
-      expect(gen.next().value).toEqual(
-        put(productListActions.setLoading(false)),
-      );
-      expect(gen.next().done).toBe(true);
+        expect(gen.next().done).toBe(true);
+      });
     });
   });
 });

@@ -1,58 +1,54 @@
-// @ts-nocheck
 import { AppStateMockBuilder } from '@store/__mocks__/AppStateMockBuilder.mock';
 
-import { productListSelectors } from '../';
 import { ProductItemBuilderMock } from '../__mocks__/productItemBuilder.mock';
 import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
+import * as selectors from '../selectors';
 
 describe('ProductList Selector', () => {
-  test('deve obter o state do productListReducer', () => {
-    const mockState = new AppStateMockBuilder()
-      .withProductList({ isLoading: false, productLists: [] })
-      .build();
+  const mockItem = new ProductItemBuilderMock()
+    .withId('12345')
+    .withName('mock name')
+    .build();
 
-    const response = productListSelectors.getState(mockState);
+  const mockList = new ProductListBuilderMock()
+    .withId('2')
+    .withItems([mockItem])
+    .build();
 
-    expect(response).toEqual(mockState.productListReducer);
-  });
+  const mockState = new AppStateMockBuilder()
+    .withProductList({ isLoading: false, productLists: [mockList] })
+    .build();
 
-  test('deve obter os productLists do productListReducer', () => {
-    const mockedList = new ProductListBuilderMock().withName('name').build();
-    const mockState = new AppStateMockBuilder()
-      .withProductList({ isLoading: false, productLists: [mockedList] })
-      .build();
+  //#region Selectors
 
-    const response = productListSelectors.getProductLists(mockState);
+  const getState = [
+    'getState',
+    selectors.getState(mockState),
+    { isLoading: false, productLists: [mockList] },
+  ];
 
-    expect(response).toEqual([mockedList]);
-  });
+  const getProductLists = [
+    'getProductLists',
+    selectors.getProductLists(mockState),
+    [mockList],
+  ];
 
-  test('deve obter o isLoading do productListReducer', () => {
-    const mockState = new AppStateMockBuilder()
-      .withProductList({ isLoading: false, productLists: [] })
-      .build();
+  const isLoading = ['isLoading', selectors.isLoading(mockState), false];
 
-    const response = productListSelectors.isLoading(mockState);
+  const getProductItems = [
+    'getProductItems',
+    selectors.getProductItems(mockState, '2'),
+    [mockItem],
+  ];
 
-    expect(response).toEqual(false);
-  });
+  //#endregion
 
-  test('deve obter os itens de um productList', () => {
-    const mockedListItem = new ProductItemBuilderMock()
-      .withId('12345')
-      .withName('mock name')
-      .build();
-    const mockedList = new ProductListBuilderMock()
-      .withId(2)
-      .withItems([mockedListItem])
-      .build();
-
-    const mockState = new AppStateMockBuilder()
-      .withProductList({ productLists: [mockedList] })
-      .build();
-
-    const response = productListSelectors.getProductItems(mockState, 2);
-
-    expect(response).toEqual([mockedListItem]);
-  });
+  test.each([getState, getProductLists, isLoading, getProductItems] as Array<
+    [string, typeof selectors, any]
+  >)(
+    'deve retornar corretamente os dados do selector %s',
+    (describe, selector, expected) => {
+      expect(selector).toEqual(expected);
+    },
+  );
 });

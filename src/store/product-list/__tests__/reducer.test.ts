@@ -1,8 +1,11 @@
-// @ts-nocheck
-
-import { productListActions } from '../';
 import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
-import listItemsReducer from '../reducer';
+import actions from '../actions';
+import reducer from '../reducer';
+import {
+  ProductListAction,
+  ProductListState,
+  ProductListTypes,
+} from '../types';
 
 describe('ProductList Reducers', () => {
   const initialState = {
@@ -11,62 +14,53 @@ describe('ProductList Reducers', () => {
     error: undefined,
   };
 
-  test('deve retornar o state para uma action default', () => {
-    const action = { type: 'any' };
+  const mockData = new ProductListBuilderMock()
+    .withId('123456')
+    .withName('Teste')
+    .build();
 
-    const response = listItemsReducer(initialState, action);
+  //#region Actions
 
-    const expected = {
-      ...initialState,
-    };
+  const any = ['any', { type: 'any' as ProductListTypes }, { ...initialState }];
 
-    expect(response).toEqual(expected);
-  });
+  const setError = [
+    'setError',
+    actions.setError('error'),
+    { ...initialState, error: 'error' },
+  ];
 
-  test('deve retornar o state correto para o setLoading', () => {
-    const action = productListActions.setLoading(true);
+  const setProductLists = [
+    'setProductLists',
+    actions.setProductLists([mockData]),
+    { ...initialState, productLists: [mockData] },
+  ];
 
-    const response = listItemsReducer(initialState, action);
+  const requestLists = [
+    'requestLists',
+    actions.requestLists(),
+    { ...initialState, isLoading: true, error: undefined },
+  ];
 
-    const expected = {
-      ...initialState,
-      isLoading: true,
-    };
+  const requestItems = [
+    'requestItems',
+    actions.requestItems('12345'),
+    { ...initialState, isLoading: true, error: undefined },
+  ];
 
-    expect(response).toEqual(expected);
-  });
+  //#endregion
 
-  test('deve retornar o state correto para o setError', () => {
-    const mockError = new Error('error');
-    const action = productListActions.setError(mockError);
+  test.each([
+    any,
+    setError,
+    setProductLists,
+    requestLists,
+    requestItems,
+  ] as Array<[string, ProductListAction<ProductListState>, ProductListState]>)(
+    'deve retornar corretamente o state para a action %s',
+    (describe, action, expected) => {
+      const response = reducer(initialState, action);
 
-    const response = listItemsReducer(initialState, action);
-
-    const expected = {
-      ...initialState,
-      error: mockError,
-    };
-
-    expect(response).toEqual(expected);
-  });
-
-  test('deve retornar o state correto para o setProductList', () => {
-    const mockData = new ProductListBuilderMock()
-      .withId('123456')
-      .withName('Teste')
-      .build();
-
-    const mockProductLists = [mockData];
-
-    const action = productListActions.setProductLists(mockProductLists);
-
-    const response = listItemsReducer(initialState, action);
-
-    const expected = {
-      ...initialState,
-      productLists: mockProductLists,
-    };
-
-    expect(response).toEqual(expected);
-  });
+      expect(response).toEqual(expected);
+    },
+  );
 });

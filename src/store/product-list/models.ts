@@ -5,13 +5,15 @@ import firestore, {
 import { ProductList, ProductItem } from './types';
 
 export type QueryFirestore<T> = FirebaseFirestoreTypes.QuerySnapshot<T>;
-export type DocumentFirestore<T> = FirebaseFirestoreTypes.QueryDocumentSnapshot<T>;
+export type DocumentFirestore<T> = FirebaseFirestoreTypes.QueryDocumentSnapshot<
+  T
+>;
 export type DocumentReference<T> = FirebaseFirestoreTypes.DocumentReference<T>;
 
-const getProductLists = (userId: string) =>
+const requestLists = (userId: string) =>
   firestore().collection(`users/${userId}/productLists`).get();
 
-const createProductList = (
+const createList = (
   userId: string,
   listId: string,
   productList: Omit<ProductList, 'id' | 'items'>,
@@ -21,10 +23,10 @@ const createProductList = (
     .doc(listId)
     .set({ ...productList });
 
-const findProductList = (userId: string, listId: string) =>
+const findList = (userId: string, listId: string) =>
   firestore().collection(`users/${userId}/productLists`).doc(listId).get();
 
-const updateProductList = (
+const updateList = (
   userId: string,
   listId: string,
   productList: Omit<ProductList, 'id' | 'items'>,
@@ -34,13 +36,13 @@ const updateProductList = (
     .doc(listId)
     .update({ ...productList });
 
-const deleteProductList = (userId: string, listId: string) =>
+const deleteList = (userId: string, listId: string) =>
   firestore().collection(`users/${userId}/productLists`).doc(listId).delete();
 
-const getProductItems = (userId: string, listId: string) =>
+const requestItems = (userId: string, listId: string) =>
   firestore().collection(`users/${userId}/productLists/${listId}/items`).get();
 
-const createProductItem = (
+const createItem = (
   userId: string,
   listId: string,
   itemId: string,
@@ -51,13 +53,13 @@ const createProductItem = (
     .doc(itemId)
     .set({ ...productItem });
 
-const findProductItem = (userId: string, listId: string, itemId: string) =>
+const findItem = (userId: string, listId: string, itemId: string) =>
   firestore()
     .collection(`users/${userId}/productLists/${listId}/items`)
     .doc(itemId)
     .get();
 
-const updateProductItem = (
+const updateItem = (
   userId: string,
   listId: string,
   itemId: string,
@@ -68,21 +70,21 @@ const updateProductItem = (
     .doc(itemId)
     .update({ ...productItem });
 
-const deleteProductItem = (userId: string, listId: string, itemId: string) =>
+const deleteItem = (userId: string, listId: string, itemId: string) =>
   firestore()
     .collection(`users/${userId}/productLists/${listId}/items`)
     .doc(itemId)
     .delete();
 
 export {
-  getProductLists,
-  createProductList,
-  updateProductList,
-  findProductList,
-  deleteProductList,
-  createProductItem,
-  getProductItems,
-  deleteProductItem,
-  updateProductItem,
-  findProductItem,
+  requestLists,
+  createList,
+  updateList,
+  findList,
+  deleteList,
+  createItem,
+  requestItems,
+  deleteItem,
+  updateItem,
+  findItem,
 };

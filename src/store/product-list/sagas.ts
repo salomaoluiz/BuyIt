@@ -8,10 +8,10 @@ import { addRemoveDays, formatDate } from '@utils/date';
 import { productListActions } from './';
 import * as sagaLocal from './sagas-local';
 import * as sagaServer from './sagas-server';
-import selectors from './selectors';
+import * as selectors from './selectors';
 import {
   ProductListTypes,
-  ProductListActions,
+  ProductListAction,
   ProductList,
   ProductLists,
   ProductItem,
@@ -20,108 +20,91 @@ import { injectProductListExtraData } from './utils';
 
 const strings = appLocale();
 
-export function* createProductListAsync(
-  props: ProductListActions<{ productList: ProductList }>,
+export function* createList(
+  props: ProductListAction<{ productList: ProductList }>,
 ) {
   const { productList } = props.payload;
   try {
     yield put(productListActions.setError());
-    yield put(productListActions.setLoading(true));
+
     const ajustedProductList = injectProductListExtraData(productList);
 
     const newProductListsArray = yield call(
-      sagaLocal.createProductList,
+      sagaLocal.createList,
       ajustedProductList,
     );
 
     yield put(productListActions.setProductLists(newProductListsArray));
     yield call(navigationService.goBack);
 
-    yield call(sagaServer.createProductList, ajustedProductList);
+    yield call(sagaServer.createList, ajustedProductList);
   } catch (err) {
     yield put(productListActions.setError(err.message));
-  } finally {
-    yield put(productListActions.setLoading(false));
   }
 }
 
-export function* getProductListsAsync() {
+export function* requestLists() {
   try {
     yield put(productListActions.setError());
-    yield put(productListActions.setLoading(true));
 
-    const serverProductLists = yield call(sagaServer.getProductLists);
+    const serverProductLists = yield call(sagaServer.requestLists);
 
     if (serverProductLists) {
       yield put(productListActions.setProductLists(serverProductLists));
     }
   } catch (err) {
     yield put(productListActions.setError(err.message));
-  } finally {
-    yield put(productListActions.setLoading(false));
   }
 }
 
-export function* updateProductListAsync(
-  props: ProductListActions<{ productList: ProductList }>,
+export function* updateList(
+  props: ProductListAction<{ productList: ProductList }>,
 ) {
   const { productList } = props.payload;
   try {
     yield put(productListActions.setError());
-    yield put(productListActions.setLoading(true));
 
     const ajustedProductList = injectProductListExtraData(productList);
 
     const updatedProductLists = yield call(
-      sagaLocal.updateProductList,
+      sagaLocal.updateList,
       ajustedProductList,
     );
 
     yield put(productListActions.setProductLists(updatedProductLists));
     yield call(navigationService.goBack);
 
-    yield call(sagaServer.updateProductList, ajustedProductList);
+    yield call(sagaServer.updateList, ajustedProductList);
   } catch (err) {
     yield put(productListActions.setError(err.message));
-  } finally {
-    yield put(productListActions.setLoading(false));
   }
 }
 
-export function* deleteProductListAsync(
-  props: ProductListActions<{ listId: string }>,
-) {
+export function* deleteList(props: ProductListAction<{ listId: string }>) {
   const { listId } = props.payload;
   try {
     yield put(productListActions.setError());
-    yield put(productListActions.setLoading(true));
 
-    const filteredList: ProductLists = yield call(
-      sagaLocal.deleteProductList,
-      listId,
-    );
+    const filteredList: ProductLists = yield call(sagaLocal.deleteList, listId);
     yield put(productListActions.setProductLists(filteredList));
 
-    yield call(sagaServer.deleteProductList, listId);
+    yield call(sagaServer.deleteList, listId);
   } catch (err) {
     yield put(productListActions.setError(err.message));
-  } finally {
-    yield put(productListActions.setLoading(false));
   }
 }
 
-export function* createProductItemAsync(
-  props: ProductListActions<{ productItem: ProductItem; listId: string }>,
+export function* createItem(
+  props: ProductListAction<{ productItem: ProductItem; listId: string }>,
 ) {
   try {
     const { productItem, listId } = props.payload;
     yield put(productListActions.setError());
-    yield put(productListActions.setLoading(true));
 
     const formatedProductItem = injectProductListExtraData(productItem);
 
     const productListsArray = yield call(
-      sagaLocal.createProductItem,
+      sagaLocal.createItem,
       formatedProductItem,
       listId,
     );
@@ -143,29 +126,25 @@ export function* createProductItemAsync(
     }
     yield call(navigationService.goBack);
 
-    yield call(sagaServer.createProductItem, formatedProductItem, listId);
+    yield call(sagaServer.createItem, formatedProductItem, listId);
   } catch (err) {
     yield put(productListActions.setError(err.message));
-  } finally {
-    yield put(productListActions.setLoading(false));
   }
 }
 
-export function* getProductItemsAsync(
-  props: ProductListActions<{ listId: string }>,
-) {
+export function* requestItems(props: ProductListAction<{ listId: string }>) {
   try {
     const { listId } = props.payload;
     yield put(productListActions.setError());
-    yield put(productListActions.setLoading(true));
+
     const cachedProductItems = yield select(selectors.getProductItems, listId);
 
-    const serverProductItems = yield call(sagaServer.getProductItems, listId);
+    const serverProductItems = yield call(sagaServer.requestItems, listId);
 
     const productItems = serverProductItems || cachedProductItems;
 
     const productListsArray = yield call(
-      sagaLocal.getProductItems,
+      sagaLocal.requestItems,
       productItems,
       listId,
     );
@@ -173,47 +152,41 @@ export function* getProductItemsAsync(
     yield put(productListActions.setProductLists(productListsArray));
   } catch (err) {
     yield put(productListActions.setError(err.message));
-  } finally {
-    yield put(productListActions.setLoading(false));
   }
 }
 
-export function* deleteProductItemAsync(
-  props: ProductListActions<{ listId: string; itemId: string }>,
+export function* deleteItem(
+  props: ProductListAction<{ listId: string; itemId: string }>,
 ) {
   try {
     const { listId, itemId } = props.payload;
     yield put(productListActions.setError());
-    yield put(productListActions.setLoading(true));
 
     const newProductItemsArray = yield call(
-      sagaLocal.deleteProductItem,
+      sagaLocal.deleteItem,
       listId,
       itemId,
     );
 
     yield put(productListActions.setProductLists(newProductItemsArray));
 
-    yield call(sagaServer.deleteProductItem, listId, itemId);
+    yield call(sagaServer.deleteItem, listId, itemId);
   } catch (err) {
     yield put(productListActions.setError(err.message));
-  } finally {
-    yield put(productListActions.setLoading(false));
   }
 }
 
-export function* updateProductItemAsync(
-  props: ProductListActions<{ productItem: ProductItem; listId: string }>,
+export function* updateItem(
+  props: ProductListAction<{ productItem: ProductItem; listId: string }>,
 ) {
   try {
     const { productItem, listId } = props.payload;
     yield put(productListActions.setError());
-    yield put(productListActions.setLoading(true));
 
     const formatedProductItem = injectProductListExtraData(productItem);
 
     const productListsArray = yield call(
-      sagaLocal.updateProductItem,
+      sagaLocal.updateItem,
       formatedProductItem,
       listId,
     );
@@ -221,39 +194,19 @@ export function* updateProductItemAsync(
     yield put(productListActions.setProductLists(productListsArray));
     yield call(navigationService.goBack);
 
-    yield call(sagaServer.updateProductItem, formatedProductItem, listId);
+    yield call(sagaServer.updateItem, formatedProductItem, listId);
   } catch (err) {
     yield put(productListActions.setError(err.message));
-  } finally {
-    yield put(productListActions.setLoading(false));
   }
 }
 
 export default [
-  takeLatest(
-    ProductListTypes.CREATE_PRODUCT_LIST_ASYNC,
-    createProductListAsync,
-  ),
-  takeLatest(ProductListTypes.GET_PRODUCT_LISTS_ASYNC, getProductListsAsync),
-  takeLatest(
-    ProductListTypes.UPDATE_PRODUCT_LIST_ASYNC,
-    updateProductListAsync,
-  ),
-  takeLatest(
-    ProductListTypes.DELETE_PRODUCT_LIST_ASYNC,
-    deleteProductListAsync,
-  ),
-  takeLatest(
-    ProductListTypes.CREATE_PRODUCT_ITEM_ASYNC,
-    createProductItemAsync,
-  ),
-  takeLatest(ProductListTypes.GET_PRODUCT_ITEMS_ASYNC, getProductItemsAsync),
-  takeLatest(
-    ProductListTypes.DELETE_PRODUCT_ITEM_ASYNC,
-    deleteProductItemAsync,
-  ),
-  takeLatest(
-    ProductListTypes.UPDATE_PRODUCT_ITEM_ASYNC,
-    updateProductItemAsync,
-  ),
+  takeLatest(ProductListTypes.CREATE_LIST, createList),
+  takeLatest(ProductListTypes.REQUEST_LISTS, requestLists),
+  takeLatest(ProductListTypes.UPDATE_LIST, updateList),
+  takeLatest(ProductListTypes.DELETE_LIST, deleteList),
+  takeLatest(ProductListTypes.CREATE_ITEM, createItem),
+  takeLatest(ProductListTypes.REQUEST_ITEMS, requestItems),
+  takeLatest(ProductListTypes.DELETE_ITEM, deleteItem),
+  takeLatest(ProductListTypes.UPDATE_ITEM, updateItem),
 ];

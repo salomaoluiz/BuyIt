@@ -1,144 +1,100 @@
-import { productListActions } from '../';
 import { ProductItemBuilderMock } from '../__mocks__/productItemBuilder.mock';
 import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
+import actions from '../actions';
 import { ProductListTypes } from '../types';
 
 describe('ProductList Actions', () => {
-  test('deve retornar setLoading corretamente.', () => {
-    const result = productListActions.setLoading(true);
+  const mockList = new ProductListBuilderMock().withName('Lista').build();
+  const mockItem = new ProductItemBuilderMock().withName('Lista').build();
 
-    expect(result).toEqual({
-      type: ProductListTypes.SET_LOADING,
-      payload: {
-        isLoading: true,
-      },
-    });
-  });
+  //#region Actions
 
-  test('deve retornar setError corretamente.', () => {
-    const mockError = new Error('teste');
-    const result = productListActions.setError(mockError.message);
+  const setError = [
+    'setError',
+    actions.setError('error'),
+    { type: ProductListTypes.SET_ERROR, payload: { error: 'error' } },
+  ];
 
-    expect(result).toEqual({
-      type: ProductListTypes.SET_ERROR,
-      payload: {
-        error: 'teste',
-      },
-    });
-  });
+  const requestLists = [
+    'requestLists',
+    actions.requestLists(),
+    { type: ProductListTypes.REQUEST_LISTS },
+  ];
 
-  test('deve retornar getProductListsAsync corretamente.', () => {
-    const result = productListActions.getProductListsAsync();
+  const createList = [
+    'createList',
+    actions.createList(mockList),
+    { type: ProductListTypes.CREATE_LIST, payload: { productList: mockList } },
+  ];
 
-    expect(result).toEqual({
-      type: ProductListTypes.GET_PRODUCT_LISTS_ASYNC,
-    });
-  });
+  const updateList = [
+    'updateList',
+    actions.updateList(mockList),
+    { type: ProductListTypes.UPDATE_LIST, payload: { productList: mockList } },
+  ];
 
-  test('deve retornar createProductListAsync corretamente.', () => {
-    const mockData = new ProductListBuilderMock().withName('Lista').build();
+  const deleteList = [
+    'deleteList',
+    actions.deleteList('12345'),
+    { type: ProductListTypes.DELETE_LIST, payload: { listId: '12345' } },
+  ];
 
-    const result = productListActions.createProductListAsync(mockData);
+  const setProductLists = [
+    'setProductLists',
+    actions.setProductLists([mockList]),
+    {
+      type: ProductListTypes.SET_PRODUCT_LISTS,
+      payload: { productLists: [mockList] },
+    },
+  ];
 
-    expect(result).toEqual({
-      type: ProductListTypes.CREATE_PRODUCT_LIST_ASYNC,
-      payload: {
-        productList: mockData,
-      },
-    });
-  });
+  const requestItems = [
+    'requestItems',
+    actions.requestItems('12345'),
+    { type: ProductListTypes.REQUEST_ITEMS, payload: { listId: '12345' } },
+  ];
 
-  test('deve retornar updateProductListAsync corretamente.', () => {
-    const mockData = new ProductListBuilderMock().withName('Lista').build();
+  const createItem = [
+    'createItem',
+    actions.createItem(mockItem, '12345'),
+    {
+      type: ProductListTypes.CREATE_ITEM,
+      payload: { productItem: mockItem, listId: '12345' },
+    },
+  ];
 
-    const result = productListActions.updateProductListAsync(mockData);
+  const deleteItem = [
+    'deleteItem',
+    actions.deleteItem('111', '12345'),
+    {
+      type: ProductListTypes.DELETE_ITEM,
+      payload: { itemId: '111', listId: '12345' },
+    },
+  ];
 
-    expect(result).toEqual({
-      type: ProductListTypes.UPDATE_PRODUCT_LIST_ASYNC,
-      payload: {
-        productList: mockData,
-      },
-    });
-  });
+  const updateItem = [
+    'updateItem',
+    actions.updateItem(mockItem, '12345'),
+    {
+      type: ProductListTypes.UPDATE_ITEM,
+      payload: { productItem: mockItem, listId: '12345' },
+    },
+  ];
 
-  test('deve retornar deleteProductListAsync corretamente.', () => {
-    const result = productListActions.deleteProductListAsync('12345');
+  //#endregion
 
-    expect(result).toEqual({
-      type: ProductListTypes.DELETE_PRODUCT_LIST_ASYNC,
-      payload: {
-        listId: '12345',
-      },
-    });
-  });
-
-  test('deve retornar setProductLists corretamente.', () => {
-    const mockData = [new ProductListBuilderMock().withName('Lista').build()];
-
-    const result = productListActions.setProductLists(mockData);
-
-    expect(result).toEqual({
-      type: ProductListTypes.SET_PRODUCT_LIST,
-      payload: {
-        productLists: mockData,
-      },
-    });
-  });
-
-  test('deve retornar getProductItemsAsync corretamente.', () => {
-    const listId = '12345';
-    const result = productListActions.getProductItemsAsync(listId);
-
-    expect(result).toEqual({
-      type: ProductListTypes.GET_PRODUCT_ITEMS_ASYNC,
-      payload: {
-        listId,
-      },
-    });
-  });
-
-  test('deve retornar createProductItemAsync corretamente.', () => {
-    const mockData = new ProductItemBuilderMock().withName('Lista').build();
-    const listId = '12345';
-    const result = productListActions.createProductItemAsync(mockData, listId);
-
-    expect(result).toEqual({
-      type: ProductListTypes.CREATE_PRODUCT_ITEM_ASYNC,
-      payload: {
-        productItem: mockData,
-        listId,
-      },
-    });
-  });
-
-  test('deve retornar deleteProductItemAsync corretamente.', () => {
-    const itemId = '54321';
-    const listId = '12345';
-    const result = productListActions.deleteProductItemAsync(itemId, listId);
-
-    expect(result).toEqual({
-      type: ProductListTypes.DELETE_PRODUCT_ITEM_ASYNC,
-      payload: {
-        itemId,
-        listId,
-      },
-    });
-  });
-
-  test('deve retornar updateProductItemAsync corretamente.', () => {
-    const productItem = new ProductItemBuilderMock().withName('Lista').build();
-    const listId = '12345';
-    const result = productListActions.updateProductItemAsync(
-      productItem,
-      listId,
-    );
-
-    expect(result).toEqual({
-      type: ProductListTypes.UPDATE_PRODUCT_ITEM_ASYNC,
-      payload: {
-        listId,
-        productItem,
-      },
-    });
+  test.each([
+    setError,
+    requestLists,
+    createList,
+    updateList,
+    deleteList,
+    setProductLists,
+    requestItems,
+    createItem,
+    deleteItem,
+    updateItem,
+  ])('deve retornar corretamente a action %s', (describe, action, expected) => {
+    expect(action).toEqual(expected);
   });
 });

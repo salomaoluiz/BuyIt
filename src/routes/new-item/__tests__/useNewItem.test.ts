@@ -51,7 +51,7 @@ describe('NewItem - useNewItem', () => {
 
     expect(checkForm).toHaveBeenCalled();
     expect(dispatch).toHaveBeenCalledWith(
-      productListActions.createProductItemAsync(
+      productListActions.createItem(
         initialProps.formParams,
         listId,
       ),
@@ -95,7 +95,7 @@ describe('NewItem - useNewItem', () => {
 
     expect(checkForm).toHaveBeenCalled();
     expect(dispatch).toHaveBeenCalledWith(
-      productListActions.updateProductItemAsync(
+      productListActions.updateItem(
         newInitialProps.formParams,
         listId,
       ),

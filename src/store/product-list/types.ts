@@ -1,21 +1,20 @@
 import { PaperListData } from '@components/list';
 
 export enum ProductListTypes {
-  SET_LOADING = '@productLists/SET_LOADING',
   SET_ERROR = '@productLists/SET_ERROR',
   SET_SYNCED = '@productLists/SET_SYNCED',
 
-  CREATE_PRODUCT_LIST_ASYNC = '@productLists/CREATE_PRODUCT_LIST_ASYNC',
-  GET_PRODUCT_LISTS_ASYNC = '@productLists/GET_PRODUCT_LISTS_ASYNC',
-  UPDATE_PRODUCT_LIST_ASYNC = '@productLists/UPDATE_PRODUCT_LIST_ASYNC',
-  DELETE_PRODUCT_LIST_ASYNC = '@productLists/DELETE_PRODUCT_LIST_ASYNC',
+  REQUEST_LISTS = '@productLists/REQUEST_LISTS',
+  CREATE_LIST = '@productLists/CREATE_LIST',
+  UPDATE_LIST = '@productLists/UPDATE_LIST',
+  DELETE_LIST = '@productLists/DELETE_LIST',
 
-  CREATE_PRODUCT_ITEM_ASYNC = '@productLists/CREATE_PRODUCT_ITEM_ASYNC',
-  GET_PRODUCT_ITEMS_ASYNC = '@productLists/GET_PRODUCT_ITEMS_ASYNC',
-  UPDATE_PRODUCT_ITEM_ASYNC = '@productLists/UPDATE_PRODUCT_ITEM_ASYNC',
-  DELETE_PRODUCT_ITEM_ASYNC = '@productLists/DELETE_PRODUCT_ITEM_ASYNC',
+  REQUEST_ITEMS = '@productLists/REQUEST_ITEMS',
+  CREATE_ITEM = '@productLists/CREATE_ITEM',
+  UPDATE_ITEM = '@productLists/UPDATE_ITEM',
+  DELETE_ITEM = '@productLists/DELETE_ITEM',
 
-  SET_PRODUCT_LIST = '@productLists/SET_PRODUCT_LIST',
+  SET_PRODUCT_LISTS = '@productLists/SET_PRODUCT_LISTS',
 }
 
 export type ProductItemForm = {
@@ -54,12 +53,12 @@ export interface ProductListState {
   error?: string;
 }
 
-export type ProductListActions<Payload> = {
+export type ProductListAction<Payload> = {
   type: ProductListTypes;
   payload: Payload;
 };
 
 export type ProductListReducer = (
   state: ProductListState,
-  payload: ProductListActions<ProductListState>,
+  payload: ProductListAction<ProductListState>,
 ) => ProductListState;

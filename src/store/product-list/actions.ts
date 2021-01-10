@@ -1,5 +1,5 @@
 import {
-  ProductListActions,
+  ProductListAction,
   ProductListTypes,
   ProductList,
   ProductLists,
@@ -7,79 +7,73 @@ import {
 } from './types';
 
 const actions = {
-  setLoading: (
-    isLoading: boolean,
-  ): ProductListActions<{ isLoading: boolean }> => ({
-    type: ProductListTypes.SET_LOADING,
-    payload: { isLoading },
-  }),
-  setError: (error?: string): ProductListActions<{ error?: string }> => ({
+  setError: (error?: string): ProductListAction<{ error?: string }> => ({
     type: ProductListTypes.SET_ERROR,
     payload: { error },
   }),
-  getProductListsAsync: () => ({
-    type: ProductListTypes.GET_PRODUCT_LISTS_ASYNC,
+  requestLists: () => ({
+    type: ProductListTypes.REQUEST_LISTS,
   }),
-  createProductListAsync: (
+  createList: (
     productList: Partial<ProductList>,
-  ): ProductListActions<{ productList: Partial<ProductList> }> => ({
-    type: ProductListTypes.CREATE_PRODUCT_LIST_ASYNC,
+  ): ProductListAction<{ productList: Partial<ProductList> }> => ({
+    type: ProductListTypes.CREATE_LIST,
     payload: { productList },
   }),
-  updateProductListAsync: (
+  updateList: (
     productList: Partial<ProductList>,
-  ): ProductListActions<{ productList: Partial<ProductList> }> => ({
-    type: ProductListTypes.UPDATE_PRODUCT_LIST_ASYNC,
+  ): ProductListAction<{ productList: Partial<ProductList> }> => ({
+    type: ProductListTypes.UPDATE_LIST,
     payload: { productList },
   }),
-  deleteProductListAsync: (
+  deleteList: (
     listId: string,
-  ): ProductListActions<{
+  ): ProductListAction<{
     listId: string;
   }> => ({
-    type: ProductListTypes.DELETE_PRODUCT_LIST_ASYNC,
+    type: ProductListTypes.DELETE_LIST,
     payload: { listId },
   }),
   setProductLists: (
     productLists: ProductLists,
-  ): ProductListActions<{ productLists: ProductLists }> => ({
-    type: ProductListTypes.SET_PRODUCT_LIST,
+  ): ProductListAction<{ productLists: ProductLists }> => ({
+    type: ProductListTypes.SET_PRODUCT_LISTS,
     payload: { productLists },
   }),
-  getProductItemsAsync: (
+  requestItems: (
     listId: string,
-  ): ProductListActions<{ listId: string }> => ({
-    type: ProductListTypes.GET_PRODUCT_ITEMS_ASYNC,
+  ): ProductListAction<{ listId: string }> => ({
+    type: ProductListTypes.REQUEST_ITEMS,
     payload: { listId },
   }),
-  createProductItemAsync: (
+  createItem: (
     productItem: Partial<ProductItem>,
     listId: string,
-  ): ProductListActions<{
+  ): ProductListAction<{
     productItem: Partial<ProductItem>;
     listId: string;
   }> => ({
-    type: ProductListTypes.CREATE_PRODUCT_ITEM_ASYNC,
+    type: ProductListTypes.CREATE_ITEM,
     payload: { productItem, listId },
   }),
-  deleteProductItemAsync: (
+  deleteItem: (
     itemId: string,
     listId: string,
-  ): ProductListActions<{
+  ): ProductListAction<{
     itemId: string;
     listId: string;
   }> => ({
-    type: ProductListTypes.DELETE_PRODUCT_ITEM_ASYNC,
+    type: ProductListTypes.DELETE_ITEM,
     payload: { itemId, listId },
   }),
-  updateProductItemAsync: (
+  updateItem: (
     productItem: Partial<ProductItem>,
     listId: string,
-  ): ProductListActions<{
+  ): ProductListAction<{
     productItem: Partial<ProductItem>;
     listId: string;
   }> => ({
-    type: ProductListTypes.UPDATE_PRODUCT_ITEM_ASYNC,
+    type: ProductListTypes.UPDATE_ITEM,
     payload: { productItem, listId },
   }),
 };
