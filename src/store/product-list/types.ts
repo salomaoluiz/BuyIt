@@ -27,6 +27,7 @@ export type ProductItemForm = {
   createdAt: number;
   updatedAt: number;
   image?: string;
+  barcode?: string;
 };
 
 export interface ProductItem extends ProductItemForm {

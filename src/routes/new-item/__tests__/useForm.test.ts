@@ -37,6 +37,8 @@ describe('NewItem - useForm', () => {
       qtd: '',
       unit: undefined,
       brand: '',
+      barcode: '',
+      dueDate: undefined,
     };
 
     expect(result.current.formParams).toEqual(expected);

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Portal } from 'react-native-paper';
 
+import BarcodeCamera from '@components/barcode-camera';
 import Dialog from '@components/dialog';
 import Divider from '@components/divider';
 import CircleButton from '@components/FAB';
@@ -10,6 +11,7 @@ import TouchableRipple from '@components/touchable-ripple';
 import appLocale, { appCurrency } from '@locales';
 import { formatDate } from '@utils/date';
 
+import BarcodeContainer from './containers/barcode';
 import DueDateModal from './containers/duedate-modal';
 import UnitModal from './containers/unit-modal';
 import {
@@ -35,8 +37,9 @@ const NewItem = () => {
     setUnit,
     checkForm,
     setDueDate,
+    setBarcode,
   } = useForm();
-  const { amount, brand, name, qtd, unit, dueDate } = formParams;
+  const { amount, brand, name, qtd, unit, dueDate, barcode } = formParams;
 
   const {
     onSaveButtonPress,
@@ -44,6 +47,8 @@ const NewItem = () => {
     modalVisible,
     datePickerVisible,
     handleDatePickerVisible,
+    handleBarcodeCameraVisibility,
+    barcodeCameraVisible,
   } = useNewItem({
     formParams,
     checkForm,
@@ -111,6 +116,12 @@ const NewItem = () => {
             </TouchableRipple>
           </TwoColumnsContainer>
         </SubContainer>
+        <Divider columnDivider />
+        <BarcodeContainer
+          handleBarcodeChange={setBarcode}
+          barcode={barcode}
+          handleCameraVisibility={handleBarcodeCameraVisibility}
+        />
       </Container>
       <ButtonContainer>
         <CircleButton icon="check" onPress={onSaveButtonPress} />
@@ -133,6 +144,11 @@ const NewItem = () => {
           handleModalVisible={handleDatePickerVisible}
           isVisible={datePickerVisible}
           setDueDate={setDueDate}
+        />
+        <BarcodeCamera
+          isVisible={barcodeCameraVisible}
+          handleClose={handleBarcodeCameraVisibility}
+          handleBarcodeDetected={setBarcode}
         />
       </Portal>
     </>

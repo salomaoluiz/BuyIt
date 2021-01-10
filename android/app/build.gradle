@@ -149,6 +149,7 @@ android {
         versionName getVersionName
         resValue "string", "build_config_package", "br.com.jacobysoftware.buyit"
         multiDexEnabled true
+        missingDimensionStrategy 'react-native-camera', 'general'
     }
     splits {
         abi {

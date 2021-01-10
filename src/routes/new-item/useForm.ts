@@ -17,15 +17,17 @@ const useForm = () => {
   const editBrand = route.params?.productItem?.brand || '';
   const editUnit = route.params?.productItem?.unit || undefined;
   const editDueDate = route.params?.productItem?.dueDate || undefined;
+  const editBarcode = route.params?.productItem?.barcode || '';
 
   const [name, setName] = useState(editName);
   const [amount, setAmount] = useState(editAmount);
   const [qtd, setQtd] = useState(editQtd);
   const [brand, setBrand] = useState(editBrand);
+  const [barcode, setBarcode] = useState(editBarcode);
   const [dueDate, setDueDate] = useState(editDueDate);
   const [unit, setUnit] = useState<PaperListData | undefined>(editUnit);
 
-  const formParams = { id: editId, name, amount, qtd, unit, brand, dueDate };
+  const formParams = { id: editId, name, amount, qtd, unit, brand, dueDate, barcode };
 
   const { validateError, handleErrorMessage } = useFormError({
     formParams,
@@ -47,6 +49,7 @@ const useForm = () => {
     handleErrorMessage,
     setUnit,
     setDueDate,
+    setBarcode,
   };
 };
 

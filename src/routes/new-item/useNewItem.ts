@@ -20,6 +20,7 @@ const useNewItem = (props: Props) => {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [datePickerVisible, setDatePickerVisible] = useState(false);
+  const [barcodeCameraVisible, setBarcodeCameraVisible] = useState(false);
 
   const dispatch = useDispatch();
   const isLoading = useSelector(productListSelectors.isLoading);
@@ -39,7 +40,7 @@ const useNewItem = (props: Props) => {
 
   const handleModalVisible = useCallback(
     (visible?: boolean) => {
-      if (typeof visible === 'boolean') return setModalVisible(visible);
+      if (visible) return setModalVisible(visible);
 
       return setModalVisible(!modalVisible);
     },
@@ -47,9 +48,15 @@ const useNewItem = (props: Props) => {
   );
 
   const handleDatePickerVisible = (visible?: boolean) => {
-    if (typeof visible === 'boolean') return setDatePickerVisible(visible);
+    if (visible) return setDatePickerVisible(visible);
 
     return setDatePickerVisible(!datePickerVisible);
+  };
+
+  const handleBarcodeCameraVisibility = (visible?: boolean) => {
+    if (visible) return setBarcodeCameraVisible(visible);
+
+    return setBarcodeCameraVisible(!barcodeCameraVisible);
   };
 
   return {
@@ -59,6 +66,8 @@ const useNewItem = (props: Props) => {
     modalVisible,
     datePickerVisible,
     handleDatePickerVisible,
+    handleBarcodeCameraVisibility,
+    barcodeCameraVisible,
   };
 };
 

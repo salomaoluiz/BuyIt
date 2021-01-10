@@ -41,15 +41,11 @@ const TextInput = (props: Props) => {
     disabled,
     editable,
     fixedValue,
+    onChangeText,
+    value,
   } = props;
 
-  const {
-    isFocused,
-    onChangeText,
-    onClearText,
-    handleFocusStatus,
-    value,
-  } = useTextInput(props);
+  const { isFocused, onClearText, handleFocusStatus } = useTextInput(props);
 
   const showClearButton = hasClearButton && isFocused;
   const showRightIcon = (!!rightIcon && !isFocused) || !hasClearButton;
