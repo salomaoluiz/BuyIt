@@ -28,6 +28,7 @@
     "react": "16.13.1",
     "react-native": "0.63.2",
     "react-native-bootsplash": "^2.2.4",
+    "react-native-camera": "^3.41.0",
     "react-native-config": "^1.2.1",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-iap": "^5.1.3",

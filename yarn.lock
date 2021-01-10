@@ -7738,6 +7738,13 @@ react-native-bootsplash@^2.2.4:
     jimp "0.14.0"
     prompts "2.3.2"
 
+react-native-camera@^3.41.0:
+  version "3.41.0"
+  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-3.41.0.tgz#8c819cc982d8d9bb598947ee728ee73f6ac1f510"
+  integrity sha512-MCjZ4KOXTqhWAZAouxnkXwDT+3Gnt8Aw0IaigMhXYG4hYhzsTajfr5A6brybPsPXeftOOIsfvDV7o/sSWCjnHQ==
+  dependencies:
+    prop-types "^15.6.2"
+
 react-native-config@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-1.2.1.tgz#f80454fc58ea89b549819ccb4bdab26518a9f0db"

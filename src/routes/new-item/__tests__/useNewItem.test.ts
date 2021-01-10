@@ -42,7 +42,7 @@ describe('NewItem - useNewItem', () => {
     checkForm,
   };
 
-  test('ao chamar onSaveButtonPress sem um id deve chamar o checkForm e disparar a action createProductItemAsync', async () => {
+  test('ao clicar no botão de salvar na tela de novo item da lista, deve disparar a action para criar um item na lista', async () => {
     const { result } = renderHook(useNewItem, { initialProps });
 
     await act(async () => {
@@ -51,14 +51,11 @@ describe('NewItem - useNewItem', () => {
 
     expect(checkForm).toHaveBeenCalled();
     expect(dispatch).toHaveBeenCalledWith(
-      productListActions.createItem(
-        initialProps.formParams,
-        listId,
-      ),
+      productListActions.createItem(initialProps.formParams, listId),
     );
   });
 
-  test('ao chamar onSaveButtonPress a partir do stock sem um id deve chamar o checkForm e disparar a action createItem do stock', async () => {
+  test('ao clicar no botão de salvar na tela de novo item do stock, deve disparar a action para criar um item no stock', async () => {
     useRouteSpy.mockReturnValue({
       key: '',
       name: 'NewItem',
@@ -77,7 +74,7 @@ describe('NewItem - useNewItem', () => {
     );
   });
 
-  test('ao chamar onSaveButtonPress com um id deve chamar o checkForm e disparar a action updateProductItemAsync', async () => {
+  test('ao clicar no botão de salvar na tela de novo item da lista tendo o id no form, deve disparar a action para atualizar o item do id', async () => {
     const newInitialProps = {
       ...initialProps,
       formParams: {
@@ -95,14 +92,11 @@ describe('NewItem - useNewItem', () => {
 
     expect(checkForm).toHaveBeenCalled();
     expect(dispatch).toHaveBeenCalledWith(
-      productListActions.updateItem(
-        newInitialProps.formParams,
-        listId,
-      ),
+      productListActions.updateItem(newInitialProps.formParams, listId),
     );
   });
 
-  test('ao chamar onSaveButtonPress a partir do stock com um id deve chamar o checkForm e disparar a action updateItem do stock', async () => {
+  test('ao clicar no botão de salvar na tela de novo item do stock tendo o id no form, deve disparar a action para atualizar o item do id', async () => {
     useRouteSpy.mockReturnValue({
       key: '',
       name: 'NewItem',
@@ -127,17 +121,9 @@ describe('NewItem - useNewItem', () => {
     );
   });
 
-  test('ao chamar handleModalVisible passando um status, deve atualizar o status do modal para o status informado', () => {
-    const newInitialProps = {
-      ...initialProps,
-      formParams: {
-        ...initialProps.formParams,
-        id: '123456',
-      },
-    };
-
+  test('caso passe um valor para o modal, deve atualizar o status para o valor passado', () => {
     const { result } = renderHook(useNewItem, {
-      initialProps: newInitialProps,
+      initialProps,
     });
 
     expect(result.current.modalVisible).toBe(false);
@@ -149,17 +135,9 @@ describe('NewItem - useNewItem', () => {
     expect(result.current.modalVisible).toBe(true);
   });
 
-  test('ao chamar handleModalVisible nao passando nada, deve atualizar o status do modal para o status inverso ao atual', () => {
-    const newInitialProps = {
-      ...initialProps,
-      formParams: {
-        ...initialProps.formParams,
-        id: '123456',
-      },
-    };
-
+  test('caso nao passe um valor pro modal, deve atualizar o status do modal para o status inverso ao atual', () => {
     const { result } = renderHook(useNewItem, {
-      initialProps: newInitialProps,
+      initialProps,
     });
 
     expect(result.current.modalVisible).toBe(false);
@@ -171,17 +149,9 @@ describe('NewItem - useNewItem', () => {
     expect(result.current.modalVisible).toBe(true);
   });
 
-  test('ao chamar handleDatePickerVisible passando um status, deve atualizar o status do modal para o status informado', () => {
-    const newInitialProps = {
-      ...initialProps,
-      formParams: {
-        ...initialProps.formParams,
-        id: '123456',
-      },
-    };
-
+  test('caso passe um valor para o date picker, deve atualizar o status do modal para o status informado', () => {
     const { result } = renderHook(useNewItem, {
-      initialProps: newInitialProps,
+      initialProps,
     });
 
     expect(result.current.datePickerVisible).toBe(false);
@@ -193,17 +163,9 @@ describe('NewItem - useNewItem', () => {
     expect(result.current.datePickerVisible).toBe(true);
   });
 
-  test('ao chamar handleDatePickerVisible nao passando nada, deve atualizar o status do modal para o status inverso ao atual', () => {
-    const newInitialProps = {
-      ...initialProps,
-      formParams: {
-        ...initialProps.formParams,
-        id: '123456',
-      },
-    };
-
+  test('caso passe um valor para o date picker, deve atualizar o status do modal para o status inverso ao atual', () => {
     const { result } = renderHook(useNewItem, {
-      initialProps: newInitialProps,
+      initialProps,
     });
 
     expect(result.current.datePickerVisible).toBe(false);
@@ -213,5 +175,33 @@ describe('NewItem - useNewItem', () => {
     });
 
     expect(result.current.datePickerVisible).toBe(true);
+  });
+
+  test('caso passe um valor para o modal da camera, deve atualizar o status para o passado', () => {
+    const { result } = renderHook(useNewItem, {
+      initialProps,
+    });
+
+    expect(result.current.barcodeCameraVisible).toBe(false);
+
+    act(() => {
+      result.current.handleBarcodeCameraVisibility(true);
+    });
+
+    expect(result.current.barcodeCameraVisible).toBe(true);
+  });
+
+  test('caso nao passe um valor para o modal da camera, deve atualizar o status para o inverso do status atual', () => {
+    const { result } = renderHook(useNewItem, {
+      initialProps,
+    });
+
+    expect(result.current.barcodeCameraVisible).toBe(false);
+
+    act(() => {
+      result.current.handleBarcodeCameraVisibility();
+    });
+
+    expect(result.current.barcodeCameraVisible).toBe(true);
   });
 });

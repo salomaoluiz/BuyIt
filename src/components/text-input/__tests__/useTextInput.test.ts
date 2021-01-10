@@ -9,14 +9,7 @@ describe('Testando useTextInput', () => {
     label: 'title',
   };
 
-  it('deve iniciar com os valores defaults', () => {
-    const { result } = renderHook(useTextInput, { initialProps });
-
-    expect(result.current.isFocused).toEqual(false);
-    expect(result.current.value).toEqual('');
-  });
-
-  it('deve alterar o isFocused', () => {
+  test('deve alterar o isFocused', () => {
     const { result } = renderHook(useTextInput, { initialProps });
 
     act(() => result.current.handleFocusStatus());
@@ -24,18 +17,29 @@ describe('Testando useTextInput', () => {
     expect(result.current.isFocused).toEqual(true);
   });
 
-  it('deve alterar o valor do text e limpa ele novamente', () => {
-    const { result } = renderHook(useTextInput, { initialProps });
-
+  test('deve alterar o valor do text e limpa ele novamente', () => {
     const mockValue = 'mock value';
-    act(() => result.current.onChangeText(mockValue));
 
-    expect(result.current.value).toEqual(mockValue);
-    expect(initialProps.onChangeText).toHaveBeenCalledWith(mockValue);
+    const { result } = renderHook(useTextInput, {
+      initialProps: { ...initialProps, value: mockValue },
+    });
 
     act(() => result.current.onClearText());
 
-    expect(result.current.value).toEqual(initialProps.value);
     expect(initialProps.onChangeText).toHaveBeenCalledWith('');
+  });
+
+  test('nao deve alterar nada caso nao possua o onChangeText', () => {
+    const mockValue = 'mock value';
+
+    const { result } = renderHook(useTextInput, {
+      initialProps: { value: mockValue, label: 'label' },
+    });
+
+    act(() => {
+      result.current.onClearText();
+    });
+
+    expect(initialProps.onChangeText).not.toHaveBeenCalled();
   });
 });
