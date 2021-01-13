@@ -42,7 +42,7 @@ ADMOB_INTERSTITIAL_ID_CAMPAING=
 Observe que apesar de ter um `ADMOB_BANNER_ID_*` no ambiente de desenvolvimento, enquanto você utilizar o projeto sem ser em release, ele irá apresentar as propagandas de teste somente.
 
 ## Realizando build
-Para realizar o build do projeto, tenha todas as dependências instaladas usando o `yarn install` em seguida execute `yarn android:dev` para iniciar em modo debug na lane de desenvolvimento. Para gerar uma release em debug na lane de produção é preciso ter uma **keystore**  configurada e presente na sua *$HOME*, após configura-la com o nome *buyit.keystore* execute na raiz do projeto `yarn android:prod`.
+Para realizar o build do projeto, tenha todas as dependências instaladas usando o `yarn install` em seguida execute `yarn android:dev` para iniciar em modo debug na lane de desenvolvimento. Para gerar um app em debug na lane de produção é preciso ter uma **keystore**  configurada e presente na sua *$HOME*, após configura-la com o nome *buyit.keystore* execute na raiz do projeto `yarn android:prod`.
 
 ### Após gerar meu build ele abre e fecha o app, o que fazer?
 Caso você tenha gerado um build e ao tentar abrir ele no emulador/device ele abrir e fechar o app, vá até a pasta *./android* e execute `./gradlew clean` e tente realizar o build novamente.
