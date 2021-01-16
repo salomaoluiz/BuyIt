@@ -5,6 +5,7 @@ import { Routes } from '@routes';
 
 import Drawer from './components/drawer';
 import ProductNavigator from './product-navigator';
+import SettingsNavigator from './settings-navigator';
 import StockNavigator from './stock-navigator';
 import UnauthenticatedNavigator from './unauthenticated';
 
@@ -26,6 +27,10 @@ const AuthenticatedNavigator = () => {
         <AuthenticatedStack.Screen
           name={Routes.StockNavigator}
           component={StockNavigator}
+        />
+        <AuthenticatedStack.Screen
+          name={Routes.SettingsNavigator}
+          component={SettingsNavigator}
         />
         <AuthenticatedStack.Screen
           name={Routes.UnauthenticatedNavigator}

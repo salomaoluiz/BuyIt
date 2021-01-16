@@ -7,7 +7,6 @@ const errors = {
     opsWeHaveAProblem: 'Ops, tivemos um problema',
     tryAgainLater: 'Tente novamente mais tarde',
     theValueIsMuchLong: 'O valor é muito longo',
-    failureUpdatingLanguage: 'Falha ao atualizar o idioma',
   },
   productList: {
     insertValidAmount: 'Insira um valor válido',

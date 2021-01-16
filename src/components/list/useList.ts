@@ -8,11 +8,11 @@ const useList = (props: Props) => {
 
   useEffect(() => {
     props.selectedItems.forEach(({ id }) => {
-      const itemFiltered = data.filter((item) => item.id === id)[0];
+      const itemFiltered = props.data.filter((item) => item.id === id)[0];
       selectedData.push({ ...itemFiltered, isSelected: true });
     });
 
-    const newData = data.map((item) => {
+    const newData = props.data.map((item) => {
       const filteredItem = selectedData.find(
         (selectedItem) => selectedItem.id === item.id,
       );
@@ -23,7 +23,7 @@ const useList = (props: Props) => {
     });
 
     setData(newData);
-  }, [props.data]);
+  }, [props.data, props.selectedItems]);
 
   const handleItemPress = useCallback((item: PaperListData) => {
     const canSelectMultiple = props.checkMode && props.checkMode === 'checkbox';

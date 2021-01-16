@@ -23,3 +23,9 @@ jest.mock('@react-native-firebase/firestore', () =>
   }),
 );
 
+jest.mock('@react-native-community/async-storage', () => ({
+  setItem: jest.fn(),
+  getItem: jest.fn(),
+}));
+
+jest.mock('react-native-restart', () => ({ Restart: jest.fn() }));
