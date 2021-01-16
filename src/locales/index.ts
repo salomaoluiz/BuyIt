@@ -1,10 +1,53 @@
-import ptBR from './ptBR';
+import i18n from 'i18n-js';
 
-export type AppLocales = {
-  ptBR: 'ptBR';
+import * as persist from './persist';
+import { hasTranslationAvailable } from './utils';
+import enUS from './enUS'; // eslint-disable-line
+import ptBR from './ptBR'; // eslint-disable-line
+
+export type AppLocales = 'ptBR' | 'enUS';
+
+i18n.translations = {
+  ptBR: { ...ptBR },
+  enUS: { ...enUS },
 };
 
-export const _currentLocale: keyof AppLocales = 'ptBR';
+i18n.defaultLocale = 'ptBR';
+
+export const init = async () => {
+  const currentLocale = (await persist.getLocale()) as AppLocales;
+  if (!currentLocale) {
+    i18n.locale = 'ptBR';
+    return;
+  }
+
+  i18n.locale = currentLocale;
+};
+
+export const translate = i18n.t;
+
+export const getLanguage = () => i18n.locale;
+
+export const getAvailableLocales = () =>
+  Object.keys(i18n.translations) as AppLocales[];
+
+export const translateInLocale = (key: string, locale: AppLocales) =>
+  i18n.t(key, { locale });
+
+export const setLanguage = async (language: AppLocales) => {
+  const isAvailable = hasTranslationAvailable(language);
+
+  if (!isAvailable) throw new Error('Unavailable language');
+
+  i18n.locale = language;
+  await persist.saveLocale(language);
+};
+
+init();
+
+//#region LEGADO - LEGACY
+
+export const _currentLocale: AppLocales = 'ptBR';
 
 const locales: { [key: string]: typeof ptBR } = {
   ptBR,
@@ -21,5 +64,7 @@ export const appCurrency = () => {
 
   return currency;
 };
+
+//#endregion
 
 export default appLocale;

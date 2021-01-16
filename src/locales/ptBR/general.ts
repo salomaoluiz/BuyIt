@@ -6,10 +6,10 @@ const general = {
   delete: 'Apagar',
   whatWant: 'O que deseja?',
   whatWantDo: 'O que deseja fazer?',
-  languageUpdatedWithSuccess: 'Idioma atualizado com sucesso',
-  restartAppToHaveEffect: 'Reinicie a aplicação para surtir efeito',
   dismiss: 'Dispensar',
   cancel: 'Cancelar',
+  yes: 'Sim',
+  no: 'Não',
 };
 
 export default general;
