@@ -2,6 +2,7 @@ import * as loginErrors from '../__mocks__/register.mock';
 import testSchema from '../../testSchema';
 
 describe('Testando a validação do ProductList', () => {
+  // should return treu if all values are valid
   test('deve retornar true se todos os valores forem válidos', async () => {
     const mock = {
       name: 'aaaa',
@@ -14,6 +15,7 @@ describe('Testando a validação do ProductList', () => {
     expect(result).toEqual(true);
   });
 
+  // should return an array with errors to empty values and to password too short
   test('deve retornar um array com erros para valores vazios e que a senha é muito curta', async () => {
     const mock = {
       name: '',
@@ -34,6 +36,7 @@ describe('Testando a validação do ProductList', () => {
     ]);
   });
 
+  // should return an array with errors to password not equals
   test('deve retornar um array com erros para senhas não iguais', async () => {
     const mock = {
       name: 'aaa',

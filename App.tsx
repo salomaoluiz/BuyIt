@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import RNBootSplash from 'react-native-bootsplash';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { Provider } from 'react-redux';

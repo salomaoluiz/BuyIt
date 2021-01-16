@@ -28,6 +28,7 @@ describe('Login - useForm', () => {
     });
   });
 
+  // should start with the default values
   test('deve inicializar com valores default', () => {
     const { result } = renderHook(useForm);
 
@@ -41,6 +42,7 @@ describe('Login - useForm', () => {
     expect(result.current.formParams).toEqual(expected);
   });
 
+  // when checkForm is called, should call the validateError
   test('ao chamar o checkForm, deve ser chamado o validateError', async () => {
     const { result } = renderHook(useForm);
     let isValid = false;

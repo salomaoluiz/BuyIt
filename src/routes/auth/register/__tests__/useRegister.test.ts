@@ -20,6 +20,7 @@ describe('Register - useRegister', () => {
     checkForm: jest.fn().mockResolvedValue(true),
   };
 
+  // when you press the register button with a valid form, should dispatch the action to register
   test('ao pressionar o botao de registro com o formulario válido deve disparar a action de registro', async () => {
     const { result } = renderHook(useRegister, { initialProps });
 

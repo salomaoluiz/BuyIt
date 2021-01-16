@@ -1,8 +1,6 @@
 import * as Yup from 'yup';
 
-import appLocale from '@locales';
-
-const strings = appLocale();
+import { translate } from '@locales';
 
 const numberWithDot = /^[0-9]*[.]?[0-9]*$/g;
 const onlyNumber = /^[0-9]*$/g;
@@ -16,25 +14,28 @@ const validateMax = (value: string) => {
 };
 
 const productItem = Yup.object().shape({
-  name: Yup.string().required(strings.errors.general.thisValueIsRequired),
+  name: Yup.string().required(translate('errors.general.thisValueIsRequired')),
   amount: Yup.string()
-    .required(strings.errors.general.thisValueIsRequired)
+    .required(translate('errors.general.thisValueIsRequired'))
     .test(
       'lower-then-100000',
-      strings.errors.general.theValueIsMuchLong,
+      translate('errors.general.theValueIsMuchLong'),
       validateMax,
     )
-    .matches(numberWithDot, strings.errors.productList.invalidValueUseOnlyDot),
+    .matches(
+      numberWithDot,
+      translate('errors.productList.invalidValueUseOnlyDot'),
+    ),
   qtd: Yup.string()
-    .required(strings.errors.general.thisValueIsRequired)
+    .required(translate('errors.general.thisValueIsRequired'))
     .test(
       'lower-then-100000',
-      strings.errors.general.theValueIsMuchLong,
+      translate('errors.general.theValueIsMuchLong'),
       validateMax,
     )
-    .matches(onlyNumber, strings.errors.general.invalidValue),
-  brand: Yup.string().typeError(strings.errors.general.invalidValue),
-  unit: Yup.string().required(strings.errors.general.thisValueIsRequired),
+    .matches(onlyNumber, translate('errors.general.invalidValue')),
+  brand: Yup.string().typeError(translate('errors.general.invalidValue')),
+  unit: Yup.string().required(translate('errors.general.thisValueIsRequired')),
 });
 
 export default productItem;

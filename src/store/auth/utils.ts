@@ -1,15 +1,13 @@
-import appLocale from '@locales';
-
-const strings = appLocale();
+import { translate } from '@locales';
 
 export const notificationMessages = {
   registerSuccess: {
-    title: strings.auth.registerWithSuccess,
-    body: strings.auth.verifyYourEmailToConfirm,
+    title: translate('auth.registerWithSuccess'),
+    body: translate('auth.verifyYourEmailToConfirm'),
     icon: 'emoticon-excited-outline',
   },
   opsError: (errorMessage: string) => ({
-    title: strings.errors.general.opsWeHaveAProblem,
+    title: translate('errors.general.opsWeHaveAProblem'),
     body: errorMessage,
   }),
 };

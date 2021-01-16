@@ -18,6 +18,7 @@ describe('Login - useLogin', () => {
     return false;
   });
 
+  // when handleLoginAnonymously are called, should dispatch a action to Anonymous login
   test('se chamado handleLoginAnonymously, deve disparar a action de login anonimo', () => {
     const initialProps = {
       formParams: {
@@ -36,6 +37,7 @@ describe('Login - useLogin', () => {
     expect(dispatch).toHaveBeenCalledWith(authActions.requestLoginAnonymously());
   });
 
+  // when handleLoginEmailPassword is called and the form is correctly, should dispatch a action to login with email and password
   test('se chamado handleLoginEmailPassword e o form estiver correto, deve disparar a action do login com email e senha', async () => {
     const initialProps = {
       formParams: {
@@ -60,6 +62,7 @@ describe('Login - useLogin', () => {
     );
   });
 
+  // when handleRegisterUser is called, should navigate to the Register screen passing the email as props
   test('se chamado handleRegisterUser deve navegar para a tela de Registro passando o email como props', async () => {
     const initialProps = {
       formParams: {

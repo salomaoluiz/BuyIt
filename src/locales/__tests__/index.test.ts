@@ -4,7 +4,7 @@ import appLocale, {
   appCurrency,
   getAvailableLocales,
   getLanguage,
-  init,
+  initLocale,
   setLanguage,
   toCurrency,
   translate,
@@ -51,7 +51,7 @@ describe('Locales', () => {
   test('caso não possua o locale no AsyncStorage, deve setar o default ptBR', async () => {
     spyGetLocale.mockResolvedValue(null);
 
-    await init();
+    await initLocale();
 
     expect(spyGetLocale).toHaveBeenCalled();
     expect(i18n.locale).toEqual('ptBR');
@@ -61,7 +61,7 @@ describe('Locales', () => {
   test('caso possua o locale no AsyncStorage, deve seta-lo', async () => {
     spyGetLocale.mockResolvedValue('enUS');
 
-    await init();
+    await initLocale();
 
     expect(spyGetLocale).toHaveBeenCalled();
     expect(i18n.locale).toEqual('enUS');

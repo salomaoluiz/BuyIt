@@ -1,16 +1,14 @@
 import * as Yup from 'yup';
 
-import appLocale from '@locales';
-
-const strings = appLocale();
+import { translate } from '@locales';
 
 const login = Yup.object().shape({
   email: Yup.string()
-    .email(strings.errors.auth.emailInvalid)
-    .required(strings.errors.general.thisValueIsRequired),
+    .email(translate('errors.auth.emailInvalid'))
+    .required(translate('errors.general.thisValueIsRequired')),
   password: Yup.string()
-    .required(strings.errors.general.thisValueIsRequired)
-    .min(6, strings.errors.auth.passwordShort),
+    .required(translate('errors.general.thisValueIsRequired'))
+    .min(6, translate('errors.auth.passwordShort')),
 });
 
 export default login;

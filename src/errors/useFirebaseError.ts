@@ -1,16 +1,14 @@
-import appLocale from '@locales';
+import { translate } from '@locales';
 
 import * as auth from './firebase/auth';
 import { RegexValues } from './firebase/auth';
 import * as productLists from './firebase/productLists';
 
-const strings = appLocale();
-
 type Modules = 'auth' | 'productLists';
 export type RegexPattern = { [key: string]: string };
 type ErrorPattern = RegexValues;
 type ModulesPattern = {
-  [key: string]: { errorRegex: RegexPattern; errorStrings: RegexPattern };
+  [key: string]: { errorRegex: RegexPattern };
 };
 
 const modules: ModulesPattern = {
@@ -20,13 +18,11 @@ const modules: ModulesPattern = {
 
 const useFirebaseError = (module: Modules) => {
   const errorRegex = modules[module].errorRegex;
-  const errorStrings = modules[module].errorStrings;
 
   const _filterError = (errorResponse: string) => {
     let error;
     for (const key in errorRegex) {
-      const regex = errorRegex[key];
-      if (errorResponse.includes(regex)) {
+      if (errorResponse.includes(key)) {
         error = key;
       }
     }
@@ -38,14 +34,14 @@ const useFirebaseError = (module: Modules) => {
     const errorKey = _filterError(errorResponse);
 
     if (errorKey) {
-      return errorStrings[errorKey];
+      return errorRegex[errorKey];
     }
   };
 
   const getErrorMessage = (errorResponse: string) => {
     const errorMessage = filterErrorMessage(errorResponse);
 
-    return errorMessage || strings.errors.general.tryAgainLater;
+    return errorMessage || translate('errors.general.tryAgainLater');
   };
 
   const isFirebaseError = (error: string) => {
