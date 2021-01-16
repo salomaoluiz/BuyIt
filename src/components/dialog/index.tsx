@@ -4,9 +4,7 @@ import { Dialog as PaperDialog } from 'react-native-paper';
 
 import Button from '@components/button';
 import Paragraph from '@components/paragraph';
-import appLocale from '@locales';
-
-const strings = appLocale();
+import { translate } from '@locales';
 
 interface Props {
   isVisible: boolean;
@@ -60,7 +58,7 @@ const Dialog = (props: Props) => {
       {injectScroll()}
       <PaperDialog.Actions>
         {hasCancelButton ? (
-          <Button title={strings.general.cancel} onPress={onDismiss} />
+          <Button title={translate('general.cancel')} onPress={onDismiss} />
         ) : leftButton ? (
           <Button title={leftButton.title} onPress={leftButton.onPress} />
         ) : undefined}

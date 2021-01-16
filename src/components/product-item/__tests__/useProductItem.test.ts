@@ -5,6 +5,7 @@ import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productIte
 import useProductItem from '../useProductItem';
 
 describe('useProductItem', () => {
+  // when start, should set the subtotal
   test('ao inicializar, deve setar o subtotal', () => {
     const mockProductItem = new ProductItemBuilderMock()
       .withQtd('3')

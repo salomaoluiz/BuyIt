@@ -43,6 +43,9 @@ export const setLanguage = async (language: AppLocales) => {
   await persist.saveLocale(language);
 };
 
+export const toCurrency = (number: number) =>
+  i18n.toCurrency(number, { unit: translate('general.currency') });
+
 init();
 
 //#region LEGADO - LEGACY

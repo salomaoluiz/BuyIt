@@ -3,7 +3,7 @@ import React from 'react';
 import Divider from '@components/divider';
 import Icon from '@components/icon';
 import Menu from '@components/menu';
-import appLocale, { appCurrency } from '@locales';
+import { toCurrency, translate } from '@locales';
 import { ProductItem } from '@store/product-list/types';
 
 import {
@@ -31,9 +31,6 @@ export interface Props {
   onChangeCheckBox?: () => void;
 }
 
-const strings = appLocale();
-const currency = appCurrency();
-
 const ProductItemComponent = (props: Props) => {
   const {
     productItem,
@@ -46,12 +43,16 @@ const ProductItemComponent = (props: Props) => {
 
   const menuItems = [
     {
-      title: strings.general.edit,
+      title: translate('general.edit'),
       icon: 'pencil',
       onPress: onEditItem,
       hasDivider: true,
     },
-    { title: strings.general.delete, icon: 'close', onPress: onDeleteItem },
+    {
+      title: translate('general.delete'),
+      icon: 'close',
+      onPress: onDeleteItem,
+    },
   ];
 
   return (
@@ -82,13 +83,12 @@ const ProductItemComponent = (props: Props) => {
               </TopContainer>
               <AmountContainer>
                 <Price
-                  text={`${strings.productItems.qtdTimes(
-                    productItem.qtd,
-                    currency,
-                    productItem.amount,
-                  )}`}
+                  text={translate('productItems.qtdTimes', {
+                    qtd: productItem.qtd,
+                    price: toCurrency(parseFloat(productItem.amount)),
+                  })}
                 />
-                <SubTotal text={`${currency} ${subTotal}`} />
+                <SubTotal text={toCurrency(subTotal)} />
               </AmountContainer>
             </TextsContainer>
           </ItemSubContainer>

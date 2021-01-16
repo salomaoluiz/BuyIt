@@ -1,6 +1,6 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
 
-import appLocale from '@locales';
+import { translate } from '@locales';
 import navigationService from '@navigator/services/navigationService';
 import { notificationActions } from '@store/notification';
 import { ProductItem } from '@store/product-list/types';
@@ -11,8 +11,6 @@ import * as sagaLocal from './sagas-local';
 import * as sagaServer from './sagas-server';
 import { StockTypes, StockAction } from './types';
 import { injectStockItemExtraData } from './utils';
-
-const strings = appLocale();
 
 export function* createItem(props: StockAction<{ stockItem: ProductItem }>) {
   try {
@@ -29,10 +27,10 @@ export function* createItem(props: StockAction<{ stockItem: ProductItem }>) {
       yield put(
         notificationActions.scheduleLocalNotificationAsync({
           date: notificationDate,
-          message: strings.productItems.productExpireInDay(
-            stockItem.name,
-            formatDate(stockItem.dueDate),
-          ),
+          message: translate('productItems.productExpireInDay', {
+            product: stockItem.name,
+            date: formatDate(stockItem.dueDate),
+          }),
           playSound: true,
           title: stockItem.name,
         }),

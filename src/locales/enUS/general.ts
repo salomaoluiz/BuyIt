@@ -10,6 +10,7 @@ const general = {
   cancel: `Cancel`,
   yes: `Yes`,
   no: `No`,
+  currency: '$',
 };
 
 export default general;
