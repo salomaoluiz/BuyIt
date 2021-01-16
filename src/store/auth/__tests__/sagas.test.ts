@@ -1,7 +1,7 @@
 import { put, call, select } from 'redux-saga/effects';
 
 import useFirebaseError from '@errors/useFirebaseError';
-import appLocale from '@locales';
+import { translate } from '@locales';
 import navigationService from '@navigator/services/navigationService';
 import { notificationActions } from '@store/notification';
 import { mockCurrentUser } from 'src/__tests__/firebase-mocks';
@@ -13,8 +13,6 @@ import {
   requestRegisterEmailPassword,
 } from '../sagas';
 import { notificationMessages } from '../utils';
-
-const strings = appLocale();
 
 describe('Auth Saga - Login com Email e Senha', () => {
   jest.spyOn(authModels, 'loginWithEmailPassword');
@@ -64,8 +62,8 @@ describe('Auth Saga - Login com Email e Senha', () => {
     );
 
     const notificationParams = {
-      title: strings.errors.general.opsWeHaveAProblem,
-      body: strings.errors.auth.emailInvalid,
+      title: translate('errors.general.opsWeHaveAProblem'),
+      body: translate('errors.auth.emailInvalid'),
     };
 
     expect(gen.throw(error).value).toEqual(

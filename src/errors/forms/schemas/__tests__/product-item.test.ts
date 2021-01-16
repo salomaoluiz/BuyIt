@@ -2,6 +2,7 @@ import { productListErrors } from '../__mocks__/product-items.mock';
 import testSchema from '../../testSchema';
 
 describe('Testando a validação do ProductList', () => {
+  // should return true if all values are valid
   test('deve retornar true se todos os valores forem válidos', async () => {
     const mock = {
       name: 'Nome',
@@ -14,6 +15,7 @@ describe('Testando a validação do ProductList', () => {
     expect(result).toEqual(true);
   });
 
+  // should return an array with the errors to empty values
   test('deve retornar um array com erros para valores vazios', async () => {
     const mock = {
       name: '',
@@ -31,6 +33,7 @@ describe('Testando a validação do ProductList', () => {
     ]);
   });
 
+  // should return an array with the errors to invalid amount and qtd
   test('deve retornar um array com erros de amount e qtd inválidos', async () => {
     const mock = {
       name: 'name',
@@ -47,6 +50,7 @@ describe('Testando a validação do ProductList', () => {
     ]);
   });
 
+  // should return an array with errors to amount and qtd much longer
   test('deve retornar um array com erros de amount e qtd muito longos', async () => {
     const mock = {
       name: 'name',

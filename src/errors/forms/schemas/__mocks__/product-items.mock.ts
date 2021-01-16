@@ -1,47 +1,48 @@
 import { ValidationError } from 'yup';
 
-import appLocale from '@locales';
+import { translate } from '@locales';
 
 import { ErrorInterface } from '../../';
-
-const strings = appLocale();
 
 const generateError = (errorText: string | string[], path: string) => {
   return new ValidationError(errorText, '', path);
 };
 
 const nameRequired = generateError(
-  strings.errors.general.thisValueIsRequired,
+  translate('errors.general.thisValueIsRequired'),
   'name',
 );
 const amountRequired = generateError(
-  strings.errors.general.thisValueIsRequired,
+  translate('errors.general.thisValueIsRequired'),
   'amount',
 );
 const amountInvalid = generateError(
-  strings.errors.productList.invalidValueUseOnlyDot,
+  translate('errors.productList.invalidValueUseOnlyDot'),
   'amount',
 );
 
 const qtdRequired = generateError(
-  strings.errors.general.thisValueIsRequired,
+  translate('errors.general.thisValueIsRequired'),
   'qtd',
 );
-const qtdInvalid = generateError(strings.errors.general.invalidValue, 'qtd');
+const qtdInvalid = generateError(
+  translate('errors.general.invalidValue'),
+  'qtd',
+);
 const brandInvalid = generateError(
-  strings.errors.general.invalidValue,
+  translate('errors.general.invalidValue'),
   'brand',
 );
 const amountIsMuchLong = generateError(
-  strings.errors.general.theValueIsMuchLong,
+  translate('errors.general.theValueIsMuchLong'),
   'amount',
 );
 const qtdIsMuchLong = generateError(
-  strings.errors.general.theValueIsMuchLong,
+  translate('errors.general.theValueIsMuchLong'),
   'qtd',
 );
 const unitRequired = generateError(
-  strings.errors.general.thisValueIsRequired,
+  translate('errors.general.thisValueIsRequired'),
   'unit',
 );
 
@@ -50,19 +51,19 @@ const resultErrorRequired: ErrorInterface = {
   errors: [
     {
       errorItem: 'name',
-      errorMessage: strings.errors.general.thisValueIsRequired,
+      errorMessage: translate('errors.general.thisValueIsRequired'),
     },
     {
       errorItem: 'amount',
-      errorMessage: strings.errors.general.thisValueIsRequired,
+      errorMessage: translate('errors.general.thisValueIsRequired'),
     },
     {
       errorItem: 'qtd',
-      errorMessage: strings.errors.general.thisValueIsRequired,
+      errorMessage: translate('errors.general.thisValueIsRequired'),
     },
     {
       errorItem: 'unit',
-      errorMessage: strings.errors.general.thisValueIsRequired,
+      errorMessage: translate('errors.general.thisValueIsRequired'),
     },
   ],
 };
@@ -72,11 +73,11 @@ const resultErrorInvalid: ErrorInterface = {
   errors: [
     {
       errorItem: 'amount',
-      errorMessage: strings.errors.productList.invalidValueUseOnlyDot,
+      errorMessage: translate('errors.productList.invalidValueUseOnlyDot'),
     },
     {
       errorItem: 'qtd',
-      errorMessage: strings.errors.general.invalidValue,
+      errorMessage: translate('errors.general.invalidValue'),
     },
   ],
 };

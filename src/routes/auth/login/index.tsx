@@ -7,7 +7,7 @@ import Divider from '@components/divider';
 import FullscreenLoader from '@components/fullscreen-loader';
 import Header from '@components/header';
 import TextInput from '@components/text-input';
-import appLocale from '@locales';
+import { translate } from '@locales';
 import { UnauthenticatedParamsList } from '@navigator/unauthenticated';
 import { dimensions } from '@styles';
 
@@ -20,8 +20,6 @@ import {
 } from './styles';
 import useForm from './useForm';
 import useLogin from './useLogin';
-
-const strings = appLocale();
 
 export type Props = StackScreenProps<UnauthenticatedParamsList, 'Login'>;
 
@@ -49,7 +47,7 @@ const Login = () => {
   return (
     <>
       <Header
-        title={strings.auth.login}
+        title={translate('auth.login')}
         hidden={!isAnonymously}
         hiddenStatusBar={!isAnonymously}
         drawerButton
@@ -64,7 +62,7 @@ const Login = () => {
             </LogoContainer>
             <InputContainer>
               <TextInput
-                label={strings.auth.email}
+                label={translate('auth.email')}
                 onChangeText={setEmail}
                 value={email}
                 leftIcon="account"
@@ -74,7 +72,7 @@ const Login = () => {
               />
               <Divider columnDivider />
               <TextInput
-                label={strings.auth.password}
+                label={translate('auth.password')}
                 onChangeText={setPassword}
                 value={password}
                 leftIcon="lock"
@@ -86,14 +84,14 @@ const Login = () => {
               <Divider columnDivider />
               <Button
                 uppercase
-                title={strings.auth.login}
+                title={translate('auth.login')}
                 onPress={handleLoginEmailPassword}
                 mode="contained"
               />
               <Divider columnDivider />
               <Button
                 uppercase
-                title={strings.auth.register}
+                title={translate('auth.register')}
                 onPress={handleRegisterUser}
                 mode="contained"
               />
@@ -104,7 +102,7 @@ const Login = () => {
               {!isAnonymously && (
                 <Button
                   mode="text"
-                  title={strings.auth.continueWithoutLogin}
+                  title={translate('auth.continueWithoutLogin')}
                   onPress={handleLoginAnonymously}
                   uppercase
                 />

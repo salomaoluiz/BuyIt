@@ -13,8 +13,9 @@ i18n.translations = {
 };
 
 i18n.defaultLocale = 'ptBR';
+i18n.fallbacks = true;
 
-export const init = async () => {
+export const initLocale = async () => {
   const currentLocale = (await persist.getLocale()) as AppLocales;
   if (!currentLocale) {
     i18n.locale = 'ptBR';
@@ -23,6 +24,7 @@ export const init = async () => {
 
   i18n.locale = currentLocale;
 };
+initLocale();
 
 export const translate = i18n.t;
 
@@ -45,8 +47,6 @@ export const setLanguage = async (language: AppLocales) => {
 
 export const toCurrency = (number: number) =>
   i18n.toCurrency(number, { unit: translate('general.currency') });
-
-init();
 
 //#region LEGADO - LEGACY
 

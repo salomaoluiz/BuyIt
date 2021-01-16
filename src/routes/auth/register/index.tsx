@@ -5,13 +5,11 @@ import Divider from '@components/divider';
 import FullscreenLoader from '@components/fullscreen-loader';
 import Header from '@components/header';
 import TextInput from '@components/text-input';
-import appLocale from '@locales';
+import { translate } from '@locales';
 
 import { Container } from './styles';
 import useForm from './useForm';
 import useRegister from './useRegister';
-
-const strings = appLocale();
 
 const RegisterUser = () => {
   const {
@@ -35,12 +33,12 @@ const RegisterUser = () => {
 
   return (
     <>
-      <Header title={strings.auth.register} backButton />
+      <Header title={translate('auth.register')} backButton />
       {shouldShowLoading && <FullscreenLoader />}
       {shouldShowScreen && (
         <Container keyboardShouldPersistTaps="handled">
           <TextInput
-            label={strings.auth.name}
+            label={translate('auth.name')}
             value={name}
             onChangeText={setName}
             error={!!handleErrorMessage('name').error}
@@ -49,7 +47,7 @@ const RegisterUser = () => {
           />
           <Divider columnDivider />
           <TextInput
-            label={strings.auth.email}
+            label={translate('auth.email')}
             value={email}
             onChangeText={setEmail}
             error={!!handleErrorMessage('email').error}
@@ -58,7 +56,7 @@ const RegisterUser = () => {
           />
           <Divider columnDivider />
           <TextInput
-            label={strings.auth.password}
+            label={translate('auth.password')}
             value={password}
             onChangeText={setPassword}
             secureTextEntry
@@ -68,7 +66,7 @@ const RegisterUser = () => {
           />
           <Divider columnDivider />
           <TextInput
-            label={strings.auth.confirmPassword}
+            label={translate('auth.confirmPassword')}
             value={confirmPassword}
             onChangeText={setConfirmPassword}
             secureTextEntry
@@ -79,7 +77,7 @@ const RegisterUser = () => {
           <Divider columnDivider />
           <Button
             onPress={handleRegisterPress}
-            title={strings.auth.register}
+            title={translate('auth.register')}
             mode="contained"
           />
         </Container>

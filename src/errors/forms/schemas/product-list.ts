@@ -1,13 +1,11 @@
 import * as Yup from 'yup';
 
-import appLocale from '@locales';
-
-const strings = appLocale();
+import { translate } from '@locales';
 
 const productList = Yup.object().shape({
   name: Yup.string()
-    .required(strings.errors.general.thisValueIsRequired)
-    .max(100, strings.errors.general.theValueIsMuchLong),
+    .required(translate('errors.general.thisValueIsRequired'))
+    .max(100, translate('errors.general.theValueIsMuchLong')),
 });
 
 export default productList;

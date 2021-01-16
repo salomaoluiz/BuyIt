@@ -1,16 +1,12 @@
 import { RegexPattern } from '@errors/useFirebaseError';
-import appLocale from '@locales';
-
-const strings = appLocale();
+import { translate } from '@locales';
 
 export type RegexValues = 'emailAlreadyInUse' | 'emailInvalid' | 'weakPassword';
 
 const errorRegex: RegexPattern = {
-  emailAlreadyInUse: 'email-already-in-use',
-  emailInvalid: 'invalid-email',
-  weakPassword: 'weak-password',
+  'email-already-in-use': translate('errors.auth.emailAlreadyInUse'),
+  'invalid-email': translate('errors.auth.emailInvalid'),
+  'weak-password': translate('errors.auth.weakPassword'),
 };
 
-const errorStrings = { ...strings.errors.auth };
-
-export { errorRegex, errorStrings };
+export { errorRegex };
