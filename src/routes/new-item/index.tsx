@@ -8,7 +8,7 @@ import CircleButton from '@components/FAB';
 import Header from '@components/header';
 import TextInput from '@components/text-input';
 import TouchableRipple from '@components/touchable-ripple';
-import appLocale, { appCurrency } from '@locales';
+import { translate } from '@locales';
 import { formatDate } from '@utils/date';
 
 import BarcodeContainer from './containers/barcode';
@@ -22,9 +22,6 @@ import {
 } from './styles';
 import useForm from './useForm';
 import useNewItem from './useNewItem';
-
-const strings = appLocale();
-const currency = appCurrency();
 
 const NewItem = () => {
   const {
@@ -56,19 +53,19 @@ const NewItem = () => {
 
   return (
     <>
-      <Header title={strings.productItems.newItem} backButton />
+      <Header title={translate('productItems.newItem')} backButton />
       <Container>
         <SubContainer>
           <TextInput
             value={name}
-            label={strings.general.name}
+            label={translate('general.name')}
             onChangeText={setName}
             {...handleErrorMessage('name')}
           />
           <Divider columnDivider />
           <TextInput
             value={brand}
-            label={strings.productItems.brand}
+            label={translate('productItems.brand')}
             onChangeText={setBrand}
             {...handleErrorMessage('brand')}
           />
@@ -78,8 +75,8 @@ const NewItem = () => {
               value={amount}
               leftIcon="currency-usd"
               onChangeText={setAmount}
-              label={strings.productItems.amount}
-              prefix={currency}
+              label={translate('productItems.amount')}
+              prefix={translate('general.currency')}
               keyboardType="decimal-pad"
               {...handleErrorMessage('amount')}
             />
@@ -90,7 +87,7 @@ const NewItem = () => {
               <TextInput
                 editable={false}
                 fixedValue={dueDate && formatDate(dueDate)}
-                label={strings.productItems.dueDate}
+                label={translate('productItems.dueDate')}
                 {...handleErrorMessage('dueDate')}
               />
             </TouchableRipple>
@@ -99,7 +96,7 @@ const NewItem = () => {
           <TwoColumnsContainer>
             <TextInput
               value={qtd}
-              label={strings.productItems.qtd}
+              label={translate('productItems.qtd')}
               onChangeText={setQtd}
               leftIcon="cart-outline"
               keyboardType="decimal-pad"
@@ -110,7 +107,7 @@ const NewItem = () => {
               <TextInput
                 editable={false}
                 fixedValue={unit && unit.title}
-                label={strings.unit.unit}
+                label={translate('unit.unit')}
                 {...handleErrorMessage('unit')}
               />
             </TouchableRipple>

@@ -6,6 +6,8 @@ import appLocale, {
   getLanguage,
   init,
   setLanguage,
+  toCurrency,
+  translate,
   translateInLocale,
 } from '@locales';
 
@@ -24,6 +26,8 @@ describe('Locales', () => {
     utils,
     'hasTranslationAvailable',
   );
+
+  const spyToCurrency = jest.spyOn(i18n, 'toCurrency');
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -108,5 +112,14 @@ describe('Locales', () => {
     const availableLocales = getAvailableLocales();
 
     expect(availableLocales).toEqual(['ptBR', 'enUS']);
+  });
+
+  // should convert a number to a currency
+  test('deve converter um número para o currency', () => {
+    toCurrency(125.15);
+
+    expect(spyToCurrency).toHaveBeenCalledWith(125.15, {
+      unit: translate('general.currency'),
+    });
   });
 });

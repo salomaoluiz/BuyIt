@@ -20,6 +20,7 @@ describe('useItemCard', () => {
     jest.spyOn(Alert, 'alert');
   });
 
+  // when handleEditItem is called, should navigate to NewListItem screen with the correctly params
   test('ao chamar handleEditItem deve navegar para a tela de NewListItem com os parâmetros corretos', () => {
     const initialProps = {
       item: new ProductItemBuilderMock().build(),
@@ -41,6 +42,7 @@ describe('useItemCard', () => {
     );
   });
 
+  // when handleDeleteItem is called, should dispatch the action to delete the item
   test('ao chamar handleDeleteItem deve disparar a action para apagar o item', () => {
     const initialProps = {
       item: new ProductItemBuilderMock().build(),

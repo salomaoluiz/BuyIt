@@ -1,6 +1,6 @@
 import { takeLatest, put, call, select } from 'redux-saga/effects';
 
-import appLocale from '@locales';
+import { translate } from '@locales';
 import navigationService from '@navigator/services/navigationService';
 import { notificationActions } from '@store/notification';
 import { addRemoveDays, formatDate } from '@utils/date';
@@ -17,8 +17,6 @@ import {
   ProductItem,
 } from './types';
 import { injectProductListExtraData } from './utils';
-
-const strings = appLocale();
 
 export function* createList(
   props: ProductListAction<{ productList: ProductList }>,
@@ -115,10 +113,10 @@ export function* createItem(
       yield put(
         notificationActions.scheduleLocalNotificationAsync({
           date: notificationDate,
-          message: strings.productItems.productExpireInDay(
-            productItem.name,
-            formatDate(productItem.dueDate),
-          ),
+          message: translate('productItems.productExpireInDay', {
+            product: productItem.name,
+            date: formatDate(productItem.dueDate),
+          }),
           playSound: true,
           title: productItem.name,
         }),

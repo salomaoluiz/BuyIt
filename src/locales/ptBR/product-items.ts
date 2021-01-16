@@ -5,12 +5,9 @@ const productItems = {
   totalQtd: (totalQtd: number) => `Quantidade: ${totalQtd}`,
   amount: `Valor`,
   qtd: `Quantidade`,
-  qtdTimes: (qtd: number | string, currency: string, price: string) =>
-    `${qtd}x ${currency} ${price}`,
-
+  qtdTimes: `{{qtd}}x {{price}}`,
   dueDate: 'Data de vencimento',
-  productExpireInDay: (product: string, date: string) =>
-    `Atenção, o produto "${product}" está vencendo no dia ${date}`,
+  productExpireInDay: `Atenção, o produto "{{product}}" está vencendo no dia {{date}}`,
   brand: 'Marca',
   qtdDefault: (value: number) => `Padrão: ${value}`,
   insertQtd: 'Insira a quantidade',

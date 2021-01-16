@@ -40,7 +40,7 @@ const useNewItem = (props: Props) => {
 
   const handleModalVisible = useCallback(
     (visible?: boolean) => {
-      if (visible) return setModalVisible(visible);
+      if (typeof visible === 'boolean') return setModalVisible(visible);
 
       return setModalVisible(!modalVisible);
     },
@@ -48,13 +48,13 @@ const useNewItem = (props: Props) => {
   );
 
   const handleDatePickerVisible = (visible?: boolean) => {
-    if (visible) return setDatePickerVisible(visible);
+    if (typeof visible === 'boolean') return setDatePickerVisible(visible);
 
     return setDatePickerVisible(!datePickerVisible);
   };
 
   const handleBarcodeCameraVisibility = (visible?: boolean) => {
-    if (visible) return setBarcodeCameraVisible(visible);
+    if (typeof visible === 'boolean') return setBarcodeCameraVisible(visible);
 
     return setBarcodeCameraVisible(!barcodeCameraVisible);
   };
