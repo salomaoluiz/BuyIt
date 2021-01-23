@@ -5,15 +5,13 @@ import {
 import { put, delay, takeLatest, select } from 'redux-saga/effects';
 
 import { pushNotification } from '@lib/push-notification';
-import appLocale from '@locales';
+import { translate } from '@locales';
 import { animation } from '@styles';
 import { syncTwoArraysByID } from '@utils/filters';
 import { randomNumberId } from '@utils/id';
 
 import { notificationActions, notificationSelector } from './';
 import { BannerProps, NotificationTypes, NotificationAction } from './types';
-
-const strings = appLocale();
 
 export function* showBannerAsync(props: NotificationAction<BannerProps>) {
   const body = props.payload?.banner.body;
@@ -22,7 +20,7 @@ export function* showBannerAsync(props: NotificationAction<BannerProps>) {
   const icon = props.payload?.banner.icon;
 
   if (!body) {
-    throw new Error(strings.errors.general.opsWeHaveAProblem);
+    throw new Error(translate('errors.general.opsWeHaveAProblem'));
   }
 
   yield put(

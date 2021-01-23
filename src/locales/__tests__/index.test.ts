@@ -1,7 +1,6 @@
 import i18n from 'i18n-js';
 
-import appLocale, {
-  appCurrency,
+import {
   getAvailableLocales,
   getLanguage,
   initLocale,
@@ -12,7 +11,6 @@ import appLocale, {
 } from '@locales';
 
 import * as persist from '../persist';
-import stringsPTBR from '../ptBR';
 import * as utils from '../utils';
 
 jest.mock('../persist');
@@ -31,20 +29,6 @@ describe('Locales', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
-  });
-
-  // should return the correctly string
-  test('deve retornar a string correta', () => {
-    const result = appLocale();
-
-    expect(result).toEqual(stringsPTBR);
-  });
-
-  // should return the correctly currency
-  test('deve retornar a currency correta', () => {
-    const result = appCurrency();
-
-    expect(result).toEqual('R$');
   });
 
   // if don't has the locale in AsyncStorage, should set default value ptBR

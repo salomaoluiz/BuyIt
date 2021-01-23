@@ -1,15 +1,13 @@
 import { put, delay, select } from 'redux-saga/effects';
 
 import { ChannelID, pushNotification } from '@lib/push-notification';
-import appLocale from '@locales';
+import { translate } from '@locales';
 import { animation } from '@styles';
 import * as utilIds from '@utils/id';
 
 import { notificationActions, notificationSelector } from '../';
 import * as sagas from '../sagas';
 import { NotificationTypes } from '../types';
-
-const strings = appLocale();
 
 jest.mock('react-native-push-notification', () => ({
   localNotificationSchedule: jest.fn(),
@@ -60,7 +58,7 @@ describe('Notification Sagas', () => {
     const gen = sagas.showBannerAsync(action);
 
     expect(() => gen.next().value).toThrowError(
-      new Error(strings.errors.general.opsWeHaveAProblem),
+      new Error(translate('errors.general.opsWeHaveAProblem')),
     );
   });
 

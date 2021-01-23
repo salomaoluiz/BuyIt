@@ -47,27 +47,3 @@ export const setLanguage = async (language: AppLocales) => {
 
 export const toCurrency = (number: number) =>
   i18n.toCurrency(number, { unit: translate('general.currency') });
-
-//#region LEGADO - LEGACY
-
-export const _currentLocale: AppLocales = 'ptBR';
-
-const locales: { [key: string]: typeof ptBR } = {
-  ptBR,
-};
-
-const appLocale = () => {
-  const strings = locales[_currentLocale];
-
-  return strings;
-};
-
-export const appCurrency = () => {
-  const currency = 'R$';
-
-  return currency;
-};
-
-//#endregion
-
-export default appLocale;
