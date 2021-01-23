@@ -1,12 +1,10 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import * as reactRedux from 'react-redux';
 
-import appLocale from '@locales';
+import { translate } from '@locales';
 import { notificationActions, notificationSelector } from '@store/notification';
 
 import useBanner from '../useBanner';
-
-const strings = appLocale();
 
 describe('Testando o useBanner', () => {
   const dispatch = jest.fn();
@@ -48,7 +46,7 @@ describe('Testando o useBanner', () => {
     expect(result.current.bannerActions).toEqual([
       {
         onPress: result.current._handleDismiss,
-        label: strings.general.dismiss.toLocaleUpperCase(),
+        label: translate('general.dismiss').toLocaleUpperCase(),
       },
     ]);
   });

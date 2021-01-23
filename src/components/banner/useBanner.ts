@@ -1,11 +1,9 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import appLocale from '@locales';
+import { translate } from '@locales';
 import { notificationSelector, notificationActions } from '@store/notification';
 import { BannerButton } from '@store/notification/types';
-
-const strings = appLocale();
 
 const useBanner = () => {
   const notificationState = useSelector(notificationSelector.getBanner);
@@ -39,7 +37,7 @@ const useBanner = () => {
     } else {
       bannerActions.push({
         onPress: _handleDismiss,
-        label: strings.general.dismiss.toLocaleUpperCase(),
+        label: translate('general.dismiss').toLocaleUpperCase(),
       });
     }
 
