@@ -3,13 +3,11 @@ import React from 'react';
 import CircleButton from '@components/FAB';
 import Header from '@components/header';
 import TextInput from '@components/text-input';
-import appLocale from '@locales';
+import { translate } from '@locales';
 
 import { Container, SubContainer, ButtonContainer } from './styles';
 import useForm from './useForm';
 import useNewList from './useNewList';
-
-const strings = appLocale();
 
 const NewList = () => {
   const { listParams, setName, checkForm, handleErrorMessage } = useForm();
@@ -18,11 +16,11 @@ const NewList = () => {
 
   return (
     <>
-      <Header title={strings.productLists.newList} backButton />
+      <Header title={translate('productLists.newList')} backButton />
       <Container>
         <SubContainer keyboardShouldPersistTaps="handled">
           <TextInput
-            label={strings.general.name}
+            label={translate('general.name')}
             value={name}
             onChangeText={setName}
             {...handleErrorMessage('name')}

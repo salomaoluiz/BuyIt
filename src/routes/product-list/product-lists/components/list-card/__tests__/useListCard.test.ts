@@ -3,7 +3,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { Alert } from 'react-native';
 import * as reactRedux from 'react-redux';
 
-import appLocale from '@locales';
+import { translate } from '@locales';
 import { Routes } from '@routes';
 import { productListActions } from '@store/product-list';
 import { ProductItemBuilderMock } from '@store/product-list/__mocks__/productItemBuilder.mock';
@@ -12,8 +12,6 @@ import { ProductList } from '@store/product-list/types';
 import { useNavigationMocks } from 'src/__tests__/navigation-mocks';
 
 import useListCard from '../useListCard';
-
-const strings = appLocale();
 
 jest.mock('@react-navigation/native');
 describe('ProductList - useListCard', () => {
@@ -66,15 +64,15 @@ describe('ProductList - useListCard', () => {
       result.current.handleListLongPress();
     });
     expect(alertSpy).toHaveBeenCalledWith(
-      strings.general.whatWant,
-      strings.general.whatWantDo,
+      translate('general.whatWant'),
+      translate('general.whatWantDo'),
       [
         {
-          text: strings.general.edit,
+          text: translate('general.edit'),
           onPress: result.current._handleEditItem,
         },
         {
-          text: strings.general.delete,
+          text: translate('general.delete'),
           onPress: result.current._handleDeleteItem,
         },
       ],

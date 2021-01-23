@@ -13,7 +13,7 @@ const useFooter = (props: Props) => {
   const { productItems, listId } = props;
   const navigation = useNavigation<NavProps>();
 
-  const [amountTotal, setAmountTotal] = useState('');
+  const [amountTotal, setAmountTotal] = useState(0);
   const [qtdTotal, setQtdTotal] = useState('');
 
   const handleSubTotal = useCallback(() => {
@@ -25,7 +25,7 @@ const useFooter = (props: Props) => {
         totalQtd += parseFloat(item.qtd);
       });
 
-    setAmountTotal(totalAmount.toFixed(2));
+    setAmountTotal(parseFloat(totalAmount.toFixed(2)));
     setQtdTotal(totalQtd.toString());
   }, [productItems]);
 

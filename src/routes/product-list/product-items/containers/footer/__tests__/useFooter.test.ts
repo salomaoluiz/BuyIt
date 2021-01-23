@@ -37,7 +37,7 @@ describe('ProductItems - Containers - Footer - useFooter', () => {
 
     const { result } = renderHook(useFooter, { initialProps });
 
-    expect(result.current.amountTotal).toEqual('3.70');
+    expect(result.current.amountTotal).toEqual(3.70);
     expect(result.current.qtdTotal).toEqual('7');
   });
 
