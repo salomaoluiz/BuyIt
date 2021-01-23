@@ -3,7 +3,7 @@ import React from 'react';
 import FAB from '@components/FAB';
 import Subheading from '@components/subheading';
 import Text from '@components/text';
-import appLocale, { appCurrency } from '@locales';
+import { toCurrency, translate } from '@locales';
 import { ProductItems } from '@store/product-list/types';
 
 import {
@@ -20,8 +20,6 @@ export interface Props {
   listId: string;
 }
 
-const strings = appLocale();
-const currency = appCurrency();
 const Footer = (props: Props) => {
   const { amountTotal, onAddButtonPress, qtdTotal } = useFooter(props);
   return (
@@ -33,12 +31,12 @@ const Footer = (props: Props) => {
         <SubContainer>
           <TextContainer>
             <TextSubContainer>
-              <Subheading text={strings.productItems.items} />
+              <Subheading text={translate('productItems.items')} />
               <Text text={qtdTotal} />
             </TextSubContainer>
             <TextSubContainer>
-              <Subheading text={strings.productItems.total} />
-              <Text text={`${currency} ${amountTotal}`} />
+              <Subheading text={translate('productItems.total')} />
+              <Text text={`${toCurrency(amountTotal)}`} />
             </TextSubContainer>
           </TextContainer>
         </SubContainer>

@@ -2,15 +2,13 @@ import React from 'react';
 import { FlatList } from 'react-native';
 
 import Header from '@components/header';
-import appLocale from '@locales';
+import { translate } from '@locales';
 import { ProductItem } from '@store/product-list/types';
 
 import ItemCard from './components/item-card';
 import Footer from './containers/footer';
 import { Container } from './styles';
 import useProductItems from './useProductItems';
-
-const strings = appLocale();
 
 const ProductItems = () => {
   const { ordenedList, listId } = useProductItems();
@@ -26,7 +24,7 @@ const ProductItems = () => {
   };
   return (
     <>
-      <Header title={strings.productItems.items} backButton />
+      <Header title={translate('productItems.items')} backButton />
       <Container>
         <FlatList
           data={ordenedList}

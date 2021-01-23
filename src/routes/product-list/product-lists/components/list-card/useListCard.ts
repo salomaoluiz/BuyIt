@@ -3,14 +3,13 @@ import { useCallback, useState, useEffect } from 'react';
 import { Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import appLocale from '@locales';
+import { translate } from '@locales';
 import { ProductNavigatorParamsList } from '@navigator/product-navigator';
 import { Routes } from '@routes';
 import { productListActions } from '@store/product-list';
 
 import { Props } from './';
 
-const strings = appLocale();
 type NavProps = NavigationProp<ProductNavigatorParamsList, 'ProductLists'>;
 
 const useListCard = (props: Props) => {
@@ -35,10 +34,14 @@ const useListCard = (props: Props) => {
   }, [productList]);
 
   const handleListLongPress = useCallback(() => {
-    Alert.alert(strings.general.whatWant, strings.general.whatWantDo, [
-      { text: strings.general.edit, onPress: _handleEditItem },
-      { text: strings.general.delete, onPress: _handleDeleteItem },
-    ]);
+    Alert.alert(
+      translate('general.whatWant'),
+      translate('general.whatWantDo'),
+      [
+        { text: translate('general.edit'), onPress: _handleEditItem },
+        { text: translate('general.delete'), onPress: _handleDeleteItem },
+      ],
+    );
   }, [productList]);
 
   useEffect(() => {
