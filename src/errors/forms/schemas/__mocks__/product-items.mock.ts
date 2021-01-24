@@ -37,6 +37,10 @@ const amountIsMuchLong = generateError(
   translate('errors.general.theValueIsMuchLong'),
   'amount',
 );
+const dueDateIsLowerThanToday = generateError(
+  translate('errors.general.dateHigherThanToday'),
+  'dueDate',
+);
 const qtdIsMuchLong = generateError(
   translate('errors.general.theValueIsMuchLong'),
   'qtd',
@@ -94,6 +98,7 @@ const productListErrors = {
   amountIsMuchLong,
   qtdIsMuchLong,
   unitRequired,
+  dueDateIsLowerThanToday,
 };
 
 export { generateError, productListErrors };

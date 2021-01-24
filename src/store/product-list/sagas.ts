@@ -16,7 +16,7 @@ import {
   ProductLists,
   ProductItem,
 } from './types';
-import { injectProductListExtraData } from './utils';
+import { ajustLegacyDueDate, injectProductListExtraData } from './utils';
 
 export function* createList(
   props: ProductListAction<{ productList: ProductList }>,
@@ -139,7 +139,9 @@ export function* requestItems(props: ProductListAction<{ listId: string }>) {
 
     const serverProductItems = yield call(sagaServer.requestItems, listId);
 
-    const productItems = serverProductItems || cachedProductItems;
+    const selectedProductItems = serverProductItems || cachedProductItems;
+
+    const productItems = ajustLegacyDueDate(selectedProductItems);
 
     const productListsArray = yield call(
       sagaLocal.requestItems,

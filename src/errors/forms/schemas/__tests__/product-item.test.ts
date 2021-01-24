@@ -2,6 +2,10 @@ import { productListErrors } from '../__mocks__/product-items.mock';
 import testSchema from '../../testSchema';
 
 describe('Testando a validação do ProductList', () => {
+  beforeAll(() => {
+    jest.spyOn(Date, 'now').mockReturnValue(1604012169142);
+  });
+
   // should return true if all values are valid
   test('deve retornar true se todos os valores forem válidos', async () => {
     const mock = {
@@ -9,6 +13,7 @@ describe('Testando a validação do ProductList', () => {
       amount: '15',
       qtd: '1',
       unit: { id: 'un', title: '123' },
+      dueDate: 16040121999999
     };
 
     const result = await testSchema('productItem', mock);
@@ -65,5 +70,20 @@ describe('Testando a validação do ProductList', () => {
       productListErrors.amountIsMuchLong,
       productListErrors.qtdIsMuchLong,
     ]);
+  });
+
+  // should return an array with error of date before today
+  test('deve retornar um array com erro de data anterior a hoje', async () => {
+    const mock = {
+      name: 'name',
+      qtd: '12',
+      amount: '12',
+      unit: { id: 'un', title: '123' },
+      dueDate: 160401210000,
+    };
+
+    const result = await testSchema('productItem', mock);
+
+    expect(result).toEqual([productListErrors.dueDateIsLowerThanToday]);
   });
 });

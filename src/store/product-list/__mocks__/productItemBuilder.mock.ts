@@ -8,6 +8,7 @@ export class ProductItemBuilderMock {
   amount = '';
   qtd = '';
   brand = '';
+  dueDate?: number = undefined;
   createdAt = 0;
   updatedAt = 0;
   unit?: PaperListData = undefined;
@@ -50,6 +51,11 @@ export class ProductItemBuilderMock {
     return this;
   }
 
+  withDueDate(dueDate: number) {
+    this.dueDate = dueDate;
+    return this;
+  }
+
   build = (): ProductItem => {
     return {
       id: this.id,
@@ -58,6 +64,7 @@ export class ProductItemBuilderMock {
       qtd: this.qtd,
       brand: this.brand,
       unit: this.unit,
+      dueDate: this.dueDate,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     };

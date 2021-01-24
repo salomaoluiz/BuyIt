@@ -30,6 +30,11 @@ describe('Utils ProductList Store', () => {
     updatedAt: 123456,
   }));
 
+  beforeAll(() => {
+    jest.spyOn(Date, 'now').mockReturnValue(1604012169142);
+  });
+
+  // should extract the data and merge the firestore return with the ID
   test('deve extrair o data e mesclar com o ID o retorno do firestore', () => {
     const mockData = new DocumentFirestoreBuilder()
       .withId('123456')
@@ -46,6 +51,7 @@ describe('Utils ProductList Store', () => {
     expect(response).toEqual(expected);
   });
 
+  // should ajust the firestore list as so the app undestand
   test('deve ajustar a lista retornada do firestore de modo que o app compreenda', () => {
     const mockDoc1 = new DocumentFirestoreBuilder()
       .withId('123456')
@@ -70,6 +76,7 @@ describe('Utils ProductList Store', () => {
     expect(response).toEqual(expected);
   });
 
+  // if due date are a firestore timestamp, should format to correctly date type.
   test('caso duedate seja Firestore Timestamp, deve formatar o tipo de data corretamente', () => {
     const date = new Date(100000);
 
@@ -88,6 +95,7 @@ describe('Utils ProductList Store', () => {
     expect(response).toEqual(expected);
   });
 
+  // should format the productList to send to DB, removing ID and items
   test('deve formatar um productList para enviar pro DB, remover ID e Items', () => {
     const mockProductList: ProductList = new ProductListBuilderMock().build();
 
@@ -102,6 +110,7 @@ describe('Utils ProductList Store', () => {
     expect(response).toEqual(expected);
   });
 
+  // should inject the ID and timestamp into a list or item
   test('deve injetar o ID e o timestamp a uma lista ou item', () => {
     const mockList = {
       name: 'mock',
@@ -119,6 +128,7 @@ describe('Utils ProductList Store', () => {
     expect(response).toEqual(expected);
   });
 
+  // should replace a list filtering by ID
   test('deve sobrescrever uma lista filtrando por ID', () => {
     const mockList = new ProductListBuilderMock()
       .withId('11111')
@@ -147,6 +157,7 @@ describe('Utils ProductList Store', () => {
     expect(response).toEqual(expected);
   });
 
+  // should create a new list
   test('deve criar uma nova lista', () => {
     const mock1 = new ProductListBuilderMock()
       .withId('11111')
@@ -171,6 +182,7 @@ describe('Utils ProductList Store', () => {
     expect(response).toEqual(expected);
   });
 
+  // should create a new list's item
   test('deve criar um novo item de uma lista', () => {
     const item1 = new ProductItemBuilderMock()
       .withId('11111')
@@ -197,5 +209,48 @@ describe('Utils ProductList Store', () => {
       .build();
 
     expect(response).toEqual(expected);
+  });
+
+  // should add the first list's item
+  test('deve adicionar o primeiro item da lista', () => {
+    const mockList: ProductList = new ProductListBuilderMock()
+      .withId('11111')
+      .withItems([])
+      .withName('Nome')
+      .build();
+
+    const newItem = new ProductItemBuilderMock()
+      .withId('222222')
+      .withName('novo item')
+      .build();
+
+    const response = utils.createProductItemArray(mockList, newItem);
+
+    const expected = new ProductListBuilderMock()
+      .withId('11111')
+      .withItems([newItem])
+      .withName('Nome')
+      .build();
+
+    expect(response).toEqual(expected);
+  });
+
+  // should ajust a legacy date to the new format
+  test('deve ajustar uma data legado para o novo formato', () => {
+    const date = new Date(Date.now()) as any;
+    const item1 = new ProductItemBuilderMock()
+      .withId('11111')
+      .withName('item 1')
+      .withDueDate(date)
+      .build();
+
+    const response = utils.ajustLegacyDueDate([item1]);
+
+    const expectedItem = new ProductItemBuilderMock()
+      .withId('11111')
+      .withName('item 1')
+      .withDueDate(Date.now())
+      .build();
+    expect(response).toEqual([expectedItem]);
   });
 });

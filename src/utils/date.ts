@@ -2,19 +2,19 @@ import { format, addDays, addMinutes, isBefore } from 'date-fns';
 
 export const getDateNow = () => Date.now();
 
-export const formatDate = (date: Date) => {
+export const formatDate = (date: number) => {
   return format(date, 'dd/MM/yyyy');
 };
 
-export const addRemoveDays = (days: number, date: Date) => {
+export const addRemoveDays = (days: number, date: number) => {
   return addDays(date, days);
 };
 
-export const addRemoveMinutes = (minutes: number, date: Date) => {
+export const addRemoveMinutes = (minutes: number, date: number) => {
   return addMinutes(date, minutes);
 };
 
-export const isBeforeThan = (date: Date, dateToCompare: Date) => {
+export const isBeforeThan = (date: number, dateToCompare: number) => {
   return isBefore(date, dateToCompare);
 };
 

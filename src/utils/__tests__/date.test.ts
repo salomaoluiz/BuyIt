@@ -41,7 +41,7 @@ describe('Date Utils', () => {
   });
 
   test('deve retornar a data formatada', () => {
-    const mockDate = new Date(Date.now());
+    const mockDate = 1603963032026;
 
     const result = date.formatDate(mockDate);
 
@@ -49,28 +49,28 @@ describe('Date Utils', () => {
   });
 
   test('deve adicionar 2 dias e retornar a nova data', () => {
-    const mockDate = new Date(Date.now());
+    const mockDate = Date.now();
 
     const result = date.addRemoveDays(2, mockDate);
 
-    const mockDays = mockDate.getDate();
+    const mockDays = new Date(mockDate).getDate();
 
     expect(result.getDate()).toEqual(mockDays + 2);
   });
 
   test('deve adicionar 2 minutos e retornar a nova hora', () => {
-    const mockDate = new Date(Date.now());
+    const mockDate = Date.now();
 
     const result = date.addRemoveMinutes(2, mockDate);
 
-    const mockMinutes = mockDate.getMinutes();
+    const mockMinutes = new Date(mockDate).getMinutes();
 
     expect(result.getMinutes()).toEqual(mockMinutes + 2);
   });
 
   test('deve retornar informando que a data é após a data comparada', () => {
-    const mockDate = new Date(Date.now());
-    const today = new Date();
+    const mockDate = Date.now();
+    const today = new Date().getTime();
 
     const result = date.isBeforeThan(mockDate, today);
 

@@ -23,7 +23,7 @@ export type ProductItemForm = {
   qtd: string;
   brand: string;
   unit?: PaperListData;
-  dueDate?: Date;
+  dueDate?: number;
   createdAt: number;
   updatedAt: number;
   image?: string;
