@@ -3,15 +3,15 @@ import React from 'react';
 import DateTimePicker from '@components/datetimepicker';
 
 export interface Props {
-  setDueDate: (date: Date) => void;
-  dueDate?: Date;
+  setDueDate: (date: number) => void;
+  dueDate?: number;
   handleModalVisible: (visible?: boolean) => void;
   isVisible: boolean;
 }
 
 const DueDateModal = (props: Props) => {
   const { isVisible, dueDate, handleModalVisible, setDueDate } = props;
-  
+
   return (
     <DateTimePicker
       handleModalVisible={handleModalVisible}

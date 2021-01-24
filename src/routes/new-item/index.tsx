@@ -86,7 +86,7 @@ const NewItem = () => {
               onPress={handleDatePickerVisible}>
               <TextInput
                 editable={false}
-                fixedValue={dueDate && formatDate(dueDate)}
+                fixedValue={dueDate ? formatDate(dueDate) : undefined}
                 label={translate('productItems.dueDate')}
                 {...handleErrorMessage('dueDate')}
               />

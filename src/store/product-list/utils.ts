@@ -5,7 +5,7 @@ import { extractObjectElement, filterNotByID } from '@utils/filters';
 import { injectId } from '@utils/id';
 
 import { QueryFirestore, DocumentFirestore } from './models';
-import { ProductLists, ProductList, ProductItem } from './types';
+import { ProductLists, ProductList, ProductItem, ProductItems } from './types';
 
 export const formatDocumentProductList = <T>(
   productList: DocumentFirestore<T>,
@@ -96,4 +96,13 @@ export const createProductItemArray = (
   };
 
   return newEditedList;
+};
+
+export const ajustLegacyDueDate = (productItems: ProductItems) => {
+  return productItems.map((item) => {
+    return {
+      ...item,
+      dueDate: item.dueDate && new Date(item.dueDate).getTime(),
+    };
+  });
 };

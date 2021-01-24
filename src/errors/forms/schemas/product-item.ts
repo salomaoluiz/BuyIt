@@ -34,6 +34,10 @@ const productItem = Yup.object().shape({
       validateMax,
     )
     .matches(onlyNumber, translate('errors.general.invalidValue')),
+  dueDate: Yup.number().min(
+    Date.now(),
+    translate('errors.general.dateHigherThanToday'),
+  ),
   brand: Yup.string().typeError(translate('errors.general.invalidValue')),
   unit: Yup.string().required(translate('errors.general.thisValueIsRequired')),
 });
