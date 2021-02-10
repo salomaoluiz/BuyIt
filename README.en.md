@@ -3,6 +3,23 @@
 
 This project has been created as a case study to test several development points. If you want to use this project to study and learn or for commercial purpose, feel free, as long as you follow the [LICENSE](https://github.com/salomaoluiz/BuyIt/blob/main/LICENSE) rules. Most of the project description is in Portuguese, so as to help Brazilian starter developer understand without any language barrier, but the code is written in English and will not create any hindrance in understanding the code itself.
 
+Read this in other languages: [English](README.en.md), [Português](README.md)
+
+## :camera: Screenshots
+
+<div style="display:flex;" >
+  <img src=".github/screenshots/1.jpg" width="19%" >
+  <img src=".github/screenshots/2.jpg" style="margin-left:10px;" width="19%" >
+  <img src=".github/screenshots/3.jpg" style="margin-left:10px;" width="19%" >
+  <img src=".github/screenshots/4.jpg" style="margin-left:10px;" width="19%" >
+  <img src=".github/screenshots/5.jpg" style="margin-left:10px;" width="19%" >
+</div>
+
+<div style="display:flex;" >
+  <img src=".github/screenshots/6.jpg" width="19%" >
+  <img src=".github/screenshots/7.jpg" width="19%" >
+</div>
+
 ## Firebase
 This project uses `Firebase` as a BAS (Backend as a Service), so in order to run the project, you need to configure these settings in code.
 

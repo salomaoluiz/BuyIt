@@ -3,6 +3,23 @@
 
 Esse projeto foi criado como forma de estudo de caso de diversos quesitos de desenvolvimento. Caso deseje utilizar esse projeto para estudos e/ou comercialmente, fique a vontade, desde que siga as regras da [LICENSE](https://github.com/salomaoluiz/BuyIt/blob/main/LICENSE). Esse projeto está com as descrições inteiramente em português para que seja mais fácil para quem está começando na area de desenvolvimento entender os conceitos sem ter a trava da linguagem, apenas o código é inteiramente em inglês.
 
+Read this in other languages: [English](README.en.md), [Português](README.md)
+
+## :camera: Screenshots
+
+<div style="display:flex;" >
+  <img src=".github/screenshots/1.jpg" width="19%" >
+  <img src=".github/screenshots/2.jpg" style="margin-left:10px;" width="19%" >
+  <img src=".github/screenshots/3.jpg" style="margin-left:10px;" width="19%" >
+  <img src=".github/screenshots/4.jpg" style="margin-left:10px;" width="19%" >
+  <img src=".github/screenshots/5.jpg" style="margin-left:10px;" width="19%" >
+</div>
+
+<div style="display:flex;" >
+  <img src=".github/screenshots/6.jpg" width="19%" >
+  <img src=".github/screenshots/7.jpg" width="19%" >
+</div>
+
 ## Firebase
 Para esse projeto foi utilizado o Firebase como forma de BAS, logo é preciso realizar algumas configurações no projeto.
 
