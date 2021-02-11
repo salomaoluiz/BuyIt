@@ -37,7 +37,9 @@ export interface ProductItem extends ProductItemForm {
 
 export type ProductListForm = {
   name: string;
+  buyDate?: number;
 };
+
 export interface ProductList extends ProductListForm {
   id: string;
   createdAt: number;

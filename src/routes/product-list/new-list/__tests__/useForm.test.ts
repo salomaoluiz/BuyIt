@@ -31,6 +31,7 @@ describe('NewList - useForm', () => {
     const expected = {
       id: undefined,
       name: '',
+      buyDate: undefined,
       items: [],
     };
 
