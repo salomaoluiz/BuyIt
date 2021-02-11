@@ -11,12 +11,14 @@ const useForm = () => {
   const listId = route.params?.productList?.id || undefined;
   const listName = route.params?.productList?.name || '';
   const listItems = route.params?.productList?.items || [];
+  const listBuyDate = route.params?.productList?.buyDate || undefined;
 
   const [name, setName] = useState(listName);
+  const [buyDate, setBuyDate] = useState(listBuyDate);
   const [id] = useState(listId);
   const [items] = useState(listItems);
 
-  const formParams = { name };
+  const formParams = { name, buyDate };
   const listParams = { ...formParams, id, items };
 
   const { validateError, errorItems, handleErrorMessage } = useFormError({
@@ -32,6 +34,7 @@ const useForm = () => {
   return {
     listParams,
     setName,
+    setBuyDate,
     checkForm,
     errorItems,
     handleErrorMessage,

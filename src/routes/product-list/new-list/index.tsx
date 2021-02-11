@@ -1,18 +1,31 @@
 import React from 'react';
 
+import DateTimePicker from '@components/datetimepicker';
 import CircleButton from '@components/FAB';
 import Header from '@components/header';
 import TextInput from '@components/text-input';
+import TouchableRipple from '@components/touchable-ripple';
 import { translate } from '@locales';
+import { formatDate } from '@utils/date';
 
 import { Container, SubContainer, ButtonContainer } from './styles';
 import useForm from './useForm';
 import useNewList from './useNewList';
 
 const NewList = () => {
-  const { listParams, setName, checkForm, handleErrorMessage } = useForm();
-  const { name } = listParams;
-  const { onAddPress } = useNewList({ listParams, checkForm });
+  const {
+    listParams,
+    setName,
+    checkForm,
+    handleErrorMessage,
+    setBuyDate,
+  } = useForm();
+  const { name, buyDate } = listParams;
+  const {
+    onAddPress,
+    datePickerVisible,
+    handleDatePickerVisible,
+  } = useNewList({ listParams, checkForm });
 
   return (
     <>
@@ -25,7 +38,23 @@ const NewList = () => {
             onChangeText={setName}
             {...handleErrorMessage('name')}
           />
+           <TouchableRipple
+              withoutBackground
+              onPress={handleDatePickerVisible}>
+              <TextInput
+                editable={false}
+                fixedValue={buyDate ? formatDate(buyDate) : undefined}
+                label={translate('productLists.buyDate')}
+              />
+            </TouchableRipple>
         </SubContainer>
+          <DateTimePicker
+            getDateTime={setBuyDate}
+            mode="date"
+            isVisible={datePickerVisible}
+            handleModalVisible={handleDatePickerVisible}
+            value={buyDate}
+          />
         <ButtonContainer behavior="height">
           <CircleButton icon="check" onPress={onAddPress} />
         </ButtonContainer>

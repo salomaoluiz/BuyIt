@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { productListActions } from '@store/product-list';
@@ -11,6 +11,7 @@ interface Props {
 }
 const useNewList = (props: Props) => {
   const { listParams, checkForm } = props;
+  const [datePickerVisible, setDatePickerVisible] = useState(false);
   const { showAd } = useInterstitialAd();
   const dispatch = useDispatch();
 
@@ -27,8 +28,15 @@ const useNewList = (props: Props) => {
     }
   }, [props]);
 
+  const handleDatePickerVisible = (isVisible?: boolean) => {
+    if (typeof isVisible === 'boolean') return setDatePickerVisible(isVisible);
+    return setDatePickerVisible(!datePickerVisible);
+  };
+
   return {
     onAddPress,
+    datePickerVisible,
+    handleDatePickerVisible,
   };
 };
 
