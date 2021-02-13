@@ -1,24 +1,27 @@
 import i18n from 'i18n-js';
+import * as RNLocalize from 'react-native-localize';
 
 import * as persist from './persist';
 import { hasTranslationAvailable } from './utils';
 import enUS from './enUS'; // eslint-disable-line
 import ptBR from './ptBR'; // eslint-disable-line
 
-export type AppLocales = 'ptBR' | 'enUS';
+export type AppLocales = 'pt-BR' | 'en-US';
 
 i18n.translations = {
-  ptBR: { ...ptBR },
-  enUS: { ...enUS },
+  ['pt-BR']: { ...ptBR },
+  ['en-US']: { ...enUS },
 };
 
-i18n.defaultLocale = 'ptBR';
+i18n.defaultLocale = 'pt-BR';
 i18n.fallbacks = true;
 
 export const initLocale = async () => {
   const currentLocale = (await persist.getLocale()) as AppLocales;
   if (!currentLocale) {
-    i18n.locale = 'ptBR';
+    i18n.locale =
+      RNLocalize.findBestAvailableLanguage(Object.keys(i18n.translations))
+        ?.languageTag || 'pt-BR';
     return;
   }
 

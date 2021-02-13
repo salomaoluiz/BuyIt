@@ -1,4 +1,5 @@
 import i18n from 'i18n-js';
+import * as RNLocalize from 'react-native-localize';
 
 import {
   getAvailableLocales,
@@ -31,43 +32,72 @@ describe('Locales', () => {
     jest.clearAllMocks();
   });
 
-  // if don't has the locale in AsyncStorage, should set default value ptBR
-  test('caso não possua o locale no AsyncStorage, deve setar o default ptBR', async () => {
+  // if don't has the locale in AsyncStorage, should set default value from 'react-native-localize'
+  test('caso não possua o locale no AsyncStorage, deve setar o default de react-native-localize', async () => {
     spyGetLocale.mockResolvedValue(null);
+    const spyFindBestAvailableLanguage = jest
+      .spyOn(RNLocalize, 'findBestAvailableLanguage')
+      .mockImplementation(() => ({
+        languageTag: 'en-US',
+        isRTL: false,
+      }));
 
     await initLocale();
 
     expect(spyGetLocale).toHaveBeenCalled();
-    expect(i18n.locale).toEqual('ptBR');
+    expect(spyFindBestAvailableLanguage).toHaveBeenCalledWith(
+      getAvailableLocales(),
+    );
+    expect(i18n.locale).toEqual('en-US');
+
+    spyFindBestAvailableLanguage.mockRestore();
+  });
+
+  // if don't has the locale in AsyncStorage, and system locale is not supported, should set it to 'pt-BR'
+  test('caso não possua o locale no AsyncStorage e o locale não é suportado pelo sistema, deve configurá-lo como pt-BR', async () => {
+    spyGetLocale.mockResolvedValue(null);
+    const spyFindBestAvailableLanguage = jest
+      .spyOn(RNLocalize, 'findBestAvailableLanguage')
+      .mockImplementation(() => undefined);
+
+    await initLocale();
+
+    expect(spyGetLocale).toHaveBeenCalled();
+    expect(spyFindBestAvailableLanguage).toHaveBeenCalledWith(
+      getAvailableLocales(),
+    );
+    expect(i18n.locale).toEqual('pt-BR');
+
+    spyFindBestAvailableLanguage.mockRestore();
   });
 
   // if has the locale in AsyncStorage, should set it
   test('caso possua o locale no AsyncStorage, deve seta-lo', async () => {
-    spyGetLocale.mockResolvedValue('enUS');
+    spyGetLocale.mockResolvedValue('en-US');
 
     await initLocale();
 
     expect(spyGetLocale).toHaveBeenCalled();
-    expect(i18n.locale).toEqual('enUS');
+    expect(i18n.locale).toEqual('en-US');
   });
 
   // should translate in a specífic language
   test('deve traduzir em um idioma específico', () => {
     const tSpy = jest.spyOn(i18n, 't');
 
-    translateInLocale('teste', 'ptBR');
+    translateInLocale('teste', 'pt-BR');
 
-    expect(tSpy).toHaveBeenCalledWith('teste', { locale: 'ptBR' });
+    expect(tSpy).toHaveBeenCalledWith('teste', { locale: 'pt-BR' });
   });
 
   // should set the correctly language
   test('deve definir o idioma correto', async () => {
     spyHasTranslationAvailable.mockReturnValue(true);
 
-    await setLanguage('enUS');
+    await setLanguage('en-US');
 
-    expect(i18n.locale).toEqual('enUS');
-    expect(spySaveLocale).toHaveBeenCalledWith('enUS');
+    expect(i18n.locale).toEqual('en-US');
+    expect(spySaveLocale).toHaveBeenCalledWith('en-US');
   });
 
   // if the language are not available, should throw a error
@@ -75,7 +105,7 @@ describe('Locales', () => {
     spyHasTranslationAvailable.mockReturnValue(false);
     try {
       // @ts-ignore
-      await setLanguage('frEU');
+      await setLanguage('fr-EU');
     } catch (err) {
       expect(err).toEqual(new Error('Unavailable language'));
     }
@@ -83,19 +113,19 @@ describe('Locales', () => {
 
   // should return the selected language
   test('deve retornar o idioma selecionado', async () => {
-    expect(i18n.locale).toEqual('enUS');
+    expect(i18n.locale).toEqual('en-US');
     spyHasTranslationAvailable.mockReturnValue(true);
-    await setLanguage('ptBR');
+    await setLanguage('pt-BR');
 
     const locale = getLanguage();
-    expect(locale).toEqual('ptBR');
+    expect(locale).toEqual('pt-BR');
   });
 
   // should return the available locales
   test('deve retornar as traduções disponíveis', () => {
     const availableLocales = getAvailableLocales();
 
-    expect(availableLocales).toEqual(['ptBR', 'enUS']);
+    expect(availableLocales).toEqual(['pt-BR', 'en-US']);
   });
 
   // should convert a number to a currency
