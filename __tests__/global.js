@@ -29,3 +29,7 @@ jest.mock('@react-native-community/async-storage', () => ({
 }));
 
 jest.mock('react-native-restart', () => ({ Restart: jest.fn() }));
+
+jest.mock('react-native-localize', () => ({
+  findBestAvailableLanguage: jest.fn(),
+}));

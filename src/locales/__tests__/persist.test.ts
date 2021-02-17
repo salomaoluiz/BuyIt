@@ -12,18 +12,18 @@ describe('Locales - persist', () => {
 
   // should save the locale in AsyncStorage
   test('deve salvar no AsyncStorage o locale', async () => {
-    await saveLocale('enUS');
+    await saveLocale('en-US');
 
-    expect(spySetItem).toHaveBeenCalledWith(storeKey, 'enUS');
+    expect(spySetItem).toHaveBeenCalledWith(storeKey, 'en-US');
   });
 
   // should get the item from AsyncStorage
   test('deve obter o item do AsyncStorage', async () => {
-    spyGetItem.mockResolvedValue('ptBR');
+    spyGetItem.mockResolvedValue('pt-BR');
 
     const locale = await getLocale();
 
     expect(spyGetItem).toHaveBeenCalledWith(storeKey);
-    expect(locale).toEqual('ptBR');
+    expect(locale).toEqual('pt-BR');
   });
 });

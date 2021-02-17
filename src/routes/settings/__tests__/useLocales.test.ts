@@ -13,13 +13,13 @@ describe('Settings - useLocales', () => {
   const spyRestart = jest.spyOn(RNRestart, 'Restart');
   const spyAlert = jest.spyOn(Alert, 'alert');
   const spySetLanguage = jest.spyOn(locales, 'setLanguage');
-  jest.spyOn(locales, 'getAvailableLocales').mockReturnValue(['enUS', 'ptBR']);
-  jest.spyOn(locales, 'getLanguage').mockReturnValue('enUS');
+  jest.spyOn(locales, 'getAvailableLocales').mockReturnValue(['en-US', 'pt-BR']);
+  jest.spyOn(locales, 'getLanguage').mockReturnValue('en-US');
   jest
     .spyOn(locales, 'translateInLocale')
     .mockImplementation((path, language) => {
-      if (language === 'enUS') return 'English';
-      if (language === 'ptBR') return 'Português';
+      if (language === 'en-US') return 'English';
+      if (language === 'pt-BR') return 'Português';
 
       return '';
     });
@@ -36,11 +36,11 @@ describe('Settings - useLocales', () => {
     const { result } = renderHook(useLocales);
 
     expect(result.current.selectedLanguage).toEqual([
-      { id: 'enUS', title: 'English' },
+      { id: 'en-US', title: 'English' },
     ]);
     expect(result.current.languageList).toEqual([
-      { id: 'enUS', title: 'English' },
-      { id: 'ptBR', title: 'Português' },
+      { id: 'en-US', title: 'English' },
+      { id: 'pt-BR', title: 'Português' },
     ]);
   });
 
@@ -59,7 +59,7 @@ describe('Settings - useLocales', () => {
   test('ao setar o idioma, deve abrir um modal perguntado se deseja reiniciar, e deve setar o idioma escolhido ', async () => {
     const { result } = await renderHook(useLocales);
 
-    const selectedLanguage = [{ id: 'ptBR', title: 'Português' }];
+    const selectedLanguage = [{ id: 'pt-BR', title: 'Português' }];
 
     act(() => {
       result.current.handleSetLanguage(selectedLanguage);
