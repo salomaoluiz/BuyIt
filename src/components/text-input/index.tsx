@@ -4,6 +4,7 @@ import { TextInput as PaperTextInput } from 'react-native-paper';
 
 import HelperComponent from '@components/helper-text';
 
+import AutoComplete, { AutoCompleteData } from './components/auto-complete';
 import { Container } from './styles';
 import useTextInput from './useTextInput';
 
@@ -23,6 +24,8 @@ export interface Props extends TextInputProps {
   disabled?: boolean;
   editable?: boolean;
   fixedValue?: string;
+  autoCompleteData?: AutoCompleteData[];
+  onAutoCompleteItemPress?: (item: AutoCompleteData) => void;
 }
 
 const TextInput = (props: Props) => {
@@ -43,6 +46,8 @@ const TextInput = (props: Props) => {
     fixedValue,
     onChangeText,
     value,
+    autoCompleteData,
+    onAutoCompleteItemPress,
   } = props;
 
   const { isFocused, onClearText, handleFocusStatus } = useTextInput(props);
@@ -86,6 +91,13 @@ const TextInput = (props: Props) => {
           ) : undefined
         }
       />
+      {autoCompleteData && (
+        <AutoComplete
+          data={autoCompleteData}
+          onItemPress={onAutoCompleteItemPress}
+        />
+      )}
+
       <HelperComponent value={helperText} isError={error} />
     </Container>
   );

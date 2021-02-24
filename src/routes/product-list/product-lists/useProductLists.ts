@@ -32,7 +32,7 @@ const useProductLists = () => {
 
     setOrndenedList(ordenedByUpdateList);
   }, [productLists]);
-  
+
   return {
     ordenedList,
     onNewButtonPress,

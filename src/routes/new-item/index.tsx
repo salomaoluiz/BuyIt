@@ -21,23 +21,29 @@ import {
   TwoColumnsContainer,
 } from './styles';
 import useForm from './useForm';
+import useItemStore from './useItemStore';
 import useNewItem from './useNewItem';
 
 const NewItem = () => {
+  const { formParams, setParams, handleErrorMessage, checkForm } = useForm();
+
   const {
-    formParams,
     setBrand,
     setAmount,
     setName,
     setQtd,
-    handleErrorMessage,
     setUnit,
-    checkForm,
     setDueDate,
     setBarcode,
-  } = useForm();
+  } = setParams;
+
   const { amount, brand, name, qtd, unit, dueDate, barcode } = formParams;
 
+  const {
+    storedPlaceholder,
+    handleAutoCompleteItemPress,
+    handleBarCodeDetected,
+  } = useItemStore({ formParams, setParams });
   const {
     onSaveButtonPress,
     handleModalVisible,
@@ -54,12 +60,14 @@ const NewItem = () => {
   return (
     <>
       <Header title={translate('productItems.newItem')} backButton />
-      <Container>
+      <Container keyboardShouldPersistTaps="handled">
         <SubContainer>
           <TextInput
             value={name}
             label={translate('general.name')}
             onChangeText={setName}
+            autoCompleteData={storedPlaceholder}
+            onAutoCompleteItemPress={handleAutoCompleteItemPress}
             {...handleErrorMessage('name')}
           />
           <Divider columnDivider />
@@ -145,7 +153,7 @@ const NewItem = () => {
         <BarcodeCamera
           isVisible={barcodeCameraVisible}
           handleClose={handleBarcodeCameraVisibility}
-          handleBarcodeDetected={setBarcode}
+          handleBarcodeDetected={handleBarCodeDetected}
         />
       </Portal>
     </>

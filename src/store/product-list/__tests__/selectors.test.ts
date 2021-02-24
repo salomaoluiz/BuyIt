@@ -41,11 +41,20 @@ describe('ProductList Selector', () => {
     [mockItem],
   ];
 
+  const getAllItems = [
+    'getAllItems',
+    selectors.getAllItems(mockState),
+    [mockItem],
+  ];
   //#endregion
 
-  test.each([getState, getProductLists, isLoading, getProductItems] as Array<
-    [string, typeof selectors, any]
-  >)(
+  test.each([
+    getState,
+    getProductLists,
+    isLoading,
+    getProductItems,
+    getAllItems,
+  ] as Array<[string, typeof selectors, any]>)(
     'deve retornar corretamente os dados do selector %s',
     (describe, selector, expected) => {
       expect(selector).toEqual(expected);
