@@ -9,7 +9,7 @@ import useBarcode from './useBarcode';
 
 export interface Props {
   handleCameraVisibility: (visibility: boolean) => void;
-  barcode: string;
+  barcode?: string;
   handleBarcodeChange: (barcode: string) => void;
 }
 

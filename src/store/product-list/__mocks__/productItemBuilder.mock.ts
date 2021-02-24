@@ -11,7 +11,8 @@ export class ProductItemBuilderMock {
   dueDate?: number = undefined;
   createdAt = 0;
   updatedAt = 0;
-  unit?: PaperListData = undefined;
+  unit: PaperListData = { id: 'un', title: 'Unidade' };
+  barcode?: string;
 
   withId(id: string) {
     this.id = id;
@@ -56,6 +57,11 @@ export class ProductItemBuilderMock {
     return this;
   }
 
+  withBarcode(barcode: string) {
+    this.barcode = barcode;
+    return this;
+  }
+
   build = (): ProductItem => {
     return {
       id: this.id,
@@ -67,6 +73,7 @@ export class ProductItemBuilderMock {
       dueDate: this.dueDate,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
+      barcode: this.barcode,
     };
   };
 }

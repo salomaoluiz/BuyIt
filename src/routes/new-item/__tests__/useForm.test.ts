@@ -35,9 +35,9 @@ describe('NewItem - useForm', () => {
       name: '',
       amount: '',
       qtd: '',
-      unit: undefined,
+      unit: { id: 'un', title: 'Unidade' },
       brand: '',
-      barcode: '',
+      barcode: undefined,
       dueDate: undefined,
     };
 

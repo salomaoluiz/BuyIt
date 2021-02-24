@@ -14,10 +14,11 @@ export interface Props {
   hitslop?: boolean;
   style?: ViewStyle;
   size?: number;
+  disabled?: boolean;
 }
 
 const Icon = (props: Props) => {
-  const { isVisible, name, color, hitslop, style, size } = props;
+  const { isVisible, name, color, hitslop, style, size, disabled } = props;
   const { handlePress, visibleAnimation } = useIcon(props);
 
   const buttonHitSlop = hitslop
@@ -36,6 +37,7 @@ const Icon = (props: Props) => {
         color={color}
         size={size}
         onPress={handlePress}
+        disabled={disabled}
         style={{ margin: 0 }}
       />
     </IconContainer>

@@ -22,7 +22,7 @@ export type ProductItemForm = {
   amount: string;
   qtd: string;
   brand: string;
-  unit?: PaperListData;
+  unit: PaperListData;
   dueDate?: number;
   createdAt: number;
   updatedAt: number;

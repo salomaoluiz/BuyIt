@@ -9,4 +9,8 @@ export const getProductItems = (state: RootState, listId: string) =>
   state.productListReducer.productLists.find((list) => list.id === listId)
     ?.items;
 
-export const isLoading = (state: RootState) => state.productListReducer.isLoading;
+export const getAllItems = (state: RootState) =>
+  state.productListReducer.productLists.map((list) => list.items).flat(1);
+
+export const isLoading = (state: RootState) =>
+  state.productListReducer.isLoading;

@@ -65,10 +65,6 @@ const resultErrorRequired: ErrorInterface = {
       errorItem: 'qtd',
       errorMessage: translate('errors.general.thisValueIsRequired'),
     },
-    {
-      errorItem: 'unit',
-      errorMessage: translate('errors.general.thisValueIsRequired'),
-    },
   ],
 };
 
