@@ -26,10 +26,7 @@ const useForm = () => {
     formName: 'productList',
   });
 
-  const checkForm = useCallback(async () => {
-    const isValid = await validateError();
-    return isValid;
-  }, [formParams]);
+  const checkForm = useCallback(() => validateError(), [formParams]);
 
   return {
     listParams,

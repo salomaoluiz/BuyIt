@@ -1,12 +1,11 @@
 import { translate } from '@locales';
 
 import * as auth from './firebase/auth';
-import { RegexValues } from './firebase/auth';
 import * as productLists from './firebase/productLists';
 
 type Modules = 'auth' | 'productLists';
 export type RegexPattern = { [key: string]: string };
-type ErrorPattern = RegexValues;
+type ErrorPattern = auth.RegexValues;
 type ModulesPattern = {
   [key: string]: { errorRegex: RegexPattern };
 };

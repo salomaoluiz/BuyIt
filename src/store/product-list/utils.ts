@@ -47,19 +47,15 @@ export const appProductListFormater = <T>(
 };
 
 export const dbProductListFormated = (productList: ProductList) => {
-  const filteredData = extractObjectElement<ProductList, 'id' | 'items'>(
-    productList,
-    ['id', 'items'],
-  );
-
-  return filteredData;
+  return extractObjectElement<ProductList, 'id' | 'items'>(productList, [
+    'id',
+    'items',
+  ]);
 };
 
 export const injectProductListExtraData = <T>(productList: T) => {
   const productListWithId = injectId(productList);
-  const productListWithTimeStamp = injectTimeStamp(productListWithId);
-
-  return productListWithTimeStamp;
+  return injectTimeStamp(productListWithId);
 };
 
 export const updateProductListArray = (
@@ -68,18 +64,14 @@ export const updateProductListArray = (
 ) => {
   const { id } = productList;
   const filteredList = filterNotByID(stateProductList, id);
-  const newProductListsArray = filteredList.concat([{ ...productList }]);
-
-  return newProductListsArray;
+  return filteredList.concat([{ ...productList }]);
 };
 
 export const createProductListArray = (
   stateProductList: ProductLists,
   productList: ProductList,
 ) => {
-  const newProductListsArray = stateProductList.concat([{ ...productList }]);
-
-  return newProductListsArray;
+  return stateProductList.concat([{ ...productList }]);
 };
 
 export const createProductItemArray = (
@@ -90,12 +82,10 @@ export const createProductItemArray = (
     ? productList.items.concat([{ ...productItem }])
     : [{ ...productItem }];
 
-  const newEditedList: ProductList = {
+  return {
     ...productList,
     items: newProductItemsArray,
   };
-
-  return newEditedList;
 };
 
 export const ajustLegacyDueDate = (productItems: ProductItems) => {
