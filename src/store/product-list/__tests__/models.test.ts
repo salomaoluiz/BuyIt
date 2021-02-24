@@ -1,6 +1,5 @@
 import * as firestore from '@react-native-firebase/firestore';
 
-import { ProductItemBuilderMock } from '../__mocks__/productItemBuilder.mock';
 import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
 import * as models from '../models';
 
@@ -85,74 +84,4 @@ describe('ProductLists Models', () => {
     });
   });
 
-  describe('Product Items', () => {
-    test('ao chamar requestItems deve chamar o get da collection', async () => {
-      const listId = '1234';
-      await models.requestItems(userId, listId);
-
-      expect(collectionSpy).toHaveBeenCalledWith(
-        `users/${userId}/productLists/${listId}/items`,
-      );
-      expect(collectionGet).toHaveBeenCalled();
-    });
-
-    test('ao chamar createItem deve chamar o set do doc', async () => {
-      const mockProductItem = new ProductItemBuilderMock()
-        .withId('1234')
-        .build();
-
-      const listId = '1234';
-      const itemId = '1234';
-
-      await models.createItem(userId, listId, itemId, mockProductItem);
-
-      expect(collectionSpy).toHaveBeenCalledWith(
-        `users/${userId}/productLists/${listId}/items`,
-      );
-      expect(collectionDoc).toHaveBeenCalledWith(itemId);
-      expect(docSet).toHaveBeenCalledWith({ ...mockProductItem });
-    });
-
-    test('ao chamar findItem deve chamar o get do doc', async () => {
-      const listId = '1234';
-      const itemId = '1234';
-
-      await models.findItem(userId, listId, itemId);
-
-      expect(collectionSpy).toHaveBeenCalledWith(
-        `users/${userId}/productLists/${listId}/items`,
-      );
-      expect(collectionDoc).toHaveBeenCalledWith(itemId);
-      expect(docGet).toHaveBeenCalled();
-    });
-
-    test('ao chamar updateItem deve chamar o update do doc', async () => {
-      const mockProductItem = new ProductItemBuilderMock()
-        .withId('1234')
-        .build();
-      const listId = '1234';
-      const itemId = '1234';
-
-      await models.updateItem(userId, listId, itemId, mockProductItem);
-
-      expect(collectionSpy).toHaveBeenCalledWith(
-        `users/${userId}/productLists/${listId}/items`,
-      );
-      expect(collectionDoc).toHaveBeenCalledWith(itemId);
-      expect(docUpdate).toHaveBeenCalledWith({ ...mockProductItem });
-    });
-
-    test('ao chamar deleteItem deve chamar o delete do doc', async () => {
-      const listId = '1234';
-      const itemId = '1234';
-
-      await models.deleteItem(userId, listId, itemId);
-
-      expect(collectionSpy).toHaveBeenCalledWith(
-        `users/${userId}/productLists/${listId}/items`,
-      );
-      expect(collectionDoc).toHaveBeenCalledWith(itemId);
-      expect(docDelete).toHaveBeenCalled();
-    });
-  });
 });

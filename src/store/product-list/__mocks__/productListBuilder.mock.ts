@@ -1,10 +1,11 @@
-import { ProductItems, ProductItem } from '../types';
+import { ProductItems, ProductItem, ProductList } from '../types';
 
 export class ProductListBuilderMock {
   id = '';
   name = '';
   createdAt = 0;
   updatedAt = 0;
+  buyDate?: number = undefined;
   items: ProductItems = [];
 
   withId(id: string) {
@@ -39,17 +40,18 @@ export class ProductListBuilderMock {
     return this;
   }
 
-  build = (props?: { inArray?: boolean }): any => {
-    const data = {
+  withBuyDate(date: number) {
+    this.buyDate = date;
+    return this;
+  }
+  build = (): ProductList => {
+    return {
       id: this.id,
       name: this.name,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       items: this.items,
+      buyDate: this.buyDate,
     };
-    if (props && props.inArray) {
-      return [data];
-    }
-    return data;
   };
 }

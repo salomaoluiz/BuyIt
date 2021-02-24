@@ -1,8 +1,8 @@
-import { select } from 'redux-saga/effects';
+import { put, select } from 'redux-saga/effects';
 
 import { filterNotByID, filterByID } from '@utils/filters';
 
-import { productListSelectors } from './';
+import { productListActions, productListSelectors } from './';
 import { ProductList, ProductLists, ProductItem, ProductItems } from './types';
 import {
   createProductItemArray,
@@ -34,11 +34,18 @@ export function* deleteList(listId: string) {
 
 export function* createItem(productItem: ProductItem, listId: string) {
   const stateProductList = yield select(productListSelectors.getProductLists);
+
   const currentList = filterByID<ProductList>(stateProductList, listId);
 
   const newEditedList = createProductItemArray(currentList, productItem);
 
-  return updateProductListArray(stateProductList, newEditedList);
+  const newProductListsArray = updateProductListArray(
+    stateProductList,
+    newEditedList,
+  );
+  yield put(productListActions.setProductLists(newProductListsArray));
+
+  return newEditedList as ProductList;
 }
 
 export function* requestItems(productItems: ProductItems, listId: string) {
@@ -69,7 +76,14 @@ export function* deleteItem(listId: string, itemId: string) {
     items: filteredItems,
   };
 
-  return updateProductListArray(stateProductList, newEditedList);
+  const newProductListsArray = updateProductListArray(
+    stateProductList,
+    newEditedList,
+  );
+
+  yield put(productListActions.setProductLists(newProductListsArray));
+
+  return newEditedList;
 }
 
 export function* updateItem(productItem: ProductItem, listId: string) {
@@ -85,5 +99,12 @@ export function* updateItem(productItem: ProductItem, listId: string) {
     items: newProductItemsArray,
   };
 
-  return updateProductListArray(stateProductList, newEditedList);
+  const newProductListsArray = updateProductListArray(
+    stateProductList,
+    newEditedList,
+  );
+
+  yield put(productListActions.setProductLists(newProductListsArray));
+
+  return newEditedList;
 }

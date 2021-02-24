@@ -21,7 +21,7 @@ const useProductItems = () => {
   const [ordenedList, setOrdenedList] = useState(productItems);
 
   const fetchProductItems = useCallback(() => {
-    dispatch(productListActions.requestItems(listId));
+    dispatch(productListActions.requestLists());
   }, []);
 
   useEffect(() => {

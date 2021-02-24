@@ -9,29 +9,21 @@ import { createStockItemArray, updateStockItemArray } from './utils';
 export function* createItem(stockItem: ProductItem) {
   const stateStockItems = yield select(stockSelectors.getStock);
 
-  const newEditedList = createStockItemArray(stateStockItems, stockItem);
-
-  return newEditedList as ProductItems;
+  return createStockItemArray(stateStockItems, stockItem);
 }
 
 export function* requestStock() {
-  const stateStockItems: ProductItems = yield select(stockSelectors.getStock);
-
-  return stateStockItems;
+  return yield select(stockSelectors.getStock);
 }
 
 export function* deleteItem(itemId: string) {
   const stateStockItems: ProductItems = yield select(stockSelectors.getStock);
 
-  const newStockItemsArray = filterNotByID(stateStockItems, itemId);
-
-  return newStockItemsArray;
+  return filterNotByID(stateStockItems, itemId);
 }
 
 export function* updateItem(stockItem: ProductItem) {
   const stateStockItems: ProductItems = yield select(stockSelectors.getStock);
 
-  const newStockItemsArray = updateStockItemArray(stateStockItems, stockItem);
-
-  return newStockItemsArray;
+  return updateStockItemArray(stateStockItems, stockItem);
 }

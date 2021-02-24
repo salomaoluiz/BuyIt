@@ -41,12 +41,6 @@ describe('ProductList Reducers', () => {
     { ...initialState, isLoading: true, error: undefined },
   ];
 
-  const requestItems = [
-    'requestItems',
-    actions.requestItems('12345'),
-    { ...initialState, isLoading: true, error: undefined },
-  ];
-
   //#endregion
 
   test.each([
@@ -54,7 +48,6 @@ describe('ProductList Reducers', () => {
     setError,
     setProductLists,
     requestLists,
-    requestItems,
   ] as Array<[string, ProductListAction<ProductListState>, ProductListState]>)(
     'deve retornar corretamente o state para a action %s',
     (describe, action, expected) => {

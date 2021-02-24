@@ -48,12 +48,6 @@ describe('ProductList Actions', () => {
     },
   ];
 
-  const requestItems = [
-    'requestItems',
-    actions.requestItems('12345'),
-    { type: ProductListTypes.REQUEST_ITEMS, payload: { listId: '12345' } },
-  ];
-
   const createItem = [
     'createItem',
     actions.createItem(mockItem, '12345'),
@@ -90,7 +84,6 @@ describe('ProductList Actions', () => {
     updateList,
     deleteList,
     setProductLists,
-    requestItems,
     createItem,
     deleteItem,
     updateItem,

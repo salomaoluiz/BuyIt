@@ -65,7 +65,7 @@ describe('ProductItems - useProductItems', () => {
     renderHook(useProductItems);
 
     expect(dispatch).toHaveBeenCalledWith(
-      productListActions.requestItems('123456'),
+      productListActions.requestLists(),
     );
   });
 });

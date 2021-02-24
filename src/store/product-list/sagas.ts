@@ -1,4 +1,4 @@
-import { takeLatest, put, call, select } from 'redux-saga/effects';
+import { takeLatest, put, call } from 'redux-saga/effects';
 
 import { translate } from '@locales';
 import navigationService from '@navigator/services/navigationService';
@@ -8,7 +8,6 @@ import { addRemoveDays, formatDate } from '@utils/date';
 import { productListActions } from './';
 import * as sagaLocal from './sagas-local';
 import * as sagaServer from './sagas-server';
-import * as selectors from './selectors';
 import {
   ProductListTypes,
   ProductListAction,
@@ -16,7 +15,7 @@ import {
   ProductLists,
   ProductItem,
 } from './types';
-import { ajustLegacyDueDate, injectProductListExtraData } from './utils';
+import { injectProductListExtraData } from './utils';
 
 export function* createList(
   props: ProductListAction<{ productList: ProductList }>,
@@ -99,15 +98,6 @@ export function* createItem(
     const { productItem, listId } = props.payload;
     yield put(productListActions.setError());
 
-    const formatedProductItem = injectProductListExtraData(productItem);
-
-    const productListsArray = yield call(
-      sagaLocal.createItem,
-      formatedProductItem,
-      listId,
-    );
-    yield put(productListActions.setProductLists(productListsArray));
-
     if (productItem.dueDate) {
       const notificationDate = addRemoveDays(-2, productItem.dueDate);
       yield put(
@@ -122,34 +112,17 @@ export function* createItem(
         }),
       );
     }
-    yield call(navigationService.goBack);
 
-    yield call(sagaServer.createItem, formatedProductItem, listId);
-  } catch (err) {
-    yield put(productListActions.setError(err.message));
-  }
-}
+    const formatedProductItem = injectProductListExtraData(productItem);
 
-export function* requestItems(props: ProductListAction<{ listId: string }>) {
-  try {
-    const { listId } = props.payload;
-    yield put(productListActions.setError());
-
-    const cachedProductItems = yield select(selectors.getProductItems, listId);
-
-    const serverProductItems = yield call(sagaServer.requestItems, listId);
-
-    const selectedProductItems = serverProductItems || cachedProductItems;
-
-    const productItems = ajustLegacyDueDate(selectedProductItems);
-
-    const productListsArray = yield call(
-      sagaLocal.requestItems,
-      productItems,
+    const newProductList = yield call(
+      sagaLocal.createItem,
+      formatedProductItem,
       listId,
     );
 
-    yield put(productListActions.setProductLists(productListsArray));
+    yield call(sagaServer.updateList, newProductList);
+    yield call(navigationService.goBack);
   } catch (err) {
     yield put(productListActions.setError(err.message));
   }
@@ -162,15 +135,9 @@ export function* deleteItem(
     const { listId, itemId } = props.payload;
     yield put(productListActions.setError());
 
-    const newProductItemsArray = yield call(
-      sagaLocal.deleteItem,
-      listId,
-      itemId,
-    );
+    const newEditedList = yield call(sagaLocal.deleteItem, listId, itemId);
 
-    yield put(productListActions.setProductLists(newProductItemsArray));
-
-    yield call(sagaServer.deleteItem, listId, itemId);
+    yield call(sagaServer.updateList, newEditedList);
   } catch (err) {
     yield put(productListActions.setError(err.message));
   }
@@ -185,16 +152,15 @@ export function* updateItem(
 
     const formatedProductItem = injectProductListExtraData(productItem);
 
-    const productListsArray = yield call(
+    const newEditedList = yield call(
       sagaLocal.updateItem,
       formatedProductItem,
       listId,
     );
 
-    yield put(productListActions.setProductLists(productListsArray));
+    yield call(sagaServer.updateList, newEditedList);
+    
     yield call(navigationService.goBack);
-
-    yield call(sagaServer.updateItem, formatedProductItem, listId);
   } catch (err) {
     yield put(productListActions.setError(err.message));
   }
@@ -206,7 +172,6 @@ export default [
   takeLatest(ProductListTypes.UPDATE_LIST, updateList),
   takeLatest(ProductListTypes.DELETE_LIST, deleteList),
   takeLatest(ProductListTypes.CREATE_ITEM, createItem),
-  takeLatest(ProductListTypes.REQUEST_ITEMS, requestItems),
   takeLatest(ProductListTypes.DELETE_ITEM, deleteItem),
   takeLatest(ProductListTypes.UPDATE_ITEM, updateItem),
 ];
