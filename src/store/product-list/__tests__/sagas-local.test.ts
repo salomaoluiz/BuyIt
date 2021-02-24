@@ -1,10 +1,10 @@
-import { select } from 'redux-saga/effects';
+import { put, select } from 'redux-saga/effects';
 
-import { productListSelectors } from '../';
+import { productListActions, productListSelectors } from '../';
 import { ProductItemBuilderMock } from '../__mocks__/productItemBuilder.mock';
 import { ProductListBuilderMock } from '../__mocks__/productListBuilder.mock';
 import * as sagaLocal from '../sagas-local';
-import { ProductItem, ProductList, ProductLists } from '../types';
+import { ProductItem, ProductList } from '../types';
 
 describe('ProductList Sagas Local', () => {
   describe('Product Lists', () => {
@@ -33,7 +33,7 @@ describe('ProductList Sagas Local', () => {
       const mockCurrentProductListsArray = new ProductListBuilderMock()
         .withName('Current Name')
         .withId('2222')
-        .build({ inArray: true }) as ProductLists;
+        .build();
 
       const mockEditedProductList = new ProductListBuilderMock()
         .withName('New Name')
@@ -46,7 +46,7 @@ describe('ProductList Sagas Local', () => {
         select(productListSelectors.getProductLists),
       );
 
-      expect(gen.next(mockCurrentProductListsArray).value).toEqual([
+      expect(gen.next([mockCurrentProductListsArray]).value).toEqual([
         mockEditedProductList,
       ]);
       expect(gen.next().done).toBe(true);
@@ -76,31 +76,36 @@ describe('ProductList Sagas Local', () => {
   });
 
   describe('Product Items', () => {
-    test('deve receber um item e um id de lista e retornar as listas com o item na lista correta', () => {
+    // should recive a item and a list id, and set all lists with the item in the correctly list
+    test('deve receber um item e um id de lista e setar as listas com o item na lista correta', () => {
       const mockProductItem = new ProductItemBuilderMock()
         .withId('1111')
         .build() as ProductItem;
       const mockProductListArray = new ProductListBuilderMock()
         .withId('2222')
-        .build({ inArray: true }) as ProductLists;
+        .build();
 
       const listId = '2222';
       const gen = sagaLocal.createItem(mockProductItem, listId);
 
-      expect(gen.next(mockProductListArray).value).toEqual(
+      expect(gen.next([mockProductListArray]).value).toEqual(
         select(productListSelectors.getProductLists),
       );
 
       const expected = new ProductListBuilderMock()
         .withId('2222')
         .withItems([mockProductItem])
-        .build({ inArray: true });
+        .build();
 
-      expect(gen.next(mockProductListArray).value).toEqual(expected);
+      expect(gen.next([mockProductListArray]).value).toEqual(
+        put(productListActions.setProductLists([expected])),
+      );
+
       expect(gen.next().done).toBe(true);
     });
 
-    test('deve receber uma lista de items e um id de lista e retornar as listas com todos os items na lista correta', () => {
+    // should recive a items list and a list id, and set all lists with all items in the correctly list
+    test('deve receber uma lista de items e um id de lista e setart as listas com todos os items na lista correta', () => {
       const mockProductItem1 = new ProductItemBuilderMock()
         .withId('1111')
         .build();
@@ -112,27 +117,28 @@ describe('ProductList Sagas Local', () => {
 
       const mockProductList = new ProductListBuilderMock()
         .withId('12345')
-        .build({ inArray: true });
+        .build();
 
       const listId = '12345';
 
       const gen = sagaLocal.requestItems(mockItemsArray, listId);
 
-      expect(gen.next(mockProductList).value).toEqual(
+      expect(gen.next([mockProductList]).value).toEqual(
         select(productListSelectors.getProductLists),
       );
 
       const expected = new ProductListBuilderMock()
         .withId('12345')
         .withItems(mockItemsArray)
-        .build({ inArray: true });
+        .build();
 
-      expect(gen.next(mockProductList).value).toEqual(expected);
+      expect(gen.next([mockProductList]).value).toEqual([expected]);
 
       expect(gen.next().done).toBe(true);
     });
 
-    test('deve um itemId e um listId e retornar as listas sem o item do id', () => {
+    // should receive an item id and a list id, and set all lists without the item that has the item id
+    test('deve receber um itemId e um listId e setar as listas sem o item do id', () => {
       const mockProductItem1 = new ProductItemBuilderMock()
         .withId('1111')
         .build();
@@ -143,28 +149,34 @@ describe('ProductList Sagas Local', () => {
       const mockProductList = new ProductListBuilderMock()
         .withId('12345')
         .withItems([mockProductItem1, mockProductItem2])
-        .build({ inArray: true });
+        .build();
 
       const listId = '12345';
       const itemId = '2222';
 
       const gen = sagaLocal.deleteItem(listId, itemId);
 
-      expect(gen.next(mockProductList).value).toEqual(
+      expect(gen.next([mockProductList]).value).toEqual(
         select(productListSelectors.getProductLists),
       );
 
-      const expected = new ProductListBuilderMock()
+      const newProductListsArray = new ProductListBuilderMock()
         .withId('12345')
         .withItems([mockProductItem1])
-        .build({ inArray: true });
+        .build();
 
-      expect(gen.next(mockProductList).value).toEqual(expected);
+
+      expect(gen.next([newProductListsArray]).value).toEqual(
+        put(productListActions.setProductLists([newProductListsArray])),
+      );
+
+      expect(gen.next([newProductListsArray]).value).toEqual(newProductListsArray);
 
       expect(gen.next().done).toBe(true);
     });
 
-    test('deve receber um productItem e um listId e retornar as listas com o item específico atualizado', () => {
+    // should recive a productItem and a list id, and set all lists with the correctly item updated
+    test('deve receber um productItem e um listId e setar as listas com o item específico atualizado', () => {
       const currentProductItem = new ProductItemBuilderMock()
         .withName('Old Name')
         .withId('1111')
@@ -177,22 +189,25 @@ describe('ProductList Sagas Local', () => {
       const mockProductList = new ProductListBuilderMock()
         .withId('12345')
         .withItems([currentProductItem])
-        .build({ inArray: true });
+        .build();
 
       const listId = '12345';
 
       const gen = sagaLocal.updateItem(newProductItem, listId);
 
-      expect(gen.next(mockProductList).value).toEqual(
+      expect(gen.next([mockProductList]).value).toEqual(
         select(productListSelectors.getProductLists),
       );
 
-      const expected = new ProductListBuilderMock()
+      const newProductListsArray = new ProductListBuilderMock()
         .withId('12345')
         .withItems([newProductItem])
-        .build({ inArray: true });
+        .build();
 
-      expect(gen.next(mockProductList).value).toEqual(expected);
+      expect(gen.next([newProductListsArray]).value).toEqual(
+        put(productListActions.setProductLists([newProductListsArray])),
+      );
+      expect(gen.next([mockProductList]).value).toEqual(newProductListsArray);
 
       expect(gen.next().done).toBe(true);
     });

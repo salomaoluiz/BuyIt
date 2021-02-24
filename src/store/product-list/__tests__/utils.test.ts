@@ -96,15 +96,14 @@ describe('Utils ProductList Store', () => {
   });
 
   // should format the productList to send to DB, removing ID and items
-  test('deve formatar um productList para enviar pro DB, remover ID e Items', () => {
+  test('deve formatar um productList para enviar pro DB, remover ID', () => {
     const mockProductList: ProductList = new ProductListBuilderMock().build();
 
     const response = utils.dbProductListFormated(mockProductList);
 
     const expected = {
-      createdAt: mockProductList.createdAt,
-      name: mockProductList.name,
-      updatedAt: mockProductList.updatedAt,
+      ...mockProductList,
+      id: undefined
     };
 
     expect(response).toEqual(expected);

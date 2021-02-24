@@ -46,12 +46,8 @@ export const appProductListFormater = <T>(
   return productLists;
 };
 
-export const dbProductListFormated = (productList: ProductList) => {
-  return extractObjectElement<ProductList, 'id' | 'items'>(productList, [
-    'id',
-    'items',
-  ]);
-};
+export const dbProductListFormated = (productList: ProductList) =>
+  extractObjectElement<ProductList, 'id'>(productList, ['id']);
 
 export const injectProductListExtraData = <T>(productList: T) => {
   const productListWithId = injectId(productList);

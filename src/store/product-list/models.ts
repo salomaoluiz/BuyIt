@@ -2,7 +2,7 @@ import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
 
-import { ProductList, ProductItem } from './types';
+import { ProductList } from './types';
 
 export type QueryFirestore<T> = FirebaseFirestoreTypes.QuerySnapshot<T>;
 export type DocumentFirestore<T> = FirebaseFirestoreTypes.QueryDocumentSnapshot<
@@ -16,7 +16,7 @@ const requestLists = (userId: string) =>
 const createList = (
   userId: string,
   listId: string,
-  productList: Omit<ProductList, 'id' | 'items'>,
+  productList: Omit<ProductList, 'id'>,
 ) =>
   firestore()
     .collection(`users/${userId}/productLists`)
@@ -29,7 +29,7 @@ const findList = (userId: string, listId: string) =>
 const updateList = (
   userId: string,
   listId: string,
-  productList: Omit<ProductList, 'id' | 'items'>,
+  productList: Omit<ProductList, 'id'>,
 ) =>
   firestore()
     .collection(`users/${userId}/productLists`)
@@ -39,52 +39,10 @@ const updateList = (
 const deleteList = (userId: string, listId: string) =>
   firestore().collection(`users/${userId}/productLists`).doc(listId).delete();
 
-const requestItems = (userId: string, listId: string) =>
-  firestore().collection(`users/${userId}/productLists/${listId}/items`).get();
-
-const createItem = (
-  userId: string,
-  listId: string,
-  itemId: string,
-  productItem: Omit<ProductItem, 'id'>,
-) =>
-  firestore()
-    .collection(`users/${userId}/productLists/${listId}/items`)
-    .doc(itemId)
-    .set({ ...productItem });
-
-const findItem = (userId: string, listId: string, itemId: string) =>
-  firestore()
-    .collection(`users/${userId}/productLists/${listId}/items`)
-    .doc(itemId)
-    .get();
-
-const updateItem = (
-  userId: string,
-  listId: string,
-  itemId: string,
-  productItem: Omit<ProductItem, 'id'>,
-) =>
-  firestore()
-    .collection(`users/${userId}/productLists/${listId}/items`)
-    .doc(itemId)
-    .update({ ...productItem });
-
-const deleteItem = (userId: string, listId: string, itemId: string) =>
-  firestore()
-    .collection(`users/${userId}/productLists/${listId}/items`)
-    .doc(itemId)
-    .delete();
-
-export {
+  export {
   requestLists,
   createList,
   updateList,
   findList,
   deleteList,
-  createItem,
-  requestItems,
-  deleteItem,
-  updateItem,
-  findItem,
 };

@@ -40,12 +40,6 @@ const actions = {
     type: ProductListTypes.SET_PRODUCT_LISTS,
     payload: { productLists },
   }),
-  requestItems: (
-    listId: string,
-  ): ProductListAction<{ listId: string }> => ({
-    type: ProductListTypes.REQUEST_ITEMS,
-    payload: { listId },
-  }),
   createItem: (
     productItem: Partial<ProductItem>,
     listId: string,
