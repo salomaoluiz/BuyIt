@@ -12,10 +12,10 @@ const useForm = () => {
     formName: 'login',
   });
 
-  const checkForm = useCallback(async () => {
-    const isValid = await validateError();
-    return isValid;
-  }, [formParams]);
+  const checkForm = useCallback(
+    () => validateError(),
+    [formParams],
+  );
 
   return {
     formParams,

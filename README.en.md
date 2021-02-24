@@ -1,5 +1,12 @@
 # Project Buy It
+
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=salomaoluiz_BuyIt&metric=alert_status)](https://sonarcloud.io/dashboard?id=salomaoluiz_BuyIt)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=salomaoluiz_BuyIt&metric=code_smells)](https://sonarcloud.io/project/issues?id=salomaoluiz_BuyIt&resolved=false&types=CODE_SMELL)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=salomaoluiz_BuyIt&metric=coverage)](https://sonarcloud.io/component_measures?id=salomaoluiz_BuyIt&metric=coverage&view=list)
+
+<div style="display: flex; width: 200px">
+<a href="https://www.buymeacoffee.com/salomaoluiz"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=salomaoluiz&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"></a>
+</div>
 
 This project has been created as a case study to test several development points. If you want to use this project to study and learn or for commercial purpose, feel free, as long as you follow the [LICENSE](https://github.com/salomaoluiz/BuyIt/blob/main/LICENSE) rules. Most of the project description is in Portuguese, so as to help Brazilian starter developer understand without any language barrier, but the code is written in English and will not create any hindrance in understanding the code itself.
 

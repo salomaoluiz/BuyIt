@@ -27,17 +27,23 @@ const useForm = () => {
   const [dueDate, setDueDate] = useState(editDueDate);
   const [unit, setUnit] = useState<PaperListData | undefined>(editUnit);
 
-  const formParams = { id: editId, name, amount, qtd, unit, brand, dueDate, barcode };
+  const formParams = {
+    id: editId,
+    name,
+    amount,
+    qtd,
+    unit,
+    brand,
+    dueDate,
+    barcode,
+  };
 
   const { validateError, handleErrorMessage } = useFormError({
     formParams,
     formName: 'productItem',
   });
 
-  const checkForm = useCallback(async () => {
-    const isValid = await validateError();
-    return isValid;
-  }, [formParams]);
+  const checkForm = useCallback(() => validateError(), [formParams]);
 
   return {
     formParams,

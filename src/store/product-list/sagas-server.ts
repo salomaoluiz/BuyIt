@@ -34,11 +34,7 @@ export function* requestLists() {
       userId,
     );
 
-    const formatedProductList = appProductListFormater<ProductLists>(
-      productList,
-    );
-
-    return formatedProductList;
+    return appProductListFormater<ProductLists>(productList);
   }
 }
 
@@ -95,9 +91,7 @@ export function* requestItems(listId: string) {
 
   const document = yield call(productListModels.requestItems, userId, listId);
 
-  const formatedList = appProductListFormater<ProductItem>(document);
-
-  return formatedList;
+  return appProductListFormater<ProductItem>(document);
 }
 
 export function* updateItem(productItem: ProductItem, listId: string) {

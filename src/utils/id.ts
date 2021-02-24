@@ -1,10 +1,6 @@
 import { v4 as uuidV4 } from 'react-native-uuid';
 
-export const generateUniqueID = () => {
-  const id = uuidV4();
-
-  return id;
-};
+export const generateUniqueID = () => uuidV4();
 
 export const randomNumberId = () => {
   const id = (Math.random() * 10000000).toFixed(0);

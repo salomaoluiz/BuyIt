@@ -24,7 +24,6 @@ const useNewList = (props: Props) => {
       }
       dispatch(productListActions.createList(listParams));
       showAd();
-      return;
     }
   }, [props]);
 

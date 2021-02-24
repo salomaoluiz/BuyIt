@@ -34,7 +34,6 @@ const useNewItem = (props: Props) => {
         return;
       }
       dispatch(action.createItem(formParams, listId));
-      return;
     }
   }, [formParams]);
 

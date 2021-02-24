@@ -15,12 +15,7 @@ export function* createList(productList: ProductList) {
     productListSelectors.getProductLists,
   );
 
-  const newProductListArray = createProductListArray(
-    stateProductList,
-    productList,
-  );
-
-  return newProductListArray;
+  return createProductListArray(stateProductList, productList);
 }
 
 export function* updateList(productList: ProductList) {
@@ -28,20 +23,13 @@ export function* updateList(productList: ProductList) {
     productListSelectors.getProductLists,
   );
 
-  const formatedProductList: ProductLists = updateProductListArray(
-    stateProductList,
-    productList,
-  );
-
-  return formatedProductList;
+  return updateProductListArray(stateProductList, productList);
 }
 
 export function* deleteList(listId: string) {
   const productLists = yield select(productListSelectors.getProductLists);
 
-  const filteredList: ProductLists = filterNotByID(productLists, listId);
-
-  return filteredList;
+  return filterNotByID(productLists, listId);
 }
 
 export function* createItem(productItem: ProductItem, listId: string) {
@@ -50,12 +38,7 @@ export function* createItem(productItem: ProductItem, listId: string) {
 
   const newEditedList = createProductItemArray(currentList, productItem);
 
-  const newProductListsArray = updateProductListArray(
-    stateProductList,
-    newEditedList,
-  );
-
-  return newProductListsArray as ProductLists;
+  return updateProductListArray(stateProductList, newEditedList);
 }
 
 export function* requestItems(productItems: ProductItems, listId: string) {
@@ -69,12 +52,7 @@ export function* requestItems(productItems: ProductItems, listId: string) {
     items: productItems,
   };
 
-  const newProductListsArray = updateProductListArray(
-    stateProductList,
-    newEditedList,
-  );
-
-  return newProductListsArray;
+  return updateProductListArray(stateProductList, newEditedList);
 }
 
 export function* deleteItem(listId: string, itemId: string) {
@@ -91,12 +69,7 @@ export function* deleteItem(listId: string, itemId: string) {
     items: filteredItems,
   };
 
-  const newProductListsArray = updateProductListArray(
-    stateProductList,
-    newEditedList,
-  );
-
-  return newProductListsArray;
+  return updateProductListArray(stateProductList, newEditedList);
 }
 
 export function* updateItem(productItem: ProductItem, listId: string) {
@@ -112,10 +85,5 @@ export function* updateItem(productItem: ProductItem, listId: string) {
     items: newProductItemsArray,
   };
 
-  const newProductListsArray = updateProductListArray(
-    stateProductList,
-    newEditedList,
-  );
-
-  return newProductListsArray;
+  return updateProductListArray(stateProductList, newEditedList);
 }

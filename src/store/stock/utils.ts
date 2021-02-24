@@ -28,21 +28,14 @@ export const appStockItemsFormater = <T>(stockItemsData: QueryFirestore) => {
   return stockItems;
 };
 
-export const dbStockItemFormated = (stockItem: ProductItem) => {
-  const filteredData = extractObjectElement<ProductItem, 'id'>(stockItem, [
-    'id',
-  ]);
-
-  return filteredData;
-};
+export const dbStockItemFormated = (stockItem: ProductItem) =>
+  extractObjectElement<ProductItem, 'id'>(stockItem, ['id']);
 
 export const injectStockItemExtraData = <T extends { id: string }>(
   stockItem: T,
 ) => {
   const stockItemWithId = injectId(stockItem);
-  const stockItemWithTimeStamp = injectTimeStamp(stockItemWithId);
-
-  return stockItemWithTimeStamp;
+  return injectTimeStamp(stockItemWithId);
 };
 
 export const updateStockItemArray = (
@@ -51,16 +44,10 @@ export const updateStockItemArray = (
 ) => {
   const { id } = stockItem;
   const filteredList = filterNotByID(stateStockItem, id);
-  const newStockItemsArray = filteredList.concat([{ ...stockItem }]);
-
-  return newStockItemsArray;
+  return filteredList.concat([{ ...stockItem }]);
 };
 
 export const createStockItemArray = (
   stateStockItem: ProductItems,
   stockItem: ProductItem,
-) => {
-  const newStockItemsArray = stateStockItem.concat([{ ...stockItem }]);
-
-  return newStockItemsArray;
-};
+) => stateStockItem.concat([{ ...stockItem }]);

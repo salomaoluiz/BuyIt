@@ -12,13 +12,7 @@ const initialState: ProductListState = {
   error: undefined,
 };
 
-const requestLists: ProductListReducer = (state) => ({
-  ...state,
-  isLoading: true,
-  error: undefined,
-});
-
-const requestItems: ProductListReducer = (state) => ({
+const requestData: ProductListReducer = (state) => ({
   ...state,
   isLoading: true,
   error: undefined,
@@ -50,8 +44,8 @@ const setError: ProductListReducer = (state, action) => {
 const ProductListMap = new Map([
   [ProductListTypes.SET_ERROR, setError],
   [ProductListTypes.SET_PRODUCT_LISTS, setProductLists],
-  [ProductListTypes.REQUEST_ITEMS, requestItems],
-  [ProductListTypes.REQUEST_LISTS, requestLists],
+  [ProductListTypes.REQUEST_ITEMS, requestData],
+  [ProductListTypes.REQUEST_LISTS, requestData],
 ]);
 
 const reducer = (

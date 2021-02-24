@@ -14,12 +14,7 @@ export function* createItem(item: ProductItem) {
   const userId: string = yield select(authSelectors.getUserId);
   const filteredItem = extractObjectElement(item, ['id']);
 
-  yield call(
-    stockModels.createItem,
-    userId,
-    item.id,
-    filteredItem,
-  );
+  yield call(stockModels.createItem, userId, item.id, filteredItem);
 }
 
 export function* requestStock() {
@@ -30,9 +25,7 @@ export function* requestStock() {
 
   const document = yield call(stockModels.requestStock, userId);
 
-  const formatedList = appStockItemsFormater<ProductItem>(document);
-
-  return formatedList;
+  return appStockItemsFormater<ProductItem>(document);
 }
 
 export function* updateItem(stockItem: ProductItem) {
@@ -42,12 +35,7 @@ export function* updateItem(stockItem: ProductItem) {
   const userId = yield select(authSelectors.getUserId);
   const formatedStockItem = extractObjectElement(stockItem, ['id']);
 
-  yield call(
-    stockModels.updateItem,
-    userId,
-    stockItem.id,
-    formatedStockItem,
-  );
+  yield call(stockModels.updateItem, userId, stockItem.id, formatedStockItem);
 }
 
 export function* deleteItem(itemId: string) {

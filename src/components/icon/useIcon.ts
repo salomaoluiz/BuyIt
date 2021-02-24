@@ -38,7 +38,6 @@ const useIcon = (props: Props) => {
     }
 
     handleAnimation(true);
-    return;
   }, [isVisible]);
 
   return {
