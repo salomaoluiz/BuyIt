@@ -23,6 +23,7 @@ import {
 import useForm from './useForm';
 import useItemStore from './useItemStore';
 import useNewItem from './useNewItem';
+import useScreenSettings from './useScreenSettings';
 
 const NewItem = () => {
   const { formParams, setParams, handleErrorMessage, checkForm } = useForm();
@@ -44,6 +45,7 @@ const NewItem = () => {
     handleAutoCompleteItemPress,
     handleBarCodeDetected,
   } = useItemStore({ formParams, setParams });
+
   const {
     onSaveButtonPress,
     handleModalVisible,
@@ -57,9 +59,11 @@ const NewItem = () => {
     checkForm,
   });
 
+  const { screenTitle, fabIcon } = useScreenSettings();
+
   return (
     <>
-      <Header title={translate('productItems.newItem')} backButton />
+      <Header title={screenTitle} backButton />
       <Container keyboardShouldPersistTaps="handled">
         <SubContainer>
           <TextInput
@@ -129,7 +133,7 @@ const NewItem = () => {
         />
       </Container>
       <ButtonContainer>
-        <CircleButton icon="check" onPress={onSaveButtonPress} />
+        <CircleButton icon={fabIcon} onPress={onSaveButtonPress} />
       </ButtonContainer>
 
       <Portal>

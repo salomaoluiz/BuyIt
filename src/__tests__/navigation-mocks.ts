@@ -13,3 +13,9 @@ export const useNavigationMocks = {
   setParams: jest.fn(),
   openDrawer: jest.fn(),
 };
+
+export const useRouteMock = {
+  params: {},
+  key: '',
+  name: ''
+};

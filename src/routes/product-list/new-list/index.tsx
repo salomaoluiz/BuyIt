@@ -11,6 +11,7 @@ import { formatDate } from '@utils/date';
 import { Container, SubContainer, ButtonContainer } from './styles';
 import useForm from './useForm';
 import useNewList from './useNewList';
+import useScreenSettings from './useScreenSettings';
 
 const NewList = () => {
   const {
@@ -27,9 +28,11 @@ const NewList = () => {
     handleDatePickerVisible,
   } = useNewList({ listParams, checkForm });
 
+  const { fabIcon, screenTitle } = useScreenSettings();
+
   return (
     <>
-      <Header title={translate('productLists.newList')} backButton />
+      <Header title={screenTitle} backButton />
       <Container>
         <SubContainer keyboardShouldPersistTaps="handled">
           <TextInput
@@ -38,25 +41,23 @@ const NewList = () => {
             onChangeText={setName}
             {...handleErrorMessage('name')}
           />
-           <TouchableRipple
-              withoutBackground
-              onPress={handleDatePickerVisible}>
-              <TextInput
-                editable={false}
-                fixedValue={buyDate ? formatDate(buyDate) : undefined}
-                label={translate('productLists.buyDate')}
-              />
-            </TouchableRipple>
+          <TouchableRipple withoutBackground onPress={handleDatePickerVisible}>
+            <TextInput
+              editable={false}
+              fixedValue={buyDate ? formatDate(buyDate) : undefined}
+              label={translate('productLists.buyDate')}
+            />
+          </TouchableRipple>
         </SubContainer>
-          <DateTimePicker
-            getDateTime={setBuyDate}
-            mode="date"
-            isVisible={datePickerVisible}
-            handleModalVisible={handleDatePickerVisible}
-            value={buyDate}
-          />
+        <DateTimePicker
+          getDateTime={setBuyDate}
+          mode="date"
+          isVisible={datePickerVisible}
+          handleModalVisible={handleDatePickerVisible}
+          value={buyDate}
+        />
         <ButtonContainer behavior="height">
-          <CircleButton icon="check" onPress={onAddPress} />
+          <CircleButton icon={fabIcon} onPress={onAddPress} />
         </ButtonContainer>
       </Container>
     </>

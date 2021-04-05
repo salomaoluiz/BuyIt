@@ -1,6 +1,7 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import React from 'react';
 
+import { translate } from '@locales';
 import { Routes } from '@routes';
 
 import Drawer from './components/drawer';
@@ -23,14 +24,17 @@ const AuthenticatedNavigator = () => {
         <AuthenticatedStack.Screen
           name={Routes.ProductNavigator}
           component={ProductNavigator}
+          options={{ title: translate('productLists.productLists') }}
         />
         <AuthenticatedStack.Screen
           name={Routes.StockNavigator}
           component={StockNavigator}
+          options={{ title: translate('stock.stock') }}
         />
         <AuthenticatedStack.Screen
           name={Routes.SettingsNavigator}
           component={SettingsNavigator}
+          options={{ title: translate('settings.settings') }}
         />
         <AuthenticatedStack.Screen
           name={Routes.UnauthenticatedNavigator}
