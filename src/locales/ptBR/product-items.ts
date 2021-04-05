@@ -1,6 +1,7 @@
 const productItems = {
   items: 'Itens',
   newItem: 'Novo item',
+  editItem: 'Editar item',
   total: 'Total',
   amount: `Valor`,
   qtd: `Quantidade`,

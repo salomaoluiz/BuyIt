@@ -24,7 +24,8 @@ Read this in other languages: [English](README.en.md), [Português](README.md)
 
 <div style="display:flex;" >
   <img src=".github/screenshots/6.jpg" width="19%" >
-  <img src=".github/screenshots/7.jpg" width="19%" >
+  <img src=".github/screenshots/7.jpg" style="margin-left:10px;" width="19%" >
+  <img src=".github/screenshots/8.jpg" style="margin-left:10px;" width="19%" >
 </div>
 
 ## Firebase

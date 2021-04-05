@@ -11,6 +11,7 @@ const general = {
   yes: 'Sim',
   no: 'Não',
   currency: 'R$',
+  logout: 'Desconectar',
 };
 
 export default general;

@@ -11,6 +11,7 @@ const general = {
   yes: `Yes`,
   no: `No`,
   currency: '$',
+  logout: 'Logout',
 };
 
 export default general;
