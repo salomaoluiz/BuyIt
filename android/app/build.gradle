@@ -98,11 +98,6 @@ apply from: "../../node_modules/react-native/react.gradle"
 def enableSeparateBuildPerCPUArchitecture = false
 
 /**
- * Run Proguard to shrink the Java bytecode in release builds.
- */
-def enableProguardInReleaseBuilds = false
-
-/**
  * The preferred build flavor of JavaScriptCore.
  *
  * For example, to use the international variant, you can use:
@@ -129,8 +124,26 @@ project.ext.envConfigFiles = [
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
 
-def getVersionCode = System.getenv('ANDROID_VERSION_CODE') ? System.getenv('ANDROID_VERSION_CODE') as int : 1;
-def getVersionName = System.getenv('ANDROID_VERSION_NAME') ? System.getenv('ANDROID_VERSION_NAME') : "1.0";
+def getVersionCode = project.hasProperty('buildVersionCode') ? project.property('buildVersionCode') as int : 1;
+def getVersionName = project.hasProperty('buildVersionName') ? project.property('buildVersionName') : "1.0";
+def getPackageName = project.hasProperty('buildPackageName') ? project.property('buildPackageName') : "br.com.jacobysoftware.buyit";
+
+def buildStoreFilePath = project.hasProperty('buildStoreFilePath') ? project.property('buildStoreFilePath') : 'debug.keystore'
+def signingFile = new File(System.getenv('HOME') + '/buyit.keystore')
+def buildStoreFile;
+if(buildStoreFilePath.contains('http')){
+  new URL(buildStoreFilePath).withInputStream{ i -> signingFile.withOutputStream{ it << i }}
+  buildStoreFile = file(System.getenv("HOME")+"/buyit.keystore")
+} else {
+  buildStoreFile = file(buildStoreFilePath)
+}
+
+def buildStorePassword = project.hasProperty('buildStorePassword') ? project.property('buildStorePassword') : "android"
+def buildKeyAlias = project.hasProperty('buildKeyAlias') ? project.property('buildKeyAlias') : "androiddebugkey"
+def buildKeyPassword = project.hasProperty('buildKeyPassword') ? project.property('buildKeyPassword') : "android"
+def enableMinifyInReleaseBuilds = true
+def enableShrinkInReleaseBuilds = true
+
 crashlytics {
   enableNdk true
 }
@@ -142,12 +155,12 @@ android {
     }
 
     defaultConfig {
-        applicationId "br.com.jacobysoftware.buyit"
+        applicationId getPackageName
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode getVersionCode
         versionName getVersionName
-        resValue "string", "build_config_package", "br.com.jacobysoftware.buyit"
+        resValue "string", "build_config_package", 'br.com.jacobysoftware.buyit'
         multiDexEnabled true
         missingDimensionStrategy 'react-native-camera', 'general'
     }
@@ -167,14 +180,10 @@ android {
             keyPassword 'android'
         }
         release {
-            def signingFile = new File(System.getenv('HOME') + '/buyit.keystore')
-            if (!signingFile.exists()) {
-                new URL(System.getenv('BITRISEIO_ANDROID_KEYSTORE_URL')).withInputStream{ i -> signingFile.withOutputStream{ it << i }}
-            }
-            storeFile file(System.getenv('HOME') + '/buyit.keystore')
-            storePassword System.getenv('BITRISEIO_ANDROID_KEYSTORE_PASSWORD')
-            keyAlias System.getenv('BITRISEIO_ANDROID_KEYSTORE_ALIAS')
-            keyPassword System.getenv('BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD')
+            storeFile buildStoreFile
+            storePassword buildStorePassword
+            keyAlias buildKeyAlias
+            keyPassword buildKeyPassword
         }
     }
     buildTypes {
@@ -185,7 +194,8 @@ android {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
             signingConfig signingConfigs.release
-            minifyEnabled enableProguardInReleaseBuilds
+            minifyEnabled enableMinifyInReleaseBuilds
+            shrinkResources enableShrinkInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }

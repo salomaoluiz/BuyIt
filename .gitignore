@@ -68,3 +68,7 @@ coverage
 
 .env.*
 google-services.json
+*.asc*
+fastlane/report.xml
+*.pem
+google-key.json

@@ -4,9 +4,10 @@ import React from 'react';
 import Config from 'react-native-config';
 
 const AdmobBanner = () => {
-  const bannerAdID = __DEV__
-    ? TestIds.BANNER
-    : Config.ADMOB_BANNER_ID_CAMPAING || Config.ADMOB_BANNER_ID_DEFAULT;
+  const bannerAdID =
+    Config['DEFAULT_ENVIRONMENT'] === 'development'
+      ? TestIds.BANNER
+      : Config.ADMOB_BANNER_ID_CAMPAING || Config.ADMOB_BANNER_ID_DEFAULT;
 
   return (
     <BannerAd

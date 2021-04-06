@@ -9,6 +9,7 @@ jest.mock('globals', () => ({
   __DEV__: false,
 }));
 jest.mock('react-native-config', () => ({
+  DEFAULT_ENVIRONMENT: 'development',
   ADMOB_INTERSTITIAL_ID_DEFAULT: 'ADMOB_INTERSTITIAL_ID_DEFAULT',
 }));
 jest.mock('@react-native-firebase/admob', () => ({
