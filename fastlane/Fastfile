@@ -1,0 +1,139 @@
+OUT_DIR = ENV['DEPLOY_DIR'] || 'build/'
+ANDROID_KEYSTORE_PATH = ENV['ANDROID_KEYSTORE_PATH']
+ANDROID_KEYSTORE_PASSWORD = ENV['ANDROID_KEYSTORE_PASSWORD']
+ANDROID_KEYSTORE_ALIAS = ENV['ANDROID_KEYSTORE_ALIAS']
+ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD = ENV['ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD']
+BUILD_NUMBER = ENV["BUILD_NUMBER"] || 1
+VERSION_NAME = ENV["VERSION_NAME"] || 'v0.0'
+PACKAGE_NAME = ENV["PACKAGE_NAME"] || 'br.com.jacobysoftware.buyit'
+UPLOAD_TO_STORE = ENV["UPLOAD_TO_STORE"] == "true" ? true : false
+
+before_all do
+  sh 'yarn'
+end
+
+desc 'Realizando o build debug para o ambiente de desenvolvimento'
+lane :debug_android_development do
+  ENV['ENVFILE'] = '.env.dev'
+  gradle(task: 'clean', project_dir: 'android/')
+
+  gradle(
+    task: 'assemble',
+    flavor: 'development',
+    build_type: 'debug',
+    project_dir: './android',
+    properties: {
+      'buildVersionName' => VERSION_NAME,
+      'buildVersionCode' => BUILD_NUMBER,
+      'buildPackageName' => PACKAGE_NAME
+    }
+  )
+
+  copy_artifacts(
+    :task => 'assemble',
+    :flavor => 'development'
+  )
+
+end
+
+desc 'Realizando o build release para o ambiente de desenvolvimento'
+lane :release_android_development do
+  ENV['ENVFILE'] = '.env.dev'
+  gradle(task: 'clean', project_dir: 'android/')
+
+  gradle(
+    task: 'assemble',
+    flavor: 'development',
+    build_type: 'release',
+    project_dir: './android',
+    properties: {
+      'buildVersionName' => VERSION_NAME,
+      'buildVersionCode' => BUILD_NUMBER,
+      'buildPackageName' => PACKAGE_NAME
+    }
+  )
+
+  copy_artifacts(
+    :task => 'assemble',
+    :flavor => 'development'
+  )
+
+end
+
+
+desc 'Realizando o build release para o ambiente de producao'
+lane :release_android_production do
+  ENV['ENVFILE'] = '.env.prod'
+
+  gradle(task: 'clean', project_dir: 'android/')
+
+  gradle(
+    task: 'assemble',
+    flavor: 'production',
+    build_type: 'release',
+    project_dir: './android',
+    properties: {
+      'buildVersionName' => VERSION_NAME,
+      'buildVersionCode' => BUILD_NUMBER,
+      'buildStoreFilePath' => ANDROID_KEYSTORE_PATH,
+      'buildStorePassword' => ANDROID_KEYSTORE_PASSWORD,
+      'buildKeyAlias' => ANDROID_KEYSTORE_ALIAS,
+      'buildKeyPassword' => ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD,
+      'buildPackageName' => PACKAGE_NAME,
+    },
+  )
+
+  copy_artifacts(
+    :task => 'assemble',
+    :flavor => 'production'
+  )
+end
+
+desc 'Realizando o build release para enviar o ambiente de producao'
+lane :bundle_android_production do
+  ENV['ENVFILE'] = '.env.prod'
+
+  gradle(task: 'clean', project_dir: 'android/')
+
+  gradle(
+    task: 'bundle',
+    flavor: 'production',
+    build_type: 'release',
+    project_dir: './android',
+    properties: {
+      'buildVersionName' => VERSION_NAME,
+      'buildVersionCode' => BUILD_NUMBER,
+      'buildStoreFilePath' => ANDROID_KEYSTORE_PATH,
+      'buildStorePassword' => ANDROID_KEYSTORE_PASSWORD,
+      'buildKeyAlias' => ANDROID_KEYSTORE_ALIAS,
+      'buildKeyPassword' => ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD,
+      'buildPackageName' => PACKAGE_NAME,
+    },
+  )
+
+  copy_artifacts(
+    :task => 'bundle',
+    :flavor => 'production'
+  )
+
+  if UPLOAD_TO_STORE
+    upload_to_play_store(
+      track: 'internal',
+      aab: "./fastlane/build/BuyIt-production.aab",
+      json_key: ENV['GOOGLE_KEY'],
+      package_name: ENV['PACKAGE_NAME'],
+      skip_upload_apk: true
+    )
+  end
+end
+
+def copy_artifacts(params = {})
+  task = params[:task]
+  flavor = params[:flavor]
+  artifact_location = task === 'assemble' ? lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH] : lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]
+  artifact_extension = task === 'assemble' ? 'apk' : 'aab'
+
+  UI.message "Movendo para  \"#{OUT_DIR}\""
+  sh "mkdir -p #{OUT_DIR}"
+  sh "cp #{artifact_location} #{File.join(OUT_DIR, 'BuyIt-' + flavor + '.' + artifact_extension)}"
+end

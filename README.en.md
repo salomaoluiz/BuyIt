@@ -29,13 +29,15 @@ Read this in other languages: [English](README.en.md), [Português](README.md)
 </div>
 
 ## Firebase
+
 This project uses `Firebase` as a BAS (Backend as a Service), so in order to run the project, you need to configure these settings in code.
 
-First, you need create a project in `Firebase` (Two projects if you want to separate the development environment from production environment), to configure the project for Android, add the **google-services.json** in folders *./android/app/src/development* and *./android/app/src/production*.
+First, you need create a project in `Firebase` (Two projects if you want to separate the development environment from production environment), to configure the project for Android, add the **google-services.json** in folders _./android/app/src/development_ and _./android/app/src/production_.
 
-After that, you need to adjust the *ADMOB* for the ads, to configure this, you need to create 3 files into your root folder(where package.json is present), each file with the following information:
+After that, you need to adjust the _ADMOB_ for the ads, to configure this, you need to create 3 files into your root folder(where package.json is present), each file with the following information:
 
 - **firebase.json**
+
 ```
 {
   "react-native": {
@@ -44,7 +46,9 @@ After that, you need to adjust the *ADMOB* for the ads, to configure this, you n
   }
 }
 ```
+
 - **.env.dev**
+
 ```
 DEFAULT_ENVIRONMENT=development
 ADMOB_APP_ID=ADMOB_APP_ID
@@ -55,6 +59,7 @@ ADMOB_INTERSTITIAL_ID_CAMPAING=
 ```
 
 - **.env.prod**
+
 ```
 DEFAULT_ENVIRONMENT=production
 ADMOB_APP_ID=ADMOB_APP_ID
@@ -67,17 +72,13 @@ ADMOB_INTERSTITIAL_ID_CAMPAING=
 > **Note:**, In spite having `ADMOB BANNER _ID_*` in the development environment, while you are using the project in development mode, it will only show test ads.
 
 ## Creating a build
-To build the project, install all the dependencies using command `yarn install` after that execute `yarn android:dev` to start the app in debug mode using the development lane. To generate the app in debug mode using the production lane requires a **keystore** configured and in your *$HOME*, after configured it with the name *buyit.keystore* execute in project root `yarn android:prod`.
+
+To build the project, install all the dependencies using command `yarn install` after that execute `yarn android:dev` to start the app in debug mode using the development lane.
 
 ## After creating a build, app closes after launch, what should I do?
-If you created the build following above instructions and when you launch the app in emulator/device it opens and closes immediately, go into the folder *./android* in *terminal* and execute `./gradlew clean` and try to build the app again.
+
+If you created the build following above instructions and when you launch the app in emulator/device it opens and closes immediately, go into the folder _./android_ in _terminal_ and execute `./gradlew clean` and try to build the app again.
 
 ## Create a build in release
-To create a build in production release, you need to go to folder *./android* and execute the following command `./gradlew assembleProduction` passing the environments variable:
 
-- `ENVFILE=.env.prod`
-- `BITRISEIO_ANDROID_KEYSTORE_PASSWORD="YOUR_KEYSTORE_PASSWORD"`
-- `BITRISEIO_ANDROID_KEYSTORE_ALIAS="YOUR_KEYSTORE_ALIAS"`
-- `BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD="YOUR_KEYSTORE_PRIVATE_PASSWORD"`
-- `BITRISE_BUILD_NUMBER="BUILD_NUMBER_DESIRED"`
-- `BITRISE_VERSION_NUMBER="VERSION_NUMBER_DESIRED"`
+To create a build in development release, just run `fastlane release_android_development`, if you wanna create a build in production release, see the documentation [HOW_TO_DEPLOY](https://github.com/salomaoluiz/BuyIt/blob/main/fastlane/HOW_TO_DEPLOY.en.md)

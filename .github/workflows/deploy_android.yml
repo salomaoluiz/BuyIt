@@ -1,0 +1,58 @@
+name: Android Build
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy-android:
+    name: Android - Deploy Production
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" >> buyit.keystore.asc
+          echo "${{ secrets.GOOGLE_SERVICES_BASE64 }}" >> google-services.json.asc
+          echo "${{ secrets.FIREBASE_BASE64 }}" >> firebase.json.asc
+          echo "${{ secrets.ENVFILE_PROD_BASE64 }}" >> .env.prod.asc
+          echo "${{ secrets.GOOGLE_KEY_BASE64 }}" >> google-key.json.asc
+          gpg -d --passphrase "${{ secrets.ANDROID_KEYSTORE_BASE64_PASSPHRASE }}" --batch buyit.keystore.asc > android/app/buyit.keystore
+          gpg -d --passphrase "${{ secrets.ENVFILE_PROD_BASE64_PASSPHRASE }}" --batch .env.prod.asc > .env.prod
+          gpg -d --passphrase "${{ secrets.GOOGLE_KEY_BASE64_PASSPHRASE }}" --batch google-key.json.asc > google-key.json
+          gpg -d --passphrase "${{ secrets.FIREBASE_BASE64_PASSPHRASE }}" --batch firebase.json.asc > firebase.json
+          gpg -d --passphrase "${{ secrets.GOOGLE_SERVICES_BASE64_PASSPHRASE }}" --batch google-services.json.asc > ./android/app/src/production/google-services.json
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.x'
+
+      - name: Get the version name
+        id: get_version_name
+        run: echo ::set-output name=VERSION_NAME::$(git describe --tags --abbrev=0)
+
+      - name: Get the build number
+        id: get_build_number
+        run: echo ::set-output name=BUILD_NUMBER::$(git log --pretty=format:'' | wc -l)
+
+      - name: Install Fastlane
+        run: |
+          gem install bundler
+          gem update bundler
+
+      - name: Deploy Production
+        run: fastlane bundle_android_production
+        env:
+          ANDROID_KEYSTORE_URL: ${{ secrets.ANDROID_KEYSTORE_URL }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
+          ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD }}
+          PACKAGE_NAME: ${{ secrets.PACKAGE_NAME }}
+          ENVFILE: '.env.prod'
+          ANDROID_KEYSTORE_PATH: 'buyit.keystore'
+          UPLOAD_TO_STORE: 'true'
+          GOOGLE_KEY: 'google-key.json'
+          BUILD_NUMBER: ${{ steps.get_build_number.outputs.BUILD_NUMBER }}
+          VERSION_NAME: ${{ steps.get_version_name.outputs.VERSION_NAME }}

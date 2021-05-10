@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android:dev": "ENVFILE=.env.dev react-native run-android --variant=developmentDebug",
+    "android:dev": "react-native run-android --variant=developmentDebug",
     "ios": "react-native run-ios",
     "start": "react-native start --reset-cache",
     "test": "jest",

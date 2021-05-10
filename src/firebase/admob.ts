@@ -16,10 +16,11 @@ const admobInit = () => {
 };
 
 export const useInterstitialAd = () => {
-  const bannerAdID = __DEV__
-    ? TestIds.INTERSTITIAL
-    : Config.ADMOB_INTERSTITIAL_ID_CAMPAING ||
-      Config.ADMOB_INTERSTITIAL_ID_DEFAULT;
+  const bannerAdID =
+    Config['DEFAULT_ENVIRONMENT'] === 'development'
+      ? TestIds.INTERSTITIAL
+      : Config.ADMOB_INTERSTITIAL_ID_CAMPAING ||
+        Config.ADMOB_INTERSTITIAL_ID_DEFAULT;
 
   const interstitial = InterstitialAd.createForAdRequest(bannerAdID, {
     requestNonPersonalizedAdsOnly: true,
