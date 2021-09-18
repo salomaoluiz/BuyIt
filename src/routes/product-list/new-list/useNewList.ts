@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 
 import { productListActions } from '@store/product-list';
 import { ProductList } from '@store/product-list/types';
-import { useInterstitialAd } from 'src/firebase/admob';
 
 interface Props {
   listParams: Partial<ProductList>;
@@ -12,7 +11,6 @@ interface Props {
 const useNewList = (props: Props) => {
   const { listParams, checkForm } = props;
   const [datePickerVisible, setDatePickerVisible] = useState(false);
-  const { showAd } = useInterstitialAd();
   const dispatch = useDispatch();
 
   const onAddPress = useCallback(async () => {
@@ -23,7 +21,6 @@ const useNewList = (props: Props) => {
         return;
       }
       dispatch(productListActions.createList(listParams));
-      showAd();
     }
   }, [props]);
 

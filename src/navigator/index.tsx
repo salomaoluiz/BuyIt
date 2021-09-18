@@ -1,7 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 
-import AdmobBanner from '@components/admob-banner';
 import FullscreenLoader from '@components/fullscreen-loader';
 
 import AuthenticatedNavigator from './authenticated';
@@ -21,7 +20,7 @@ const AppNavigator = () => {
       {shouldShowLoading && <FullscreenLoader />}
       {shouldShowLogin && <UnauthenticatedNavigator />}
       {shouldShowApp && <AuthenticatedNavigator />}
-      <AdmobBanner />
+
     </NavigationContainer>
   );
 };

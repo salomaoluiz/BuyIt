@@ -6,13 +6,11 @@ import { Provider } from 'react-redux';
 import Banner from '@components/banner';
 import AppNavigator from '@navigator';
 import createStore from '@store';
-import firebaseInit from 'src/firebase';
 import theme from 'src/styles/theme';
 
 const { store } = createStore();
 const App = () => {
   RNBootSplash.hide();
-  firebaseInit();
   return (
     <Provider store={store}>
       <PaperProvider theme={theme}>
