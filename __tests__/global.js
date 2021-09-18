@@ -7,7 +7,6 @@ jest.mock('react-native-push-notification', () => ({
   createChannel: jest.fn(),
 }));
 jest.mock('@react-native-firebase/auth', () => ({}));
-jest.mock('@react-native-firebase/admob', () => ({}));
 
 jest.mock('@react-native-firebase/firestore', () =>
   jest.fn().mockReturnValue({

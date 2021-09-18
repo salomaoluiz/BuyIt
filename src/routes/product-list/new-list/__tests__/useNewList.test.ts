@@ -2,17 +2,15 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import * as reactRedux from 'react-redux';
 
 import { productListActions } from '@store/product-list';
-import * as admob from 'src/firebase/admob';
 
 import useNewList from '../useNewList';
 
 const dispatch = jest.fn();
-const showAd = jest.fn();
+
 describe('NewList - useNewList', () => {
   beforeAll(() => {
     jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(dispatch);
     jest.spyOn(reactRedux, 'useSelector').mockReturnValue(true);
-    jest.spyOn(admob, 'useInterstitialAd').mockReturnValue({ showAd });
   });
   const checkForm = jest.fn().mockResolvedValue(true);
   const initialProps = {
@@ -37,7 +35,6 @@ describe('NewList - useNewList', () => {
     expect(dispatch).toHaveBeenCalledWith(
       productListActions.createList(initialProps.listParams),
     );
-    expect(showAd).toHaveBeenCalled();
   });
 
   // when the onAddPress is called with a id, should call the checkForm and dispatch the action updateProductAsync
@@ -61,7 +58,6 @@ describe('NewList - useNewList', () => {
     expect(dispatch).toHaveBeenCalledWith(
       productListActions.updateList(newInitialProps.listParams),
     );
-    expect(showAd).not.toHaveBeenCalled();
   });
 
   // when the handleDatePickerVisible is called with a status, should set that status in datePickerVisible
@@ -73,7 +69,7 @@ describe('NewList - useNewList', () => {
     act(() => {
       result.current.handleDatePickerVisible(true);
     });
-    
+
     expect(result.current.datePickerVisible).toBeTruthy();
   });
 

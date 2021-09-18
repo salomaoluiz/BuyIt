@@ -34,42 +34,19 @@ Para esse projeto foi utilizado o Firebase como forma de BAS, logo é preciso re
 
 Primeiro é preciso criar um projeto no firebase (dois projetos se você deseja separar o ambiente de desenvolvimento do ambiente de produção), configurar o projeto para Android e adicionando o **google-services.json** nas pastas _./android/app/src/development_ e _./android/app/src/production_.
 
-Realizada essas configurações iniciais é preciso também ajustar o ADMOB para as publicidades dentro do projeto, para configurar isso é preciso que crie 3 arquivos, sendo cada um deles com as seguintes informações:
-
-- **firebase.json**
-
-```
-{
-  "react-native": {
-    "admob_android_app_id": "APP_ID_DO_ADMOB_ANDROID",
-    "admob_ios_app_id": "APP_ID_DO_ADMOB_IOS"
-  }
-}
-```
+Após isso, é preciso criar 2 arquivos, sendo cada um deles com as seguintes informações:
 
 - **.env.dev**
 
 ```
 DEFAULT_ENVIRONMENT=development
-ADMOB_APP_ID=ADMOB_APP_ID
-ADMOB_BANNER_ID_DEFAULT=ADMOB_BANNER_ID_DEFAULT
-ADMOB_BANNER_ID_CAMPAING=
-ADMOB_INTERSTITIAL_ID_DEFAULT=ADMOB_INTERSTITIAL_ID_DEFAULT
-ADMOB_INTERSTITIAL_ID_CAMPAING=
 ```
 
 - **.env.prod**
 
 ```
 DEFAULT_ENVIRONMENT=production
-ADMOB_APP_ID=ADMOB_APP_ID
-ADMOB_BANNER_ID_DEFAULT=ADMOB_BANNER_ID_DEFAULT
-ADMOB_BANNER_ID_CAMPAING=
-ADMOB_INTERSTITIAL_ID_DEFAULT=ADMOB_INTERSTITIAL_ID_DEFAULT
-ADMOB_INTERSTITIAL_ID_CAMPAING=
 ```
-
-Observe que apesar de ter um `ADMOB_BANNER_ID_*` no ambiente de desenvolvimento, enquanto você utilizar o projeto sem ser em release, ele irá apresentar as propagandas de teste somente.
 
 ## Realizando build
 

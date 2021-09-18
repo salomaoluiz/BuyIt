@@ -34,42 +34,19 @@ This project uses `Firebase` as a BAS (Backend as a Service), so in order to run
 
 First, you need create a project in `Firebase` (Two projects if you want to separate the development environment from production environment), to configure the project for Android, add the **google-services.json** in folders _./android/app/src/development_ and _./android/app/src/production_.
 
-After that, you need to adjust the _ADMOB_ for the ads, to configure this, you need to create 3 files into your root folder(where package.json is present), each file with the following information:
-
-- **firebase.json**
-
-```
-{
-  "react-native": {
-    "admob_android_app_id": "APP_ID_DO_ADMOB_ANDROID",
-    "admob_ios_app_id": "APP_ID_DO_ADMOB_IOS"
-  }
-}
-```
+After that, you need to create 2 files into your root folder (where package.json is present), each file with the following information:
 
 - **.env.dev**
 
 ```
 DEFAULT_ENVIRONMENT=development
-ADMOB_APP_ID=ADMOB_APP_ID
-ADMOB_BANNER_ID_DEFAULT=ADMOB_BANNER_ID_DEFAULT
-ADMOB_BANNER_ID_CAMPAING=
-ADMOB_INTERSTITIAL_ID_DEFAULT=ADMOB_INTERSTITIAL_ID_DEFAULT
-ADMOB_INTERSTITIAL_ID_CAMPAING=
 ```
 
 - **.env.prod**
 
 ```
 DEFAULT_ENVIRONMENT=production
-ADMOB_APP_ID=ADMOB_APP_ID
-ADMOB_BANNER_ID_DEFAULT=ADMOB_BANNER_ID_DEFAULT
-ADMOB_BANNER_ID_CAMPAING=
-ADMOB_INTERSTITIAL_ID_DEFAULT=ADMOB_INTERSTITIAL_ID_DEFAULT
-ADMOB_INTERSTITIAL_ID_CAMPAING=
 ```
-
-> **Note:**, In spite having `ADMOB BANNER _ID_*` in the development environment, while you are using the project in development mode, it will only show test ads.
 
 ## Creating a build
 
